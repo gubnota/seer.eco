@@ -1,0 +1,54 @@
+import { fileURLToPath, URL } from 'url'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { join, parse, resolve, dirname } from 'path'
+
+const root = resolve(__dirname, '')
+const outDir = resolve(__dirname, 'dist')
+const publicP = resolve(__dirname, 'public')
+console.log(root)
+// https://vitejs.dev/config/
+export default defineConfig({
+	plugins: [
+		vue({
+			template: {
+				transformAssetUrls: {
+					includeAbsolute: false,
+				},
+			},
+		}),
+	],
+	// root: './src',
+	base: '/',
+	// root,
+	build: {
+		outDir: './dist',
+		emptyOutDir: true,
+		// rollupOptions: {
+		// 	input: {
+		// 		'index.html': resolve(__dirname, 'index.html'),
+		// 		'/page2/index.html': resolve(__dirname, 'src/page2/index.html'),
+		// 		'page2/page3.html': resolve(__dirname, 'page2/page3.html'),
+		// 	},
+		// 	output: {
+		// 		'index.html': 'index.html',
+		// 		'page2/index.html': 'page2/index.html',
+		// 		'page2/page3.html': 'page2/page3.html',
+		// 	},
+		// },
+	},
+	publicDir: './public',
+})
+
+function entryPoints(...paths) {
+	const entries = paths.map(parse).map((entry) => {
+		const { dir, base, name, ext } = entry
+		const key = join(dir, name)
+		const path = resolve(root, dir, base)
+		console.log('entryPoints', entry, key, path)
+		return [key, path]
+	})
+
+	const config = Object.fromEntries(entries)
+	return config
+}
