@@ -62,6 +62,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.videoPlaceholder {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 100vh;
+	overflow-x: hidden;
+}
 video {
 	top: 0;
 	left: 0;
