@@ -12,7 +12,7 @@
 		>
 			<source :src="video" />
 		</video>
-		<div class="videoPlaceholder__overlay"></div>
+		<div class="videoPlaceholder_overlay"></div>
 	</div>
 </template>
 
@@ -80,7 +80,18 @@ video {
 }
 .mobile {
 	height: auto;
-	width: 283%;
-	transform: translateX(19%);
+	/* width: 283%;
+	transform: translateX(19%); */
+	width: 346%;
+	transform: translateX(27.4%);
+}
+.videoPlaceholder_overlay {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 100vh;
+	/* background: aquamarine; */
+	z-index: 1;
 }
 </style>

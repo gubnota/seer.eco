@@ -662,12 +662,22 @@
 	}
 }
 @media (max-width: 550px) {
+	.stats .rows .row h3 {
+		font-size: 0.8125rem;
+	}
+	.stats .rows .row p {
+		font-size: 1.5rem;
+		margin-top: -10px;
+		line-height: normal;
+		font-weight: 500;
+	}
 	.part1 {
-		padding-top: 1.875rem;
+		padding-top: 5.25rem;
 	}
 	.part1 .col {
-		justify-content: flex-end;
-		flex-direction: column-reverse;
+		justify-content: flex-start;
+		flex-direction: column;
+		max-width: 90vw;
 	}
 	.part1 .badge {
 		width: 63px;
@@ -675,21 +685,24 @@
 	}
 	.part1 .row {
 		flex-direction: row;
-		gap: 1rem;
+		gap: 26px;
 	}
 	.part1 .badges {
 		margin: 0;
 		flex-direction: row;
 		display: flex;
-		gap: 1rem;
+		gap: 0 26px;
 		position: absolute;
 		top: 500px;
-		margin: 0 auto;
+		/* margin: 0 auto; */
+		left: 18px;
 		justify-self: center;
 		align-self: center;
 	}
 	.part1 .col .sub {
-		font-size: 1.4rem !important;
+		font-size: 1.05rem !important;
+		max-width: 40vw;
+		line-height: 140%;
 	}
 	.part1 .badge p {
 		display: none;
