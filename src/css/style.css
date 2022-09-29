@@ -1007,8 +1007,8 @@ nav.mobile .wrapper {
 	right: 1.5rem;
 	margin-right: -2.5rem;
 	z-index: -1;
-	background: #f4f4f4;
-	box-shadow: 0px 5px 6px 1px rgba(0, 0, 0, 0.16);
+	background: #fcfcfe; /*#f4f4f4*/
+	box-shadow: 0px 6px 6px 1px rgba(0, 0, 0, 0.16);
 	border-radius: 0 0px 0px 29px;
 	display: flex;
 	flex-direction: column;
