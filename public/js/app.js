@@ -46,8 +46,8 @@ const create_top_nav = () => {
 	var tl = gsap.timeline({ paused: true })
 	tl.to(menu, {
 		duration: 1,
-		opacity: 1,
-		height: '313px', // change this to 100vh for full-height menu
+		opacity: 0.95,
+		height: '360px', // change this to 100vh for full-height menu
 		ease: 'expo.inOut',
 	})
 	tl.from(

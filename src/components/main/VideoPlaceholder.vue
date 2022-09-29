@@ -1,5 +1,8 @@
 <template>
-	<div class="videoPlaceholder">
+	<div
+		class="videoPlaceholder"
+		:style="'height:' + (this.$store.state.statsOffsetTop || 880) + 'px'"
+	>
 		<video
 			autoplay
 			muted
@@ -80,6 +83,7 @@ video {
 	/* height: min(100vh, 100vw); */
 	object-fit: cover;
 	overflow-x: hidden;
+	z-index: 1;
 }
 
 .video {
@@ -91,7 +95,10 @@ video {
 	/* width: 283%;
 	transform: translateX(19%); */
 	width: 346%;
-	transform: translateX(27.4%);
+	/* top: 8%; */
+	/* transform: translateX(27.4%); */
+	transform: translateX(29%);
+	padding-top: 8%;
 }
 .videoPlaceholder_overlay {
 	position: absolute;
@@ -99,7 +106,7 @@ video {
 	right: 0;
 	top: 0;
 	height: 100vh;
-	/* background: aquamarine; */
-	z-index: 1;
+	background: #fcfcfe;
+	z-index: 0;
 }
 </style>

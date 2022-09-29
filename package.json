@@ -4,9 +4,9 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite --host",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview --host"
 	},
 	"dependencies": {
 		"gsap": "^3.11.1",
@@ -15,9 +15,9 @@
 		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
-		"typescript": "^4.6.4",
 		"@types/node": "^18.7.23",
 		"@vitejs/plugin-vue": "^3.1.0",
+		"typescript": "^4.6.4",
 		"vite": "^3.1.0",
 		"vue-tsc": "^0.40.4"
 	}
