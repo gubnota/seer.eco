@@ -71,7 +71,7 @@ export default defineComponent({
 	top: 0;
 	right: 0;
 	height: 100vh;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 video {
 	top: 0;
@@ -94,10 +94,10 @@ video {
 	height: auto;
 	/* width: 283%;
 	transform: translateX(19%); */
-	width: 346%;
+	width: 310%;
 	/* top: 8%; */
 	/* transform: translateX(27.4%); */
-	transform: translateX(29%);
+	transform: translateX(27%);
 	padding-top: 8%;
 }
 .videoPlaceholder_overlay {
