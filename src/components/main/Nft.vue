@@ -19,7 +19,7 @@
 								class="pic"
 								v-if="el == 0"
 							/>
-							<img src="/07nft/creator3.png" alt="ava" class="pic" v-else />
+							<img src="/07nft/creator5.gif" alt="ava" class="pic" v-else />
 							<div
 								class="r r1"
 								:class="{ first: el == 0, next: el != 0 }"
