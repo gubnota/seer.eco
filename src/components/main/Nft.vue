@@ -67,6 +67,7 @@
 								<span>{{ el == 0 ? 'Land Sale' : 'Token Sale' }}</span>
 							</div>
 						</div>
+						<!-- <div class="back" v-if="el == 0"></div> -->
 						<div class="back" v-if="el == 0"></div>
 					</div>
 				</swiper-slide>
@@ -283,7 +284,7 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	width: 476px;
-	height: 566px;
+	height: 666px;
 	/* background-color: rgba(0, 0, 0, 0.1); */
 	position: relative;
 	border-radius: 20px;
@@ -295,7 +296,7 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	width: 476px;
-	height: 566px;
+	height: 666px;
 	position: absolute;
 	border-radius: 20px;
 	overflow: hidden;
@@ -419,11 +420,12 @@ h2 {
 }
 .desc {
 	text-align: left;
-	margin: 0px 30px 2px 30px; /*20px 30px 22px 30px;*/
+	margin: 0px 30px 42px 30px; /**/
 	font-size: 15px;
 	line-height: 22px;
 	color: white;
 	font-weight: 600;
+	min-height: 44px;
 }
 .next .desc {
 	color: #666;
@@ -465,7 +467,7 @@ h2 {
 	line-height: 22px;
 	color: white;
 
-	margin: 2px 30px 2px 0px; /*12px 30px 22px 0px;*/
+	margin: 12px 30px 22px 0px; /**/
 	text-align: left;
 	padding-left: 28px;
 }

@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="create">
 		<h4>Create your own SEER space</h4>
 		<a class="cta">
 			<span>Create Now</span>
@@ -23,12 +23,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-section {
+section.create {
 	display: flex;
 	flex-direction: column;
 	width: 1718px;
 	max-width: 100vw;
-	gap: 64px;
+	gap: 50px;
 	margin-bottom: 98px;
 }
 h4 {
@@ -79,7 +79,7 @@ h3 {
 	height: 24px;
 }
 @media (max-width: 1718px) {
-	section {
+	section.create {
 		width: 90vw;
 	}
 }
