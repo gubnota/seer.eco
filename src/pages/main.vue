@@ -1,40 +1,46 @@
 <template>
 	<VideoPlaceHolder />
 	<Nav />
-	<BgContainer />
+	<MobileNav />
 	<Wrapper />
 	<Stats />
-	<Wrapper2 />
-	<Part2n5 />
-	<Ch3 />
-	<Ch5 />
+	<section class="wrapper2">
+		<Value />
+		<Create />
+	</section>
+	<section class="arrow_down"></section>
+	<Factory />
+	<Nft />
+	<Contact />
 	<Footer />
 	<Modal />
-	<!-- <Billboard /> -->
 </template>
 
 <script lang="ts">
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import store from '../store'
-import gsap from 'gsap'
+// import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import VideoPlaceHolder from '../components/main/VideoPlaceholder.vue'
-import Billboard from '../components/billboard.vue'
 import Nav from '../components/common/Nav.vue'
-import BgContainer from '../components/main/BgContainer.vue'
 import Wrapper from '../components/main/Wrapper.vue'
 import Stats from '../components/main/Stats.vue'
-import Wrapper2 from '../components/main/Wrapper2.vue'
-import Part2n5 from '../components/main/Part2n5.vue'
-import Ch3 from '../components/main/Ch3.vue'
-import Ch5 from '../components/main/Ch5.vue'
 import Footer from '../components/common/Footer.vue'
 import Modal from '../components/common/Modal.vue'
+import MobileNav from '../components/MobileNav.vue'
+import Value from '../components/main/Value.vue'
+import Create from '../components/main/Create.vue'
+import Factory from '../components/main/Factory.vue'
+import Nft from '../components/main/Nft.vue'
+import Contact from '../components/main/Contact.vue'
+import Factory from '../components/main/Factory.vue'
+import Nft from '../components/main/Nft.vue'
+import Contact from '../components/main/Contact.vue'
 
 // import { fileURLToPath, URL } from 'url'
 // import uniswap from '../assets/uniswap.jpg'
-gsap.registerPlugin([ScrollTrigger])
+// gsap.registerPlugin([ScrollTrigger])
 export default {
 	name: 'Main',
 	data() {
@@ -57,18 +63,18 @@ export default {
 		},
 	},
 	components: {
-		Billboard,
 		VideoPlaceHolder,
 		Nav,
-		BgContainer,
 		Wrapper,
 		Stats,
-		Wrapper2,
-		Part2n5,
-		Ch3,
-		Ch5,
 		Footer,
 		Modal,
+		MobileNav,
+		Value,
+		Create,
+		Factory,
+		Nft,
+		Contact,
 	},
 }
 </script>

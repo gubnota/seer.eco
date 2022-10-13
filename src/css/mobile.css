@@ -36,11 +36,6 @@
 	}
 }
 @media (max-width: 800px) {
-	body {
-		background-image: url('../img/bg_mobile.jpg');
-		background-size: 800px;
-		/* background-position: 0 50px; */
-	}
 }
 @media (max-width: 1557px) {
 	#seereco,
@@ -152,9 +147,6 @@
 	.space .plates p {
 		margin-bottom: 0;
 	}
-	.stats {
-		margin-top: 100px;
-	}
 	.part2 img.illustration,
 	.part2 .illustration {
 		transform: none;
@@ -230,36 +222,7 @@
 	.space .plates .bar img {
 		height: 30px;
 	}
-	.part1 .badges {
-		margin: 10px 0 42px 0;
-	}
-	.part1 .badge {
-		background-color: #f4f4f4;
-	}
-	.part1 .row {
-		flex-direction: column;
-		gap: 0;
-	}
-	.part1 {
-		padding-top: 3.875rem;
-		/* background-image: url('../img/seer.eco.png');
-		background-image: image-set(
-			url('../img/seer.eco.webp') 1x,
-			url('../img/seer.eco@2x.webp') 2x,
-			url('../img/seer.eco.png') 1x,
-			url('../img/seer.eco@2x.png') 2x
-		);
-		background-repeat: no-repeat;
-		background-position: 90% 71%; */
-		min-height: 570px;
-		/* background-size: 333px; */
-	}
-	.stats .rows .row {
-		padding: 0 0 0 1rem;
-	}
-	.stats .rows .row p {
-		text-align: left;
-	}
+
 	.sitemap h2 {
 		font-size: 1.5rem;
 	}
@@ -406,28 +369,10 @@
 	}
 }
 
-@media (max-width: 1500px) {
-	.stats .rows {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr 1fr;
-		grid-template-areas: 'row1 row2' 'row3 row4';
-	}
-}
-
 @media (max-width: 1200px) {
 	.part1 {
 		grid-template-columns: 1fr 1fr 0fr 2fr;
 		grid-template-rows: 3fr 1.3fr 0.8fr 0.8fr;
-	}
-}
-@media (max-width: 1190px) {
-	.stats {
-		/* position: initial; */
-		margin-top: 0;
-	}
-	.part2 h2 {
-		padding-top: 0;
 	}
 }
 
@@ -538,28 +483,6 @@
 	}
 }
 
-@media (max-width: 820px) {
-	.stats .rows {
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 1fr 1fr 1fr;
-		grid-template-areas: 'row1' 'row2' 'row3' 'row4';
-	}
-	.stats .rows .row {
-		border-left: none;
-		border-bottom: 1px solid white;
-
-		display: flex;
-		flex-direction: column;
-		line-height: 30px;
-		height: 71px;
-	}
-	.stats .rows .row p {
-		font-size: 2rem;
-		line-height: 2.5rem;
-	}
-}
-
 @media (max-width: 694px) {
 	.investors .plate {
 		grid-template-columns: 1fr;
@@ -585,126 +508,5 @@
 	}
 	footer .button.lang img {
 		flex: none;
-	}
-}
-
-@media (max-width: 573px) {
-	.part3 h2 {
-		max-width: 276px;
-		align-self: center;
-	}
-	.space .plates .bar {
-		/* padding: 0 0; */
-		max-height: 35px;
-		height: auto; /* grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr;
-		grid-template-areas: 'twitter medium telegram' ' news news news'; */
-	}
-	.space .plates .bar .news {
-		line-height: 1.5rem;
-		font-size: 0.7rem;
-		padding: 0 0.1rem;
-		min-height: 22px;
-		width: 170px;
-		justify-self: flex-end;
-		text-align: center;
-		height: 25px;
-		overflow: hidden;
-	}
-	.space .plates .bar .news span {
-		line-height: 1.5rem;
-		text-align: left;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-		display: inline-block;
-		font-size: 12px;
-		max-width: 110px;
-	}
-	.space .plates .plate {
-		padding: 16px 6px;
-		width: 356px;
-		max-width: calc(100vw - 32px - 30px);
-	}
-	.space .plates h3 {
-		font-size: 1.25rem;
-	}
-	.space .plates p {
-		font-size: 0.875rem;
-	}
-	.space .plates .plate * {
-		margin: 0 0.1rem;
-	}
-	.space .plates .bar img {
-		height: 21px;
-	}
-	.space .plates .bar .icon,
-	.space .plates .bar .icon img {
-		margin: 0;
-	}
-	.space .plates .bar .icon {
-		justify-self: end;
-	}
-	/* .space .plates .bar {
-		height: 92px;
-	} */
-	.actions {
-		flex-direction: row;
-		width: 90%;
-	}
-	.actions .button {
-		height: 32px;
-	}
-}
-@media (max-width: 360px) {
-	.space .plates .bar .news {
-		font-size: 0.3rem;
-	}
-}
-@media (max-width: 550px) {
-	.stats .rows .row h3 {
-		font-size: 0.8125rem;
-	}
-	.stats .rows .row p {
-		font-size: 1.5rem;
-		margin-top: -10px;
-		line-height: normal;
-		font-weight: 500;
-	}
-	.part1 {
-		padding-top: 5.25rem;
-	}
-	.part1 .col {
-		justify-content: flex-start;
-		flex-direction: column;
-		max-width: 90vw;
-	}
-	.part1 .badge {
-		width: 63px;
-		height: 63px;
-	}
-	.part1 .row {
-		flex-direction: row;
-		gap: 26px;
-	}
-	.part1 .badges {
-		margin: 0;
-		flex-direction: row;
-		display: flex;
-		gap: 0 26px;
-		position: absolute;
-		top: 500px;
-		/* margin: 0 auto; */
-		left: 18px;
-		justify-self: center;
-		align-self: center;
-	}
-	.part1 .col .sub {
-		font-size: 1.05rem !important;
-		max-width: 40vw;
-		line-height: 140%;
-	}
-	.part1 .badge p {
-		display: none;
 	}
 }

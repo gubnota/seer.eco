@@ -1,6 +1,6 @@
 <template>
 	<div class="basement">
-		<Billboard />
+		<!-- <Billboard /> -->
 	</div>
 </template>
 
@@ -9,7 +9,7 @@ let window: any = { inst: 0 }
 import { getCurrentInstance, ref } from 'vue'
 import { useStore } from 'vuex'
 import store from '../store'
-import Billboard from '../components/billboard.vue'
+// import Billboard from '../components/billboard.vue'
 export default {
 	data() {
 		return {}
@@ -31,7 +31,7 @@ export default {
 		})
 	},
 	methods: {},
-	components: { Billboard },
+	components: {},
 }
 </script>
 
