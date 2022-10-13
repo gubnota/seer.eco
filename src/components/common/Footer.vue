@@ -18,9 +18,13 @@
 							<h3>{{ el.header }}</h3>
 						</li>
 						<li v-for="el2 in el.items">
-							<a :href="el2.hash" :target="el2.hash == '#' ? '' : '_blank'">{{
-								el2.name
-							}}</a>
+							<a v-if="el2.hash == '#'">{{ el2.name }}</a>
+							<a
+								:href="el2.hash"
+								:target="el2.hash == '#' ? '' : '_blank'"
+								v-else
+								>{{ el2.name }}</a
+							>
 						</li>
 					</ul>
 				</div>
@@ -231,6 +235,9 @@ footer .button {
 	.sitemap .columns {
 		margin: 0 1rem;
 	}
+}
+a {
+	cursor: pointer;
 }
 @media (max-width: 400px) {
 	.sitemap .columns {

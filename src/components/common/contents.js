@@ -50,7 +50,7 @@ const footer = {
 			header: 'Developers',
 			items: [
 				{ name: 'Documents', hash: '#' },
-				{ name: 'Github', hash: '/github' },
+				{ name: 'Github', hash: '#' },
 				{ name: 'Safety', hash: '#' },
 				{ name: 'StreamKit', hash: '#' },
 				{ name: 'Q&A', hash: '#' },
