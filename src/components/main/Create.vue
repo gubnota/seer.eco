@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<h4>Create your own SEER space</h4>
-		<a href="#" class="cta">
+		<a class="cta">
 			<span>Create Now</span>
 			<img src="/04create/arrow-right.svg" alt="arrow right" />
 		</a>
@@ -53,6 +53,7 @@ h3 {
 	text-align: center;
 }
 .cta {
+	cursor: pointer;
 	flex: 1;
 	align-self: center;
 	display: flex;
@@ -66,6 +67,9 @@ h3 {
 	border: 1.5px solid #b4b4b4;
 	text-decoration: none;
 	color: black;
+}
+.cta:active {
+	transform: scale(0.95);
 }
 /* .cta > * {
 	flex: 1;

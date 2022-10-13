@@ -22,7 +22,7 @@
 				<img src="/03value/pic.png" loading="lazy" class="ill" />
 			</picture>
 
-			<a href="#" class="more">
+			<a class="cta">
 				<img src="/03value/arrow-right.svg" alt="arrow right" />
 				<span>More</span>
 			</a>
@@ -111,7 +111,8 @@ main .ill {
 	object-fit: contain;
 	max-width: 695px;
 }
-.more {
+.cta {
+	cursor: pointer;
 	flex: 1;
 	align-self: center;
 	display: flex;
@@ -126,10 +127,13 @@ main .ill {
 	text-decoration: none;
 	color: black;
 }
-.more > * {
+.cta:active {
+	transform: scale(0.95);
+}
+.cta > * {
 	flex: 1;
 }
-.more > img {
+.cta > img {
 	width: 24px;
 	height: 24px;
 }

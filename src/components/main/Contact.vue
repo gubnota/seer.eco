@@ -4,22 +4,22 @@
 		<div class="front">
 			<h2>Want to know more about us?</h2>
 			<div class="row">
-				<a href="https://discord.gg/zpy6tXP5Qt">
+				<a href="https://discord.gg/zpy6tXP5Qt" target="_blank">
 					<img src="/08contact/discord.png" alt="discord" />
 				</a>
-				<a href="https://twitter.com/SeerFoundation">
+				<a href="https://twitter.com/SeerFoundation" target="_blank">
 					<img src="/08contact/twitter.png" alt="twitter" />
 				</a>
-				<a href="https://t.me/seer_official">
+				<a href="https://t.me/seer_official" target="_blank">
 					<img src="/08contact/telegram.png" alt="telegram" />
 				</a>
-				<a href="#">
+				<a>
 					<img src="/08contact/youtube.png" alt="youtube" />
 				</a>
-				<a href="#">
+				<a>
 					<img src="/08contact/tiktok.png" alt="tiktok" />
 				</a>
-				<a href="#">
+				<a>
 					<img src="/08contact/instagram.png" alt="instagram" />
 				</a>
 			</div>
@@ -128,6 +128,7 @@ button:active {
 	gap: 30px;
 }
 .row a {
+	cursor: pointer;
 	flex: 1;
 	width: 50px;
 	height: 50px;
@@ -159,6 +160,11 @@ button:active {
 }
 @media (max-width: 1120px) {
 	.row {
+		flex-direction: column;
+	}
+}
+@media (max-width: 550px) {
+	.subscribe {
 		flex-direction: column;
 	}
 }

@@ -18,7 +18,9 @@
 							<h3>{{ el.header }}</h3>
 						</li>
 						<li v-for="el2 in el.items">
-							<a :href="el2.hash" target="_blank">{{ el2.name }}</a>
+							<a :href="el2.hash" :target="el2.hash == '#' ? '' : '_blank'">{{
+								el2.name
+							}}</a>
 						</li>
 					</ul>
 				</div>

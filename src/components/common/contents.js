@@ -1,13 +1,13 @@
 const menu = [
-	{ name: 'launch App', hash: '/', children: false },
+	{ name: 'launch App', hash: '#', children: false },
 	{
 		name: 'Ecology',
 		hash: false,
 		children: [
 			{ name: 'SDID', hash: 'https://sdid.seer.eco/' },
-			{ name: 'NFT', hash: '/' },
-			{ name: 'DAO', hash: '/' },
-			{ name: 'AD Services', hash: '/' },
+			{ name: 'NFT', hash: '#' },
+			{ name: 'DAO', hash: '#' },
+			{ name: 'AD Services', hash: '#' },
 		],
 	},
 	{
@@ -24,9 +24,9 @@ const menu = [
 		name: 'Support',
 		hash: false,
 		children: [
-			{ name: 'Document', hash: '/' },
-			{ name: 'Dev Support', hash: '/' },
-			{ name: 'Dev Community', hash: '/' },
+			{ name: 'Document', hash: '#' },
+			{ name: 'Dev Support', hash: '#' },
+			{ name: 'Dev Community', hash: '#' },
 		],
 	},
 ]
@@ -40,29 +40,29 @@ const footer = {
 			header: 'Product',
 			items: [
 				{ name: 'Litepaper', hash: '/asset/litepaper.png' },
-				{ name: 'Download', hash: '/' },
-				{ name: 'NFT', hash: '/' },
+				{ name: 'Download', hash: '#' },
+				{ name: 'NFT', hash: '#' },
 				{ name: 'SDID', hash: 'https://sdid.seer.eco/' },
-				{ name: 'ADS', hash: '/' },
+				{ name: 'ADS', hash: '#' },
 			],
 		},
 		{
 			header: 'Developers',
 			items: [
-				{ name: 'Documents', hash: '/' },
+				{ name: 'Documents', hash: '#' },
 				{ name: 'Github', hash: '/github' },
-				{ name: 'Safety', hash: '/' },
-				{ name: 'StreamKit', hash: '/' },
-				{ name: 'Q&A', hash: '/' },
+				{ name: 'Safety', hash: '#' },
+				{ name: 'StreamKit', hash: '#' },
+				{ name: 'Q&A', hash: '#' },
 			],
 		},
 		{
 			header: 'Governance',
 			items: [
-				{ name: 'Apply for IDO', hash: '/' },
-				{ name: 'SEER DAO', hash: '/' },
-				{ name: 'Overview', hash: '/' },
-				{ name: 'Forum', hash: '/' },
+				{ name: 'Apply for IDO', hash: '#' },
+				{ name: 'SEER DAO', hash: '#' },
+				{ name: 'Overview', hash: '#' },
+				{ name: 'Forum', hash: '#' },
 				{
 					name: 'Brand Kit',
 					hash: 'https://www.figma.com/file/bAfVSpnLjzSRSWidF3YOrS/Project-Seer-Brand-Kit?node-id=3%3A347',
@@ -72,12 +72,12 @@ const footer = {
 		{
 			header: 'Help',
 			items: [
-				{ name: 'Support', hash: '/' },
+				{ name: 'Support', hash: '#' },
 				{ name: 'Terms & Conditions', hash: '/user.html' },
-				{ name: 'Cookie Settings', hash: '/' },
+				{ name: 'Cookie Settings', hash: '#' },
 				{ name: 'Privacy', hash: '/privacy.html' },
-				{ name: 'Guidelines', hash: '/' },
-				{ name: 'Licenses', hash: '/' },
+				{ name: 'Guidelines', hash: '#' },
+				{ name: 'Licenses', hash: '#' },
 			],
 		},
 	],

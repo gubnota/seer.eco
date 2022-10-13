@@ -52,7 +52,7 @@
 						Build your metaverse social network in SEER and find your true
 						friends.
 					</h3>
-					<a class="cta" href="#"><span>Coming soon</span></a>
+					<a class="cta"><span>Coming soon</span></a>
 				</div>
 				<!-- <div class="hover">Coming soon</div> -->
 			</div>
@@ -135,7 +135,7 @@ section.kaleidoscope {
 }
 .tile .hover {
 	display: none;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.8);
 	top: 0;
 	left: 0;
 	bottom: 0;

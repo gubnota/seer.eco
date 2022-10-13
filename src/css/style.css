@@ -22,6 +22,17 @@
 	-webkit-text-fill-color: transparent;
 }
 
+.cta {
+	transition: all 0.2s ease;
+}
+.cta:hover {
+	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+	color: white !important;
+	border: none;
+}
+.cta:hover > img {
+	filter: brightness(0) invert(1);
+}
 * {
 	box-sizing: border-box;
 }

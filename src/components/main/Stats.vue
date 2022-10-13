@@ -6,11 +6,11 @@
 				<p>0</p>
 			</div>
 			<div class="row row2">
-				<h3>Ecosystem Partners</h3>
+				<h3>ADS Number</h3>
 				<p>0</p>
 			</div>
 			<div class="row row3">
-				<h3>ADS Number</h3>
+				<h3>Ecosystem Partners</h3>
 				<p>0</p>
 			</div>
 			<div class="row row4">
@@ -89,6 +89,7 @@ export default {
 	flex: 1;
 	text-align: center;
 	font-weight: 600;
+	margin-top: 8px;
 }
 
 .stats .rows .row1 {
@@ -158,6 +159,7 @@ export default {
 		font-size: 1.5rem;
 		line-height: normal;
 		font-weight: 600;
+		margin-top: 0;
 	}
 }
 </style>

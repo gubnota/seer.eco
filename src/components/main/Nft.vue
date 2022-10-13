@@ -497,4 +497,9 @@ h2 {
 	color: #1f2226;
 	text-shadow: 0px 0px 17px rgba(244, 244, 244, 0.88);
 }
+@media (max-width: 550px) {
+	.swiper-slide {
+		margin-right: 0;
+	}
+}
 </style>
