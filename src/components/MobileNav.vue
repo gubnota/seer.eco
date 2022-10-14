@@ -55,7 +55,7 @@
 // import { ref } from 'vue'
 declare const document: any, window: any
 import { defineComponent } from 'vue'
-import { menu } from './common/contents'
+import { menu } from '../common/contents'
 
 export default defineComponent({
 	name: 'MobileNav',

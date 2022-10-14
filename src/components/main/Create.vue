@@ -1,7 +1,7 @@
 <template>
 	<section class="create">
 		<h4>Create your own SEER space</h4>
-		<a class="cta">
+		<a class="cta" @click="comingSoon">
 			<span>Create Now</span>
 			<img src="/04create/arrow-right.svg" alt="arrow right" />
 		</a>

@@ -52,7 +52,7 @@
 						Build your metaverse social network in SEER and find your true
 						friends.
 					</h3>
-					<a class="cta"><span>Coming soon</span></a>
+					<a class="cta" @click="comingSoon"><span>Coming soon</span></a>
 				</div>
 				<!-- <div class="hover">Coming soon</div> -->
 			</div>

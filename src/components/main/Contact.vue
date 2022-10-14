@@ -27,7 +27,7 @@
 				<div class="subscribe">
 					<input type="email" v-model="email" placeholder="Email Address" />
 					<div class="button">
-						<button class="submit" type="submit">Sign up here</button>
+						<button class="submit" type="submit">Subscribe</button>
 					</div>
 				</div>
 			</form>

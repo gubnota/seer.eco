@@ -139,12 +139,17 @@
 </template>
 
 <script>
-import { menu } from './contents'
+import { menu } from '../../common/contents'
 
 export default {
 	name: 'Nav',
 	data() {
 		return { menu }
+	},
+	methods: {
+		toggleMenu(evt) {
+			console.log(evt.target, 'toggleMenu')
+		},
 	},
 }
 </script>

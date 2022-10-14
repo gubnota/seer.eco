@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"gsap": "^3.11.1",
-		"vue": "^3.2.37",
+		"vue": "^3.2.40",
 		"vue-router": "4",
 		"vuex": "^4.0.2",
 		"swiper": "^8.4.2"

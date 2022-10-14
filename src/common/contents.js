@@ -1,5 +1,5 @@
 const menu = [
-	{ name: 'launch App', hash: '/coming-soon', children: false },
+	{ name: 'Launch App', hash: '/coming-soon', children: false },
 	{
 		name: 'Ecology',
 		hash: false,

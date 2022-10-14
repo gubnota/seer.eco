@@ -80,7 +80,7 @@
 				<div class="next"><img src="/07nft/left.svg" alt="prev" /></div>
 			</div>
 		</div>
-		<a @click="onclickHandler" class="cta">Explore More Space</a>
+		<a @click="comingSoon" class="cta">Explore More Space</a>
 	</section>
 </template>
 <script>
@@ -92,6 +92,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/autoplay'
+import { comingSoon } from '../../common/helper'
 export default {
 	name: 'Nft',
 	data() {
@@ -126,7 +127,7 @@ export default {
 	},
 	methods: {
 		onclickHandler() {
-			this.slider.slideTo(1)
+			// this.slider.slideTo(1)
 		},
 	},
 	mounted() {

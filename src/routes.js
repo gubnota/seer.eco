@@ -3,7 +3,7 @@ import Page2 from './pages/page2.vue'
 import Page3 from './pages/page3.vue'
 import Main from './pages/main.vue'
 import Nft from './components/main/Nft.vue'
-
+import { comingSoon } from './common/helper'
 const routes = [
 	{ path: '/', component: Main },
 	{ path: '/nft', component: Nft },
@@ -11,10 +11,7 @@ const routes = [
 		path: '/coming-soon',
 		component: Main,
 		beforeEnter() {
-			document.querySelector('.modal').style.display = ''
-			setTimeout(() => {
-				document.querySelector('.modal').style.display = 'none'
-			}, 1000)
+			comingSoon()
 			return false
 		},
 	},
@@ -30,6 +27,20 @@ const routes = [
 		beforeEnter: () => {
 			location.href = '/'
 			window.open('/asset/litepaper.png', '_blank')
+		},
+	},
+	{
+		path: '/user.html',
+		beforeEnter: () => {
+			location.href = '/'
+			window.open('/user.html', '_blank')
+		},
+	},
+	{
+		path: '/privacy.html',
+		beforeEnter: () => {
+			location.href = '/'
+			window.open('/privacy.html', '_blank')
 		},
 	},
 	{

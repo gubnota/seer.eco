@@ -22,7 +22,7 @@
 				<img src="/03value/pic.png" loading="lazy" class="ill" />
 			</picture>
 
-			<a class="cta">
+			<a class="cta" @click="comingSoon">
 				<img src="/03value/arrow-right.svg" alt="arrow right" />
 				<span>More</span>
 			</a>
@@ -46,11 +46,11 @@ section.value {
 	margin-bottom: 149px;
 }
 @keyframes buzybuzz {
-	50% {
-		transform: rotate(360deg);
+	20% {
+		transform: rotate(0deg); /*360*/
 	}
 	100% {
-		transform: rotate(0deg);
+		transform: rotate(360deg); /*0 */
 	}
 }
 

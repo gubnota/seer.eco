@@ -38,6 +38,11 @@ export default defineConfig({
 		// },
 	},
 	publicDir: './public',
+	server: {
+		watch: {
+			usePolling: true,
+		},
+	},
 })
 
 function entryPoints(...paths) {

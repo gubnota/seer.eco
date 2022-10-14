@@ -6,6 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import store from './store'
 import routes from './routes'
+import { comingSoon } from './common/helper'
 // const p1 = { template: Page1 }
 // const p2 = { template: Page2 }
 
@@ -31,6 +32,7 @@ export { router }
 const app = createApp(App)
 
 app.config.globalProperties.window = window
+app.config.globalProperties.comingSoon = comingSoon
 // Make sure to _use_ the router instance to make the
 // whole app router-aware.
 app.use(router)

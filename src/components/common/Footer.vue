@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { footer } from '../../components/common/contents.js'
+import { footer } from '../../common/contents.js'
 
 export default {
 	name: 'Footer',

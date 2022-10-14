@@ -2,29 +2,30 @@
 	<div id="wrapper">
 		<div class="part part1">
 			<div class="col">
-				<h1 class="header">Make encounters more valuable</h1>
+				<h1 class="header">Make encounters more valuables</h1>
 				<div class="sub">WEB3 Social Value Discovery Protocol</div>
 				<div class="badges">
 					<div class="row">
-						<a href="#" class="appstore badge">
+						<a href="#" class="appstore badge" @click="comingSoon">
 							<img src="/01head/apple.png" alt="AppStore" />
 							<p>Download on the <br />AppStore</p>
 						</a>
-						<a href="#" class="google badge">
+						<a href="#" class="google badge" @click="comingSoon">
 							<img src="/01head/google.png" alt="Google" />
 							<p>Get it on <br />Google Play</p>
 						</a>
 					</div>
 					<div class="row">
-						<a href="#" class="apk badge">
+						<a href="#" class="apk badge" @click="comingSoon">
 							<img src="/01head/apk.png" alt="Apk Android" />
 							<p>
 								Download for<br />
 								Apk
 							</p>
 						</a>
-						<a href="#" class="chrome badge">
-							<img src="/01head/chrome.png" alt="AppStore" />
+						<a href="#" class="chrome badge" @click="comingSoon"
+							><!-- https://chrome.google.com/webstore/detail/seer-chat/enjolihhaijimgfaedhiilljgcooocgm -->
+							<img src="/01head/chrome.png" alt="Chrome" />
 							<p>Add to <br />Chrome</p>
 						</a>
 					</div>
