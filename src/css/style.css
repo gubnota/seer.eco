@@ -24,6 +24,7 @@
 
 .cta {
 	transition: all 0.2s ease;
+	font-weight: 600;
 }
 .cta:hover {
 	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
@@ -103,10 +104,10 @@ h2 {
 	display: none;
 }
 .top {
-	max-width: 1200px;
+	max-width: 1120px;
 	display: flex;
 	justify-content: space-between;
-	margin: 2rem 0 0 0;
+	margin: 23px 0 0 0;
 	flex-direction: row;
 	/* max-width: 90vw; */
 	/* background-color: blanchedalmond; */

@@ -1,4 +1,5 @@
 <template>
+	<Modal />
 	<VideoPlaceHolder />
 	<Nav />
 	<MobileNav />
@@ -13,7 +14,6 @@
 	<Nft />
 	<Contact />
 	<Footer />
-	<Modal />
 </template>
 
 <script lang="ts">

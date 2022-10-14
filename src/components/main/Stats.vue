@@ -44,6 +44,10 @@ export default {
 				k: 'statsOffsetTop',
 				v: this.$refs.stats.offsetTop,
 			})
+			store.dispatch('save', {
+				k: 'statsOffsetHeight',
+				v: this.$refs.stats.offsetHeight,
+			})
 		},
 	},
 }
@@ -52,7 +56,7 @@ export default {
 <style scoped>
 .stats {
 	max-width: 100vw;
-	margin-top: 211px;
+	margin-top: 354px; /*354px - 211px */
 	background: #1f2226;
 	width: 100%;
 	overflow: hidden;
@@ -74,7 +78,8 @@ export default {
 	flex: 1;
 	min-height: 4.4rem;
 	display: flex;
-	line-height: 3.9rem;
+	line-height: 50px;
+	padding-top: 18px;
 	/* padding: 0 3.25rem 0 3.25rem; */
 	flex-direction: column-reverse;
 	align-items: center;

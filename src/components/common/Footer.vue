@@ -4,7 +4,7 @@
 			<h2 class="rainbow">{{ footer.aside.h2 }}</h2>
 			<nav>
 				<img :src="footer.aside.nav.flag" class="flag" alt="" />
-				<div class="lang">
+				<div class="lang" @click="comingSoon">
 					<span>{{ footer.aside.nav.lang }}</span>
 					<img class="icon" src="/09footer/arrowdown.svg" />
 				</div>
@@ -24,7 +24,17 @@
 								:target="el2.hash == '#' ? '' : '_blank'"
 								v-else
 								>{{ el2.name }}</a -->
-							<router-link :to="{ path: el2.hash }">{{ el2.name }}</router-link>
+							<a
+								:href="el2.hash"
+								target="_blank"
+								v-if="
+									el2.hash.search('.html') > -1 || el2.hash.search('.png') > -1
+								"
+								>{{ el2.name }}</a
+							>
+							<router-link :to="{ path: el2.hash }" v-else>{{
+								el2.name
+							}}</router-link>
 						</li>
 					</ul>
 				</div>
@@ -90,11 +100,11 @@ footer {
 	width: 100%;
 	/* background: #aa1fff; */
 	border-radius: 10px;
-	padding: 22px 45px;
+	padding: 22px 45px 0 45px;
 	display: flex;
 	flex-direction: row;
 	margin: 1rem;
-	margin-bottom: 6rem;
+	margin-bottom: 0;
 	justify-content: space-between;
 	align-items: flex-start;
 }
@@ -150,6 +160,7 @@ footer aside nav .lang:active {
 }
 footer aside nav .lang span {
 	flex: 1;
+	font-weight: 600;
 }
 footer aside nav .lang .icon {
 	height: 5px;
@@ -158,7 +169,7 @@ footer aside nav .lang .icon {
 
 .sitemap {
 	flex: 494;
-	margin-bottom: 4rem;
+	margin-bottom: 36px;
 	width: 100%;
 }
 .sitemap .columns {

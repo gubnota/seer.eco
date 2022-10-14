@@ -21,30 +21,41 @@
 				</svg>
 			</label>
 			<ul class="menu-sidebar">
-				<li v-for="el in $data.menu" v-bind:key="el.name">
-					<ul v-if="!el.hash" class="sub">
-						<li class="head">{{ el.name }}</li>
+				<li
+					v-for="(el, j) in $data.menu"
+					v-bind:key="el.name"
+					:class="{
+						active:
+							(this.$store.state.MobileMenu &&
+								this.$store.state.MobileMenu[j]) ||
+							false,
+					}"
+				>
+					<ul v-if="el.children" class="sub">
+						<li class="head" @click="groupHandler" :data-i="j">
+							<span>{{ el.name }}</span>
+							<svg
+								class="icon chevron-right"
+								v-if="el.children"
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								viewBox="0 0 298 511.93"
+							>
+								<path
+									fill-rule="nonzero"
+									d="M70.77 499.85c-16.24 16.17-42.53 16.09-58.69-.15-16.17-16.25-16.09-42.54.15-58.7l185.5-185.03L12.23 70.93c-16.24-16.16-16.32-42.45-.15-58.7 16.16-16.24 42.45-16.32 58.69-.15l215.15 214.61c16.17 16.25 16.09 42.54-.15 58.7l-215 214.46z"
+								/>
+							</svg>
+						</li>
 						<li v-for="el2 in el.children" v-bind:key="el.name" class="sub">
 							<router-link :to="{ path: el2.hash }" @click="toggleMenu">{{
 								el2.name
 							}}</router-link>
 						</li>
 					</ul>
-					<router-link :to="{ path: el.hash }" v-else @click="toggleMenu">{{
+					<router-link v-else :to="{ path: el.hash }" @click="toggleMenu">{{
 						el.name
 					}}</router-link>
-					<svg
-						class="icon chevron-right"
-						v-if="el.hash"
-						fill-rule="evenodd"
-						clip-rule="evenodd"
-						viewBox="0 0 298 511.93"
-					>
-						<path
-							fill-rule="nonzero"
-							d="M70.77 499.85c-16.24 16.17-42.53 16.09-58.69-.15-16.17-16.25-16.09-42.54.15-58.7l185.5-185.03L12.23 70.93c-16.24-16.16-16.32-42.45-.15-58.7 16.16-16.24 42.45-16.32 58.69-.15l215.15 214.61c16.17 16.25 16.09 42.54-.15 58.7l-215 214.46z"
-						/>
-					</svg>
 				</li>
 			</ul>
 		</li>
@@ -56,14 +67,22 @@
 declare const document: any, window: any
 import { defineComponent } from 'vue'
 import { menu } from '../common/contents'
+import store from '../store'
 
 export default defineComponent({
 	name: 'MobileNav',
-	data: () => {
+	data() {
 		return {
 			opened: false,
 			menu,
 		}
+	},
+	mounted() {
+		//this.$store.state.MobileMenu[i]
+		store.dispatch('save', {
+			k: 'MobileMenu',
+			v: new Array(menu.length).fill(false),
+		})
 	},
 	methods: {
 		toggleMenu(evt) {
@@ -74,6 +93,36 @@ export default defineComponent({
 			} else {
 				document.querySelector('body').setAttribute('style', 'overflow:auto')
 			}
+		},
+		groupHandler(evt) {
+			if (evt.target.getAttribute('data-i') === undefined) return
+			var sel_id = evt.target.getAttribute('data-i')
+			//[false, false, false, true].filter((el,i,arr)=>{console.log(el,i,arr)});
+			// console.log(sel_id)
+			// this.$store.state.MobileMenu.filter((el, i, arr) => {
+			// 	if (el == true && i == sel_id)
+			// 		store.dispatch('save', {
+			// 			k: 'MobileMenu',
+			// 			v: new Array(menu.length).fill(false),
+			// 		})
+			// 	console.log('found opened')
+			// })
+			// console.log(
+			// 	sel_id,
+			// 	this.$store.state.MobileMenu.map(function (val, id) {
+			// 		return id == sel_id
+			// 	})
+			// )
+			store.dispatch('save', {
+				k: 'MobileMenu',
+				v: this.$store.state.MobileMenu.map(function (val, id) {
+					if (id == sel_id) return !val
+					else {
+						return false
+					}
+					// return id == sel_id
+				}),
+			})
 		},
 	},
 
@@ -101,6 +150,15 @@ li.head {
 	font-size: 1rem;
 	font-weight: 600;
 	cursor: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+.menu-sidebar > li {
+	padding-left: 20px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .menu-sidebar {
 	transition: any 0.3s cubic-bezier(0, 0, 0.3, 1);
@@ -138,8 +196,6 @@ li.head {
 		font-size: 16px;
 		text-align: left;
 		position: relative;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		padding-left: 20px;
 		&:hover {
 			// background: #eee;
 		}
@@ -192,10 +248,20 @@ li.head {
 svg.chevron-right {
 	width: 18px !important;
 	height: 18px !important;
+	transform: rotate(90deg);
 	margin-right: 40px;
 	path {
 		fill: #000 !important;
 	}
+}
+ul.sub li.sub {
+	display: none;
+}
+.active ul.sub li.sub {
+	display: initial;
+}
+.active .head svg.chevron-right {
+	transform: rotate(-90deg);
 }
 .mob {
 	display: none;

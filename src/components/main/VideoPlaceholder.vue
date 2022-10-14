@@ -1,7 +1,11 @@
 <template>
 	<div
 		class="videoPlaceholder"
-		:style="'height:' + (this.$store.state.statsOffsetTop || 880) + 'px'"
+		:style="
+			'height:' +
+			(this.$store.state.statsOffsetTop || 880) + // + this.$store.state.statsOffsetHeight
+			'px'
+		"
 	>
 		<video
 			autoplay
@@ -11,15 +15,30 @@
 			playsinline
 			:class="(isMobile ? 'mobile' : '') + ' video'"
 			poster="/asset/bg.webp"
-			:style="'height:' + (this.$store.state.statsOffsetTop || 880) + 'px'"
+			:style="
+				'height:' +
+				(this.$store.state.statsOffsetTop || 880) + //+this.$store.state.statsOffsetHeight
+				'px'
+			"
 		>
 			<source :src="video" />
 		</video>
-		<div class="videoPlaceholder_overlay"></div>
+		<div
+			class="videoPlaceholder_overlay"
+			:style="
+				'height:' +
+				(this.$store.state.statsOffsetTop +
+					this.$store.state.statsOffsetHeight || 880) +
+				'px'
+			"
+		></div>
 	</div>
 </template>
 
 <script lang="ts">
+/*
+this.$store.state.statsOffsetTop makes video shown a little bit downwards
+*/
 import { defineComponent } from 'vue'
 import store from '../../store'
 
@@ -45,7 +64,6 @@ export default defineComponent({
 		myEvtHandler(e: Event) {
 			this.width = window.innerWidth
 			this.switch_bg_videos(e)
-			// console.log('VideoBgResize', window.innerWidth)
 		},
 		switch_bg_videos(e: Event) {
 			this.isMobile = this.width > 1000 ? false : true
@@ -70,7 +88,7 @@ export default defineComponent({
 	left: 0;
 	top: 0;
 	right: 0;
-	height: 100vh;
+	height: 80vh;
 	overflow: hidden;
 }
 video {
@@ -92,13 +110,8 @@ video {
 }
 .mobile {
 	height: auto;
-	/* width: 283%;
-	transform: translateX(19%); */
 	width: 310%;
-	/* top: 8%; */
-	/* transform: translateX(27.4%); */
 	transform: translateX(27%);
-	padding-top: 8%;
 }
 .videoPlaceholder_overlay {
 	position: absolute;
@@ -106,7 +119,13 @@ video {
 	right: 0;
 	top: 0;
 	height: 100vh;
-	background: #fcfcfe;
-	z-index: 0;
+	background: #ffffff;
+	z-index: 3;
+	display: none;
+}
+@media (min-width: 1980px) {
+	.videoPlaceholder {
+		left: 180px;
+	}
 }
 </style>

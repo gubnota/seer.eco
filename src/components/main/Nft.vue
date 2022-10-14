@@ -63,12 +63,12 @@
 									<div class="dims">718</div>
 								</div>
 							</div>
-							<div class="r r4">
+							<div class="r r4" @click="onclickHandler">
 								<span>{{ el == 0 ? 'Land Sale' : 'Token Sale' }}</span>
 							</div>
 						</div>
 						<!-- <div class="back" v-if="el == 0"></div> -->
-						<div class="back" v-if="el == 0"></div>
+						<div class="back"></div>
 					</div>
 				</swiper-slide>
 			</div>
@@ -126,7 +126,10 @@ export default {
 		SwiperSlide,
 	},
 	methods: {
-		onclickHandler() {
+		onclickHandler(e) {
+			e.preventDefault()
+			e.stopPropagation()
+			comingSoon()
 			// this.slider.slideTo(1)
 		},
 	},
@@ -163,6 +166,7 @@ section.nft {
 	max-width: 100vw;
 	display: flex;
 	flex-direction: column;
+	margin: 0 0 42px 0;
 }
 h2 {
 	font-size: 32px;
@@ -174,7 +178,7 @@ h2 {
 }
 .pagination {
 	z-index: 1;
-	padding-top: 40px;
+	margin: 40px 0 0 100px;
 }
 .collections {
 	gap: 49px;
@@ -205,16 +209,28 @@ h2 {
 }
 
 .swiper-container {
-	transform: translateX(70px);
+	overflow-x: hidden;
+	/* transform: translateX(70px); */
+	max-width: 100vw;
+}
+.swiper-slide:first-child {
+	margin-left: 70px;
 }
 
+@media (max-width: 550px) {
+	.swiper-container {
+		transform: none;
+		overflow-x: hidden;
+	}
+}
 .swiper-slide {
 	/* background: #f0f0f0; */
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	width: 480px !important;
-	height: 640px !important;
+	min-width: 480px;
+	/* height: 640px !important; */
+	max-width: 100vw;
 	/* Center slide text vertically */
 }
 .swiper-slide img {
@@ -226,13 +242,15 @@ h2 {
 .nextprev {
 	display: flex;
 	flex-direction: row;
-	position: absolute;
+	/* position: absolute; */
 	right: 144px;
 	bottom: -40px;
 	width: 100px;
 	height: 60px;
 	gap: 10px;
 	z-index: 1;
+	float: right;
+	margin: -30px 100px 0 0;
 }
 .nextprev .next,
 .nextprev .prev {
@@ -289,6 +307,7 @@ h2 {
 	/* background-color: rgba(0, 0, 0, 0.1); */
 	position: relative;
 	border-radius: 20px;
+	max-width: 100vw;
 }
 .front,
 .back {
@@ -301,6 +320,7 @@ h2 {
 	position: absolute;
 	border-radius: 20px;
 	overflow: hidden;
+	max-width: 100vw;
 }
 .slide.next .front {
 	box-shadow: inset 0px 4px 18px rgba(217, 239, 255, 0.71) !important;
@@ -312,7 +332,11 @@ h2 {
 	position: relative;
 }
 .slide.first .front {
-	background: rgba(255, 255, 255, 1);
+	/* background: rgba(255, 255, 255, 1); */
+	background: rgba(233, 242, 255, 0.6);
+	box-shadow: inset 0px 4px 18px rgba(217, 239, 255, 0.71);
+	backdrop-filter: blur(12px);
+	background: linear-gradient(90deg, #efc3ea 0%, #d4a3fa 100%);
 	box-shadow: inset 0px 4px 18px rgba(217, 239, 255, 0.71) !important;
 }
 .back {
@@ -321,7 +345,10 @@ h2 {
 	background: #aa1fff;
 	background: url(/07nft/bg2.svg);
 }
-
+.next .back {
+	transform: none;
+	box-shadow: 0 0 10px rgba(217, 239, 255, 0.71);
+}
 .r {
 	width: 100%;
 }
@@ -353,14 +380,19 @@ h2 {
 }
 .r3 {
 	flex: 308;
-	/* background-color: yellow; */
+	background-color: white;
 	z-index: 1;
 }
 .first .r3 {
-	background: rgba(233, 242, 255, 0.6);
+	background-color: #000;
+	background: url(/07nft/bg_first.svg);
+	/* background: linear-gradient(90deg, #f9e0f3 0%, #efd9fd 100%); */
+}
+.first .r3 {
+	/* background: rgba(233, 242, 255, 0.6);
 	box-shadow: inset 0px 4px 18px rgba(217, 239, 255, 0.71);
 	backdrop-filter: blur(12px);
-	background: linear-gradient(90deg, #efc3ea 0%, #d4a3fa 100%);
+	background: linear-gradient(90deg, #efc3ea 0%, #d4a3fa 100%); */
 }
 .first .r4 {
 	background: linear-gradient(90deg, #f9e0f3 0%, #efd9fd 100%);
@@ -431,37 +463,69 @@ h2 {
 .next .desc {
 	color: #666;
 }
+/* start Autofill the space between elements with dots. pure Css */
+
 .table {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
 	margin: 0 2rem;
-	position: relative;
 	color: #1f2226;
 	font-weight: 600;
 	font-size: 18px;
 	line-height: 27px;
-}
-.prods::after {
-	content: '';
-	position: absolute;
-	bottom: 0rem;
-	width: 100%;
-	height: 0;
-	line-height: 0;
-	border-bottom: 1px dashed #1f2226;
-	max-width: 200px;
+	position: relative;
+	background: inherit;
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+	font-size: 1.2rem;
+	line-height: 1.5rem;
+	padding-right: 4rem;
+	margin-bottom: 0.5rem;
+	width: calc(100% - 50px);
+	padding: 0 25px;
 }
 .first .table {
 	color: white;
 }
-.first .prods::after {
+.table:after {
+	content: '';
+	position: absolute;
+	bottom: 0.4rem;
+	width: calc(100% - 50px);
+	height: 0;
+	line-height: 0;
+	border-bottom: 1px dashed #1f2226;
+	max-width: 100%;
+}
+
+.first .table:after {
 	border-bottom: 1px dashed #fff;
 }
+
 .prods {
+	background: inherit;
+	display: inline;
+	z-index: 1;
+	padding-right: 12px;
 }
 .dims {
+	background: inherit;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding-left: 12px;
+	text-align: right;
+	z-index: 2;
 }
+.first .dims {
+	background: initial;
+}
+.first .table::after {
+	width: 300px;
+}
+.first .table:last-child::after {
+	width: 366px;
+}
+/* end Autofill the space between elements with dots. pure Css */
 .platform {
 	font-weight: 400;
 	font-size: 15px;
@@ -501,8 +565,27 @@ h2 {
 	text-shadow: 0px 0px 17px rgba(244, 244, 244, 0.88);
 }
 @media (max-width: 550px) {
+	.swiper-slide:first-child {
+		margin-left: 0;
+	}
 	.swiper-slide {
 		margin-right: 0;
+		min-width: 100vw;
+		/* height: 700px !important; */
+	}
+	.nextprev {
+		bottom: initial;
+		margin: 30px auto;
+		text-align: center;
+		float: none;
+	}
+	.collections {
+		margin-right: auto;
+		padding: 1rem 1rem 0 1rem;
+	}
+	.pagination {
+		margin: 40px auto;
+		text-align: center;
 	}
 }
 </style>

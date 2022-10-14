@@ -159,6 +159,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	margin-top: -20px;
+	gap: 16px;
 	/* overflow: hidden; */
 	/* background-color: #333; */
 }
@@ -191,6 +192,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	gap: 12px;
+	font-weight: 600;
 }
 
 .dropdown-content {
@@ -201,13 +203,13 @@ export default {
 	z-index: 1;
 	flex-direction: column;
 	align-items: flex-start;
-	padding: 6px 6px;
+	padding: 20px 20px;
 	gap: 0;
-	min-width: 162px;
+	min-width: 122px;
 	min-height: 142px;
 	background: #ffffff;
-	box-shadow: 0 0 4px rgba(194, 189, 189, 0.25);
 	border-radius: 12px;
+	box-shadow: 0px 4px 4px rgba(194, 189, 189, 0.25);
 }
 
 .dropdown-content a {
@@ -259,6 +261,7 @@ li {
 .top ul li {
 	flex: 1;
 	list-style: none;
+	white-space: nowrap;
 }
 .top ul li a {
 	color: #000;
@@ -315,7 +318,7 @@ li.head > * {
 	nav.top,
 	.navbar {
 		justify-content: flex-start;
-		gap: 2rem;
+		gap: 14px;
 	}
 }
 @media (max-width: 1024px) {

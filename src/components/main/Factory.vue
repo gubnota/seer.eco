@@ -21,8 +21,10 @@ section.factory {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin: 32px 0 180px 0;
 }
 .text {
+	font-weight: 600;
 	flex: 498;
 	font-size: 24px;
 	padding: 0 8px;
@@ -40,6 +42,11 @@ section.factory {
 @media (max-width: 550px) {
 	section.factory {
 		gap: 0;
+		flex-direction: column;
+	}
+	.ill {
+		min-height: 400px;
+		width: 100%;
 	}
 	.text {
 		flex: 2000;

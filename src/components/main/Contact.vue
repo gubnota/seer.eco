@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="contact">
 		<div class="back"></div>
 		<div class="front">
 			<h2>Want to know more about us?</h2>
@@ -13,13 +13,13 @@
 				<a href="https://t.me/seer_official" target="_blank">
 					<img src="/08contact/telegram.png" alt="telegram" />
 				</a>
-				<a>
+				<a @click="handleSubmit" href="#">
 					<img src="/08contact/youtube.png" alt="youtube" />
 				</a>
-				<a>
+				<a @click="handleSubmit" href="#">
 					<img src="/08contact/tiktok.png" alt="tiktok" />
 				</a>
-				<a>
+				<a @click="handleSubmit" href="#">
 					<img src="/08contact/instagram.png" alt="instagram" />
 				</a>
 			</div>
@@ -46,7 +46,8 @@ export default {
 		}
 	},
 	methods: {
-		handleSubmit: () => {
+		handleSubmit: (e) => {
+			e.preventDefault()
 			// console.log(this.email)
 			router.push({ path: '/coming-soon' })
 		},
@@ -54,7 +55,7 @@ export default {
 }
 </script>
 <style scoped>
-section {
+section.contact {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -170,6 +171,11 @@ button:active {
 @media (max-width: 550px) {
 	.subscribe {
 		flex-direction: column;
+	}
+	section.contact {
+	}
+	.front {
+		transform: translateX(-6px) translateY(-6px);
 	}
 }
 </style>

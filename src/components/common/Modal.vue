@@ -109,7 +109,7 @@ export default {
 @media (max-width: 1023px) {
 	.actual-message {
 		padding: 10px;
-		max-width: calc(100% - 20rem);
+		max-width: calc(100% - 10rem);
 	}
 	.message-container .actual-message h2 {
 		font-size: 1.5rem;

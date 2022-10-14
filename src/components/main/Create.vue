@@ -44,8 +44,11 @@ h2 {
 	line-height: 123%;
 	color: #1f2226;
 	text-align: center;
+	margin-top: 87px;
+	/* margin-bottom: 18px; */
 }
 h3 {
+	margin-top: -10px;
 	font-weight: 600;
 	font-size: 28px;
 	line-height: 42px;

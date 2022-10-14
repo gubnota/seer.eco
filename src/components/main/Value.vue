@@ -39,11 +39,10 @@ export default {
 section.value {
 	display: flex;
 	flex-direction: column;
-	margin-top: 120px;
+	margin: 120px 0 149px 0;
 	max-width: 1120px;
 	width: 100%;
 	gap: 13px;
-	margin-bottom: 149px;
 }
 @keyframes buzybuzz {
 	20% {
@@ -147,6 +146,11 @@ main .ill {
 	}
 	main .ill {
 		max-width: 100%;
+	}
+}
+@media (max-width: 550px) {
+	section.value {
+		margin: 50px 0 50px 0;
 	}
 }
 </style>

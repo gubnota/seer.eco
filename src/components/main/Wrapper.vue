@@ -2,32 +2,32 @@
 	<div id="wrapper">
 		<div class="part part1">
 			<div class="col">
-				<h1 class="header">Make encounters more valuables</h1>
+				<h1 class="header">Make encounters<br />More Valuable</h1>
 				<div class="sub">WEB3 Social Value Discovery Protocol</div>
 				<div class="badges">
 					<div class="row">
-						<a href="#" class="appstore badge" @click="comingSoon">
+						<div class="appstore badge" @click="comingSoon">
 							<img src="/01head/apple.png" alt="AppStore" />
 							<p>Download on the <br />AppStore</p>
-						</a>
-						<a href="#" class="google badge" @click="comingSoon">
+						</div>
+						<div class="google badge" @click="comingSoon">
 							<img src="/01head/google.png" alt="Google" />
-							<p>Get it on <br />Google Play</p>
-						</a>
+							<p>Download on the <br />Google Play</p>
+						</div>
 					</div>
 					<div class="row">
-						<a href="#" class="apk badge" @click="comingSoon">
+						<div class="apk badge" @click="comingSoon">
 							<img src="/01head/apk.png" alt="Apk Android" />
 							<p>
 								Download for<br />
 								Apk
 							</p>
-						</a>
-						<a href="#" class="chrome badge" @click="comingSoon"
-							><!-- https://chrome.google.com/webstore/detail/seer-chat/enjolihhaijimgfaedhiilljgcooocgm -->
+						</div>
+						<div class="chrome badge" @click="comingSoon">
+							<!-- https://chrome.google.com/webstore/detail/seer-chat/enjolihhaijimgfaedhiilljgcooocgm -->
 							<img src="/01head/chrome.png" alt="Chrome" />
 							<p>Add to <br />Chrome</p>
-						</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@ export default {}
 }
 
 .part1 {
-	padding-top: 145px;
+	padding-top: 194px;
 	display: flex;
 	flex-direction: row;
 	/* overflow: visible !important; */
@@ -77,7 +77,7 @@ export default {}
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	gap: 47px;
+	gap: 26px;
 }
 
 .part1 .header {
@@ -88,6 +88,7 @@ export default {}
 	font-family: Poppins;
 	width: 574px;
 	color: #1f2226;
+	line-height: 123%;
 }
 .part1 .sub {
 	width: 6475px;
@@ -106,7 +107,7 @@ export default {}
 		-1px 1px 0 #ffffff, 1px -1px 0 #ffffff;
 }
 .part1 .badges {
-	margin: 16px 0 42px 0;
+	margin: 36px 0 42px 0;
 }
 
 .part1 .image {
@@ -118,8 +119,8 @@ export default {}
 }
 
 .part1 .badge {
-	width: 203px;
-	height: 63px;
+	width: 226px;
+	height: 76px;
 	background-color: #ffffff;
 }
 .part1 .appstore {
@@ -157,6 +158,9 @@ export default {}
 	color: white !important;
 	transform: translateY(-3px) !important;
 }
+.part1 .badge:hover p {
+	color: white !important;
+}
 .part1 .badge:active {
 	transform: translateY(3px) !important;
 }
@@ -173,6 +177,7 @@ export default {}
 	line-height: 150%;
 	align-self: center;
 	font-size: 14px;
+	color: #999;
 }
 .part1 strong {
 	font-weight: bold;

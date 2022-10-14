@@ -18,29 +18,32 @@ const routes = [
 	{
 		path: '/sdid',
 		beforeEnter: () => {
-			location.href = '/'
 			window.open('https://sdid.seer.eco', '_blank')
+			location.href = '/'
 		},
 	},
 	{
 		path: '/asset/litepaper.png',
 		beforeEnter: () => {
-			location.href = '/'
 			window.open('/asset/litepaper.png', '_blank')
+			location.href = '/'
+			return
 		},
 	},
 	{
 		path: '/user.html',
 		beforeEnter: () => {
-			location.href = '/'
 			window.open('/user.html', '_blank')
+			location.href = '/'
+			return
 		},
 	},
 	{
 		path: '/privacy.html',
 		beforeEnter: () => {
-			location.href = '/'
 			window.open('/privacy.html', '_blank')
+			location.href = '/'
+			return
 		},
 	},
 	{
