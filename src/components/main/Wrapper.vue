@@ -205,7 +205,7 @@ export default {}
 }
 @media (max-width: 900px) {
 	.logo {
-		margin-top: 6px;
+		/* margin-top: 6px; */
 	}
 	.top {
 		display: none;

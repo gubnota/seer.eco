@@ -2,6 +2,7 @@
 	<section class="nav">
 		<nav class="top">
 			<a href="/"><img src="/01head/seer.png" alt="logo" class="logo" /></a>
+			<MobileNav />
 
 			<div class="navbar">
 				<div
@@ -140,6 +141,7 @@
 
 <script>
 import { menu } from '../../common/contents'
+import MobileNav from '../MobileNav.vue'
 
 export default {
 	name: 'Nav',
@@ -151,6 +153,7 @@ export default {
 			console.log(evt.target, 'toggleMenu')
 		},
 	},
+	components: { MobileNav },
 }
 </script>
 
@@ -319,18 +322,22 @@ li.head > * {
 	.navbar {
 		justify-content: flex-start;
 		gap: 14px;
-	}
-}
-@media (max-width: 1024px) {
-	nav.top,
-	.navbar {
-		display: none;
+		padding: 0 1rem;
 	}
 }
 .logo {
-	/* margin-top: -6px; */
+	margin-top: -10px;
 	flex: 1;
 	max-width: 117px;
 	/* height: 117px; */
+}
+
+@media (max-width: 1024px) {
+	.navbar {
+		display: none;
+	}
+	.logo {
+		margin-top: 0;
+	}
 }
 </style>

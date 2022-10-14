@@ -2,7 +2,6 @@
 	<Modal />
 	<VideoPlaceHolder />
 	<Nav />
-	<MobileNav />
 	<Wrapper />
 	<Stats />
 	<section class="wrapper2">

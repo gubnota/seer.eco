@@ -264,6 +264,9 @@ ul.sub li.sub {
 	transform: rotate(-90deg);
 }
 .mob {
+	position: absolute;
+	right: 0;
+	top: 0;
 	display: none;
 	color: #fff;
 	padding: 0;
