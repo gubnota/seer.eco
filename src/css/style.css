@@ -564,3 +564,9 @@ h2 {
 sup {
 	font-size: 1rem;
 }
+
+@media (max-width: 550px) {
+	.arrow_down {
+		min-height: 28px;
+	}
+}

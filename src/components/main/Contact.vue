@@ -173,6 +173,8 @@ button:active {
 		flex-direction: column;
 	}
 	section.contact {
+		margin-top: 100px;
+		margin-bottom: 100px;
 	}
 	.front {
 		transform: translateX(-6px) translateY(-6px);

@@ -7,7 +7,7 @@
 				class="quote"
 			/>
 		</aside>
-		<main>
+		<main class="value">
 			<img src="/03value/cube1.svg" alt="bee1" class="bee" />
 			<img src="/03value/cube2.svg" alt="bee2" class="bee" />
 			<img src="/03value/cube3.svg" alt="bee3" class="bee" />
@@ -99,14 +99,14 @@ h2 span {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 38px;
 }
-main {
+main.value {
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 140px;
 }
-main .ill {
+main.value .ill {
 	object-fit: contain;
 	max-width: 695px;
 }
@@ -144,13 +144,16 @@ main .ill {
 		max-width: 100vw;
 		padding: 0 1rem;
 	}
-	main .ill {
+	main.value .ill {
 		max-width: 100%;
 	}
 }
 @media (max-width: 550px) {
 	section.value {
-		margin: 50px 0 50px 0;
+		margin: 50px 0 150px 0;
+	}
+	main.value {
+		gap: 80px;
 	}
 }
 </style>

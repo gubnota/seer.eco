@@ -166,5 +166,8 @@ export default {
 		font-weight: 600;
 		margin-top: 0;
 	}
+	.stats {
+		margin-top: 70px;
+	}
 }
 </style>

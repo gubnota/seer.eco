@@ -43,6 +43,7 @@ section.factory {
 	section.factory {
 		gap: 0;
 		flex-direction: column;
+		margin: 82px 0 50px 0;
 	}
 	.ill {
 		min-height: 400px;
@@ -50,6 +51,9 @@ section.factory {
 	}
 	.text {
 		flex: 2000;
+		font-size: 20px;
+		padding: 0 16px;
+		line-height: 32px;
 	}
 }
 </style>

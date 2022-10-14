@@ -86,4 +86,17 @@ h3 {
 		width: 90vw;
 	}
 }
+@media (max-width: 550px) {
+	h2 {
+		font-size: 33px;
+		margin-top: 27px;
+	}
+	h3 {
+		font-size: 22px;
+	}
+	section.create {
+		gap: 24px;
+		margin-bottom: 48px;
+	}
+}
 </style>

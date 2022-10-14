@@ -565,6 +565,9 @@ h2 {
 	text-shadow: 0px 0px 17px rgba(244, 244, 244, 0.88);
 }
 @media (max-width: 550px) {
+	section.nft {
+		margin: 49px 0 42px 0;
+	}
 	.swiper-slide:first-child {
 		margin-left: 0;
 	}
@@ -586,6 +589,9 @@ h2 {
 	.pagination {
 		margin: 40px auto;
 		text-align: center;
+	}
+	.cta {
+		margin: 10px 0;
 	}
 }
 </style>

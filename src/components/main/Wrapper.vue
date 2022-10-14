@@ -270,18 +270,21 @@ export default {}
 		display: flex;
 		gap: 0 26px;
 		position: absolute;
-		top: 500px;
+		top: 550px;
 		left: 18px;
 		justify-self: center;
 		align-self: center;
 	}
 	.part1 .header {
-		font-size: 32px;
+		font-size: 28px;
 	}
 	.part1 .col .sub {
 		/* font-size: 1.05rem !important;
 		max-width: 40vw; */
 		line-height: 140%;
+		max-width: 50vw;
+		font-size: 20px;
+		margin: 15px 0 15px 0;
 	}
 	.part1 .badge p {
 		display: none;
