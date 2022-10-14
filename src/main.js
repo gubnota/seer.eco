@@ -14,6 +14,18 @@ const router = createRouter({
 	history: createWebHistory(),
 	routes, // short for `routes: routes`
 })
+router.afterEach((to, from) => {
+	if (to.path.search('/https://') === 0) {
+		window.open(to.path.substring(1), '_blank')
+		router.back()
+	}
+	// console.log('guard', to, from)
+	// ...
+	// explicitly return false to cancel the navigation
+	// return false
+})
+
+export { router }
 
 // 5. Create and mount the root instance.
 const app = createApp(App)

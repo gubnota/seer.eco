@@ -35,6 +35,9 @@
 	</section>
 </template>
 <script>
+import { useRouter } from 'vue-router'
+import { router } from '/src/main'
+
 export default {
 	name: 'Contact',
 	data() {
@@ -43,8 +46,9 @@ export default {
 		}
 	},
 	methods: {
-		handleSubmit() {
-			console.log(this.email)
+		handleSubmit: () => {
+			// console.log(this.email)
+			router.push({ path: '/coming-soon' })
 		},
 	},
 }

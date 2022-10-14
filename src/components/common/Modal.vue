@@ -53,6 +53,7 @@ export default {
 	top: 0;
 	left: 0;
 	z-index: 999999;
+	transition: all 0.4s ease;
 }
 
 .close-button {

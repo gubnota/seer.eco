@@ -8,6 +8,17 @@ const routes = [
 	{ path: '/', component: Main },
 	{ path: '/nft', component: Nft },
 	{
+		path: '/coming-soon',
+		component: Main,
+		beforeEnter() {
+			document.querySelector('.modal').style.display = ''
+			setTimeout(() => {
+				document.querySelector('.modal').style.display = 'none'
+			}, 1000)
+			return false
+		},
+	},
+	{
 		path: '/sdid',
 		beforeEnter: () => {
 			location.href = '/'

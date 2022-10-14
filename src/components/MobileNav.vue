@@ -88,6 +88,9 @@ export default defineComponent({
 	transition: any 0.3s cubic-bezier(0, 0, 0.3, 1);
 }
 
+ul.menu-sidebar {
+	overflow-y: scroll;
+}
 ul.menu-sidebar li.sub {
 	background: white;
 }

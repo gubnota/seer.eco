@@ -18,13 +18,13 @@
 							<h3>{{ el.header }}</h3>
 						</li>
 						<li v-for="el2 in el.items">
-							<a v-if="el2.hash == '#'">{{ el2.name }}</a>
+							<!-- <a v-if="el2.hash == '#'">{{ el2.name }}</a>
 							<a
 								:href="el2.hash"
 								:target="el2.hash == '#' ? '' : '_blank'"
 								v-else
-								>{{ el2.name }}</a
-							>
+								>{{ el2.name }}</a -->
+							<router-link :to="{ path: el2.hash }">{{ el2.name }}</router-link>
 						</li>
 					</ul>
 				</div>

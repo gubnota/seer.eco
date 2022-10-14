@@ -38,15 +38,15 @@
 						<div class="dropdown-content">
 							<ul>
 								<li v-for="el2 in el.children" v-bind:key="el.name">
-									<a
+									<!-- <a
 										:href="el2.hash"
 										@click="toggleMenu"
 										:target="el2.hash == '#' ? '' : '_blank'"
 										>{{ el2.name }}</a
-									>
-									<!-- <router-link :to="{ path: el2.hash }" @click="toggleMenu">{{
+									> -->
+									<router-link :to="{ path: el2.hash }" @click="toggleMenu">{{
 										el2.name
-									}}</router-link> -->
+									}}</router-link>
 								</li>
 							</ul>
 						</div>
