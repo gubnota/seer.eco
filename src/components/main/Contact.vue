@@ -177,5 +177,29 @@ button:active {
 	.front {
 		transform: translateX(-6px) translateY(-6px);
 	}
+	.row {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-template-areas: 'l1 l2 l3' 'l4 l5 l6';
+	}
+	.row a:nth-child(1) {
+		grid-area: l1;
+	}
+	.row a:nth-child(2) {
+		grid-area: l2;
+	}
+	.row a:nth-child(3) {
+		grid-area: l3;
+	}
+	.row a:nth-child(4) {
+		grid-area: l4;
+	}
+	.row a:nth-child(5) {
+		grid-area: l5;
+	}
+	.row a:nth-child(6) {
+		grid-area: l6;
+	}
 }
 </style>
