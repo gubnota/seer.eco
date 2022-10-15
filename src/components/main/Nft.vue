@@ -9,7 +9,8 @@
 		<div ref="mySlider" class="swiper-container">
 			<div class="swiper-wrapper">
 				<!-- Slides -->
-				<swiper-slide v-for="el in [...Array(3 * 8).keys()]">
+				<swiper-slide v-for="(el, j) in [...Array(4 * 2).keys()]">
+					<!-- <div class="slide next" v-if="j > 6"></div> -->
 					<div class="slide" :class="{ first: el == 0, next: el != 0 }">
 						<div class="front">
 							<div class="ava"></div>
@@ -17,10 +18,22 @@
 								src="/07nft/creator1.png"
 								alt="ava"
 								class="pic"
-								v-if="el == 0"
+								v-if="j == 0"
+							/>
+							<img
+								src="/07nft/creator4.gif"
+								alt="ava"
+								class="pic"
+								v-if="j % 3 == 0"
+							/>
+							<img
+								src="/07nft/creator3.png"
+								alt="ava"
+								class="pic"
+								v-if="j % 3 == 1"
 							/>
 							<img src="/07nft/creator5.gif" alt="ava" class="pic" v-else />
-							<div
+							<!-- <div
 								class="r r1"
 								:class="{ first: el == 0, next: el != 0 }"
 								v-bind:style="{
@@ -31,7 +44,28 @@
 											: '/07nft/bored_ape.webp') +
 										')',
 								}"
+							></div> -->
+							<div
+								v-if="el == 0"
+								class="r r1 first"
+								style="background-image: url(/07nft/creation5.webp)"
 							></div>
+							<div
+								v-else-if="el == 1"
+								class="r r1"
+								style="background-image: url(/07nft/creation3.webp)"
+							></div>
+							<div
+								v-else-if="el == 2"
+								class="r r1"
+								style="background-image: url(/07nft/creation4.webp)"
+							></div>
+							<div
+								v-else
+								class="r r1"
+								style="background-image: url(/07nft/bored_ape.webp)"
+							></div>
+
 							<div class="r r2">
 								<span>Ended on</span>
 								<span>September 30, 2021</span>
@@ -39,7 +73,9 @@
 							<div class="r r3">
 								<div class="seller">
 									<span
-										>{{ el == 0 ? 'Cega Super Sanics' : 'Cega Super Sanics2' }}
+										>{{
+											el == 0 ? 'Cega Super Sanics' : `Cega Super Sanics` + j
+										}}
 									</span>
 									<img src="/07nft/token1.png" v-if="el == 0" class="token" />
 									<img src="/07nft/token2.png" v-else class="token" />
@@ -100,11 +136,31 @@ export default {
 			// active: 0
 			slider: null,
 			mySliderOptions: {
-				// loop: true,
+				loop: true,
+				// centeredSlides: true,
+				centerInsufficientSlides: true,
 				class: 'mySwiper',
 				spaceBetween: 40,
-				slidesPerGroup: 4,
-				slidesPerView: 4,
+				slidesPerGroup: 2,
+				slidesPerView: 2,
+				breakpoints: {
+					1979: {
+						slidesPerGroup: 3,
+						slidesPerView: 4,
+					},
+					1280: {
+						slidesPerGroup: 2,
+						slidesPerView: 3,
+					},
+					1024: {
+						slidesPerGroup: 1,
+						slidesPerView: 2,
+					},
+					890: {
+						slidesPerGroup: 1,
+						slidesPerView: 1,
+					},
+				},
 				Keyboard: true,
 				pagination: {
 					el: '.pagination',
@@ -335,7 +391,7 @@ h2 {
 .back {
 	z-index: 1;
 	transform: translateX(10px) translateY(10px);
-	background: #aa1fff;
+	background-color: #aa1fff;
 	background: url(/07nft/bg2.svg);
 }
 .next .back {
@@ -368,7 +424,7 @@ h2 {
 	flex: 1;
 }
 .next .r2 {
-	background: #aa1fff;
+	background-color: #aa1fff;
 	color: white;
 }
 .r3 {
@@ -406,7 +462,9 @@ h2 {
 	justify-content: center;
 }
 .next .r4 {
-	background: #aa1fff;
+	background-color: #aa1fff;
+	background: linear-gradient(90deg, #2ba1ff 0%, #aa1fff 100%);
+
 	color: #ffffff;
 }
 .ava {

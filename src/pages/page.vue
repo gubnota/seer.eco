@@ -9,6 +9,7 @@ const count = ref(0)
 </script>
 
 <template>
+	<g-carousel>a</g-carousel>
 	<h1>Page1 {{ $store.state.count }}</h1>
 
 	<div class="card">
@@ -38,5 +39,12 @@ const count = ref(0)
 <style scoped>
 .read-the-docs {
 	color: #888;
+}
+g-carousel {
+	display: flex;
+	flex-direction: row;
+	background-color: #888;
+	height: 400px;
+	width: 100%;
 }
 </style>
