@@ -96,15 +96,13 @@ aside.madein .version {
 }
 
 footer {
-	max-width: 1120px;
+	max-width: calc(1120px + 38px);
 	width: 100%;
 	/* background: #aa1fff; */
 	border-radius: 10px;
-	padding: 22px 45px 0 45px;
+	margin: 6px 45px 0 45px;
 	display: flex;
 	flex-direction: row;
-	margin: 1rem;
-	margin-bottom: 0;
 	justify-content: space-between;
 	align-items: flex-start;
 }
@@ -173,15 +171,17 @@ footer aside nav .lang .icon {
 	width: 100%;
 }
 .sitemap .columns {
+	flex-direction: row;
+	display: flex;
+	justify-content: space-between;
+}
+/* .sitemap .columns {
 	display: grid;
-	/* flex-direction: row; */
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-template-rows: 1fr;
 	grid-template-areas: 'col1 col2 col3 col4';
-	/* margin-top: 100px; */
 	grid: 1rem;
-	/* align-items: flex-start; */
-}
+} */
 .sitemap .columns .column {
 	justify-self: space-around;
 	width: 100%;

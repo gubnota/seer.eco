@@ -113,6 +113,10 @@ select {
 }
 input::placeholder {
 	font-size: 15px;
+	color: rgba(0, 0, 0, 0.2);
+	font-weight: 600;
+	padding-left: 6px;
+	font-family: 'Poppins';
 }
 button {
 	height: 46px;
@@ -123,6 +127,7 @@ button {
 	font-size: 15px;
 	color: #ffffff;
 	cursor: pointer;
+	font-weight: 600;
 }
 button:active {
 	transform: scale(0.95);

@@ -217,12 +217,6 @@ h2 {
 	margin-left: 70px;
 }
 
-@media (max-width: 550px) {
-	.swiper-container {
-		transform: none;
-		overflow-x: hidden;
-	}
-}
 .swiper-slide {
 	/* background: #f0f0f0; */
 	justify-content: center;
@@ -272,8 +266,7 @@ h2 {
 }
 .cta {
 	cursor: pointer;
-	margin-top: 130px;
-	margin-bottom: 101px;
+	margin: 83px 0 70px 0;
 	flex: 1;
 	align-self: center;
 	display: flex;
@@ -592,6 +585,10 @@ h2 {
 	}
 	.cta {
 		margin: 10px 0;
+	}
+	.swiper-container {
+		transform: none;
+		overflow-x: hidden;
 	}
 }
 </style>

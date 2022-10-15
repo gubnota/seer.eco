@@ -39,7 +39,7 @@ export default {
 section.value {
 	display: flex;
 	flex-direction: column;
-	margin: 120px 0 149px 0;
+	margin: 120px 0 178px 0;
 	max-width: 1120px;
 	width: 100%;
 	gap: 13px;
