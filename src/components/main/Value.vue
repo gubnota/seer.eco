@@ -153,7 +153,7 @@ main.value .ill {
 		margin: 50px 0 150px 0;
 	}
 	main.value {
-		gap: 80px;
+		gap: 60px;
 	}
 }
 </style>

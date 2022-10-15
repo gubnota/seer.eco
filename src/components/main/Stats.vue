@@ -167,7 +167,7 @@ export default {
 		margin-top: 0;
 	}
 	.stats {
-		margin-top: 70px;
+		margin-top: 20px;
 	}
 }
 </style>

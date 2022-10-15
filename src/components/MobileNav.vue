@@ -32,7 +32,7 @@
 					}"
 				>
 					<ul v-if="el.children" class="sub">
-						<li class="head" @click="groupHandler" :data-i="j">
+						<li class="head" @click="groupHandler(j)" :data-i="j">
 							<span>{{ el.name }}</span>
 							<svg
 								class="icon chevron-right"
@@ -94,25 +94,7 @@ export default defineComponent({
 				document.querySelector('body').setAttribute('style', 'overflow:auto')
 			}
 		},
-		groupHandler(evt) {
-			if (evt.target.getAttribute('data-i') === undefined) return
-			var sel_id = evt.target.getAttribute('data-i')
-			//[false, false, false, true].filter((el,i,arr)=>{console.log(el,i,arr)});
-			// console.log(sel_id)
-			// this.$store.state.MobileMenu.filter((el, i, arr) => {
-			// 	if (el == true && i == sel_id)
-			// 		store.dispatch('save', {
-			// 			k: 'MobileMenu',
-			// 			v: new Array(menu.length).fill(false),
-			// 		})
-			// 	console.log('found opened')
-			// })
-			// console.log(
-			// 	sel_id,
-			// 	this.$store.state.MobileMenu.map(function (val, id) {
-			// 		return id == sel_id
-			// 	})
-			// )
+		groupHandler(sel_id, evt) {
 			store.dispatch('save', {
 				k: 'MobileMenu',
 				v: this.$store.state.MobileMenu.map(function (val, id) {
@@ -120,19 +102,17 @@ export default defineComponent({
 					else {
 						return false
 					}
-					// return id == sel_id
 				}),
 			})
 		},
 	},
-
-	// components: {
-	//   HeadView,
-	// },
 })
 </script>
 
 <style lang="scss" scoped>
+* {
+	-webkit-tap-highlight-color: transparent;
+}
 .opened {
 	transition: any 0.3s cubic-bezier(0, 0, 0.3, 1);
 }
@@ -266,7 +246,7 @@ ul.sub li.sub {
 .mob {
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: 12px;
 	display: none;
 	color: #fff;
 	padding: 0;
@@ -386,9 +366,11 @@ ul.sub li.sub {
 	transform: rotate(90deg);
 }
 @media (max-width: 480px) {
-	.mob li {
-		min-height: 50px;
-		line-height: 50px;
-	}
+	// .mob li {
+	// 	min-height: 50px;
+	// 	line-height: 50px;
+	// }
+}
+@media (min-width: 551px) and (max-width: 1024px) {
 }
 </style>

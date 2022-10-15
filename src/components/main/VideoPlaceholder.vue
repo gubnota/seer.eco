@@ -125,7 +125,7 @@ video {
 }
 @media (min-width: 1980px) {
 	.videoPlaceholder {
-		left: 180px;
+		/* left: 180px; */
 	}
 }
 </style>

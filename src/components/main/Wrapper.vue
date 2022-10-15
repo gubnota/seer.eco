@@ -183,6 +183,11 @@ export default {}
 	font-weight: bold;
 }
 
+@media (min-width: 1555px) {
+	.part1 .image {
+		display: none;
+	}
+}
 @media (max-width: 1200px) {
 	#wrapper {
 		width: 100vw;
@@ -198,9 +203,12 @@ export default {}
 		padding: 0 1rem;
 	}
 }
-@media (min-width: 1555px) {
-	.part1 .image {
-		display: none;
+@media (max-width: 1024px) {
+	.part1 .sub {
+		font-size: 3vw;
+	}
+	.part1 .header {
+		font-size: 5vw;
 	}
 }
 @media (max-width: 900px) {
@@ -258,22 +266,21 @@ export default {}
 	.part1 .col {
 		justify-content: flex-start;
 		flex-direction: column;
-		max-width: 90vw;
+		max-width: 100vw;
 	}
 	.part1 .row {
 		flex-direction: row;
 		gap: 26px;
 	}
 	.part1 .badges {
-		margin: 0;
 		flex-direction: row;
 		display: flex;
 		gap: 0 26px;
-		position: absolute;
-		top: 550px;
-		left: 18px;
+		/* position: absolute; */
+		/* top: 550px; */
 		justify-self: center;
 		align-self: center;
+		margin: 300px 0 0px 0;
 	}
 	.part1 .header {
 		font-size: 28px;
@@ -290,9 +297,6 @@ export default {}
 		display: none;
 	}
 
-	.part1 .badges {
-		margin: 10px 0 42px 0;
-	}
 	.part1 .badge {
 	}
 	.part1 {

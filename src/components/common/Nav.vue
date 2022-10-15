@@ -337,7 +337,7 @@ li.head > * {
 		display: none;
 	}
 	.logo {
-		margin-top: 0;
+		margin-top: 10px;
 	}
 }
 </style>
