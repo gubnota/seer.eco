@@ -24,27 +24,15 @@
 								src="/07nft/creator4.gif"
 								alt="ava"
 								class="pic"
-								v-if="j % 3 == 0"
+								v-else-if="j % 3 == 0"
 							/>
 							<img
 								src="/07nft/creator3.png"
 								alt="ava"
 								class="pic"
-								v-if="j % 3 == 1"
+								v-else-if="j % 3 == 1"
 							/>
 							<img src="/07nft/creator5.gif" alt="ava" class="pic" v-else />
-							<!-- <div
-								class="r r1"
-								:class="{ first: el == 0, next: el != 0 }"
-								v-bind:style="{
-									'background-image':
-										'url(' +
-										(el == 0
-											? '/07nft/creation5.webp'
-											: '/07nft/bored_ape.webp') +
-										')',
-								}"
-							></div> -->
 							<div
 								v-if="el == 0"
 								class="r r1 first"
@@ -90,14 +78,6 @@
 											: 'NFT Designs, NFT concepts, Crypto NFT Wallpapers'
 									}}
 								</div>
-								<div class="table">
-									<div class="prods">Total raised</div>
-									<div class="dims">$250,000</div>
-								</div>
-								<div class="table">
-									<div class="prods">Participants</div>
-									<div class="dims">718</div>
-								</div>
 							</div>
 							<div class="r r4" @click="onclickHandler">
 								<span>{{ el == 0 ? 'Land Sale' : 'Token Sale' }}</span>
@@ -136,20 +116,20 @@ export default {
 			// active: 0
 			slider: null,
 			mySliderOptions: {
-				loop: true,
+				// loop: true,
 				// centeredSlides: true,
-				centerInsufficientSlides: true,
+				// centerInsufficientSlides: true,
 				class: 'mySwiper',
 				spaceBetween: 40,
-				slidesPerGroup: 2,
+				slidesPerGroup: 1,
 				slidesPerView: 2,
 				breakpoints: {
 					1979: {
-						slidesPerGroup: 3,
+						slidesPerGroup: 1,
 						slidesPerView: 4,
 					},
 					1280: {
-						slidesPerGroup: 2,
+						slidesPerGroup: 1,
 						slidesPerView: 3,
 					},
 					1024: {
@@ -268,6 +248,7 @@ h2 {
 	overflow-x: hidden;
 	/* transform: translateX(70px); */
 	max-width: 100vw;
+	max-width: 1980px;
 }
 .swiper-slide:first-child {
 	margin-left: 70px;
@@ -278,7 +259,7 @@ h2 {
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	min-width: 480px;
+	min-width: 474px;
 	/* height: 640px !important; */
 	max-width: 100vw;
 	/* Center slide text vertically */
@@ -352,7 +333,7 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	width: 476px;
-	height: 666px;
+	height: 560px;
 	/* background-color: rgba(0, 0, 0, 0.1); */
 	position: relative;
 	border-radius: 20px;
@@ -365,7 +346,7 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	width: 476px;
-	height: 666px;
+	height: 560px;
 	position: absolute;
 	border-radius: 20px;
 	overflow: hidden;
@@ -392,7 +373,8 @@ h2 {
 	z-index: 1;
 	transform: translateX(10px) translateY(10px);
 	background-color: #aa1fff;
-	background: url(/07nft/bg2.svg);
+	/* background: url(/07nft/bg2.svg); */
+	background: linear-gradient(90deg, #f94cb3, #aa1fff);
 }
 .next .back {
 	transform: none;
@@ -402,7 +384,7 @@ h2 {
 	width: 100%;
 }
 .r1 {
-	flex: 238;
+	flex: 310;
 	background-color: black;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -412,13 +394,14 @@ h2 {
 	background-color: white;
 	display: flex;
 	flex-direction: row;
-	padding-left: 136px;
 	padding-right: 12px;
 	gap: 10px;
 	align-items: center;
 	justify-content: flex-start;
-	width: 100%;
+	width: 326px;
 	font-size: 15px;
+	align-self: flex-end;
+	z-index: 4;
 }
 .r2 > span {
 	flex: 1;
@@ -475,9 +458,9 @@ h2 {
 	height: 150px;
 	display: flex;
 	align-items: center;
-	background: rgba(255, 255, 255, 0.8);
-	/* backdrop-filter: blur(10px); */
-	filter: blur(20px);
+	background: rgba(255, 255, 255, 0.5);
+	backdrop-filter: blur(10px);
+	/* filter: blur(20px); */
 	overflow: hidden;
 	border-radius: 8px;
 	justify-content: center;
@@ -498,8 +481,7 @@ h2 {
 	flex-direction: column;
 	align-items: stretch;
 	width: 100%;
-	justify-content: flex-end;
-	padding-bottom: 30px;
+	justify-content: center;
 	gap: 8px;
 }
 .desc {
@@ -508,74 +490,15 @@ h2 {
 	font-size: 15px;
 	line-height: 22px;
 	color: white;
-	font-weight: 600;
+	font-weight: 400;
 	min-height: 44px;
+	letter-spacing: 0.5px;
 }
 .next .desc {
-	color: #666;
+	color: #b2b4b5;
 }
 /* start Autofill the space between elements with dots. pure Css */
 
-.table {
-	margin: 0 2rem;
-	color: #1f2226;
-	font-weight: 600;
-	font-size: 18px;
-	line-height: 27px;
-	position: relative;
-	background: inherit;
-	display: flex;
-	flex-direction: row;
-	margin: 0 auto;
-	font-size: 1.2rem;
-	line-height: 1.5rem;
-	padding-right: 4rem;
-	margin-bottom: 0.5rem;
-	width: calc(100% - 50px);
-	padding: 0 25px;
-}
-.first .table {
-	color: white;
-}
-.table:after {
-	content: '';
-	position: absolute;
-	bottom: 0.4rem;
-	width: calc(100% - 50px);
-	height: 0;
-	line-height: 0;
-	border-bottom: 1px dashed #1f2226;
-	max-width: 100%;
-}
-
-.first .table:after {
-	border-bottom: 1px dashed #fff;
-}
-
-.prods {
-	background: inherit;
-	display: inline;
-	z-index: 1;
-	padding-right: 12px;
-}
-.dims {
-	background: inherit;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	padding-left: 12px;
-	text-align: right;
-	z-index: 2;
-}
-.first .dims {
-	background: initial;
-}
-.first .table::after {
-	width: 300px;
-}
-.first .table:last-child::after {
-	width: 366px;
-}
 /* end Autofill the space between elements with dots. pure Css */
 .platform {
 	font-weight: 400;
@@ -583,7 +506,7 @@ h2 {
 	line-height: 22px;
 	color: white;
 
-	margin: 12px 30px 22px 0px; /**/
+	margin: 6px 30px 12px 0px; /**/
 	text-align: left;
 	padding-left: 28px;
 }
@@ -595,11 +518,12 @@ h2 {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	margin: 0 24px;
+	margin: 0 0 0 24px;
 	color: #ffffff;
 	text-shadow: 0px 0px 17px rgba(244, 244, 244, 0.88);
 	font-weight: 700;
 	font-size: 28px;
+	margin-top: 15px;
 }
 .seller span {
 	flex: 4;
@@ -647,6 +571,24 @@ h2 {
 	.swiper-container {
 		transform: none;
 		overflow-x: hidden;
+	}
+}
+@media (max-width: 480px) {
+	.r2 {
+		width: 71vw;
+		font-size: 12px;
+	}
+	.pic {
+		top: 191px;
+		left: 6px;
+		width: 26vw !important;
+		height: 26vw !important;
+	}
+	.ava {
+		top: 184px;
+		left: 0;
+		width: 29vw;
+		height: 29vw;
 	}
 }
 </style>

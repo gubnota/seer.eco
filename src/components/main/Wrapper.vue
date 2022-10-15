@@ -3,30 +3,27 @@
 		<div class="part part1">
 			<div class="col">
 				<h1 class="header">Make encounters<br />More Valuable</h1>
-				<div class="sub">WEB3 Social Value Discovery Protocol</div>
+				<div class="sub rainbow">WEB3 Social Value Discovery Protocol</div>
 				<div class="badges">
 					<div class="row">
 						<div class="appstore badge" @click="comingSoon">
 							<img src="/01head/apple.png" alt="AppStore" />
-							<p>Download on the <br />AppStore</p>
+							<p>Download on the AppStore</p>
 						</div>
 						<div class="google badge" @click="comingSoon">
 							<img src="/01head/google.png" alt="Google" />
-							<p>Download on the <br />Google Play</p>
+							<p>Download on the Google Play</p>
 						</div>
 					</div>
 					<div class="row">
 						<div class="apk badge" @click="comingSoon">
 							<img src="/01head/apk.png" alt="Apk Android" />
-							<p>
-								Download for<br />
-								Apk
-							</p>
+							<p>Download for Apk</p>
 						</div>
 						<div class="chrome badge" @click="comingSoon">
 							<!-- https://chrome.google.com/webstore/detail/seer-chat/enjolihhaijimgfaedhiilljgcooocgm -->
 							<img src="/01head/chrome.png" alt="Chrome" />
-							<p>Add to <br />Chrome</p>
+							<p>Add to Chrome</p>
 						</div>
 					</div>
 				</div>
@@ -91,7 +88,6 @@ export default {}
 	line-height: 123%;
 }
 .part1 .sub {
-	width: 6475px;
 	font-size: 25px;
 	grid-area: sub;
 	align-self: flex-start;
@@ -101,7 +97,7 @@ export default {}
 	margin: 5px 0 5px 0;
 	color: #aa1fff;
 }
-.part1 .sub,
+
 .part1 .header {
 	text-shadow: 1px 0 #ffffff, 0 0 1px #ffffff, -1px -1px 0 #ffffff,
 		-1px 1px 0 #ffffff, 1px -1px 0 #ffffff;
@@ -177,7 +173,8 @@ export default {}
 	line-height: 150%;
 	align-self: center;
 	font-size: 14px;
-	color: #999;
+	color: #b2b4b5;
+	font-weight: 600;
 }
 .part1 strong {
 	font-weight: bold;

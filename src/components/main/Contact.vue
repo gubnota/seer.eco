@@ -121,7 +121,8 @@ input::placeholder {
 button {
 	height: 46px;
 	width: 125px;
-	background: #aa1fff;
+	background-color: #aa1fff;
+	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
 	border-radius: 4px;
 	border: none;
 	font-size: 15px;

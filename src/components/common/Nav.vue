@@ -28,7 +28,6 @@
 							>
 								<path
 									d="M18.26 8.20416L12.2833 14.1808C11.5775 14.8867 10.4225 14.8867 9.71667 14.1808L3.74001 8.20416"
-									stroke="#1F2226"
 									stroke-width="1.5"
 									stroke-miterlimit="10"
 									stroke-linecap="round"
@@ -283,15 +282,11 @@ nav.top {
 	flex: 1;
 }
 
-@media (max-width: 1200px) {
-	.navbar {
-		padding: 0 2rem;
-	}
-}
 .icon {
 	/* transform: rotate(90deg); */
 	width: 22px;
 	height: 22px;
+	stroke: #1f2226;
 }
 
 ul.sub {
@@ -311,6 +306,36 @@ sub.sub > li.head {
 li.head > * {
 	flex: 1;
 }
+.logo {
+	margin-top: -10px;
+	flex: 1;
+	max-width: 117px;
+	/* height: 117px; */
+}
+.link,
+.navbar > div.dropdown {
+	transition: all 0.5s ease;
+}
+.link:hover,
+.navbar > div.dropdown:hover {
+	transform: translateY(3px);
+}
+.link:hover > a,
+.navbar > div.dropdown:hover > div.dropdown > button.dropbtn > span {
+	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.navbar > div.dropdown:hover > div.dropdown > button.dropbtn > svg {
+	stroke: #aa1fff;
+}
+@media (max-width: 1200px) {
+	.navbar {
+		padding: 0 2rem;
+	}
+}
 @media (max-width: 1210px) {
 	.logo {
 		margin-top: 0;
@@ -324,12 +349,6 @@ li.head > * {
 		gap: 14px;
 		padding: 0 1rem;
 	}
-}
-.logo {
-	margin-top: -10px;
-	flex: 1;
-	max-width: 117px;
-	/* height: 117px; */
 }
 
 @media (max-width: 1024px) {

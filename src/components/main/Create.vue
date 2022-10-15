@@ -7,7 +7,7 @@
 		</a>
 		<Tiles />
 		<h2>Don't know where your customers are?</h2>
-		<h3>Come and learn more about SEER ADS protocol</h3>
+		<h3 class="rainbow">Come and learn more about SEER ADS protocol</h3>
 	</section>
 </template>
 
@@ -54,6 +54,7 @@ h3 {
 	line-height: 42px;
 	color: #aa1fff;
 	text-align: center;
+	align-self: center;
 }
 .cta {
 	cursor: pointer;

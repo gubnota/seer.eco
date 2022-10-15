@@ -113,6 +113,7 @@ section.kaleidoscope {
 	position: relative;
 	overflow: hidden;
 	cursor: pointer;
+	border-radius: 28px;
 }
 .tile .front,
 .tile .hover {

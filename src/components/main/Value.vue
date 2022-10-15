@@ -94,6 +94,7 @@ h2 {
 	font-size: 32px;
 	text-align: left;
 	align-self: flex-start;
+	margin-bottom: 20px;
 }
 h2 span {
 	font-family: Helvetica, Arial, sans-serif;
@@ -104,7 +105,7 @@ main.value {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 140px;
+	gap: 120px;
 }
 main.value .ill {
 	object-fit: contain;

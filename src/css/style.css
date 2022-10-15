@@ -31,7 +31,7 @@
 		1.5px -1.5px 0 gray, -1.5px 1.5px 0 gray, -1.5px -1.5px 0 gray; */
 }
 .cta:hover {
-	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+	background: linear-gradient(-90deg, #aa1fff, #346dff);
 	color: white !important;
 	/* border-color: transparent !important; */
 }
@@ -45,7 +45,7 @@
 	z-index: -1;
 	margin: -5px;
 	border-radius: inherit;
-	background-image: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+	background-image: linear-gradient(-90deg, #aa1fff, #346dff);
 }
 .cta:hover > img {
 	filter: brightness(0) invert(1);
