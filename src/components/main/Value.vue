@@ -45,7 +45,7 @@ section.value {
 	gap: 13px;
 }
 @keyframes buzybuzz {
-	20% {
+	0% {
 		transform: rotate(0deg); /*360*/
 	}
 	100% {
@@ -54,7 +54,7 @@ section.value {
 }
 
 .bee {
-	animation: buzybuzz 2.5s infinite ease-in-out;
+	animation: buzybuzz 2.5s infinite linear;
 	position: absolute;
 	animation-play-state: running;
 }

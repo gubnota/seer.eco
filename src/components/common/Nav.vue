@@ -161,7 +161,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	margin-top: -20px;
-	gap: 16px;
+	gap: 5px;
 	/* overflow: hidden; */
 	/* background-color: #333; */
 }

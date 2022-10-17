@@ -237,6 +237,18 @@ footer .button {
 		gap: 1rem;
 		max-width: 100vw;
 	}
+	footer aside {
+		align-items: center;
+	}
+	footer aside {
+		gap: 12px;
+		margin-bottom: 50px;
+		max-width: 300px;
+		align-self: center;
+	}
+	footer aside nav {
+		align-self: flex-start;
+	}
 	.sitemap .columns {
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr 1fr;
