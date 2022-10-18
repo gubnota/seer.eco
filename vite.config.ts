@@ -2,10 +2,15 @@ import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { join, parse, resolve, dirname } from 'path'
-
+import { exit } from 'process'
+// import child_process from 'child_process'
 const root = resolve(__dirname, '')
-const outDir = resolve(__dirname, 'dist')
+const a = new Date()
+const b = `${a.getFullYear()}.${a.getMonth()}.${a.getDate()}-${a.getHours()}_${a.getMinutes()}`
+const outDir = resolve(`/Users/vm/Downloads/seer.eco_${b}`)
 const publicP = resolve(__dirname, 'public')
+// child_process.exec(`open "${outDir}"`)
+
 console.log(root)
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,7 +27,7 @@ export default defineConfig({
 	base: '/',
 	// root,
 	build: {
-		outDir: './dist',
+		outDir,
 		emptyOutDir: true,
 		// rollupOptions: {
 		// 	input: {
