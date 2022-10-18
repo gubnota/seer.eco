@@ -7,8 +7,7 @@ import { exit } from 'process'
 const root = resolve(__dirname, '')
 const a = new Date()
 const b = `${a.getFullYear()}.${a.getMonth()}.${a.getDate()}-${a.getHours()}_${a.getMinutes()}`
-const outDir = resolve(`/Users/vm/Downloads/seer.eco_${b}`)
-const publicP = resolve(__dirname, 'public')
+console.log(`seer.eco_${b}`)
 // child_process.exec(`open "${outDir}"`)
 
 console.log(root)

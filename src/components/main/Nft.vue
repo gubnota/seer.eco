@@ -209,7 +209,7 @@ h2 {
 	line-height: 123%;
 	color: #000000;
 	text-align: left;
-	margin-left: 64px;
+	margin-left: 70px;
 	font-weight: 600;
 }
 .pagination {

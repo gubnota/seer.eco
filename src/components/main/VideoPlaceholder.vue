@@ -49,7 +49,7 @@ export default defineComponent({
 			top: store.state.statsOffsetTop || 1000,
 			width: window.innerWidth,
 			video: '/asset/bg.mp4',
-			isMobile: window.innerWidth > 1000 ? false : true,
+			isMobile: window.innerWidth > 550 ? false : true,
 			// uniswap: uniswap,
 		}
 	},
@@ -66,7 +66,7 @@ export default defineComponent({
 			this.switch_bg_videos(e)
 		},
 		switch_bg_videos(e: Event) {
-			this.isMobile = this.width > 1000 ? false : true
+			this.isMobile = this.width > 550 ? false : true
 			// if (document.querySelector('.stats') === null) return
 			// const a = document.querySelector('video#bgvid')
 			// const b = document.querySelector('.stats').offsetTop
