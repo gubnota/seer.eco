@@ -2,11 +2,13 @@ import Page1 from './pages/page.vue'
 import Page2 from './pages/page2.vue'
 import Page3 from './pages/page3.vue'
 import Main from './pages/main.vue'
+import Test from './pages/test.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
 const routes = [
 	{ path: '/', component: Main },
 	{ path: '/nft', component: Nft },
+	{ path: '/test', component: Test },
 	{
 		path: '/coming-soon',
 		component: Main,
