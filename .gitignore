@@ -22,4 +22,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-# *.ts.timestamp-[0-9]+.mjs
+*.ts.timestamp-[0-9]+.mjs
