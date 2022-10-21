@@ -23,11 +23,16 @@ section.factory {
 	align-items: center;
 	margin: 32px 0 180px 0;
 }
+@media (min-width: 551px) and (max-width: 1150px) {
+	section.factory {
+		padding: 0 1rem;
+	}
+}
 .text {
 	font-weight: 600;
 	flex: 498;
 	font-size: 24px;
-	padding: 0 8px;
+	padding: 0 0 0 16px;
 	line-height: 36px;
 }
 .ill {
@@ -39,11 +44,17 @@ section.factory {
 	background-repeat: no-repeat;
 	background-position-y: center;
 }
+@media (max-width: 800px) {
+	section.factory {
+		margin: 82px 0 90px 0;
+	}
+}
+
 @media (max-width: 550px) {
 	section.factory {
 		gap: 0;
 		flex-direction: column;
-		margin: 82px 0 50px 0;
+		margin: 0 0 160px 0;
 	}
 	.ill {
 		min-height: 400px;

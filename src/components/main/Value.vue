@@ -149,6 +149,11 @@ main.value .ill {
 		max-width: 100%;
 	}
 }
+@media (max-width: 950px) {
+	main.value {
+		gap: 80px;
+	}
+}
 @media (max-width: 550px) {
 	section.value {
 		margin: 50px 0 150px 0;

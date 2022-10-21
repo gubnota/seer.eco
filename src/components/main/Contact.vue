@@ -171,21 +171,6 @@ button:active {
 }
 @media (max-width: 1120px) {
 	.row {
-		flex-direction: column;
-	}
-}
-@media (max-width: 550px) {
-	.subscribe {
-		flex-direction: column;
-	}
-	section.contact {
-		margin-top: 100px;
-		margin-bottom: 100px;
-	}
-	.front {
-		transform: translateX(-6px) translateY(-6px);
-	}
-	.row {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-template-rows: 1fr 1fr;
@@ -208,6 +193,29 @@ button:active {
 	}
 	.row a:nth-child(6) {
 		grid-area: l6;
+	}
+}
+@media (max-width: 550px) {
+	input[type='email'] {
+		display: flex;
+		max-width: calc(100vw - 40px);
+	}
+	.subscribe {
+		flex-direction: column;
+	}
+	section.contact {
+		margin-top: 100px;
+		margin-bottom: 100px;
+	}
+	.front {
+		transform: translateX(-6px) translateY(-6px);
+	}
+}
+
+@media (max-width: 800px) {
+	h2 {
+		font-size: 6vw;
+		padding: 0 1rem;
 	}
 }
 </style>

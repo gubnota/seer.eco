@@ -109,7 +109,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 * {
 	-webkit-tap-highlight-color: transparent;
 }
@@ -126,8 +126,11 @@ ul.menu-sidebar li.sub {
 ul.menu-sidebar > li > ul {
 	width: 100%;
 }
+li {
+	font-weight: normal;
+}
 li.head {
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-weight: 600;
 	cursor: auto;
 	display: flex;
@@ -137,12 +140,12 @@ li.head {
 	width: 100%;
 }
 .menu-sidebar > li {
+	font-weight: 600;
 	padding-left: 20px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .menu-sidebar {
 	transition: any 0.3s cubic-bezier(0, 0, 0.3, 1);
-	// box-shadow: 5px 0 5px -5px #333;
 	display: block;
 	width: 100vw;
 	bottom: 0;
@@ -156,83 +159,82 @@ li.head {
 	list-style-type: none;
 	padding: 0;
 	left: 0;
-	.arrow {
-		position: absolute;
-		line-height: 50px;
-		font-size: 32px;
-		color: #555;
-		top: 0;
-		z-index: 0;
-		&.left {
-			left: 25px;
-		}
-		&.right {
-			right: 25px;
-		}
-	}
-	li {
-		min-height: 55px;
-		line-height: 55px;
-		font-size: 16px;
-		text-align: left;
-		position: relative;
-		&:hover {
-			// background: #eee;
-		}
-		.menu-sub {
-			position: fixed;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			width: 0;
-			overflow: hidden;
-			background: white;
-			visibility: hidden;
-			transition: all 0.3s cubic-bezier(0, 0, 0.3, 1);
-			border-left: 1px solid #ccc;
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-			z-index: 2;
-			max-width: 400px;
-			li {
-				overflow: hidden;
-			}
-			.menu-sub-title {
-				padding-left: 50px;
-			}
-		}
-		.submenu-label {
-			cursor: pointer;
-			width: 100%;
-			height: 100%;
-			display: block;
-		}
-		.submenu-toggle {
-			display: none;
-			&.active ~ .menu-sub,
-			&:checked ~ .menu-sub {
-				width: 65vw;
-				visibility: visible;
-				z-index: 1;
-				transition: width 0.35s cubic-bezier(0, 0, 0.3, 1);
-			}
-		}
-	}
+}
+
+.menu-sidebar .arrow {
+	position: absolute;
+	line-height: 50px;
+	font-size: 32px;
+	color: #555;
+	top: 0;
+	z-index: 0;
+}
+.menu-sidebar.left {
+	left: 25px;
+}
+.menu-sidebar.right {
+	right: 25px;
+}
+.menu-sidebar li {
+	min-height: 55px;
+	line-height: 55px;
+	text-align: left;
+	position: relative;
+}
+.menu-sidebar:hover {
+}
+.menu-sidebar .menu-sub {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 0;
+	overflow: hidden;
+	background: white;
+	visibility: hidden;
+	transition: all 0.3s cubic-bezier(0, 0, 0.3, 1);
+	border-left: 1px solid #ccc;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 2;
+	max-width: 400px;
+}
+.menu-sidebar .menu-sub li {
+	overflow: hidden;
+}
+.menu-sidebar .menu-sub .menu-sub-title {
+	padding-left: 50px;
+}
+.menu-sidebar .submenu-label {
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.menu-sidebar .submenu-toggle {
+	display: none;
+}
+
+.menu-sidebar .submenu-toggle.active ~ .menu-sub,
+.menu-sidebar .submenu-toggle:checked ~ .menu-sub {
+	width: 65vw;
+	visibility: visible;
+	z-index: 1;
+	transition: width 0.35s cubic-bezier(0, 0, 0.3, 1);
 }
 
 .opened .menu-sidebar {
 	transform: translateX(0);
-	// left: -76px;
 }
 svg.chevron-right {
 	width: 18px !important;
 	height: 18px !important;
 	transform: rotate(90deg);
 	margin-right: 40px;
-	path {
-		fill: #000 !important;
-	}
+}
+svg.chevron-right path {
+	fill: #000 !important;
 }
 ul.sub li.sub {
 	display: none;
@@ -254,94 +256,91 @@ ul.sub li.sub {
 	cursor: auto;
 	font-size: 18px;
 	list-style-type: none;
-	&:after {
-		content: '';
-		display: table;
-		clear: both;
-	}
-	svg {
-		height: 35px;
-		width: 35px;
-		path {
-			fill: #646cff;
-		}
-		&.icon-close {
-			width: 25px;
-			display: none;
-			// padding: 15px;
-		}
-	}
-	li {
-		width: 100%;
-		min-height: 72px;
-		line-height: 72px;
-		text-align: left;
-		float: left;
-		display: flex;
-		max-width: 100vw;
-		align-items: center;
-		a {
-			display: block;
-			color: #333;
-			width: 100%;
-			height: 100%;
-			text-decoration: none;
-			font-size: 1.2rem;
-		}
-	}
-	.menu-button {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		margin: 0;
-		cursor: pointer;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		&:after {
-			opacity: 0;
-			top: 45px;
-			content: '';
-			width: 100vw;
-			display: block;
-			position: fixed;
-			height: 100vh;
-			// background: rgba(0, 0, 0, 0.5);
-			content: '';
-			pointer-events: none;
-			transition: opacity 0.2s cubic-bezier(0, 0, 0.3, 1);
-			transition-delay: 0.1s;
-		}
-	}
-	// #menu-toggle {
-	// 	display: none;
-	.opened .menu-button,
-	.opened .menu-button {
-		.icon-close {
-			display: block;
-		}
-		.icon-open {
-			display: none;
-		}
-		&:after {
-			opacity: 1;
-			pointer-events: auto;
-			transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
-		}
-	}
-	// }
-	.menu-container {
-		width: 65px;
-		float: left;
-		cursor: pointer;
-		position: absolute;
-		right: 0;
-		display: none;
-	}
 }
+.mob:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+.mob svg {
+	height: 35px;
+	width: 35px;
+}
+.mob svg path {
+	fill: #646cff;
+}
+.mob .menu-container .icon-close {
+	width: 25px;
+	display: none;
+}
+.mob li {
+	width: 100%;
+	min-height: 72px;
+	line-height: 72px;
+	text-align: left;
+	float: left;
+	display: flex;
+	max-width: 100vw;
+	align-items: center;
+}
+.mob li a {
+	display: block;
+	color: #333;
+	width: 100%;
+	height: 100%;
+	text-decoration: none;
+	font-size: 1.2rem;
+}
+.mob .menu-button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.mob .menu-button:after {
+	opacity: 0;
+	top: 45px;
+	content: '';
+	width: 100vw;
+	display: block;
+	position: fixed;
+	height: 100vh;
+	/* background: rgba(0, 0, 0, 0.5);*/
+	content: '';
+	pointer-events: none;
+	transition: opacity 0.2s cubic-bezier(0, 0, 0.3, 1);
+	transition-delay: 0.1s;
+}
+/* #menu-toggle {*/
+/* 	display: none;*/
+.mob .opened .menu-button .icon-close {
+	display: block;
+}
+.mob .opened .menu-button .icon-open {
+	display: none;
+}
+.mob .opened .menu-button:after {
+	opacity: 1;
+	pointer-events: auto;
+	transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+}
+
+.mob .menu-container {
+	width: 65px;
+	float: left;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	display: none;
+}
+
 .nbox {
 	font-size: 2.5rem;
 	flex: 1;
@@ -366,10 +365,10 @@ ul.sub li.sub {
 	transform: rotate(90deg);
 }
 @media (max-width: 480px) {
-	// .mob li {
-	// 	min-height: 50px;
-	// 	line-height: 50px;
-	// }
+	/* .mob li {*/
+	/* 	min-height: 50px;*/
+	/* 	line-height: 50px;*/
+	/* }*/
 }
 @media (min-width: 551px) and (max-width: 1024px) {
 }

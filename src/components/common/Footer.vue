@@ -253,10 +253,10 @@ footer .button {
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr 1fr;
 		grid-template-areas: 'col1 col2' 'col3 col4';
-		align-items: center;
+		align-items: flex-start;
 	}
 	.sitemap .columns {
-		margin: 0 1rem;
+		margin: 0 3rem;
 	}
 }
 a {

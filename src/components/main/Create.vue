@@ -26,10 +26,12 @@ export default defineComponent({
 section.create {
 	display: flex;
 	flex-direction: column;
-	width: 1718px;
+	/* width: 1718px; */
+	width: calc(100vw - 202px);
 	max-width: 100vw;
 	gap: 50px;
 	margin-bottom: 98px;
+	max-width: 1920px;
 }
 h4 {
 	font-size: 32px;
@@ -84,7 +86,7 @@ h3 {
 }
 @media (max-width: 1718px) {
 	section.create {
-		width: 90vw;
+		width: calc(100vw - 4rem);
 	}
 }
 @media (max-width: 550px) {
@@ -97,6 +99,7 @@ h3 {
 	}
 	section.create {
 		gap: 24px;
+		width: calc(100vw - 40px);
 		margin-bottom: 48px;
 	}
 }

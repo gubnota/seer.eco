@@ -345,9 +345,14 @@ li.head > * {
 	}
 	nav.top,
 	.navbar {
-		justify-content: flex-start;
+	}
+	nav.top {
+		justify-content: space-between;
 		gap: 14px;
 		padding: 0 1rem;
+	}
+	.navbar {
+		margin-top: -10px;
 	}
 }
 

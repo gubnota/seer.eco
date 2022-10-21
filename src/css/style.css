@@ -82,6 +82,17 @@ body {
 	background-size: 100vw auto;
 	min-height: 200px;
 }
+@media (max-width: 800px) {
+	.arrow_down {
+		min-height: 50px;
+	}
+}
+@media (max-width: 550px) {
+	.arrow_down {
+		min-height: 200px;
+	}
+}
+
 .illustration {
 	object-fit: contain;
 	max-width: 1168px;
@@ -579,10 +590,4 @@ h2 {
 }
 sup {
 	font-size: 1rem;
-}
-
-@media (max-width: 550px) {
-	.arrow_down {
-		min-height: 28px;
-	}
 }
