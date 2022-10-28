@@ -1,5 +1,5 @@
 const menu = [
-	{ name: 'Launch App', hash: '/coming-soon', children: false }, //https://app.seer.eco
+	{ name: 'Launch App', hash: 'https://app.seer.eco', children: false }, //https://app.seer.eco
 	{
 		name: 'Ecology',
 		hash: false,
