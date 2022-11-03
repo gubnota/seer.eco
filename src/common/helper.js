@@ -1,7 +1,9 @@
 const comingSoon = () => {
-	document.querySelector('.modal').style.display = ''
+	let a = document.querySelector('.modal')
+	if (!a) return
+	a.style.display = ''
 	setTimeout(() => {
-		document.querySelector('.modal').style.display = 'none'
+		a.style.display = 'none'
 	}, 1000)
 }
 

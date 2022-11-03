@@ -1,7 +1,9 @@
 <template>
-	<section class="nav">
+	<section class="nav" :class="{ sticky: isSticky }">
 		<nav class="top">
-			<a href="/"><img src="/01head/seer.png" alt="logo" class="logo" /></a>
+			<router-link to="/">
+				<img src="/01head/seer.png" alt="logo" class="logo"
+			/></router-link>
 			<MobileNav />
 
 			<div class="navbar">
@@ -142,14 +144,34 @@
 import { menu } from '../../common/contents'
 import MobileNav from '../MobileNav.vue'
 
+var onscroll = (evt) => {
+	console.log('nounte', evt)
+}
+
 export default {
 	name: 'Nav',
 	data() {
-		return { menu }
+		return { menu, isSticky: false }
+	},
+
+	created() {
+		window.addEventListener('scroll', this.onscroll)
+	},
+	destroyed() {
+		window.removeEventListener('scroll', this.onscroll)
 	},
 	methods: {
 		toggleMenu(evt) {
 			console.log(evt.target, 'toggleMenu')
+		},
+		onscroll(e) {
+			this.isSticky =
+				document.body.offsetWidth > 1023 &&
+				window.pageYOffset &&
+				window.pageYOffset > (100 || document.querySelector('.stats').offsetTop)
+			// window.onscroll((ev) => {
+			// 	console.log(ev)
+			// })
 		},
 	},
 	components: { MobileNav },
@@ -244,11 +266,16 @@ export default {
 section.nav {
 	display: flex;
 	width: 100%;
-	max-width: 1120px;
+	/* max-width: 1120px; */
 	justify-content: center;
 	z-index: 1000;
 	font-weight: 600;
 	font-size: 15px;
+}
+section.nav.sticky {
+	position: fixed;
+	top: 0;
+	background: white;
 }
 
 ul.main {

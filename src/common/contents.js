@@ -6,7 +6,7 @@ const menu = [
 		children: [
 			{ name: 'SDID', hash: 'https://sdid.seer.eco/' },
 			{ name: 'NFT', hash: '/coming-soon' },
-			{ name: 'DAO', hash: '/coming-soon' },
+			{ name: 'DAO', hash: '/dao' },
 			{ name: 'AD Services', hash: '/coming-soon' },
 		],
 	},
@@ -53,7 +53,7 @@ const footer = {
 				{ name: 'Github', hash: '/coming-soon' },
 				{ name: 'Safety', hash: '/coming-soon' },
 				{ name: 'StreamKit', hash: '/coming-soon' },
-				{ name: 'Q&A', hash: '/coming-soon' },
+				{ name: 'Q&A', hash: '/seer_q_and_a.html' },
 			],
 		},
 		{
@@ -73,9 +73,9 @@ const footer = {
 			header: 'Help',
 			items: [
 				{ name: 'Support', hash: '/coming-soon' },
-				{ name: 'Terms & Conditions', hash: '/user.html' },
+				{ name: 'Terms & Conditions', hash: '/seer_user.html' },
 				{ name: 'Cookie Settings', hash: '/coming-soon' },
-				{ name: 'Privacy', hash: '/privacy.html' },
+				{ name: 'Privacy', hash: '/seer_privacy.html' },
 				{ name: 'Guidelines', hash: '/coming-soon' },
 				{ name: 'Licenses', hash: '/coming-soon' },
 			],

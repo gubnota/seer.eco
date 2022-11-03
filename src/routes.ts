@@ -2,13 +2,17 @@ import Page1 from './pages/page.vue'
 import Page2 from './pages/page2.vue'
 import Page3 from './pages/page3.vue'
 import Main from './pages/main.vue'
+import Dao from './pages/dao.vue'
 import Test from './pages/test.vue'
+import QA from './pages/qa.vue'
+import PageNotFound from './pages/404.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
 const routes = [
 	{ path: '/', component: Main },
 	{ path: '/nft', component: Nft },
 	{ path: '/test', component: Test },
+	{ path: '/q_and_a', component: QA },
 	{
 		path: '/coming-soon',
 		component: Main,
@@ -33,17 +37,25 @@ const routes = [
 		},
 	},
 	{
-		path: '/user.html',
+		path: '/seer_user.html',
 		beforeEnter: () => {
-			window.open('/user.html', '_blank')
+			window.open('/seer_user.html', '_blank')
 			location.href = '/'
 			return
 		},
 	},
 	{
-		path: '/privacy.html',
+		path: '/seer_q_and_a.html',
 		beforeEnter: () => {
-			window.open('/privacy.html', '_blank')
+			window.open('/seer_q_and_a.html', '_blank')
+			location.href = '/'
+			return
+		},
+	},
+	{
+		path: '/seer_privacy.html',
+		beforeEnter: () => {
+			window.open('/seer_privacy.html', '_blank')
 			location.href = '/'
 			return
 		},
@@ -64,6 +76,8 @@ const routes = [
 	{ path: '/page1', component: Page1 },
 	{ path: '/page2', component: Page2 },
 	{ path: '/page2/page3.html', component: Page3 },
+	{ path: '/dao', component: Dao },
+	{ path: '/:pathMatch(.*)*', component: PageNotFound },
 ]
 
 export default routes

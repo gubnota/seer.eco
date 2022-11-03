@@ -21,7 +21,7 @@
 				'px'
 			"
 		>
-			<source :src="video" />
+			<source :src="video" id="vidsource" />
 		</video>
 		<div
 			class="videoPlaceholder_overlay"
@@ -48,13 +48,23 @@ export default defineComponent({
 		return {
 			top: store.state.statsOffsetTop || 1000,
 			width: window.innerWidth,
-			video: '/asset/bg.mp4',
+			video: '',
 			isMobile: window.innerWidth > 550 ? false : true,
 			// uniswap: uniswap,
 		}
 	},
 	created() {
 		window.addEventListener('resize', this.myEvtHandler)
+	},
+	mounted() {
+		let video = document.querySelector('#bgvid')
+		this.video = '/asset/bg.mp4'
+		video.addEventListener('loadedmetadata', (e) => {
+			console.log('loadedmetadata')
+			let player = e.target as HTMLVideoElement
+			player.width = player.clientWidth
+			player.height = player.clientHeight
+		})
 	},
 	unmounted() {
 		window.removeEventListener('resize', this.myEvtHandler)

@@ -2,8 +2,9 @@
 	<section class="create">
 		<h4>Create your own SEER space</h4>
 		<a class="cta" @click="comingSoon">
+			<img src="/03value/arrow-right.svg" alt="arrow right" />
 			<span>Create Now</span>
-			<img src="/04create/arrow-right.svg" alt="arrow right" />
+			<!-- <img src="/04create/arrow-right.svg" alt="arrow right" /> -->
 		</a>
 		<Tiles />
 		<h2>Don't know where your customers are?</h2>
