@@ -1,10 +1,8 @@
 <template>
-	<div
-		class="item"
-		ref="item"
-		@mouseenter="show(true)"
+	<div class="item" ref="item" @click="show(true)">
+		<!--		@mouseenter="show(true)"
 		@mouseleave="show(false)"
-	>
+ -->
 		<span class="imgpic"> <img :src="this.userpicSample" /> </span>
 		<div class="main">
 			<span class="desc">{{ desc }}</span>
@@ -69,6 +67,17 @@ export default {
 				let top =
 					window.scrollY + el.getBoundingClientRect().top + el.offsetHeight + 6 // Y
 				let left = window.scrollX + el.getBoundingClientRect().left // X this.$store.state.detail.left
+				console.log({ top })
+				if (
+					el.getBoundingClientRect().bottom + (683 + 6) > // 683 is height of Detail el and 6 is position of this el from top
+					window.visualViewport.height
+				)
+					top =
+						top -
+						(el.getBoundingClientRect().bottom +
+							(683 + 6) -
+							window.visualViewport.height) -
+						(window.visualViewport.height - (683 + 6)) / 2
 
 				this.active = true
 				this.$store.dispatch('save', {
@@ -96,16 +105,15 @@ export default {
 			if (!trigger) {
 				this.active = false
 				if (this.$store.state.detailDeactivating == 0)
-					this.$store.state.detailDeactivating
-				this.$store.dispatch('save', {
-					k: 'detailDeactivating',
-					v: setTimeout(() => {
-						this.$store.dispatch('save', {
-							k: 'detail',
-							v: false,
-						})
-					}, 1500),
-				})
+					this.$store.dispatch('save', {
+						k: 'detailDeactivating',
+						v: setTimeout(() => {
+							this.$store.dispatch('save', {
+								k: 'detail',
+								v: false,
+							})
+						}, 1500),
+					})
 			}
 		},
 		calcTime() {

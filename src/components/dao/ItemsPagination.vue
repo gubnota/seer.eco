@@ -48,14 +48,21 @@ export default {
 		}
 	},
 	mounted() {
-		this.els = Array.from({ length: this.num }, (_, i) => i + 1) //Array.from(Array(this.num).keys())
-		this.els = '…'
+		this.select(1)
 	},
 	methods: {
+		pagination() {
+			this.els = Array.from({ length: this.num }, (_, i) => {
+				console.log('this.sel', this.sel)
+				// if (i > this.sel && i < this.num - 1) return '…'
+				return i + 1
+			}) //Array.from(Array(this.num).keys())
+		},
 		select(num: any) {
 			this.sel = num
 			this.prev = this.sel > 1 ? this.sel - 1 : 0
 			this.next = this.sel < this.num ? this.sel + 1 : 0
+			this.pagination()
 		},
 		next() {
 			if (this.sel < this.num) this.select(this.sel + 1)

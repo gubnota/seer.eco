@@ -3,22 +3,28 @@
 		<div
 			class="btn pass"
 			@click="
-				() => {
+				(e) => {
+					e.stopPropagation()
+					if (passed || rejected) return
 					passed = true
 					rejected = false
 				}
 			"
+			:class="{ inactive: rejected }"
 		>
 			<span class="ticket" v-if="passed"><Ticket /></span> <span>Pass</span>
 		</div>
 		<div
 			class="btn reject"
 			@click="
-				() => {
+				(e) => {
+					e.stopPropagation()
+					if (passed || rejected) return
 					passed = false
 					rejected = true
 				}
 			"
+			:class="{ inactive: passed }"
 		>
 			<span class="ticket" v-if="rejected"><Ticket /></span><span>Reject</span>
 		</div>
@@ -36,6 +42,9 @@ export default {
 	},
 	props: {
 		id: Number,
+	},
+	methods: {
+		handler(pass: true) {},
 	},
 	components: { Ticket },
 }
@@ -65,8 +74,14 @@ export default {
 .btn:active {
 	transform: translateY(5px);
 }
+.btn.inactive:active {
+	transform: none;
+}
+.btn.inactive {
+	cursor: not-allowed;
+}
 .btn.pass {
-	background-color: #3a4048;
+	background-color: #1f2226;
 	color: white;
 }
 .btn.reject {
@@ -78,10 +93,20 @@ export default {
 	color: #e94f4d;
 	border-color: #e94f4d;
 }
+.btn.reject.inactive {
+	color: #3a4048;
+	border-color: #3a4048;
+}
 .btn.pass:hover,
 .btn.pass:active {
 	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
 }
+.btn.pass.inactive,
+.btn.pass.inactive:hover,
+.btn.pass.inactive:active {
+	background: #3a4048;
+}
+
 .ticket svg {
 	width: 13px;
 	height: 13px;
