@@ -14,12 +14,11 @@
 				<span class="value">Happening now</span>
 			</div>
 			<div class="desc">
-				Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-				sint. Velit officia consequat duis enim velit mollit…
+				{{ this.$store.state.detail.desc.substr(0, 124) }}
 			</div>
 			<div class="username">
 				<span class="pic"><img :src="userpicSample" /></span>
-				<span class="value">恶鹜37373</span>
+				<span class="value">{{ this.$store.state.detail.username }}</span>
 			</div>
 			<div class="location">
 				<span class="pic"><Geo /></span>
@@ -31,15 +30,16 @@
 			</div>
 			<div class="group">
 				<span class="pic"><TwoUsers /></span>
-				<span class="value">1 person interested</span>
+				<span class="value"
+					>{{ this.$store.state.detail.interested }} person interested</span
+				>
 			</div>
 			<div class="creator">
 				<span class="pic"><img :src="userpicSample" /></span>
-				<span class="value">恶鹜37373</span>
+				<span class="value">{{ this.$store.state.detail.creator }}</span>
 			</div>
 			<div class="desc2">
-				Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-				sint. Velit officia consequat duis enim velit mollit…
+				{{ this.$store.state.detail.desc.substr(0, 155) }}
 			</div>
 		</div>
 		<div class="footer">
