@@ -3,7 +3,7 @@
 		<div class="col" v-for="el in $data.roles">
 			<div class="row">
 				<h3>{{ el.name }}</h3>
-				<button @click="">
+				<button @click="callback(el.action)" class="btn">
 					<img :src="arrow" />
 					<span>{{ el.action }}</span>
 				</button>
@@ -13,7 +13,7 @@
 	</section>
 </template>
 <script lang="ts">
-import arrow from '/src/dao/assets/arrow-right.png'
+import arrow from '/src/assets/dao/arrow-right.png'
 export default {
 	data() {
 		return {
@@ -36,6 +36,11 @@ export default {
 				},
 			],
 		}
+	},
+	methods: {
+		callback(action: String) {
+			if (action == 'Apply') this.router.push('/reviewer/intro')
+		},
 	},
 }
 </script>

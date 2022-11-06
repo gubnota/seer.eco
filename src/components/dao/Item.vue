@@ -24,7 +24,7 @@ import Ads from './Ads.vue'
 import Aoe from './Aoe.vue'
 import ItemActions from './ItemActions.vue'
 import ItemRate from './ItemRate.vue'
-import userpicSample from '/src/dao/assets/userpic.jpg'
+import userpicSample from '/src/assets/dao/userpic.jpg'
 import { time } from 'console'
 
 export default {

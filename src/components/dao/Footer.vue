@@ -17,7 +17,7 @@
 </template>
 <script>
 // import { router } from '../../main.ts'
-import arrow from '/src/dao/assets/arrow-right_white.png'
+import arrow from '/src/assets/dao/arrow-right_white.png'
 export default {
 	name: 'Footer',
 	data() {
@@ -28,9 +28,10 @@ export default {
 	},
 	methods: {
 		handleSubmit(e) {
+			window.open('https://to.seer.eco/#/#seer:genesis.seer.eco', '_blank')
 			// console.log(this.router)
 			// e.preventDefault()
-			this.router.push({ path: '/coming-soon' })
+			// this.router.push({ path: '/coming-soon' })
 			// alert('d')
 			// console.log(this.email)
 			// router.push({ path: '/coming-soon' })

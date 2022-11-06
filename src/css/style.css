@@ -130,15 +130,6 @@ h2 {
 	align-items: center;
 	display: none;
 }
-.top {
-	max-width: 1120px;
-	display: flex;
-	justify-content: space-between;
-	margin: 23px 0 0 0;
-	flex-direction: row;
-	/* max-width: 90vw; */
-	/* background-color: blanchedalmond; */
-}
 
 .part2 {
 	display: flex;
@@ -590,4 +581,13 @@ h2 {
 }
 sup {
 	font-size: 1rem;
+}
+.btn {
+	cursor: pointer;
+}
+.btn:active {
+	transform: translateY(5px);
+}
+.btn::selection {
+	background-color: transparent;
 }

@@ -179,6 +179,16 @@ export default {
 </script>
 
 <style scoped>
+nav.top {
+	max-width: 1120px;
+	display: flex;
+	justify-content: space-between;
+	margin: 23px 0 0 0;
+	flex-direction: row;
+	/* max-width: 90vw; */
+	/* background-color: blanchedalmond; */
+}
+
 .navbar {
 	display: flex;
 	flex-direction: row;

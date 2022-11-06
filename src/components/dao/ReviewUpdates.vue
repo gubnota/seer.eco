@@ -47,7 +47,7 @@ import Item from './Item.vue'
 import ItemsPagination from './ItemsPagination.vue'
 import fetchedCardsSample from './fetchedCardsSample'
 import Mark from './Mark.vue'
-import Ticket from '/src/dao/assets/ticket.svg'
+import Ticket from '/src/assets/dao/ticket.svg'
 import Detail from './Detail.vue'
 
 export default {

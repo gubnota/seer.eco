@@ -31,7 +31,7 @@
 	</div>
 </template>
 <script lang="ts">
-import Ticket from '/src/dao/assets/ticket.svg'
+import Ticket from '/src/assets/dao/ticket.svg'
 
 export default {
 	data() {

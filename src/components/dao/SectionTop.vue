@@ -1,5 +1,5 @@
 <template>
-	<section class="top">
+	<section class="top2">
 		<div class="col">
 			<h1>Become A <br />DAO Reviewer</h1>
 			<h2>Cast your precious vote for the project</h2>
@@ -14,7 +14,7 @@
 export default {}
 </script>
 <style scoped>
-section.top {
+section.top2 {
 	display: flex;
 	flex-direction: row;
 	align-items: center;

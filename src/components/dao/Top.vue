@@ -1,6 +1,6 @@
 <template>
-	<nav class="top">
-		<router-link to="/">
+	<nav class="top2">
+		<router-link to="/dao">
 			<img :src="logo" alt="logo" class="logo" />
 		</router-link>
 		<button @click="connect">
@@ -10,8 +10,8 @@
 	</nav>
 </template>
 <script lang="ts">
-import logo from '/src/dao/assets/logodao.png'
-import lock from '/src/dao/assets/lock.png'
+import logo from '/src/assets/dao/logodao.png'
+import lock from '/src/assets/dao/lock.png'
 export default {
 	data() {
 		return {
@@ -27,7 +27,7 @@ export default {
 }
 </script>
 <style scoped>
-nav.top {
+nav.top2 {
 	margin: 15px 0 0 0;
 	display: flex;
 	flex-direction: row;

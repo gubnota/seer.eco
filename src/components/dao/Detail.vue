@@ -48,12 +48,12 @@
 	</div>
 </template>
 <script lang="ts">
-import Close from '/src/dao/assets/close.svg'
-import Calendar from '/src/dao/assets/calendar.svg'
-import TwoUsers from '/src/dao/assets/twousers.svg'
-import Geo from '/src/dao/assets/geo.svg'
-import detailSample from '/src/dao/assets/detail.jpg'
-import userpicSample from '/src/dao/assets/userpicSample.jpg'
+import Close from '/src/assets/dao/close.svg'
+import Calendar from '/src/assets/dao/calendar.svg'
+import TwoUsers from '/src/assets/dao/twousers.svg'
+import Geo from '/src/assets/dao/geo.svg'
+import detailSample from '/src/assets/dao/detail.jpg'
+import userpicSample from '/src/assets/dao/userpicSample.jpg'
 
 export default {
 	data() {

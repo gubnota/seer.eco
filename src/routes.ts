@@ -5,6 +5,12 @@ import Main from './pages/main.vue'
 import Dao from './pages/dao.vue'
 import Test from './pages/test.vue'
 import QA from './pages/qa.vue'
+import Reviewer1 from './pages/Reviewer1.vue'
+import Reviewer2 from './pages/Reviewer2TestIntro.vue'
+import Reviewer3 from './pages/Reviewer3Test.vue'
+import Reviewer from './pages/Reviewer.vue'
+import Reviewer4 from './pages/Reviewer4Result.vue'
+
 import PageNotFound from './pages/404.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
@@ -77,6 +83,11 @@ const routes = [
 	{ path: '/page2', component: Page2 },
 	{ path: '/page2/page3.html', component: Page3 },
 	{ path: '/dao', component: Dao },
+	{ path: '/reviewer', component: Reviewer },
+	{ path: '/reviewer/conditions', component: Reviewer1 },
+	{ path: '/reviewer/intro', component: Reviewer2 },
+	{ path: '/reviewer/test', component: Reviewer3 },
+	{ path: '/reviewer/result', component: Reviewer4 },
 	{ path: '/:pathMatch(.*)*', component: PageNotFound },
 ]
 
