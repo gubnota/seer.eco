@@ -10,8 +10,8 @@
 	</main>
 </template>
 <script lang="ts">
-import Top from '../../../components/dao/Top.vue'
-import Modal from '../../../components/common/Modal.vue'
+import Top from '../Top.vue'
+import Modal from '../../common/Modal.vue'
 import oval from '/src/assets/reviewer/oval@2x.png'
 import crystal from '/src/assets/reviewer/crystal@2x.png'
 export default {

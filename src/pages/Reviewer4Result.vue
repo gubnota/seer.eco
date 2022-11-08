@@ -35,7 +35,7 @@
 	</Template>
 </template>
 <script lang="ts">
-import Template from '../components/dao/reviewer/template.vue'
+import Template from '../components/dao/reviewer/Template2.vue'
 import Reviewer2TestIntro from './Reviewer2TestIntro.vue'
 import logo from '/src/assets/reviewer/black_logo.svg'
 import prize from '/src/assets/reviewer/prize.svg'

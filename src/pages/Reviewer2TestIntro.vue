@@ -38,7 +38,7 @@
 </template>
 <script lang="ts">
 import { appendFile } from 'fs'
-import Template from '../components/dao/reviewer/template.vue'
+import Template from '../components/dao/reviewer/Template2.vue'
 // import d from '../assets/reviewer/questions_zh.json'
 
 // type options = {

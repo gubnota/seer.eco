@@ -17,7 +17,7 @@
 	</Template>
 </template>
 <script lang="ts">
-import Template from '../components/dao/reviewer/template.vue'
+import Template from '../components/dao/reviewer/Template2.vue'
 export default {
 	components: { Template },
 }

@@ -34,7 +34,7 @@
 	</Template>
 </template>
 <script lang="ts">
-import Template from '../components/dao/reviewer/template.vue'
+import Template from '../components/dao/reviewer/Template2.vue'
 import passed from '/src/assets/reviewer/passed.svg'
 import nft_calendar from '/src/assets/reviewer/nft_calendar.svg'
 import twitter from '/src/assets/reviewer/twitter.svg'
