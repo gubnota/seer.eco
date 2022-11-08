@@ -19,7 +19,7 @@
 							<span>{{ el.name }}</span>
 						</div>
 						<div class="val">
-							<passed v-if="el.passed" />
+							<passed v-if="getStatus(el.action)" />
 							<div class="btn" v-else @click="callback(el.action)">
 								<arrow_right /> <span>{{ el.actionText }}</span>
 							</div>
@@ -51,34 +51,65 @@ export default {
 					name: 'NFT duration > 60 days',
 					icon: 'nft_calendar',
 					actionText: 'Approve',
-					passed: true,
+					// passed: this.getStatus('nft'),
 					action: 'nft',
 				},
 				{
 					name: 'Certified by twitter',
 					icon: 'twitter',
 					actionText: 'Approve',
-					passed: false,
+					// passed: this.getStatus('twitter'),
 					action: 'twitter',
 				},
 				{
 					name: 'Understand the relevant specifications of SEER DAO',
 					icon: 'figures',
 					actionText: 'Learn',
-					passed: false,
+					// passed: this.getStatus('learn'),
 					action: 'learn',
 				},
 				{
 					name: 'Pass the Review Rules Competency Exam',
 					icon: 'medal_star',
 					actionText: 'Test',
-					passed: false,
+					// passed: this.getStatus('test'),
 					action: 'test',
 				},
 			],
 		}
 	},
+	mounted() {
+		if (!this.loggedIn()) {
+			// this.router.push('/dao')
+			this.web3.login()
+		}
+		// ;(async () => {
+		// 	if (!this.$store.state.address) await this.web3.login()
+		// 	// setTimeout(() => {
+		// 	// }, 1000)
+		// })()
+	},
 	methods: {
+		loggedIn() {
+			let loggedIn = this.$store.state.daoInfo != null
+			if (loggedIn)
+				this.$store.dispatch('save', { k: 'walletLoading', v: false })
+			return loggedIn
+		},
+
+		getStatus(field: String) {
+			if (!this.$store.state.daoInfo) return false
+			switch (field) {
+				case 'nft':
+					return this.$store.state.daoInfo.steps.holdDSN || false
+					break
+				case 'twitter':
+					return this.$store.state.daoInfo.steps.twitter || false
+				default:
+					return false
+					break
+			}
+		},
 		callback(e) {
 			console.log('callback', e)
 			if (e == 'twitter')

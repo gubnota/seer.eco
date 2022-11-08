@@ -7,4 +7,14 @@ export default class Web3Controller extends EventsController {
 		if (!address) address = this.store.state.address
 		return `${address.substr(0, 5)}.....${address.substr(address.length - 5)}`
 	}
+
+	login = async () => {
+		const connect = await this.connect()
+		// setTimeout(async () => {
+		const info = await this.info()
+		// setTimeout(async () => {
+		const tickets = await this.ticketsNumber()
+		const events = await this.eventList()
+		// console.log({ connect, info, tickets, events })
+	}
 }

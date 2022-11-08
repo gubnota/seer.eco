@@ -61,7 +61,7 @@ export default class EventsController extends DaoController {
 			.then((r) => {
 				let l: eventListT = r.data.data
 				console.log(l.total, l.list)
-				this.store.dispatch('save', { k: 'eventList', v: l })
+				if (l.total) this.store.dispatch('save', { k: 'eventList', v: l })
 			})
 			.catch((err: any) => {
 				console.log('err', err)

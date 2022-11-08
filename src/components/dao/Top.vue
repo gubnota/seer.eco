@@ -8,11 +8,10 @@
 			class="btn"
 			:class="{ disabled: !this.window.ethereum }"
 		>
-			<img :src="this.$store.state.address ? metamask : lock" alt="wallet" />
+			<span class="loader" v-if="loading()" />
+			<img :src="loggedIn() ? metamask : lock" alt="wallet" />
 			<span>{{
-				this.$store.state.address
-					? this.web3.addressPartially()
-					: this.ui._('Connect Wallet')
+				loggedIn() ? this.web3.addressPartially() : this.ui._('Connect Wallet')
 			}}</span>
 		</button>
 	</nav>
@@ -27,24 +26,35 @@ export default {
 			logo,
 			lock,
 			metamask,
-			loggedIn: false,
+			// loading: false,
 		}
 	},
 	mounted() {
 		this.web3.eventList()
 	},
 	methods: {
+		loggedIn() {
+			let loggedIn = this.$store.state.daoInfo != null
+			if (loggedIn)
+				this.$store.dispatch('save', { k: 'walletLoading', v: false })
+			return loggedIn
+		},
+		loading() {
+			return this.$store.state.walletLoading || false
+		},
 		async connect() {
-			if (this.loggedIn) {
+			if (this.loggedIn()) {
 				window.location.reload()
 				return
 			} else {
-				await this.web3.connect()
-				// setTimeout(async () => {
-				await this.web3.info()
-				// setTimeout(async () => {
-				await this.web3.ticketsNumber()
-				await this.web3.eventList()
+				this.$store.dispatch('save', { k: 'walletLoading', v: true })
+				await this.web3.login()
+				// await this.web3.connect()
+				// // setTimeout(async () => {
+				// await this.web3.info()
+				// // setTimeout(async () => {
+				// await this.web3.ticketsNumber()
+				// await this.web3.eventList()
 				// }, 1000)
 				// }, 1000)
 			}
@@ -73,6 +83,7 @@ button {
 	gap: 10px;
 	align-items: center; /*vertically*/
 	justify-content: center; /* horizontally*/
+	position: relative;
 }
 button img {
 	width: 18px;
@@ -96,6 +107,28 @@ button span {
 	nav.top2 {
 		flex-direction: column;
 		gap: 1rem;
+	}
+}
+
+.loader {
+	width: 24px;
+	height: 24px;
+	border: 5px solid #999;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	display: inline-block;
+	box-sizing: border-box;
+	animation: rotation 1s linear infinite;
+	position: absolute;
+	left: 4px;
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }
 </style>

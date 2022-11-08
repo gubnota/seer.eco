@@ -38,8 +38,25 @@ export default {
 		}
 	},
 	methods: {
+		loggedIn() {
+			let loggedIn = this.$store.state.daoInfo != null
+			if (loggedIn)
+				this.$store.dispatch('save', { k: 'walletLoading', v: false })
+			return loggedIn
+		},
+
 		callback(action: String, id: number) {
-			if (id == 0) this.router.push('/reviewer/conditions')
+			if (id == 0) {
+				;(async () => {
+					// check if user is logged in
+					if (!this.loggedIn()) {
+						this.$store.dispatch('save', { k: 'walletLoading', v: true })
+						await this.web3.login()
+					} else {
+						this.router.push('/reviewer/conditions')
+					}
+				})()
+			}
 			// if (id == 2)
 			// 	this.router.push({ path: '/reviewer/result', params: { passed: true } })
 		},

@@ -39,7 +39,7 @@ export default class DaoController extends UserController {
 	info = async () => {
 		if (!this.store.state.seerToken) {
 			setTimeout(() => {
-				this.info()
+				return this.info()
 			}, 100)
 			return
 		}
