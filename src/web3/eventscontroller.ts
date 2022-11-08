@@ -15,9 +15,24 @@ export default class EventsController extends DaoController {
 		Passed: 1,
 	}
 
-	eventDetail = async ({ eventId: string }) => {}
+	eventDetail = async ({ eventId: eventId }) => {
+		axios
+			.post(this.servers.business[this.branch] + 'api/dao/EventDetail', {
+				eventId: eventId,
+			})
+			.then((r) => {
+				let l: eventDetailT = r.data.data
+				// console.log(l)
+				this.store.dispatch('save', { k: 'eventDetail', v: l })
+			})
+			.catch((err: any) => {
+				// console.log('err', err)
+				this.popup({ text: err.message })
+			})
+	}
+
 	eventList = async (
-		p: eventListParams = { tab: eventTab.Waiting, from: 1, limit: 15 }
+		p: eventListParams = { tab: eventTab.Waiting, from: 1, limit: 8 }
 	) => {
 		let url, config
 		switch (p.tab) {

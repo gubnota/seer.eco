@@ -38,9 +38,12 @@
 </template>
 <script lang="ts">
 export default {
+	props: {
+		total: Number,
+	},
 	data() {
 		return {
-			num: 9,
+			num: 0,
 			sel: 1, // current
 			prev: 1, // n-1
 			next: 1, // n+1
@@ -48,8 +51,15 @@ export default {
 		}
 	},
 	mounted() {
+		this.num = this.total
+		// console.log(this.$store.eventList.total)
+		// this.num = Math.ceil(this.total / 15)
 		this.select(1)
 	},
+	updated() {
+		console.log('updated', this.$store.eventList)
+	},
+
 	methods: {
 		pagination() {
 			this.els = Array.from({ length: this.num }, (_, i) => {

@@ -60,9 +60,14 @@ window.web3 = app.config.globalProperties.web3
 // whole app router-aware.
 app.use(router)
 app.use(store)
+
 store.dispatch('save', {
 	k: 'modal',
 	v: 'none',
+})
+store.dispatch('save', {
+	k: 'eventList',
+	v: { list: [], total: 0 },
 })
 
 app.mount('#app')

@@ -3,20 +3,26 @@
 		<!--		@mouseenter="show(true)"
 		@mouseleave="show(false)"
  -->
-		<span class="imgpic"> <img :src="this.userpicSample" /> </span>
-		<div class="main">
-			<span class="desc">{{ desc }}</span>
-			<span class="row">
-				<span class="user">{{ username }}</span>
-				<span class="type">{{ type }}</span>
-				<div class="token">
-					<Aoe v-if="token == 'aoe'" /><Ads v-if="token == 'ads'" />
-				</div>
+		<section class="left">
+			<span class="imgpic">
+				<img :src="`${spaceLogo != '' ? spaceLogo : this.userpicSample}`" />
 			</span>
-		</div>
-		<span class="remaining">{{ remaining }}</span>
-		<ItemActions />
-		<ItemRate :rate="rate" />
+			<div class="main">
+				<span class="desc">{{ topic }}</span>
+				<span class="row">
+					<span class="user">{{ spaceName }}</span>
+					<span class="type">{{ classify }}</span>
+					<div class="token">
+						<Aoe v-if="showType == 'AOE'" /><Ads v-if="showType == 'ADS'" />
+					</div>
+				</span>
+			</div>
+		</section>
+		<span class="remaining" v-if="this.$store.state.eventsTab == 0">{{
+			remaining
+		}}</span>
+		<ItemActions v-if="this.$store.state.eventsTab == 0" />
+		<ItemRate :rate="voteRate" />
 	</div>
 </template>
 <script lang="ts">
@@ -24,7 +30,7 @@ import Ads from './Ads.vue'
 import Aoe from './Aoe.vue'
 import ItemActions from './ItemActions.vue'
 import ItemRate from './ItemRate.vue'
-import userpicSample from '/src/assets/dao/userpic.jpg'
+import userpicSample from '/src/assets/dao/defaultUserPic@2x.png'
 import { time } from 'console'
 
 export default {
@@ -37,20 +43,17 @@ export default {
 		}
 	},
 	props: {
-		id: Number,
-		userpic: String,
-		detail: String,
-		desc: String,
-		username: String,
-		location: String,
-		interested: Number,
-		creator: String,
-		time: Number,
-		token: String,
-		type: String,
-		group: Number, // underway: 0, have passed: 1, reject: 2
-		status: Number, // waiting: 0, passed: 1, rejected: 2
-		rate: Number, // passing rate
+		showId: Number,
+		eventId: String,
+		classify: String,
+		topic: String,
+		voteResult: Number,
+		setupTime: String,
+		voteRate: Number,
+		spaceLogo: String,
+		spaceName: String,
+		showType: String,
+		daoEndTime: String,
 	},
 	mounted() {
 		this.calcTime()
@@ -80,25 +83,27 @@ export default {
 						(window.visualViewport.height - (683 + 6)) / 2
 
 				this.active = true
+				this.web3.eventDetail({ eventId: this.eventId })
 				this.$store.dispatch('save', {
 					k: 'detail',
 					v: {
 						top,
 						left,
-						id: this.id,
-						userpic: this.userpic,
-						detail: this.detail,
-						desc: this.desc,
-						username: this.username,
-						location: this.location,
-						interested: this.interested,
-						creator: this.creator,
-						time: this.time,
-						token: this.token,
-						type: this.type,
-						group: this.group,
-						status: this.status,
-						rate: this.rate,
+						eventId: this.eventId,
+						// 		id: this.id,
+						// 		userpic: this.userpic,
+						// 		detail: this.detail,
+						// 		desc: this.desc,
+						// 		username: this.username,
+						// 		location: this.location,
+						// 		interested: this.interested,
+						// 		creator: this.creator,
+						// 		time: this.time,
+						// 		token: this.token,
+						// 		type: this.type,
+						// 		group: this.group,
+						// 		status: this.status,
+						// 		rate: this.rate,
 					},
 				})
 			}
@@ -118,7 +123,7 @@ export default {
 		},
 		calcTime() {
 			var date1 = new Date()
-			var date2 = new Date(this.time)
+			var date2 = new Date(this.daoEndTime) //new Date(this.time)
 			var diff = new Date(date2.getTime() - date1.getTime())
 
 			var years = diff.getUTCFullYear() - 1970 // Gives difference as year
@@ -129,6 +134,7 @@ export default {
 			var seconds = diff.getUTCSeconds().toString().padStart(2, '0') // Gives secs count of difference
 
 			this.remaining = `${hours}:${minutes}:${seconds}` //("remaining time = " + years + " years, " + months + " months, " + days + " days.");
+			if (date2 == 'NaN') this.remaining = '0'
 		},
 	},
 	components: { Ads, Aoe, ItemActions, ItemRate },
@@ -147,10 +153,16 @@ export default {
 	/* background-color: blue; */
 	box-sizing: border-box;
 	flex-flow: column wrap;
-	align-content: flex-start;
+	align-content: space-between;
 	overflow: hidden;
 	height: 80px;
 	width: 100%;
+	justify-content: center;
+}
+section.left {
+	display: flex;
+	flex-direction: row;
+	gap: 24px;
 }
 .item > * {
 	/* background-color: aquamarine; */
@@ -163,6 +175,10 @@ export default {
 	order: 0;
 	flex-grow: 0;
 	overflow: hidden;
+}
+.imgpic img {
+	width: 100%;
+	height: 100%;
 }
 .main {
 	display: flex;

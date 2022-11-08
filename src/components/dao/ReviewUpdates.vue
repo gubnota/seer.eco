@@ -8,7 +8,7 @@
 		</h3>
 		<h4>
 			<span>Your voting rights：</span>
-			<span>{{ this.$store.state.ticketsNumber ?? 0 }}</span>
+			<span>{{ getTicketsNumber() }}</span>
 			<span class="ticket"><Ticket /></span>
 		</h4>
 		<nav class="tabs">
@@ -21,26 +21,23 @@
 		</nav>
 		<div class="list">
 			<Item
-				v-for="(el, i) in $data.fetched"
-				:desc="el.desc"
-				:key="i"
-				:id="i"
-				:userpic="el.userpic"
-				:detail="el.detail"
-				:username="el.username"
-				:location="el.location"
-				:interested="el.interested"
-				:creator="el.creator"
-				:time="el.time"
-				:token="el.token"
-				:type="el.type"
-				:group="el.group"
-				:status="el.status"
-				:rate="el.rate"
+				v-for="(el, i) in fetch()"
+				:daoEndTime="el.daoEndTime"
+				:showId="el.showId"
+				:eventId="el.eventId"
+				:classify="el.classify"
+				:topic="el.topic"
+				:voteResult="el.voteResult"
+				:setupTime="el.setupTime"
+				:voteRate="el.voteRate"
+				:spaceLogo="el.spaceLogo"
+				:spaceName="el.spaceName"
+				:showType="el.showType"
 			/>
 		</div>
 
 		<ItemsPagination />
+		<!-- TODO: change to dynamic -->
 	</section>
 </template>
 <script lang="ts">
@@ -55,16 +52,25 @@ export default {
 	data() {
 		return {
 			shownMark: false,
-			fetched: fetchedCardsSample,
+			// fetched: [], //fetchedCardsSample,
 			tab: 0, //selected tab
 			top: 1200,
 			left: 400,
+			totalNo: 1,
 		}
 	},
 	mounted() {
+		this.$store.dispatch('save', { k: 'totalNo', v: 190 })
 		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
 	},
 	methods: {
+		fetch() {
+			return this.$store.state.eventList.list || []
+		},
+		getTicketsNumber() {
+			return this.$store.state.ticketsNumber || 0
+		},
+
 		hover(e: { target: HTMLSpanElement }) {
 			let els =
 				e.target.tagName == 'svg'
@@ -83,6 +89,7 @@ export default {
 			console.log('tab', tab)
 			this.$store.dispatch('save', { k: 'eventsTab', v: tab })
 			this.tab = tab
+			this.web3.eventList({ tab, from: 0, limit: 8 })
 		},
 	},
 

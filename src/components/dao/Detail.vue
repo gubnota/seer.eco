@@ -14,36 +14,32 @@
 				<span class="value">Happening now</span>
 			</div>
 			<div class="desc">
-				{{ this.$store.state.detail.desc.substr(0, 124) }}
+				{{ d(detail).substr(0, 124) }}
 			</div>
 			<div class="username">
-				<span class="pic"><img :src="userpicSample" /></span>
-				<span class="value">{{ this.$store.state.detail.username }}</span>
+				<span class="pic"><img :src="spaceLogo || userpicSample" /></span>
+				<span class="value">{{ spaceName }}</span>
 			</div>
 			<div class="location">
 				<span class="pic"><Geo /></span>
 				<span class="value"
-					><a href="#" target="_blank"
-						>https://to.seer.eco/#/#perfect:genesis.seer.eco</a
-					></span
+					><a :href="spaceUrl" target="_blank">{{ spaceUrl || '' }}</a></span
 				>
 			</div>
 			<div class="group">
 				<span class="pic"><TwoUsers /></span>
-				<span class="value"
-					>{{ this.$store.state.detail.interested }} person interested</span
-				>
+				<span class="value">{{ interestedCount }} person interested</span>
 			</div>
 			<div class="creator">
-				<span class="pic"><img :src="userpicSample" /></span>
-				<span class="value">{{ this.$store.state.detail.creator }}</span>
+				<span class="pic"><img :src="userLogo || userpicSample" /></span>
+				<span class="value">{{ userName }}</span>
 			</div>
 			<div class="desc2">
-				{{ this.$store.state.detail.desc.substr(0, 155) }}
+				{{ this.detail.substr(0, 155) }}
 			</div>
 		</div>
 		<div class="footer">
-			<div class="join"><span>Join space</span></div>
+			<div class="join" @click="openSpace"><span>Join space</span></div>
 		</div>
 	</div>
 </template>
@@ -53,16 +49,40 @@ import Calendar from '/src/assets/dao/calendar.svg'
 import TwoUsers from '/src/assets/dao/twousers.svg'
 import Geo from '/src/assets/dao/geo.svg'
 import detailSample from '/src/assets/dao/detail.jpg'
-import userpicSample from '/src/assets/dao/userpicSample.jpg'
+import userpicSample from '/src/assets/dao/defaultUserPic@2x.png'
 
 export default {
 	data() {
 		return {
 			detailSample,
 			userpicSample,
+			classify: '', //DAO
+			cover: '',
+			detail: '',
+			endTime: '',
+			hasAds: false,
+			hasAoe: false,
+			interestedCount: 0, //1
+			location: '', //"场所"
+			spaceLogo: '',
+			spaceName: '', //"Windows"
+			spaceUrl: '', //"https://app.seer.eco/#/room/!wLVoJfsqeCwhGRSqJo:genesis.seer.eco"
+			startTime: '', //"2022-11-08 09:00:00"
+			status: '', //"ongoing"
+			topic: '', //"标题"
+			userLogo: '',
+			userName: '',
+			video: '',
 		}
 	},
-	mounted() {},
+	mounted() {
+		if (this.$store.state.eventDetail) {
+			Object.entries(this.$store.state.eventDetail).forEach(([key, value]) => {
+				this[key] = value
+			})
+		}
+	},
+
 	components: {
 		Close,
 		Calendar,
@@ -70,6 +90,19 @@ export default {
 		Geo,
 	},
 	methods: {
+		d(k: String) {
+			if (this.$store.state.eventDetail) {
+				Object.entries(this.$store.state.eventDetail).forEach(
+					([key, value]) => {
+						this[key] = value
+					}
+				)
+			}
+			return this.k || ''
+		},
+		openSpace() {
+			window.open(this.spaceUrl, '_blank')
+		},
 		close(e) {
 			this.$store.dispatch('save', {
 				k: 'detail',
