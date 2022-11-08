@@ -22,7 +22,7 @@
 			</div>
 			<div class="location">
 				<span class="pic"><Geo /></span>
-				<span class="value"
+				<span class="value ellipsis"
 					><a :href="spaceUrl" target="_blank">{{ spaceUrl || '' }}</a></span
 				>
 			</div>
@@ -228,5 +228,10 @@ h3 {
 }
 .join:active {
 	transform: translateY(5px);
+}
+.ellipsis {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 544px;
 }
 </style>

@@ -51,7 +51,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.num = this.total
+		this.num = 1
 		// console.log(this.$store.eventList.total)
 		// this.num = Math.ceil(this.total / 15)
 		this.select(1)
