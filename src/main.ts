@@ -1,3 +1,6 @@
+import Web3Controller from './web3/web3controller'
+import MetaController from './web3/metacontroller'
+import { store } from '/src/main.ts'
 import { createApp } from 'vue'
 import './css/reset.css'
 import './css/style.css'
@@ -11,6 +14,14 @@ import App from './App.vue'
 import store from './store'
 import routes from './routes'
 import { comingSoon } from './common/helper'
+import { questions_zh, questions_en } from './assets/reviewer/questions'
+import { ui } from './assets/reviewer/ui'
+export { store }
+let ui_ = new ui()
+
+declare const window: any
+// ui_.lang = 'zh'
+
 // const p1 = { template: Page1 }
 // const p2 = { template: Page2 }
 
@@ -39,9 +50,19 @@ const app = createApp(App)
 app.config.globalProperties.window = window
 app.config.globalProperties.comingSoon = comingSoon
 app.config.globalProperties.router = router
+app.config.globalProperties.questions_zh = questions_zh
+app.config.globalProperties.questions_en = questions_en
+app.config.globalProperties.ui = ui_
+app.config.globalProperties.web3 = new Web3Controller()
+window.web3 = app.config.globalProperties.web3
+// a.load()
 // Make sure to _use_ the router instance to make the
 // whole app router-aware.
 app.use(router)
 app.use(store)
+store.dispatch('save', {
+	k: 'modal',
+	v: 'none',
+})
 
 app.mount('#app')

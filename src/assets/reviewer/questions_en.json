@@ -1,0 +1,234 @@
+[
+	{
+		"text": "Which of the following may be disqualified for evaluation",
+		"options": [
+			{
+				"k": "a",
+				"v": "Adhere to an objective, neutral and rigorous review attitude"
+			},
+			{
+				"k": "b",
+				"v": "Be responsible for the review results and do not vote blindly"
+			},
+			{
+				"k": "c",
+				"v": "Vote cheating and damage the image of the DAO jury",
+				"correct": true
+			},
+			{
+				"k": "d",
+				"v": "Gracefully receive constructive feedback from the community"
+			}
+		]
+	},
+	{
+		"text": "Which of the following complies with the SEER community building standards",
+		"options": [
+			{ "k": "a", "v": "Create a healthy and active use environment" },
+			{
+				"k": "b",
+				"v": "Comply with Community Guidelines and Terms of Service"
+			},
+			{ "k": "c", "v": "Have a team of administrators" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following is not a right owned by SEER DAO reviewers?",
+		"options": [
+			{ "k": "a", "v": "Proposal voting rights" },
+			{ "k": "b", "v": "Proposal review right" },
+			{ "k": "c", "v": "Ecological governance rights" },
+			{ "k": "d", "v": "One-vote veto", "correct": true }
+		]
+	},
+	{
+		"text": "What are the prohibited activities that are not members of SEER DAO",
+		"options": [
+			{
+				"k": "a",
+				"v": "Deceiving and misleading other community users, trying to steal sensitive account information of others"
+			},
+			{
+				"k": "b",
+				"v": "Attempts to impersonate the username of another user or individual"
+			},
+			{
+				"k": "c",
+				"v": "Help resolve issues encountered by community members",
+				"correct": true
+			},
+			{
+				"k": "d",
+				"v": "Demeans, tarnishes or otherwise harms the interests of the community"
+			}
+		]
+	},
+	{
+		"text": "Which of the following fits the nature of a DAO?",
+		"options": [
+			{ "k": "a", "v": "Distributed and Decentralized" },
+			{ "k": "b", "v": "Autonomy and Automation" },
+			{ "k": "c", "v": "Organization and orderliness" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following is not part of the core idea of Web3?",
+		"options": [
+			{ "k": "a", "v": "Web3 is decentralized" },
+			{ "k": "b", "v": "Web3 is permissionless" },
+			{ "k": "c", "v": "Web3 has native payment function" },
+			{
+				"k": "d",
+				"v": "Web3 data is stored on a centralized server",
+				"correct": true
+			}
+		]
+	},
+	{
+		"text": "What are the advantages of DeFi over traditional finance?",
+		"options": [
+			{
+				"k": "a",
+				"v": "DeFi does not need to rely on any centralized entity to provide intermediaries or endorsements"
+			},
+			{
+				"k": "b",
+				"v": "There are no access restrictions, that is, anyone who is connected to the Internet can enter"
+			},
+			{
+				"k": "c",
+				"v": "No third party can prevent or reverse any transaction"
+			},
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "The following are not the current mainstream application cases of NFT",
+		"options": [
+			{ "k": "a", "v": "Artwork/Collectibles" },
+			{ "k": "b", "v": "Game Assets" },
+			{ "k": "c", "v": "Virtual world" },
+			{ "k": "d", "v": "Payment Instruments", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following is a stablecoin?",
+		"options": [
+			{ "k": "a", "v": "UENC" },
+			{ "k": "b", "v": "USDT", "correct": true },
+			{ "k": "c", "v": "ETH" },
+			{ "k": "d", "v": "BTC" }
+		]
+	},
+	{
+		"text": "Which of the following activities is not suitable for project promotion?",
+		"options": [
+			{ "k": "a", "v": "AMA" },
+			{ "k": "b", "v": "Whitelist" },
+			{ "k": "c", "v": "Mode pulls the head", "correct": true },
+			{ "k": "d", "v": "New task" }
+		]
+	},
+	{
+		"text": "What are the characteristics of risk projects?",
+		"options": [
+			{ "k": "a", "v": "Unable to find public repository on Github" },
+			{ "k": "b", "v": "White paper plagiarism or false packaging" },
+			{ "k": "c", "v": "Ponzi MLM operation model" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following are the evaluation dimensions of the project?",
+		"options": [
+			{ "k": "a", "v": "Product technical features" },
+			{ "k": "b", "v": "Market profit model" },
+			{ "k": "c", "v": "Investor Background" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following does not meet the compliance program review criteria?",
+		"options": [
+			{ "k": "a", "v": "The official website & product UI interface is rough" },
+			{ "k": "b", "v": "Unable to find the actual functional product" },
+			{ "k": "c", "v": "The community is full of rights advocates" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following is not a subdivision of the crypto space?",
+		"options": [
+			{ "k": "a", "v": "NFT" },
+			{ "k": "b", "v": "Commodity", "correct": true },
+			{ "k": "c", "v": "SocialFi" },
+			{ "k": "d", "v": "DeFi" }
+		]
+	},
+	{
+		"text": "Any investment has risks, what are high risk activities?",
+		"options": [
+			{ "k": "a", "v": "Token private placement" },
+			{ "k": "b", "v": "Blockchain gaming" },
+			{ "k": "c", "v": "Funding disk DAPP" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following is not a standard of the Web3 community?",
+		"options": [
+			{ "k": "a", "v": "Absece of team admin", "correct": true },
+			{ "k": "b", "v": "Post clear rules and guidelines for use" },
+			{ "k": "c", "v": "Contains the title name and a specific description" },
+			{ "k": "d", "v": "Have clear community guidelines and terms of service" }
+		]
+	},
+	{
+		"text": "Examples of behaviors that foster a positive community environment include?",
+		"options": [
+			{ "k": "a", "v": "Demonstrate empathy and kindness toward others" },
+			{ "k": "b", "v": "Take responsibility and learn from experience" },
+			{
+				"k": "c",
+				"v": "Lead by example and maintain a harmonious environment in the community"
+			},
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following matches the Dapp-specific description?",
+		"options": [
+			{ "k": "a", "v": "Decentralized applications", "correct": true },
+			{ "k": "b", "v": "Application of virtual credits" },
+			{ "k": "c", "v": "Virtual application" },
+			{ "k": "d", "v": "Desktop application" }
+		]
+	},
+	{
+		"text": "Which of the following are the evaluation criteria for popular projects?",
+		"options": [
+			{ "k": "a", "v": "Huge investment lineup behind" },
+			{ "k": "b", "v": "Community formation spread effect" },
+			{ "k": "c", "v": "Innovative product technology" },
+			{ "k": "d", "v": "All of the above", "correct": true }
+		]
+	},
+	{
+		"text": "Which of the following is not an advantage of a DAO?",
+		"options": [
+			{
+				"k": "a",
+				"v": "Smart contract execution cannot be tampered with rules"
+			},
+			{ "k": "b", "v": "Change the market-fixed economic model" },
+			{
+				"k": "c",
+				"v": "A few people are responsible for DAO community governance",
+				"correct": true
+			},
+			{ "k": "d", "v": "Independent and open value network" }
+		]
+	}
+]

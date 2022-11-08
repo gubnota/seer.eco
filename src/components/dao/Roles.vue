@@ -1,9 +1,9 @@
 <template>
 	<section class="cols">
-		<div class="col" v-for="el in $data.roles">
+		<div class="col" v-for="(el, i) in $data.roles">
 			<div class="row">
 				<h3>{{ el.name }}</h3>
-				<button @click="callback(el.action)" class="btn">
+				<button @click="callback(el.action, i)" class="btn">
 					<img :src="arrow" />
 					<span>{{ el.action }}</span>
 				</button>
@@ -38,8 +38,10 @@ export default {
 		}
 	},
 	methods: {
-		callback(action: String) {
-			if (action == 'Apply') this.router.push('/reviewer/intro')
+		callback(action: String, id: number) {
+			if (id == 0) this.router.push('/reviewer/conditions')
+			// if (id == 2)
+			// 	this.router.push({ path: '/reviewer/result', params: { passed: true } })
 		},
 	},
 }
@@ -103,5 +105,28 @@ h3 {
 button img {
 	width: 24px;
 	height: 24px;
+}
+@media (max-width: 950px) {
+	section.cols {
+		flex-direction: column;
+		gap: 2rem 0;
+		width: 100vw;
+		align-self: center;
+	}
+	.col {
+		border-bottom: 1px #cdd0d4 solid;
+		align-self: center;
+		padding-bottom: 1rem;
+	}
+	.col:last-child {
+		border-bottom: none;
+	}
+	.row {
+		justify-content: space-between;
+		padding: 0 1rem;
+	}
+	p {
+		padding: 0 1rem;
+	}
 }
 </style>

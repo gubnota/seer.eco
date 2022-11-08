@@ -5,3 +5,23 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+## Web3 part
+
+- MetaController
+  - enable() ethereum enable (loads address)
+- LoginController extends MetaController
+  - signLogin() forms signature
+- VoteController extends LoginController
+  - signVote() forms signature
+- UserController extends VoteController
+  - connect() uses signLogin() (then connect api method to get `seerToken`)
+- DaoController extends UserController
+  - info() uses login()
+  - vote() uses signVote() to get a `signature` and uses `seerToken` as well
+  - ticketsNumber() how many tickets can throw web3js2.getBalanceOf()
+- EventsController extends DaoController
+  - eventDetail
+  - pendingList ...
+- Web3Controller extends EventsController
+  - ui-related addressPartially()

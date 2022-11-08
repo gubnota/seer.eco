@@ -1,0 +1,109 @@
+import { store } from '../main'
+import axios from 'axios'
+
+declare const window: any
+import {
+	Login,
+	Vote,
+	EIP712Domain,
+	verifyingContract,
+	contents,
+} from './common'
+import MetaController from './metacontroller'
+
+export default class LoginController extends MetaController {
+	signLogin = async (param: {
+		chain: string | number
+		nonce: number
+		stamp: number
+	}) => {
+		var msgParams = {
+			domain: {
+				chainId: parseInt(param.chain.toString()),
+				name: 'SEER',
+				verifyingContract,
+				version: '1',
+			},
+			message: {
+				contents,
+				node: this.node, //假节点
+				action: 'connect',
+				nonce: param.nonce, //用户的Nonce nonces
+				stamp: param.stamp, //时间戳 UTCseconds
+			},
+			primaryType: 'Login',
+			types: {
+				EIP712Domain,
+				Login,
+			},
+		}
+		let hash = await this.web3js.currentProvider.request({
+			method: 'eth_signTypedData_v4',
+			params: [
+				window.ethereum.selectedAddress.toLocaleLowerCase(),
+				JSON.stringify(msgParams),
+			],
+		})
+		return hash
+	}
+
+	connect = async () => {
+		var res = await this.enable()
+		if (!res) return
+		var x = new Date()
+		var stamp = Math.floor(
+			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
+		) // UTC seconds
+		var nonce = Math.floor(Math.random() * 100000)
+
+		var chain = 1
+		// var address = window.ethereum.selectedAddress.toLocaleLowerCase()
+		var signature = await this.signLogin({
+			chain,
+			nonce,
+			stamp,
+		})
+
+		axios
+			.post(this.servers.user[this.branch] + 'api/User/Connect', {
+				address: this.address,
+				node: this.node,
+				nonce: nonce,
+				stamp: stamp,
+				signature,
+				chain: 1,
+			})
+			.then((res) => {
+				if (res.data.message != 'Success') {
+					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.address = null
+					this.store.dispatch('save', {
+						k: 'address',
+						v: null,
+					})
+					return false
+				}
+				this.seerToken = res.data.data
+				store.dispatch('save', {
+					k: 'seerToken',
+					v: res.data.data,
+				})
+				console.log('this.seerToken', this.store.state.seerToken)
+				// return true
+				//   {
+				//     "code": 0,
+				//     "message": "Success",
+				//     "data": "e14e6c9b665e4fe0a7aa5afee5053926"
+				// }
+			})
+			.catch((error) => {
+				console.log('error', error.message)
+				this.popup({
+					timeout: 5000,
+					text: `<p><b>Error</b><br />${error.message}</p>`,
+				})
+				return false
+			})
+		return false
+	}
+}

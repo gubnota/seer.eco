@@ -7,7 +7,8 @@
 			<Mark />
 		</h3>
 		<h4>
-			<span>Your voting rights：</span> <span>3</span>
+			<span>Your voting rights：</span>
+			<span>{{ this.$store.state.ticketsNumber ?? 0 }}</span>
 			<span class="ticket"><Ticket /></span>
 		</h4>
 		<nav class="tabs">
@@ -60,6 +61,9 @@ export default {
 			left: 400,
 		}
 	},
+	mounted() {
+		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
+	},
 	methods: {
 		hover(e: { target: HTMLSpanElement }) {
 			let els =
@@ -77,6 +81,7 @@ export default {
 		},
 		tabfn(tab) {
 			console.log('tab', tab)
+			this.$store.dispatch('save', { k: 'eventsTab', v: tab })
 			this.tab = tab
 		},
 	},

@@ -81,6 +81,8 @@ export default {
 	methods: {
 		callback(e) {
 			console.log('callback', e)
+			if (e == 'twitter')
+				window.open('https://developer.twitter.com/', '_blank')
 			if (e == 'test') this.router.push({ path: '/reviewer/intro' })
 		},
 	},

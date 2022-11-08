@@ -7,6 +7,7 @@
 		<img
 			src="/dao/bird.jpg"
 			srcset="/dao/bird@2x.webp 1x, /dao/bird@2x.webp 2x"
+			class="bird"
 		/>
 	</section>
 </template>
@@ -19,11 +20,15 @@ section.top2 {
 	flex-direction: row;
 	align-items: center;
 	margin: 26px 0 0 0;
-	gap: 146px;
+	gap: 0 146px;
 	justify-content: center;
 }
 img {
 	mix-blend-mode: darken;
+}
+.bird {
+	max-width: 90vw;
+	max-width: 484px;
 }
 .col {
 	display: flex;
@@ -43,5 +48,16 @@ img {
 	background: linear-gradient(245deg, #aa1fff 0%, #2ba1ff 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+@media (max-width: 1100px) {
+	section.top2 {
+		flex-direction: column;
+		align-self: center;
+		max-width: 90vw;
+	}
+	.col h1 {
+		font-size: 10vw;
+		line-height: 15vw;
+	}
 }
 </style>

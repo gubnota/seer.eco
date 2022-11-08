@@ -1,10 +1,10 @@
 <template>
 	<Template>
 		<main class="meta">
-			<section class="review">
+			<section class="review" :class="{ hide: transition, show: showing }">
 				<div class="row">
 					<div class="key question">
-						<span class="q">Q{{ current }}</span
+						<span class="q">Q{{ current + 1 }}</span
 						>&nbsp;/&nbsp;{{ total }}
 					</div>
 					<div class="val time">{{ this.formatTime() }}</div>
@@ -12,18 +12,18 @@
 				<h3>Single Choice</h3>
 				<div class="line"></div>
 				<h2>
-					The first year of SEER's DAO is the story of which famous hero
-					founded？
+					{{ this.questions[this.current].text }}
 				</h2>
-				<div class="block">
+				<div class="block style2">
 					<div
 						class="option"
-						@click="option(1)"
-						:class="{ selected: selected == 1 }"
+						@click="option(i)"
+						:class="{ selected: selected == i }"
+						v-for="(el, i) in this.questions[this.current].options"
 					>
-						<span>A</span> <span>Option 1Option 1Option 1Option 1Option 1</span>
+						<span>{{ el.k }}</span> <span>{{ el.v }}</span>
 					</div>
-					<div
+					<!-- <div
 						class="option"
 						@click="option(2)"
 						:class="{ selected: selected == 2 }"
@@ -43,9 +43,11 @@
 						:class="{ selected: selected == 4 }"
 					>
 						<span>D</span> <span>Option 4</span>
-					</div>
+					</div> -->
 				</div>
-				<div class="btn">Next Question</div>
+				<div class="btn" :class="{ disabled: selected == -1 }" @click="next()">
+					Next Question
+				</div>
 			</section>
 			<aside class="warn" v-if="this.message">{{ this.message }}</aside>
 		</main>
@@ -53,14 +55,22 @@
 </template>
 <script lang="ts">
 import Template from '../components/dao/reviewer/template.vue'
+import Reviewer4Result from './Reviewer4Result.vue'
+
 export default {
 	data() {
 		return {
+			questions: this.questions_en,
 			message: '',
 			selected: -1,
 			remainedTime: 30 * 60, //30 mins
-			current: 1,
-			total: 20,
+			current: 0,
+			total: this.questions_en.length, //1, //
+			points: 0,
+			transition: false,
+			showing: false,
+			score: 0, // +5 for each question
+			en: true,
 		}
 	},
 	components: {
@@ -77,11 +87,41 @@ export default {
 	methods: {
 		option(no) {
 			this.selected == no ? (this.selected = -1) : (this.selected = no)
+			if (this.selected == -1) {
+				this.message = 'Please, select at least one option'
+				setTimeout(() => {
+					this.message = ''
+				}, 1000)
+			}
 		},
 		formatTime() {
 			let mins = Math.floor(this.remainedTime / 60).toString()
 			let secs = (this.remainedTime % 60).toString()
 			return `${mins.padStart(2, '0')}:${secs.padStart(2, '0')}`
+		},
+		next() {
+			if (this.transition) return
+
+			if (this.questions[this.current].options[this.selected].correct) {
+				this.score += 5
+			}
+			this.transition = true
+			if (this.current == this.total - 1) {
+				//last question
+				this.router.push(
+					this.score > 80 ? '/reviewer/success' : '/reviewer/failure'
+				)
+				return
+			}
+			setTimeout(() => {
+				this.transition = false
+				this.showing = true
+				this.selected = -1
+
+				if (this.current < this.total - 1) {
+					this.current++
+				}
+			}, 500)
 		},
 	},
 }
@@ -93,6 +133,10 @@ export default {
 	flex-direction: column;
 	gap: 56px;
 }
+.meta *::selection {
+	background-color: transparent;
+}
+
 section.review {
 	display: flex;
 	flex-direction: column;
@@ -109,7 +153,14 @@ section.review {
 	border-radius: 8px;
 	max-width: 1120px;
 }
+section.review.show {
+	animation: 1s ease-in-out 0s 1 slideInFromLeft;
+}
+section.review.hide {
+	animation: 1s ease-in-out 0s 1 slideOutFromLeft;
+}
 .warn {
+	transition: all 1s ease;
 	padding: 24px;
 	font-weight: 600;
 	font-size: 15px;
@@ -122,6 +173,45 @@ section.review {
 	align-self: center;
 	font-size: 13px;
 	font-weight: 600;
+}
+@keyframes slideInFromBottom {
+	0% {
+		transform: translateY(100%);
+	}
+	80% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 0;
+	}
+}
+@keyframes slideInFromLeft {
+	0% {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	80% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+@keyframes slideOutFromLeft {
+	0% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+	60% {
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+.warn {
+	animation: 1s ease-out 0s 1 slideInFromBottom;
 }
 .row {
 	display: flex;
@@ -171,6 +261,18 @@ h2 {
 	width: 100%;
 	align-self: center;
 }
+.block.style2 {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	align-self: flex-start;
+	align-items: flex-start;
+	margin-top: 18px;
+}
+
+.block span::selection {
+	background-color: transparent;
+}
 .option {
 	background: #ffffff;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
@@ -184,6 +286,14 @@ h2 {
 	width: 218px;
 	max-height: 62px;
 	cursor: pointer;
+	align-items: center;
+}
+.block.style2 .option {
+	width: auto;
+	max-height: initial;
+}
+.block.style2 .option span:last-child {
+	font-weight: normal;
 }
 .option.selected > span:last-child {
 	background: linear-gradient(257.98deg, #aa1fff 2.42%, #2ba1ff 95.24%);
@@ -193,14 +303,25 @@ h2 {
 	text-fill-color: transparent;
 }
 .option span {
-	overflow-wrap: break-all;
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	// overflow-wrap: break-all;
+	// white-space: wrap;
+	// overflow: hidden;
+	// text-overflow: ellipsis;
+	// line-height: 140%;
 }
 .option span:last-child {
 	flex: 1;
 	text-align: center;
+}
+.en .option span:last-child {
+	text-align: left;
+}
+.en .option {
+	max-height: 92px;
+}
+.option span:first-child {
+	text-transform: uppercase;
 }
 .option:first-child {
 	grid-area: a;
@@ -221,5 +342,24 @@ h2 {
 	opacity: 1;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	padding: 12px 46px;
+}
+.btn.disabled {
+	color: #666;
+}
+@media (max-width: 1024px) {
+	section.review {
+		max-width: calc(100vw - 2rem);
+		align-self: center;
+	}
+	.block.style2 .option span:last-child {
+		white-space: normal;
+		line-height: 150%;
+	}
+}
+@media (max-width: 532px) {
+	.block {
+		grid-template-areas: 'a' 'b' 'c' 'd';
+		justify-content: center;
+	}
 }
 </style>

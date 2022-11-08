@@ -9,7 +9,7 @@
 					<div class="page">
 						<div class="title">number of questions</div>
 						<div class="text">
-							<div class="count">30</div>
+							<div class="count">{{ questions.length }}</div>
 							<span>Que</span>
 						</div>
 					</div>
@@ -39,9 +39,23 @@
 <script lang="ts">
 import { appendFile } from 'fs'
 import Template from '../components/dao/reviewer/template.vue'
+// import d from '../assets/reviewer/questions_zh.json'
+
+// type options = {
+// 	k: String
+// 	v: String
+// 	correct?: boolean
+// }
+// type question = {
+// 	text: String
+// 	options: options[]
+// }
+// let data: question[] = d
+
 export default {
 	data() {
 		return {
+			questions: this.questions_en,
 			attempts: 0,
 		}
 	},

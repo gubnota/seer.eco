@@ -64,10 +64,10 @@ export default {
 			this.next = this.sel < this.num ? this.sel + 1 : 0
 			this.pagination()
 		},
-		next() {
+		goNext() {
 			if (this.sel < this.num) this.select(this.sel + 1)
 		},
-		prev() {
+		goPrev() {
 			if (this.sel > 1) this.select(this.sel - 1)
 		},
 	},

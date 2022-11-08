@@ -30,28 +30,42 @@
 					<span>{{ now }}</span>
 				</div>
 			</section>
-			<div class="btn">Confirmation</div>
+			<div class="btn" @click="intro()">Confirmation</div>
 		</main>
 	</Template>
 </template>
 <script lang="ts">
 import Template from '../components/dao/reviewer/template.vue'
+import Reviewer2TestIntro from './Reviewer2TestIntro.vue'
 import logo from '/src/assets/reviewer/black_logo.svg'
 import prize from '/src/assets/reviewer/prize.svg'
 
 export default {
+	props: {
+		// score: Number,
+		passed: Boolean,
+	},
+	setup(props) {
+		console.log(props.passed)
+	},
 	data() {
 		return {
-			passed: true,
+			// passed: true,
 			now: '',
 		}
 	},
 	mounted() {
-		var a = new Date()
-		this.now = `${a.getFullYear()}.${a
-			.getMonth()
-			.toString()
-			.padStart(2, '0')}.${a.getDate().toString().padStart(2, '0')}`
+		// this.passed = this.score > 4 ? true : false
+	},
+	methods: {
+		intro() {
+			if (!this.passed) this.router.push('/reviewer/intro')
+			else this.router.push('/dao')
+			setTimeout(() => {
+				// window.location.reload()
+			}, 0)
+			// window.location.reload
+		},
 	},
 	components: { Template, logo, prize },
 }

@@ -97,4 +97,14 @@ li {
 	background: linear-gradient(180deg, #dca3ff 0%, rgba(170, 31, 255, 0) 84%);
 	border-radius: 8px;
 } */
+@media (max-width: 1100px) {
+	section.announce {
+		max-width: calc(100vw - 2rem);
+		width: 100%;
+		align-self: center;
+	}
+	h3 {
+		font-size: 20px;
+	}
+}
 </style>

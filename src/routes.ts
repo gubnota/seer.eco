@@ -87,7 +87,8 @@ const routes = [
 	{ path: '/reviewer/conditions', component: Reviewer1 },
 	{ path: '/reviewer/intro', component: Reviewer2 },
 	{ path: '/reviewer/test', component: Reviewer3 },
-	{ path: '/reviewer/result', component: Reviewer4 },
+	{ path: '/reviewer/success', component: Reviewer4, props: { passed: true } },
+	{ path: '/reviewer/failure', component: Reviewer4, props: { passed: false } },
 	{ path: '/:pathMatch(.*)*', component: PageNotFound },
 ]
 

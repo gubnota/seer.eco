@@ -220,4 +220,42 @@ export default {
 	padding-left: 12px;
 	text-align: right;
 }
+@media (max-width: 1100px) {
+	.item {
+		flex-direction: column;
+		height: auto;
+		display: grid;
+		grid-template-areas:
+			'imgpic main main'
+			'remaining actions rate'; /* 'remaining actions rate'*/
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr;
+	}
+	.imgpic {
+		grid-area: imgpic;
+	}
+	.main {
+		grid-area: main;
+		min-width: auto;
+	}
+	.remaining {
+		grid-area: remaining;
+	}
+	.actions {
+		grid-area: actions;
+		align-self: flex-start;
+	}
+	.rate {
+		grid-area: rate;
+	}
+}
+@media (max-width: 523px) {
+	/* .item{
+	grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-areas:
+			'main main'
+			'imgpic remaining actions rate';
+} */
+}
 </style>

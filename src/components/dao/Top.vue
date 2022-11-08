@@ -3,25 +3,51 @@
 		<router-link to="/dao">
 			<img :src="logo" alt="logo" class="logo" />
 		</router-link>
-		<button @click="connect">
-			<img :src="lock" alt="" />
-			<span>Connect Wallet</span>
+		<button
+			@click="connect()"
+			class="btn"
+			:class="{ disabled: !this.window.ethereum }"
+		>
+			<img :src="this.$store.state.address ? metamask : lock" alt="wallet" />
+			<span>{{
+				this.$store.state.address
+					? this.web3.addressPartially()
+					: this.ui._('Connect Wallet')
+			}}</span>
 		</button>
 	</nav>
 </template>
 <script lang="ts">
 import logo from '/src/assets/dao/logodao.png'
 import lock from '/src/assets/dao/lock.png'
+import metamask from '/src/assets/dao/metamask@3x.png'
 export default {
 	data() {
 		return {
 			logo,
 			lock,
+			metamask,
+			loggedIn: false,
 		}
 	},
+	mounted() {
+		this.web3.eventList()
+	},
 	methods: {
-		connect() {
-			console.log('connect')
+		async connect() {
+			if (this.loggedIn) {
+				window.location.reload()
+				return
+			} else {
+				await this.web3.connect()
+				// setTimeout(async () => {
+				await this.web3.info()
+				// setTimeout(async () => {
+				await this.web3.ticketsNumber()
+				await this.web3.eventList()
+				// }, 1000)
+				// }, 1000)
+			}
 		},
 	},
 }
@@ -59,5 +85,17 @@ button span {
 .logo {
 	width: 174px;
 	height: 32px;
+}
+@media (max-width: 1140px) {
+	nav.top2 {
+		padding: 0 1rem;
+	}
+}
+
+@media (max-width: 405px) {
+	nav.top2 {
+		flex-direction: column;
+		gap: 1rem;
+	}
 }
 </style>

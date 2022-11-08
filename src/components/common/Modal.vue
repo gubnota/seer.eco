@@ -1,8 +1,9 @@
 <template>
-	<div class="modal" style="display: none">
-		<div class="message-container">
-			<div class="actual-message">
-				<h2>Coming soon</h2>
+	<div class="modal" :style="`display:${this.$store.state.modal};`">
+		<div class="message-container" @click="bgClick">
+			<div class="actual-message" @click="floatClick">
+				{{ this.store ? this.store.state.modal : '' }}
+				<!-- <h2>{{ this.message ? this.message : this.ui._('Coming soon') }}</h2> -->
 				<!-- <div class="close-button close_modal">&times;</div> -->
 				<!-- <button class="close_modal">OK</button> -->
 			</div>
@@ -10,9 +11,24 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
-	name: 'Modal',
+	props: {
+		message: String,
+	},
+	methods: {
+		bgClick(e) {
+			console.log('bgClick', e.target)
+			this.$store.dispatch('save', {
+				k: 'modal',
+				v: 'none',
+			})
+		},
+		floatClick(e) {
+			console.log('floatClick', e.target)
+			e.stopPropagation()
+		},
+	},
 }
 </script>
 
@@ -114,5 +130,20 @@ export default {
 	.message-container .actual-message h2 {
 		font-size: 1.5rem;
 	}
+}
+</style>
+
+<style>
+.message-container a {
+	font-weight: 600;
+	line-height: 29px;
+	background: linear-gradient(245deg, #aa1fff 0%, #2ba1ff 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-decoration: none;
+}
+.message-container b,
+.message-container strong {
+	font-weight: bold;
 }
 </style>

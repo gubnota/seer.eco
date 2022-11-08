@@ -591,3 +591,9 @@ sup {
 .btn::selection {
 	background-color: transparent;
 }
+.btn.disabled {
+	cursor: not-allowed;
+}
+.btn.disabled:active {
+	transform: none;
+}
