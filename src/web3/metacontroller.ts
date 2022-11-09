@@ -94,7 +94,7 @@ export default class MetaController {
 				// return false
 				store.dispatch('save', {
 					k: 'address',
-					v: window.ethereum.selectedAddress.toLocaleLowerCase(), // or (await window.ethereum.enable())[0]
+					v: (await window.ethereum.enable())[0], // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
 				})
 				this.address = store.state.address
 			} catch (error: any) {

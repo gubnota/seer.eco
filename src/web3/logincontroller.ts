@@ -40,7 +40,9 @@ export default class LoginController extends MetaController {
 		let hash = await this.web3js.currentProvider.request({
 			method: 'eth_signTypedData_v4',
 			params: [
-				window.ethereum.selectedAddress.toLocaleLowerCase(),
+				(
+					await window.ethereum.enable()
+				)[0], //window.ethereum.selectedAddress.toLocaleLowerCase(),
 				JSON.stringify(msgParams),
 			],
 		})
