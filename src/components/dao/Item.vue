@@ -23,7 +23,7 @@
 				remaining
 			}}</span>
 			<ItemActions v-if="this.$store.state.eventsTab == 0" :id="showId" />
-			<ItemRate :rate="voteRate" />
+			<ItemRate :id="showId" />
 		</section>
 	</div>
 </template>

@@ -1,10 +1,11 @@
 <template>
 	<div class="actions">
 		<div class="btn pass" @click="pass" :class="{ inactive: rejected }">
-			<span class="ticket" v-if="passed"><Ticket /></span> <span>Pass</span>
+			<span class="ticket" v-if="isPassed()"><Ticket /></span> <span>Pass</span>
 		</div>
 		<div class="btn reject" @click="reject" :class="{ inactive: passed }">
-			<span class="ticket" v-if="rejected"><Ticket /></span><span>Reject</span>
+			<span class="ticket" v-if="isRejected()"><Ticket /></span
+			><span>Reject</span>
 		</div>
 	</div>
 </template>
@@ -21,7 +22,38 @@ export default {
 	props: {
 		id: Number,
 	},
+
+	mounted() {
+		this.updateVoted()
+		return this.passed
+	},
 	methods: {
+		isRejected() {
+			this.updateVoted()
+			return this.rejected
+		},
+		isPassed() {
+			this.updateVoted()
+			return this.passed
+		},
+		updateVoted() {
+			if (this.$store.state.eventList)
+				var filtered = this.$store.state.eventList.list.filter((el) => {
+					return el.showId == this.id
+				})
+			console.log('filtered[0].voteResult', filtered[0].voteResult)
+			if (filtered[0])
+				switch (filtered[0].voteResult) {
+					case 1:
+						this.passed = true
+						break
+					case 2:
+						this.rejected = true
+						break
+					default:
+						break
+				}
+		},
 		pass(e: any) {
 			e.stopPropagation()
 			this.vote(true)
@@ -47,20 +79,24 @@ export default {
 				}
 				if (pass) {
 					var voteResult = await this.web3.vote(this.id, true)
-					if (voteResult !== true) return
+					// if (voteResult !== true) return
+					console.log('voteResult', voteResult)
 					this.passed = true
 					this.rejected = false
 				} else {
 					var voteResult = await this.web3.vote(this.id, false)
-					if (voteResult !== false) return
+					console.log('voteResult', voteResult)
+					// if (voteResult !== false) return
 					this.passed = false
 					this.rejected = true
 				}
-				this.web3.eventList({
-					tab: this.$store.state.eventsTab || 0,
-					from: 8 * ((parseInt(this.$store.state.eventsPage) || 1) - 1) + 1,
-					limit: 8,
-				})
+				setTimeout(() => {
+					this.web3.eventList({
+						tab: this.$store.state.eventsTab || 0,
+						from: 8 * ((parseInt(this.$store.state.eventsPage) || 1) - 1) + 1,
+						limit: 8,
+					})
+				}, 5000)
 			})()
 		},
 	},
