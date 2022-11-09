@@ -40,6 +40,16 @@ export default class MetaController {
 		this.vote_abi = vote_abi
 		this.servers = servers
 	}
+	logout = async () => {
+		this.store.dispatch('save', {
+			k: 'address',
+			v: null,
+		})
+		this.store.dispatch('save', {
+			k: 'daoInfo',
+			v: null,
+		})
+	}
 
 	restoreWeb3 = () => {
 		this.web3js = new web3(window.ethereum) // - default provider

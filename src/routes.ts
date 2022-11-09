@@ -5,7 +5,7 @@ import Main from './pages/main.vue'
 import Dao from './pages/dao.vue'
 import Test from './pages/test.vue'
 import QA from './pages/qa.vue'
-import Reviewer1 from './pages/Reviewer1.vue'
+import Reviewer1 from './pages/Reviewer1Conditions.vue'
 import Reviewer2 from './pages/Reviewer2TestIntro.vue'
 import Reviewer3 from './pages/Reviewer3Test.vue'
 import Reviewer from './pages/Reviewer.vue'
@@ -14,6 +14,13 @@ import Reviewer4 from './pages/Reviewer4Result.vue'
 import PageNotFound from './pages/404.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
+
+const openExt = (link: string) => {
+	let prev = window.location.hash
+	window.open(link, '_blank')
+	location.href = prev
+	return
+}
 const routes = [
 	{ path: '/', component: Main },
 	{ path: '/nft', component: Nft },
@@ -30,51 +37,45 @@ const routes = [
 	{
 		path: '/sdid',
 		beforeEnter: () => {
-			window.open('https://sdid.seer.eco', '_blank')
-			location.href = '/'
+			return openExt('https://sdid.seer.eco')
 		},
 	},
 	{
 		path: '/asset/litepaper.png',
 		beforeEnter: () => {
-			window.open('/asset/litepaper.png', '_blank')
-			location.href = '/'
-			return
+			return openExt('/asset/litepaper.png')
 		},
 	},
 	{
 		path: '/seer_user.html',
 		beforeEnter: () => {
-			window.open('/seer_user.html', '_blank')
-			location.href = '/'
-			return
+			return openExt('/seer_user.html')
 		},
 	},
 	{
 		path: '/seer_q_and_a.html',
 		beforeEnter: () => {
-			window.open('/seer_q_and_a.html', '_blank')
-			location.href = '/'
-			return
+			return openExt('/seer_q_and_a.html')
 		},
 	},
 	{
 		path: '/seer_privacy.html',
 		beforeEnter: () => {
-			window.open('/seer_privacy.html', '_blank')
-			location.href = '/'
-			return
+			return openExt('/seer_privacy.html')
 		},
 	},
 	{
+		path: '/seer_dao.html',
+		beforeEnter: () => {
+			return openExt('/seer_dao.html')
+		},
+	},
+
+	{
 		path: '/brandkit',
 		beforeEnter: () => {
-			// location.href =
-			//
-			location.href = '/'
-			window.open(
-				'https://www.figma.com/file/bAfVSpnLjzSRSWidF3YOrS/Project-Seer-Brand-Kit?node-id=3%3A347',
-				'_blank'
+			return openExt(
+				'https://www.figma.com/file/bAfVSpnLjzSRSWidF3YOrS/Project-Seer-Brand-Kit?node-id=3%3A347'
 			)
 		},
 	},

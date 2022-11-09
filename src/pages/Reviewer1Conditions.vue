@@ -83,6 +83,7 @@ export default {
 			// this.router.push('/dao')
 			this.web3.login()
 		}
+		if (this.$store.state.daoInfo) this.unmet = !this.$store.state.daoInfo.isDao
 		// ;(async () => {
 		// 	if (!this.$store.state.address) await this.web3.login()
 		// 	// setTimeout(() => {
@@ -99,21 +100,38 @@ export default {
 
 		getStatus(field: String) {
 			if (!this.$store.state.daoInfo) return false
+			if (this.$store.state.daoInfo.isDao) return true
+
 			switch (field) {
 				case 'nft':
 					return this.$store.state.daoInfo.steps.holdDSN || false
 					break
 				case 'twitter':
 					return this.$store.state.daoInfo.steps.twitter || false
+					break
+				case 'learn':
+					return this.$store.state.daoRulesVisited || false
+					break
 				default:
 					return false
 					break
 			}
 		},
 		callback(e) {
+			if (!this.$store.state.daoInfo) {
+				this.comingSoon({
+					text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
+					timeout: 5000,
+				})
+				return
+			}
 			console.log('callback', e)
 			if (e == 'twitter')
 				window.open('https://developer.twitter.com/', '_blank')
+			if (e == 'learn') {
+				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
+				this.router.push('/seer_dao.html')
+			}
 			if (e == 'test') this.router.push({ path: '/reviewer/intro' })
 		},
 	},

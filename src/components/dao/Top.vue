@@ -69,6 +69,7 @@ export default {
 </script>
 <style scoped>
 nav.top2 {
+	z-index: 1;
 	margin: 15px 0 0 0;
 	display: flex;
 	flex-direction: row;

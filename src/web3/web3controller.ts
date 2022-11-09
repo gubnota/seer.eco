@@ -5,11 +5,20 @@ declare const window: any
 export default class Web3Controller extends EventsController {
 	addressPartially(address) {
 		if (!address) address = this.store.state.address
-		return `${address.substr(0, 5)}.....${address.substr(address.length - 5)}`
+		if (typeof address != 'string') {
+			this.logout()
+			return
+		}
+		return `${address.substring(0, 5)}.....${address.substring(
+			address.length - 5
+		)}`
 	}
 	constructor() {
 		super()
-		this.branch = 'dev' // local || dev || release
+		let isLocal =
+			window.location.host.substring(0, 9) === 'localhost' ||
+			window.location.host.substring(0, 1) === '1'
+		this.branch = isLocal ? 'local' : 'dev' // local || dev || release
 	}
 	login = async () => {
 		const connect = await this.connect()

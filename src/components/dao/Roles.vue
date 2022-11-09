@@ -57,6 +57,10 @@ export default {
 					}
 				})()
 			}
+			if (id == 1) {
+				this.router.push('/seer_dao.html')
+				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
+			}
 			// if (id == 2)
 			// 	this.router.push({ path: '/reviewer/result', params: { passed: true } })
 		},
