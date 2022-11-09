@@ -40,35 +40,45 @@
 export default {
 	props: {
 		total: Number,
+		selected: Number,
 	},
 	data() {
 		return {
 			num: 0,
-			sel: 1, // current
+			sel: 1, // current page
 			prev: 1, // n-1
 			next: 1, // n+1
 			els: [],
+			total2: 0,
 		}
 	},
 	mounted() {
-		this.num = 1
+		this.num = Math.ceil(this.total / 8)
 		// console.log(this.$store.eventList.total)
 		// this.num = Math.ceil(this.total / 15)
-		this.select(1)
+		this.select(this.selected || 1, false)
 	},
 	updated() {
-		console.log('updated', this.$store.eventList)
+		// console.log('updated', this.$store.eventList)
 	},
 
 	methods: {
 		pagination() {
 			this.els = Array.from({ length: this.num }, (_, i) => {
-				console.log('this.sel', this.sel)
+				// console.log('this.sel', this.sel)
 				// if (i > this.sel && i < this.num - 1) return '…'
 				return i + 1
 			}) //Array.from(Array(this.num).keys())
 		},
-		select(num: any) {
+		select(num: any, save: boolean = true) {
+			if (save) {
+				this.$store.dispatch('save', { k: 'eventsPage', v: num })
+				this.web3.eventList({
+					tab: this.$store.state.eventsTab,
+					from: 8 * (num - 1) + 1,
+					limit: 8,
+				})
+			}
 			this.sel = num
 			this.prev = this.sel > 1 ? this.sel - 1 : 0
 			this.next = this.sel < this.num ? this.sel + 1 : 0

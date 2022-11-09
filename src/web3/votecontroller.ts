@@ -14,7 +14,7 @@ import LoginController from './logincontroller'
 export default class VoteController extends LoginController {
 	signVote = async (param: {
 		chain: string | number
-		event: number
+		showId: number
 		vote: Boolean //true, false
 		nonce: number
 		stamp: number
@@ -31,7 +31,7 @@ export default class VoteController extends LoginController {
 				action: 'vote', //固定
 				nonce: param.nonce, //用户的Nonce
 				stamp: param.stamp, //时间戳
-				id: param.event, //投票的showId
+				id: param.showId, //投票的showId
 				result: param.vote, //通过 true,拒绝 false
 			},
 			primaryType: 'Vote',
@@ -40,6 +40,7 @@ export default class VoteController extends LoginController {
 				Vote,
 			},
 		}
+		console.log({ msgParams })
 		let hash = await this.web3js.currentProvider.request({
 			method: 'eth_signTypedData_v4',
 			params: [

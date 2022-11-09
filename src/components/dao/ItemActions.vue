@@ -1,38 +1,16 @@
 <template>
 	<div class="actions">
-		<div
-			class="btn pass"
-			@click="
-				(e) => {
-					e.stopPropagation()
-					if (passed || rejected) return
-					passed = true
-					rejected = false
-				}
-			"
-			:class="{ inactive: rejected }"
-		>
+		<div class="btn pass" @click="pass" :class="{ inactive: rejected }">
 			<span class="ticket" v-if="passed"><Ticket /></span> <span>Pass</span>
 		</div>
-		<div
-			class="btn reject"
-			@click="
-				(e) => {
-					e.stopPropagation()
-					if (passed || rejected) return
-					passed = false
-					rejected = true
-				}
-			"
-			:class="{ inactive: passed }"
-		>
+		<div class="btn reject" @click="reject" :class="{ inactive: passed }">
 			<span class="ticket" v-if="rejected"><Ticket /></span><span>Reject</span>
 		</div>
 	</div>
 </template>
 <script lang="ts">
 import Ticket from '/src/assets/dao/ticket.svg'
-
+declare const window: any
 export default {
 	data() {
 		return {
@@ -44,7 +22,47 @@ export default {
 		id: Number,
 	},
 	methods: {
-		handler(pass: true) {},
+		pass(e: any) {
+			e.stopPropagation()
+			this.vote(true)
+		},
+		reject(e: any) {
+			e.stopPropagation()
+			this.vote(false)
+		},
+		vote(pass: true) {
+			if (this.passed || this.rejected) return
+			;(async () => {
+				if (
+					!this.$store.state.daoInfo ||
+					this.$store.state.daoInfo.isDao != true
+				) {
+					this.comingSoon({
+						text: !this.$store.state.daoInfo
+							? `<p>Please, login first</p>`
+							: `<p>Please, become a DAO reviewer first</p>`,
+					})
+					if (!this.$store.state.daoInfo) this.web3.login()
+					return
+				}
+				if (pass) {
+					var voteResult = await this.web3.vote(this.id, true)
+					if (voteResult !== true) return
+					this.passed = true
+					this.rejected = false
+				} else {
+					var voteResult = await this.web3.vote(this.id, false)
+					if (voteResult !== false) return
+					this.passed = false
+					this.rejected = true
+				}
+				this.web3.eventList({
+					tab: this.$store.state.eventsTab || 0,
+					from: 8 * ((parseInt(this.$store.state.eventsPage) || 1) - 1) + 1,
+					limit: 8,
+				})
+			})()
+		},
 	},
 	components: { Ticket },
 }

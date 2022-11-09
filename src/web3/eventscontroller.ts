@@ -46,10 +46,10 @@ export default class EventsController extends DaoController {
 				url = 'api/dao/PassList'
 				break
 		}
-		if (this.seerToken)
+		if (this.store.state.seerToken)
 			config = {
 				headers: {
-					seerToken: this.seerToken,
+					SeerToken: this.store.state.seerToken,
 				},
 			}
 		axios
@@ -60,7 +60,7 @@ export default class EventsController extends DaoController {
 			)
 			.then((r) => {
 				let l: eventListT = r.data.data
-				console.log(l.total, l.list)
+				// console.log(l.total, l.list)
 				if (l.total) this.store.dispatch('save', { k: 'eventList', v: l })
 			})
 			.catch((err: any) => {

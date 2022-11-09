@@ -1,9 +1,9 @@
 <template>
-	<div class="item" ref="item" @click="show(true)">
+	<div class="item" ref="item">
 		<!--		@mouseenter="show(true)"
 		@mouseleave="show(false)"
  -->
-		<section class="left">
+		<section class="left" @click="show(true)">
 			<span class="imgpic">
 				<img :src="`${spaceLogo != '' ? spaceLogo : this.userpicSample}`" />
 			</span>
@@ -18,11 +18,13 @@
 				</span>
 			</div>
 		</section>
-		<span class="remaining" v-if="this.$store.state.eventsTab == 0">{{
-			remaining
-		}}</span>
-		<ItemActions v-if="this.$store.state.eventsTab == 0" />
-		<ItemRate :rate="voteRate" />
+		<section class="right">
+			<span class="remaining" v-if="this.$store.state.eventsTab == 0">{{
+				remaining
+			}}</span>
+			<ItemActions v-if="this.$store.state.eventsTab == 0" :id="showId" />
+			<ItemRate :rate="voteRate" />
+		</section>
 	</div>
 </template>
 <script lang="ts">
@@ -69,8 +71,11 @@ export default {
 				let el = this.$refs['item']
 				let top =
 					window.scrollY + el.getBoundingClientRect().top + el.offsetHeight + 6 // Y
-				let left = window.scrollX + el.getBoundingClientRect().left // X this.$store.state.detail.left
-				console.log({ top })
+				let left =
+					window.visualViewport.width < 540
+						? 6
+						: window.scrollX + el.getBoundingClientRect().left // X this.$store.state.detail.left
+				// console.log({ top })
 				if (
 					el.getBoundingClientRect().bottom + (683 + 6) > // 683 is height of Detail el and 6 is position of this el from top
 					window.visualViewport.height
@@ -134,7 +139,7 @@ export default {
 			var seconds = diff.getUTCSeconds().toString().padStart(2, '0') // Gives secs count of difference
 
 			this.remaining = `${hours}:${minutes}:${seconds}` //("remaining time = " + years + " years, " + months + " months, " + days + " days.");
-			if (date2 == 'NaN') this.remaining = '0'
+			if (this.remaining == 'NaN:NaN:NaN') this.remaining = '00:00:00'
 		},
 	},
 	components: { Ads, Aoe, ItemActions, ItemRate },
@@ -163,6 +168,12 @@ section.left {
 	display: flex;
 	flex-direction: row;
 	gap: 24px;
+}
+section.right {
+	display: flex;
+	flex-direction: row;
+	gap: 24px;
+	align-items: center;
 }
 .item > * {
 	/* background-color: aquamarine; */
@@ -222,6 +233,9 @@ section.left {
 	font-weight: 400;
 	font-size: 13px;
 	line-height: 123%;
+	max-width: 58px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .item:nth-child(2n) {
 	background-color: #fafafa;
@@ -237,15 +251,19 @@ section.left {
 	text-align: right;
 }
 @media (max-width: 1100px) {
+	section.right {
+		/* justify-content: space-between; */
+	}
 	.item {
 		flex-direction: column;
 		height: auto;
-		display: grid;
+		/* display: grid;
 		grid-template-areas:
 			'imgpic main main'
-			'remaining actions rate'; /* 'remaining actions rate'*/
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr;
+			'remaining actions rate';  */
+		/* 'remaining actions rate'*/
+		/* grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr; */
 	}
 	.imgpic {
 		grid-area: imgpic;
@@ -264,8 +282,29 @@ section.left {
 	.rate {
 		grid-area: rate;
 	}
+	.desc {
+		max-width: initial;
+	}
+	.item {
+		gap: 1rem;
+	}
 }
-@media (max-width: 523px) {
+@media (max-width: 540px) {
+	.item {
+		margin-bottom: 1rem;
+		position: relative;
+		padding: 24px 0;
+	}
+	section.right {
+		flex-direction: column;
+	}
+	.actions {
+		align-self: flex-end;
+		width: 100%;
+	}
+	.rate {
+		width: 100%;
+	}
 	/* .item{
 	grid-template-columns: 1fr 1fr 1fr;
 		grid-template-rows: 1fr 1fr 1fr;

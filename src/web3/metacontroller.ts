@@ -18,12 +18,13 @@ declare const window: {
 	web3js2: any
 	web3js: any
 	location: any
+	localStorage: any
 }
 
 export default class MetaController {
 	public MumbaiProvider: any
-	public web3js: any
-	public web3js2: any
+	public web3js: web3
+	public web3js2: web3
 	public DSNContract: any
 	public address: String
 	public store
@@ -40,6 +41,11 @@ export default class MetaController {
 		this.servers = servers
 	}
 
+	restoreWeb3 = () => {
+		this.web3js = new web3(window.ethereum) // - default provider
+		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
+		this.address = store.state.address
+	}
 	enable = async () => {
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Ethereum main network ethereum.chainId == '0x1'
@@ -51,29 +57,33 @@ export default class MetaController {
 				return
 			}
 
-			// STAGE 2: reload after account has been changed
+			// STAGE 2: TODO: clean acc info after account has been changed
 			window.ethereum.on('accountsChanged', function (accounts) {
+				window.localStorage.removeItem('address')
+				window.localStorage.removeItem('daoInfo')
+				window.localStorage.removeItem('seerToken')
 				window.location.reload()
+			})
+
+			window.ethereum.on('message', (message) => {
+				console.log('eth.message', message)
 			})
 
 			// STAGE 3: add a contract to read possible tickets value from balanceOf the contract
 			this.MumbaiProvider = new web3.providers.HttpProvider(
 				'https://matic-mumbai.chainstacklabs.com'
 			)
-			this.web3js = new web3(window.ethereum) // - default provider
-			this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
+			this.restoreWeb3()
 			try {
-				const adds = await window.ethereum.enable()
-				// // STAGE 3: add a contract to read possible tickets value from balanceOf the contract
+				// // STAGE 4: add a contract to read possible tickets value from balanceOf the contract
 				// this.popup({
 				// 	timeout: 5000,
 				// 	text: 'Your <a href=//app.seer.eco target=_blank>app.seer.eco account</a> is not registered',
 				// })
 				// return false
-
 				store.dispatch('save', {
 					k: 'address',
-					v: window.ethereum.selectedAddress.toLocaleLowerCase(), //adds[0], //
+					v: window.ethereum.selectedAddress.toLocaleLowerCase(), // or (await window.ethereum.enable())[0]
 				})
 				this.address = store.state.address
 			} catch (error: any) {
@@ -94,7 +104,8 @@ export default class MetaController {
 			})
 			// alert('Please open the MetaMask')
 		}
-		window.web3js.eth.getBlockNumber().then((result: any) => {
+
+		this.web3js.eth.getBlockNumber().then((result: any) => {
 			// console.log('Latest Ethereum Block is ', result)
 		})
 		return false

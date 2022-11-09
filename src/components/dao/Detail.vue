@@ -4,21 +4,35 @@
 		ref="detail"
 		:style="`left:${this.$store.state.detail.left}px;top:${this.$store.state.detail.top}px;`"
 	>
-		<div class="bg" :style="`background-image:url(${this.detailSample})`">
+		<div class="bg" v-if="ui('video')">
+			<video autoplay muted loop playsinline id="bgdetailvideo">
+				<source :src="ui('video') as string" id="videtailsource" />
+			</video>
+			<div class="close" @click="close"><Close /></div>
+		</div>
+		<div
+			class="bg"
+			:style="
+				ui('cover')
+					? `background-image:url(${ui('cover')});background-size: cover;`
+					: 'background:#e0e0e0'
+			"
+			v-else
+		>
 			<div class="close" @click="close"><Close /></div>
 		</div>
 		<div class="head"><h3>Event info</h3></div>
 		<div class="main">
 			<div class="time">
 				<span class="pic"><Calendar /></span>
-				<span class="value">Happening now</span>
+				<span class="value ellipsis">Happening now</span>
 			</div>
-			<div class="desc">
-				{{ d(detail).substr(0, 124) }}
+			<div class="desc ellipsis">
+				{{ ui('detail', 120) }}
 			</div>
 			<div class="username">
 				<span class="pic"><img :src="spaceLogo || userpicSample" /></span>
-				<span class="value">{{ spaceName }}</span>
+				<span class="value ellipsis">{{ spaceName }}</span>
 			</div>
 			<div class="location">
 				<span class="pic"><Geo /></span>
@@ -28,14 +42,16 @@
 			</div>
 			<div class="group">
 				<span class="pic"><TwoUsers /></span>
-				<span class="value">{{ interestedCount }} person interested</span>
+				<span class="value ellipsis"
+					>{{ interestedCount }} person interested</span
+				>
 			</div>
 			<div class="creator">
 				<span class="pic"><img :src="userLogo || userpicSample" /></span>
-				<span class="value">{{ userName }}</span>
+				<span class="value ellipsis">{{ userName }}</span>
 			</div>
-			<div class="desc2">
-				{{ this.detail.substr(0, 155) }}
+			<div class="desc2 ellipsis scroll">
+				{{ ui('detail', 126) }}
 			</div>
 		</div>
 		<div class="footer">
@@ -90,7 +106,7 @@ export default {
 		Geo,
 	},
 	methods: {
-		d(k: String) {
+		ui(k: String, maxLength: number) {
 			if (this.$store.state.eventDetail) {
 				Object.entries(this.$store.state.eventDetail).forEach(
 					([key, value]) => {
@@ -98,7 +114,14 @@ export default {
 					}
 				)
 			}
-			return this.k || ''
+			let out = Object.entries(this).filter((el, i) => {
+				if (el[0] == k) return true
+			})
+			let o = out[0][1]
+			if ((o as string).length > maxLength) {
+				o = (o as string).substring(0, maxLength - 2) + `…`
+			}
+			return o || ''
 		},
 		openSpace() {
 			window.open(this.spaceUrl, '_blank')
@@ -106,6 +129,10 @@ export default {
 		close(e) {
 			this.$store.dispatch('save', {
 				k: 'detail',
+				v: false,
+			})
+			this.$store.dispatch('save', {
+				k: 'eventDetail',
 				v: false,
 			})
 		},
@@ -125,6 +152,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	max-width: calc(100% - 12px);
 }
 .bg {
 	position: relative;
@@ -233,5 +261,16 @@ h3 {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	width: 544px;
+}
+.scroll {
+	overflow: scroll;
+	text-overflow: clip;
+}
+#bgdetailvideo {
+	height: 238.4px;
+	width: 100%;
+	/* height: 300px; */
+	object-fit: cover;
+	overflow-x: hidden;
 }
 </style>

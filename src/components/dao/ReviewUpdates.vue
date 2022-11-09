@@ -33,10 +33,22 @@
 				:spaceLogo="el.spaceLogo"
 				:spaceName="el.spaceName"
 				:showType="el.showType"
+				:key="el.showId"
 			/>
+			<div class="empty" v-if="fetch().length < 1">
+				<img :src="EmptyPic" />
+				<p>
+					No Review <br />
+					Please follow the latest event updates
+				</p>
+			</div>
 		</div>
 
-		<ItemsPagination />
+		<ItemsPagination
+			v-if="fetch().length > 0"
+			:total="getItemsNumber()"
+			:selected="getEventsPage()"
+		/>
 		<!-- TODO: change to dynamic -->
 	</section>
 </template>
@@ -47,6 +59,7 @@ import fetchedCardsSample from './fetchedCardsSample'
 import Mark from './Mark.vue'
 import Ticket from '/src/assets/dao/ticket.svg'
 import Detail from './Detail.vue'
+import EmptyPic from '/src/assets/dao/seer_noitems@2x.png'
 
 export default {
 	data() {
@@ -57,10 +70,10 @@ export default {
 			top: 1200,
 			left: 400,
 			totalNo: 1,
+			EmptyPic,
 		}
 	},
 	mounted() {
-		this.$store.dispatch('save', { k: 'totalNo', v: 190 })
 		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
 	},
 	methods: {
@@ -69,6 +82,12 @@ export default {
 		},
 		getTicketsNumber() {
 			return this.$store.state.ticketsNumber || 0
+		},
+		getItemsNumber() {
+			return this.$store.state.eventList.total || 0
+		},
+		getEventsPage() {
+			return this.$store.state.eventsPage || 1
 		},
 
 		hover(e: { target: HTMLSpanElement }) {
@@ -88,8 +107,19 @@ export default {
 		tabfn(tab) {
 			console.log('tab', tab)
 			this.$store.dispatch('save', { k: 'eventsTab', v: tab })
+			this.$store.dispatch('save', { k: 'eventsPage', v: 1 })
+			this.$store.dispatch('save', {
+				k: 'eventList',
+				v: { list: [], total: 0 },
+			})
+
 			this.tab = tab
-			this.web3.eventList({ tab, from: 0, limit: 8 })
+			// this.web3.eventList({ tab, from: 0, limit: 8 }) // TODO: disable to show no review state
+			// this.web3.eventList({
+			// 	tab: this.$store.state.eventsTab || 0,
+			// 	from: 8 * (parseInt(this.$store.state.eventsPage) || 1 - 1) + 1,
+			// 	limit: 8,
+			// })
 		},
 	},
 
@@ -98,6 +128,7 @@ export default {
 </script>
 <style scoped>
 section.review {
+	transition: all 0.5s ease-in;
 	display: flex;
 	flex-direction: column;
 	margin: 61px 0 0 0;
@@ -158,5 +189,21 @@ nav.tabs span.selected {
 .ticket svg {
 	width: 20px;
 	height: 21px;
+}
+.empty {
+	gap: 17px;
+	flex-direction: column;
+	align-items: center;
+	display: flex;
+}
+.empty p {
+	font-size: 15px;
+	line-height: 22px;
+	text-align: center;
+	color: #9eadbe;
+}
+.empty img {
+	height: 120px;
+	width: 89px;
 }
 </style>

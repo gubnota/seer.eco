@@ -1,3 +1,4 @@
+import { version } from 'vue'
 import axios from 'axios'
 import { daoInfoT } from './common'
 import UserController from './usercontroller'
@@ -8,7 +9,18 @@ export default class DaoController extends UserController {
 	public voteToken: string = ''
 	public daoInfo: daoInfoT
 
-	vote = async (showId) => {
+	vote = async (showId: number, vote: boolean) => {
+		// console.log('showId', showId)
+		// return Promise.resolve(vote)
+		// return vote
+		// var signature = await this.signVote({
+		// 	chain: 1,
+		// 	showId,
+		// 	vote,
+		// 	nonce: 1,
+		// 	stamp: 1,
+		// })
+		// console.log('signature', signature)
 		var x = new Date()
 		var stamp = Math.floor(
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
@@ -18,23 +30,67 @@ export default class DaoController extends UserController {
 		var address = this.address
 		var signature = await this.signVote({
 			chain,
-			event: showId, //100002
-			vote: true,
+			showId, //100002
+			vote,
 			nonce,
 			stamp,
 		})
-		// TODO axios
-		return {
-			address,
+		// console.log(signature) // FIXME: remove after testing
+		// return Promise.resolve(null) // FIXME: remove after testing
+
+		const payload = {
+			address: this.address,
 			nonce,
 			stamp,
 			signature,
 			chainId: chain,
 			version: '1',
 			id: showId,
-			result: true,
+			result: vote,
 		}
+
+		// TODO: axios
+		axios
+			.post(this.servers.business[this.branch] + 'api/dao/Vote', payload, {
+				headers: {
+					SeerToken: this.store.state.seerToken,
+					Domain: this.node,
+					Language: 'en',
+					Terminal: 'web',
+				},
+			})
+			.then((res) => {
+				// console.log('/api/dao/Vote then', res)
+				if (res.data.message != 'Success') {
+					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					return Promise.resolve(null)
+				}
+				return Promise.resolve(vote)
+			})
+			.catch((error) => {
+				// console.log('error', error.message)
+				this.popup({
+					timeout: 5000,
+					text: `<p><b>Error</b><br />${error.message}</p>`,
+				})
+				return Promise.resolve(null)
+			})
+
+		// return {
+		// 	address,
+		// 	nonce,
+		// 	stamp,
+		// 	signature,
+		// 	chainId: chain,
+		// 	version: '1',
+		// 	id: showId,
+		// 	result: true,
+		// }
 	}
+
+	// vote = async (showId) => {
+
+	// }
 
 	info = async () => {
 		if (!this.store.state.seerToken) {
@@ -48,7 +104,6 @@ export default class DaoController extends UserController {
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
 		) // UTC seconds
 		let nonce = Math.floor(Math.random() * 100000)
-		console.log('stamp', stamp, 'seerToken', window.seerToken)
 		axios
 			.get(this.servers.business[this.branch] + 'api/dao/Info', {
 				headers: {
@@ -70,6 +125,8 @@ export default class DaoController extends UserController {
 						text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
 						timeout: 5000,
 					})
+					this.store.dispatch('save', { k: 'walletLoading', v: false })
+
 					this.store.dispatch('save', { k: 'address', v: null })
 					this.address = null
 					return

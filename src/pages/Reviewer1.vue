@@ -48,7 +48,7 @@ export default {
 			unmet: true,
 			conds: [
 				{
-					name: 'NFT duration > 60 days',
+					name: 'NFT duration > 30 days',
 					icon: 'nft_calendar',
 					actionText: 'Approve',
 					// passed: this.getStatus('nft'),
