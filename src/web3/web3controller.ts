@@ -1,8 +1,6 @@
-import TestsController from './testscontroller'
-
+import IncentiveController from './incentivecontroller'
 declare const window: any
-
-export default class Web3Controller extends TestsController {
+export default class Web3Controller extends IncentiveController {
 	addressPartially(address) {
 		if (!address) address = this.store.state.address
 		if (typeof address != 'string') {
@@ -18,7 +16,7 @@ export default class Web3Controller extends TestsController {
 		let isLocal =
 			window.location.host.substring(0, 9) === 'localhost' ||
 			window.location.host.substring(0, 1) === '1'
-		this.branch = isLocal ? 'local' : 'dev' // local || dev || release
+		this.branch = isLocal ? 'dev' : 'dev' // local || dev || release
 	}
 	login = async () => {
 		const connect = await this.connect()

@@ -67,6 +67,7 @@ store.dispatch('load', 'ticketsNumber')
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 store.dispatch('load', 'eventsTab')
 store.dispatch('load', 'daoRulesVisited')
+store.dispatch('load', 'checkedin')
 if (store.state.daoInfo) window.web3.info()
 if (store.state.address) window.web3.restoreWeb3() // otherwise after refreshing a page signing doesn't work
 store.dispatch('save', {

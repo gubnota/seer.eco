@@ -2,6 +2,7 @@
 	<Modal />
 	<main class="dao">
 		<section class="main">
+			<CheckIn />
 			<Top />
 			<SectionTop />
 			<Roles />
@@ -19,6 +20,9 @@ import Roles from '../components/dao/Roles.vue'
 import ReviewUpdates from '../components/dao/ReviewUpdates.vue'
 import FooterDao from '../components/dao/Footer.vue'
 import Modal from '../components/common/Modal.vue'
+import CheckIn from '../components/dao/CheckIn.vue'
+
+// import CheckIn from
 // import Top from '/src/components/dao/Top.vue'
 // import Top from '/src/components/dao/Top.vue'
 
@@ -33,6 +37,7 @@ export default {
 		Roles,
 		ReviewUpdates,
 		Modal,
+		CheckIn,
 	},
 }
 </script>
@@ -53,6 +58,8 @@ section.main {
 	/* background-color: aqua; */
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	/* overflow: hidden; */
+	position: relative;
+	overflow-x: visible;
 }
 </style>

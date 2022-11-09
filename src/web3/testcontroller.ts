@@ -1,7 +1,7 @@
 import axios from 'axios'
 import EventsController from './eventscontroller'
 
-export default class TestsController extends EventsController {
+export default class TestController extends EventsController {
 	examResult = async (signature: string) => {
 		axios
 			.post(
@@ -21,11 +21,6 @@ export default class TestsController extends EventsController {
 			.then((res) => {
 				if (res.data.message != 'Success') {
 					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
-					this.address = null
-					this.store.dispatch('save', {
-						k: 'address',
-						v: null,
-					})
 					return Promise.resolve(false)
 				}
 				return Promise.resolve(true)
