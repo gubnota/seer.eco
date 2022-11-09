@@ -55,8 +55,12 @@ export default {
 		}
 	},
 	mounted() {
-		// this.passed = this.score > 4 ? true : false
+		if (!this.$store.state.daoInfo) {
+			this.router.push({ path: '/dao' })
+			return
+		}
 	},
+	// this.passed = this.score > 4 ? true : false
 	methods: {
 		intro() {
 			if (!this.passed) this.router.push('/reviewer/intro')

@@ -1,8 +1,8 @@
-import EventsController from './eventscontroller'
+import TestsController from './testscontroller'
 
 declare const window: any
 
-export default class Web3Controller extends EventsController {
+export default class Web3Controller extends TestsController {
 	addressPartially(address) {
 		if (!address) address = this.store.state.address
 		if (typeof address != 'string') {

@@ -72,6 +72,7 @@ export default class MetaController {
 				window.localStorage.removeItem('address')
 				window.localStorage.removeItem('daoInfo')
 				window.localStorage.removeItem('seerToken')
+				this.logout()
 				window.location.reload()
 			})
 

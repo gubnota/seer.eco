@@ -55,6 +55,7 @@
 </template>
 <script lang="ts">
 import Template from '../components/dao/reviewer/Template2.vue'
+import score from '../web3/scoreChecksum'
 import Reviewer4Result from './Reviewer4Result.vue'
 
 export default {
@@ -66,7 +67,6 @@ export default {
 			remainedTime: 30 * 60, //30 mins
 			current: 0,
 			total: this.questions_en.length, //1, //
-			points: 0,
 			transition: false,
 			showing: false,
 			score: 0, // +5 for each question
@@ -77,6 +77,11 @@ export default {
 		Template,
 	},
 	mounted() {
+		if (!this.$store.state.daoInfo) {
+			this.router.push({ path: '/dao' })
+			return
+		}
+
 		setInterval(() => {
 			if (this.remainedTime > 0) this.remainedTime--
 			if (this.remainedTime == 0) {
@@ -101,13 +106,16 @@ export default {
 		},
 		next() {
 			if (this.transition) return
-
-			if (this.questions[this.current].options[this.selected].correct) {
+			let sel_opt = this.questions[this.current].options[this.selected]
+			if (typeof sel_opt.correct === 'boolean') {
 				this.score += 5
 			}
+			// console.log('score.checksum()', score.checksum(this.score))
 			this.transition = true
 			if (this.current == this.total - 1) {
+				// TODO: API backend request
 				//last question
+				this.web3.examResult(score.checksum(this.score))
 				this.router.push(
 					this.score > 80 ? '/reviewer/success' : '/reviewer/failure'
 				)

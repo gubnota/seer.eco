@@ -22,12 +22,12 @@
 					</div>
 				</div>
 				<div class="info">
-					3 exam opportunities. <i>{{ attempts }}</i
+					{{ this.total }} exam opportunities. <i>{{ this.remain }}</i
 					>&nbsp; remaining
 				</div>
 				<div class="btn" @click="start">start answering</div>
 			</section>
-			<aside class="conditions_unmet" v-if="attempts == 0">
+			<aside class="conditions_unmet" v-if="this.remain == 0">
 				<span
 					>You have run out of exam opportunities and can no longer take the
 					exam</span
@@ -56,8 +56,17 @@ export default {
 	data() {
 		return {
 			questions: this.questions_en,
-			attempts: 0,
+			remain: 0,
+			total: 0,
 		}
+	},
+	mounted() {
+		if (!this.$store.state.daoInfo) {
+			this.router.push({ path: '/dao' })
+			return
+		}
+		this.total = this.$store.state.daoInfo.configs.retryTimes
+		this.remain = this.$store.state.daoInfo.remainTimes
 	},
 	methods: {
 		start() {
