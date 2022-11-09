@@ -114,7 +114,7 @@ export default {
 			})
 
 			this.tab = tab
-			// this.web3.eventList({ tab, from: 0, limit: 8 }) // TODO: disable to show no review state
+			this.web3.eventList({ tab, from: 0, limit: 8 }) // TODO: disable to show no review state
 			// this.web3.eventList({
 			// 	tab: this.$store.state.eventsTab || 0,
 			// 	from: 8 * (parseInt(this.$store.state.eventsPage) || 1 - 1) + 1,

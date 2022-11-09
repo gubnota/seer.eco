@@ -41,7 +41,6 @@ export default {
 				var filtered = this.$store.state.eventList.list.filter((el) => {
 					return el.showId == this.id
 				})
-			console.log('filtered[0].voteResult', filtered[0].voteResult)
 			if (filtered[0])
 				switch (filtered[0].voteResult) {
 					case 1:
