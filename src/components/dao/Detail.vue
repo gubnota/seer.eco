@@ -54,7 +54,7 @@
 				<span class="pic"><img :src="userLogo || userpicSample" /></span>
 				<span class="value ellipsis">{{ userName }}</span>
 			</div>
-			<div class="desc2 ellipsis scroll">
+			<div class="desc2 ellipsis">
 				{{ ui('detail', 126) }}
 			</div>
 		</div>
