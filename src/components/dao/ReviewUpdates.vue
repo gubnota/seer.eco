@@ -105,7 +105,7 @@ export default {
 			this.shownMark = state
 		},
 		tabfn(tab) {
-			console.log('tab', tab)
+			this.$store.dispatch('unset', ['detail', 'eventDetail', 'eventList'])
 			this.$store.dispatch('save', { k: 'eventsTab', v: tab })
 			this.$store.dispatch('save', { k: 'eventsPage', v: 1 })
 			this.$store.dispatch('save', {
@@ -115,6 +115,7 @@ export default {
 
 			this.tab = tab
 			this.web3.eventList({ tab, from: 0, limit: 8 }) // TODO: disable to show no review state
+
 			// this.web3.eventList({
 			// 	tab: this.$store.state.eventsTab || 0,
 			// 	from: 8 * (parseInt(this.$store.state.eventsPage) || 1 - 1) + 1,

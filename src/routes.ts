@@ -10,6 +10,7 @@ import Reviewer2 from './pages/Reviewer2TestIntro.vue'
 import Reviewer3 from './pages/Reviewer3Test.vue'
 import Reviewer from './pages/Reviewer.vue'
 import Reviewer4 from './pages/Reviewer4Result.vue'
+import IncentiveCenter from './pages/IncentiveCenter.vue'
 
 import PageNotFound from './pages/404.vue'
 import Nft from './components/main/Nft.vue'
@@ -91,6 +92,7 @@ const routes = [
 	{ path: '/reviewer/success', component: Reviewer4, props: { passed: true } },
 	{ path: '/reviewer/failure', component: Reviewer4, props: { passed: false } },
 	{ path: '/:pathMatch(.*)*', component: PageNotFound },
+	{ path: '/incentive-center', component: IncentiveCenter },
 ]
 
 export default routes

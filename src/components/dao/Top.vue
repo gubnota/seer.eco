@@ -45,7 +45,7 @@ export default {
 		async connect() {
 			if (this.loggedIn()) {
 				// window.location.reload()
-				this.$store.dispatch('save', { k: 'daoInfo', v: null })
+				this.web3.logout()
 				return
 			} else {
 				this.$store.dispatch('save', { k: 'walletLoading', v: true })
@@ -54,14 +54,6 @@ export default {
 						this.$store.dispatch('save', { k: 'walletLoading', v: false })
 				}, 5000)
 				await this.web3.login()
-				// await this.web3.connect()
-				// // setTimeout(async () => {
-				// await this.web3.info()
-				// // setTimeout(async () => {
-				// await this.web3.ticketsNumber()
-				// await this.web3.eventList()
-				// }, 1000)
-				// }, 1000)
 			}
 		},
 	},

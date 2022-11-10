@@ -41,14 +41,7 @@ export default class MetaController {
 		this.servers = servers
 	}
 	logout = async () => {
-		this.store.dispatch('save', {
-			k: 'address',
-			v: null,
-		})
-		this.store.dispatch('save', {
-			k: 'daoInfo',
-			v: null,
-		})
+		this.store.dispatch('unset', ['address', 'daoInfo', 'seerToken'])
 	}
 
 	restoreWeb3 = () => {
@@ -68,10 +61,7 @@ export default class MetaController {
 			}
 
 			// STAGE 2: TODO: clean acc info after account has been changed
-			window.ethereum.on('accountsChanged', function (accounts) {
-				window.localStorage.removeItem('address')
-				window.localStorage.removeItem('daoInfo')
-				window.localStorage.removeItem('seerToken')
+			window.ethereum.on('accountsChanged', (accounts) => {
 				this.logout()
 				window.location.reload()
 			})

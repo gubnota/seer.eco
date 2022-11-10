@@ -27,7 +27,10 @@
 					</div>
 				</div>
 			</section>
-			<aside class="conditions_unmet" v-if="unmet">
+			<aside
+				class="conditions_unmet"
+				v-if="s.daoInfo ? !s.daoInfo.isDao : true"
+			>
 				<span>Please meet all the above conditions first</span>
 			</aside>
 		</div>
@@ -45,7 +48,8 @@ import arrow_right from '/src/assets/reviewer/arrow-right.svg'
 export default {
 	data() {
 		return {
-			unmet: true,
+			s: this.$store.state,
+			// unmet: true,
 			conds: [
 				{
 					name: 'NFT duration > 30 days',
@@ -91,6 +95,10 @@ export default {
 		// })()
 	},
 	methods: {
+		unmet() {
+			if (!this.$store.state.daoInfo) return false
+			return !this.$store.state.daoInfo.isDao
+		},
 		loggedIn() {
 			let loggedIn = this.$store.state.daoInfo != null
 			if (loggedIn)
@@ -99,6 +107,7 @@ export default {
 		},
 
 		getStatus(field: String) {
+			console.log('getStatus', field)
 			if (!this.$store.state.daoInfo) return false
 			if (this.$store.state.daoInfo.isDao) return true
 

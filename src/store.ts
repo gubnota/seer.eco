@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import { createStore } from 'vuex'
 
 const parseAlt = (input: any) => {
+	if (input === 'true') return true
+	if (input === 'false') return false
 	if (typeof input == 'string' && /([a-f])/.test(input)) return input
 	if (input === '[object Object]') return null
 	if (input === 'null') return null
@@ -62,17 +64,28 @@ const store = createStore<any>({
 				if (v) localStorage.setItem(k, v.toString())
 			})
 		},
-		load(state, args) {
-			// console.log('mutations, load', args, localStorage[args])
-
-			let input = localStorage[args]
-			if (
-				typeof input == 'string' &&
-				(input.substring(0, 1) === '{' || input.substring(0, 1) === '[')
-			)
-				input = JSON.parse(input)
-			if (input === 'null') input = null
-			state[args] = input
+		unset(state, arg: string | Array<string>) {
+			// localStorage.removeItem(args)
+			let args = typeof arg == 'string' ? [arg] : arg
+			for (let i = 0; i < args.length; i++) {
+				delete state[args[i]]
+				localStorage.removeItem(args[i])
+			}
+		},
+		load(state, arg: string | Array<string>) {
+			let args = typeof arg == 'string' ? [arg] : arg
+			for (let i = 0; i < args.length; i++) {
+				let input = localStorage[args[i]]
+				if (
+					typeof input == 'string' &&
+					(input.substring(0, 1) === '{' || input.substring(0, 1) === '[')
+				)
+					input = JSON.parse(input)
+				if (input === 'null') input = null
+				if (input === 'true') input = true
+				if (input === 'false') input = false
+				state[args[i]] = input
+			}
 		},
 	},
 	actions: {
@@ -83,17 +96,21 @@ const store = createStore<any>({
 			// console.log('save(context,args)', context, args)
 			context.commit('save', args)
 		},
-		load(context, args) {
+		unset(context, arg: string | Array<string>) {
+			// console.log('save(context,args)', context, args)
+			context.commit('unset', arg)
+		},
+		load(context, arg: string | Array<string>) {
 			// console.log('load', args)
 			// state[args] = 'true'
 			// context.commit('save', { k: args, v: 'true' })
-			context.commit('load', args)
-			Object.keys(localStorage).forEach((k) => {
-				// console.log({ k, v: localStorage[k] })
-				if (k === args && typeof localStorage[k] !== undefined) {
-					context.commit('load', args)
-				}
-			})
+			context.commit('load', arg)
+			// Object.keys(localStorage).forEach((k) => {
+			// 	// console.log({ k, v: localStorage[k] })
+			// 	if (k === arg && typeof localStorage[k] !== undefined) {
+			// 		context.commit('load', arg)
+			// 	}
+			// })
 			// Object.keys(state).forEach((k) => {
 		},
 	},

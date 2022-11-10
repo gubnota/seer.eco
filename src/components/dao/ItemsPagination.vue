@@ -49,9 +49,9 @@ export default {
 			prev: 1, // n-1
 			next: 1, // n+1
 			els: [],
-			total2: 0,
 		}
 	},
+	computed: {},
 	mounted() {
 		this.num = Math.ceil(this.total / 8)
 		// console.log(this.$store.eventList.total)
@@ -71,6 +71,7 @@ export default {
 			}) //Array.from(Array(this.num).keys())
 		},
 		select(num: any, save: boolean = true) {
+			this.$store.dispatch('unset', ['detail', 'eventDetail'])
 			if (save) {
 				this.$store.dispatch('save', { k: 'eventsPage', v: num })
 				this.web3.eventList({
