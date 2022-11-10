@@ -41,7 +41,13 @@ export default class MetaController {
 		this.servers = servers
 	}
 	logout = async () => {
-		this.store.dispatch('unset', ['address', 'daoInfo', 'seerToken'])
+		this.store.dispatch('unset', [
+			'address',
+			'daoInfo',
+			'seerToken',
+			'rewardInfo',
+			'rewardDetail',
+		])
 	}
 
 	restoreWeb3 = () => {
@@ -49,7 +55,8 @@ export default class MetaController {
 		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
 		this.address = store.state.address
 	}
-	enable = async () => {
+	enable = async (cb?: () => {}) => {
+		const startTime = new Date()
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Ethereum main network ethereum.chainId == '0x1'
 			if (window.ethereum.chainId !== '0x1') {
@@ -57,13 +64,13 @@ export default class MetaController {
 					timeout: 5000,
 					text: `<p><b class="rainbow">${window.ethereum.chainId}</b> is not the correct chainId<br /> Connect to <strong>Ethereum Mainnet</strong>, please</p>`,
 				})
-				return
+				return Promise.resolve(false)
 			}
 
 			// STAGE 2: TODO: clean acc info after account has been changed
 			window.ethereum.on('accountsChanged', (accounts) => {
 				this.logout()
-				window.location.reload()
+				// window.location.reload()
 			})
 
 			window.ethereum.on('message', (message) => {
@@ -87,6 +94,22 @@ export default class MetaController {
 					v: (await window.ethereum.enable())[0], // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
 				})
 				this.address = store.state.address
+				// if (cb) {
+				// 	window.localStorage.setItem(
+				// 		'cb',
+				// 		setInterval(() => {
+				// 			if (this.store.state.daoInfo) {
+				// 				clearInterval(window.localStorage['cb'])
+				// 				window.localStorage.removeItem('cb')
+				// 				cb()
+				// 			}
+				// 		}, 1000)
+				// 	)
+				// }
+				const elapsedTime = new Date().getTime() - startTime.getTime()
+
+				console.log(`enable() took ${elapsedTime}ms`)
+				Promise.resolve(true)
 			} catch (error: any) {
 				this.popup({
 					timeout: 5000,
@@ -97,7 +120,7 @@ export default class MetaController {
 			}
 			window.web3js = this.web3js
 			//
-			return true
+			return Promise.resolve(true)
 		} else {
 			this.popup({
 				timeout: 5000,
@@ -109,7 +132,7 @@ export default class MetaController {
 		this.web3js.eth.getBlockNumber().then((result: any) => {
 			// console.log('Latest Ethereum Block is ', result)
 		})
-		return false
+		return Promise.resolve(false)
 	}
 
 	// connect = async () => {

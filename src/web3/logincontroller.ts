@@ -49,9 +49,9 @@ export default class LoginController extends MetaController {
 		return hash
 	}
 
-	connect = async () => {
-		var res = await this.enable()
-		if (!res) return
+	connect = async (cb?: () => {}) => {
+		var res = await this.enable(cb)
+		if (!res) return Promise.resolve(false)
 		var x = new Date()
 		var stamp = Math.floor(
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000

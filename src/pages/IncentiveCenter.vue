@@ -30,6 +30,21 @@ import RewardDetails from '../components/incentives/RewardDetails.vue'
 
 export default {
 	components: { Template, IncentiveCenter, RewardDetails },
+	computed: {},
+	mounted() {
+		let s = this.$store.state
+		if (!this.$store.state.daoInfo)
+			this.comingSoon({
+				text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
+				timeout: 5000,
+			})
+		else if (this.$store.state.daoInfo && !this.$store.state.daoInfo.isDao) {
+			this.comingSoon({
+				text: `<p>Please, go to <a href="/#/reviewer/conditions">/reviewer/conditions</a> and become a DAO reviewer</p>`,
+				timeout: 5000,
+			})
+		}
+	},
 	methods: {
 		setTab(no) {
 			this.$store.dispatch('save', { k: 'currentTab', v: no })

@@ -8,7 +8,7 @@
 				<img :src="`${spaceLogo != '' ? spaceLogo : this.userpicSample}`" />
 			</span>
 			<div class="main">
-				<span class="desc">{{ topic }}</span>
+				<span class="desc">{{ ui(topic, 80) }}</span>
 				<span class="row">
 					<span class="user">{{ spaceName }}</span>
 					<span class="type">{{ classify }}</span>
@@ -62,6 +62,14 @@ export default {
 		setInterval(this.calcTime, 1000)
 	},
 	methods: {
+		ui(k: String, maxLength?: number) {
+			let o = k
+			if ((o as string).length > maxLength) {
+				o = (o as string).substring(0, maxLength - 2) + `…`
+			}
+			return o || ''
+		},
+
 		show(trigger: boolean) {
 			if (trigger) {
 				if (this.$store.state.detailDeactivating != 0) {
@@ -250,7 +258,7 @@ section.right {
 	padding-left: 12px;
 	text-align: right;
 }
-@media (max-width: 1100px) {
+@media (max-width: 818px) {
 	section.right {
 		/* justify-content: space-between; */
 	}
@@ -287,6 +295,21 @@ section.right {
 	}
 	.item {
 		gap: 1rem;
+	}
+	section.left,
+	section.right {
+		/* flex-direction: column; */
+		max-width: 100%;
+		width: 100%;
+		justify-content: flex-end;
+	}
+	.desc {
+		white-space: initial;
+		word-break: break-word;
+	}
+	.row {
+		/* justify-content: space-between; */
+		padding: 1rem;
 	}
 }
 @media (max-width: 540px) {

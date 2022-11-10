@@ -4,12 +4,16 @@
 			<div>
 				<img src="/incentives/punch_rewards@2x.png" alt="punch rewards" />
 				<h3>Punch rewards</h3>
-				<span>Bonus of the month : <b>35</b></span>
+				<span
+					>Bonus of the month : <b>{{ daily }}</b></span
+				>
 			</div>
 			<div>
 				<img src="/incentives/judging_rewards@2x.png" alt="judging rewards" />
 				<h3>Judging Rewards</h3>
-				<span>Cumulative days : <b>15</b></span>
+				<span
+					>Cumulative days : <b>{{ votes }}</b></span
+				>
 			</div>
 			<div>
 				<img
@@ -17,7 +21,9 @@
 					alt="divide_the_prize_pool"
 				/>
 				<h3>Divide the prize pool</h3>
-				<span>Cumulative votes : <b>124</b></span>
+				<span
+					>Cumulative votes : <b>{{ voteTickets }}</b></span
+				>
 			</div>
 		</div>
 		<h2>Reward rules <sup>(monthly settlement)</sup></h2>
@@ -49,7 +55,33 @@
 	</section>
 </template>
 <script lang="ts">
-export default {}
+export default {
+	mounted() {
+		;(async () => {
+			if (this.$store.state.daoInfo && this.$store.state.daoInfo.isDao) {
+				let a = await this.web3.rewardInfo()
+				this.$store.dispatch('save', { k: 'rewardInfo', v: a })
+			}
+		})()
+	},
+	computed: {
+		daily() {
+			return this.$store.state.rewardInfo
+				? this.$store.state.rewardInfo.daily
+				: 0
+		},
+		votes() {
+			return this.$store.state.rewardInfo
+				? this.$store.state.rewardInfo.votes
+				: 0
+		},
+		voteTickets() {
+			return this.$store.state.rewardInfo
+				? this.$store.state.rewardInfo.voteTickets
+				: 0
+		},
+	},
+}
 </script>
 <style scoped>
 .row {

@@ -18,14 +18,28 @@ export default class Web3Controller extends IncentiveController {
 			window.location.host.substring(0, 1) === '1'
 		this.branch = isLocal ? 'dev' : 'dev' // local || dev || release
 	}
-	login = async () => {
-		const connect = await this.connect()
+
+	fetchRelated = async () => {
+		this.rewardInfo()
+		if (this.store.state.daoInfo && this.store.state.daoInfo.isDao) {
+			let a = await this.rewardInfo()
+			this.store.dispatch('save', { k: 'rewardInfo', v: a })
+		}
+	}
+
+	login = async (cb?: () => {}) => {
+		const connect = await this.connect(() => {
+			cb()
+			this.fetchRelated()
+			return true
+		})
 		// setTimeout(async () => {
 		const info = await this.info()
 		// setTimeout(async () => {
 		const tickets = await this.ticketsNumber()
 		const events = await this.eventList()
 
+		return true
 		// console.log({ connect, info, tickets, events })
 	}
 }

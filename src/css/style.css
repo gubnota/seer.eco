@@ -588,7 +588,8 @@ sup {
 .btn:active {
 	transform: translateY(5px);
 }
-.btn::selection {
+.btn::selection,
+.btn *::selection {
 	background-color: transparent;
 }
 .btn.disabled {

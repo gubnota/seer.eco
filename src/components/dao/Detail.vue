@@ -2,7 +2,8 @@
 	<div
 		class="detail"
 		ref="detail"
-		:style="`left:${this.$store.state.detail.left}px;top:${this.$store.state.detail.top}px;`"
+		:style="`left:${left}px;top:${top}px;`"
+		:class="{ short: !ui('cover') }"
 	>
 		<div class="bg" v-if="ui('video')">
 			<video autoplay muted loop playsinline id="bgdetailvideo">
@@ -21,7 +22,10 @@
 		>
 			<div class="close" @click="close"><Close /></div>
 		</div>
-		<div class="head"><h3>Event info</h3></div>
+		<div class="head">
+			<h3>Event info</h3>
+			<div class="close" @click="close" v-if="!ui('cover')"><Close /></div>
+		</div>
 		<div class="main">
 			<div class="time">
 				<span class="pic"><Calendar /></span>
@@ -68,6 +72,14 @@ import detailSample from '/src/assets/dao/detail.jpg'
 import userpicSample from '/src/assets/dao/defaultUserPic@2x.png'
 
 export default {
+	computed: {
+		left() {
+			return this.$store.state.detail.left
+		},
+		top() {
+			return this.$store.state.detail.top
+		},
+	},
 	data() {
 		return {
 			detailSample,
@@ -106,7 +118,7 @@ export default {
 		Geo,
 	},
 	methods: {
-		ui(k: String, maxLength: number) {
+		ui(k: String, maxLength?: number) {
 			if (this.$store.state.eventDetail) {
 				Object.entries(this.$store.state.eventDetail).forEach(
 					([key, value]) => {
@@ -154,6 +166,12 @@ export default {
 	overflow: hidden;
 	max-width: calc(100% - 12px);
 }
+.detail.short {
+	height: 447px;
+}
+.detail.short .bg {
+	display: none;
+}
 .bg {
 	position: relative;
 	width: 100%;
@@ -164,6 +182,9 @@ export default {
 	position: absolute;
 	top: 13px;
 	right: 15px;
+}
+.short .close {
+	top: 7px;
 }
 .head {
 	border-bottom: 1px solid #e4e8ef;
@@ -272,5 +293,23 @@ h3 {
 	/* height: 300px; */
 	object-fit: cover;
 	overflow-x: hidden;
+}
+@media (max-width: 550px) {
+	.detail {
+		left: 6px !important;
+		max-width: calc(100vw - 12px);
+		box-shadow: 4px 4px 16px 10px rgb(0 0 0 / 22%);
+		height: auto;
+	}
+	.main > * {
+		width: 100%;
+	}
+	.main > .location a,
+	.value {
+		word-break: break-word;
+	}
+	.ellipsis {
+		overflow: visible;
+	}
 }
 </style>

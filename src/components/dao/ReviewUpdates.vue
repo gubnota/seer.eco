@@ -207,4 +207,11 @@ nav.tabs span.selected {
 	height: 120px;
 	width: 89px;
 }
+@media (max-width: 550px) {
+	section.review {
+		width: calc(100vw - 12px);
+		align-self: center;
+		padding: 6px;
+	}
+}
 </style>

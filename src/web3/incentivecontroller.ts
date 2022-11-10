@@ -7,9 +7,9 @@ export default class IncentiveController extends TestController {
 	"list": [
 		{
 				"date": "2022-09",
-				"dailyReward": 2, // Review reward
-				"voteSumReward": 0, // 评审累计奖励  Punch rewards
-				"poolReward": 19.89
+				"dailyReward": 2, // 每日签到奖励 Punch rewards
+				"voteSumReward": 0, // 评审累计奖励  Review reward
+				"poolReward": 19.89 // 奖池奖励 Divide the price pool
 		},
 		{
 				"date": "2022-10",
@@ -17,14 +17,21 @@ export default class IncentiveController extends TestController {
 				"voteSumReward": 20,
 				"poolReward": 99.09
 		}
-]*/
+]
+got: number // claim
+unGot: number // can be claimed
+*/
 
 	/* call: daily|rewardInfo|RewardDetail */
 	incentives = async (call: string) => {
-		if (call != 'daily' && call != 'rewardInfo' && call != 'RewardDetail')
+		if (
+			call != 'daily' &&
+			call != 'RewardInfo' &&
+			call != 'RewardDetail' &&
+			call != 'ClaimReward'
+		)
 			throw new Error('unknown method')
-
-		axios
+		let res = axios
 			.post(
 				this.servers.business[this.branch] + 'api/dao/' + call,
 				{},
@@ -32,7 +39,7 @@ export default class IncentiveController extends TestController {
 					headers: {
 						SeerToken: this.store.state.seerToken,
 						Domain: this.node,
-						Language: 'en',
+						Language: 'zh',
 						Terminal: 'web',
 					},
 				}
@@ -40,9 +47,9 @@ export default class IncentiveController extends TestController {
 			.then((res) => {
 				if (res.data.message != 'Success') {
 					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
-					return Promise.resolve(false)
+					return false
 				}
-				return Promise.resolve(call == 'daily' ? true : res.data.data)
+				return call == 'daily' || call == 'ClaimReward' ? true : res.data.data
 			})
 			.catch((error) => {
 				console.log('error', error.message)
@@ -50,11 +57,12 @@ export default class IncentiveController extends TestController {
 					timeout: 5000,
 					text: `<p><b>Error</b><br />${error.message}</p>`,
 				})
-				return Promise.resolve(false)
+				return false
 			})
+		return Promise.resolve(res)
 	}
 	daily = async () => {
-		return Promise.resolve(this.incentives('daily'))
+		return this.incentives('daily')
 	}
 	daily2 = async (signature: string) => {
 		axios
@@ -95,38 +103,15 @@ export default class IncentiveController extends TestController {
   */
 	rewardDetail = async () => {
 		let res = await this.incentives('RewardDetail')
-		console.log('rewardDetail', res)
 		return res
 	}
+	claimReward = async () => {
+		let res = await this.incentives('ClaimReward')
+		return res
+	}
+
 	rewardInfo = async () => {
-		return Promise.resolve(this.incentives('RewardInfo'))
-		axios
-			.post(
-				this.servers.business[this.branch] + 'api/dao/RewardInfo',
-				{},
-				{
-					headers: {
-						SeerToken: this.store.state.seerToken,
-						Domain: this.node,
-						Language: 'en',
-						Terminal: 'web',
-					},
-				}
-			)
-			.then((res) => {
-				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
-					return Promise.resolve(res.data.data)
-				}
-				return Promise.resolve(true)
-			})
-			.catch((error) => {
-				console.log('error', error.message)
-				this.popup({
-					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
-				})
-				return Promise.resolve(false)
-			})
+		let res = await this.incentives('RewardInfo')
+		return res
 	}
 }

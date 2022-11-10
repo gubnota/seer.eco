@@ -126,6 +126,7 @@ img {
 	section.footer {
 		margin-top: 100px;
 		margin-bottom: 100px;
+		max-width: 100vw;
 	}
 	.front {
 		transform: translateX(-6px) translateY(-6px);

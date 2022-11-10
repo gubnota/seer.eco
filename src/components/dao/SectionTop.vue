@@ -60,4 +60,10 @@ img {
 		line-height: 15vw;
 	}
 }
+@media (max-width: 550px) {
+	.bird {
+		max-width: 60vw;
+		padding: 4rem 0;
+	}
+}
 </style>
