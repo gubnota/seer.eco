@@ -129,7 +129,7 @@ export default {
 			let out = Object.entries(this).filter((el, i) => {
 				if (el[0] == k) return true
 			})
-			if (typeof out[0] != 'object') return ''
+			if (typeof out[0] != 'object') return out[0]
 			let o = out[0][1]
 
 			if ((o as string).length > maxLength) {
