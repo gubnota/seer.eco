@@ -56,14 +56,22 @@ img {
 		max-width: 90vw;
 	}
 	.col h1 {
-		font-size: 10vw;
-		line-height: 15vw;
+		font-size: 4rem;
+		line-height: 100%;
+		margin-bottom: 2rem;
+		text-align: center;
 	}
 }
 @media (max-width: 550px) {
 	.bird {
 		max-width: 60vw;
 		padding: 4rem 0;
+	}
+	.col h1 {
+		font-size: 2rem;
+		line-height: 150%;
+		margin-bottom: 1rem;
+		text-align: center;
 	}
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-	<div class="item" ref="item">
+	<div class="item" ref="item" @click="show(true)">
 		<!--		@mouseenter="show(true)"
 		@mouseleave="show(false)"
  -->
-		<section class="left" @click="show(true)">
+		<section class="left">
 			<span class="imgpic">
 				<img :src="`${spaceLogo != '' ? spaceLogo : this.userpicSample}`" />
 			</span>

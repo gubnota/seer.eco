@@ -119,4 +119,10 @@ nav.actions > div.selected {
 	font-size: 13px;
 	font-weight: 600;
 }
+@media (max-width: 1120px) {
+	section.incentive {
+		width: calc(100vw - 20px);
+		align-self: center;
+	}
+}
 </style>

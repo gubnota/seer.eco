@@ -56,6 +56,18 @@ export default {
 	},
 	mounted() {
 		this.fetch()
+		this.web3.onLogin = () => {
+			setTimeout(() => {
+				if (this.$store.state.daoInfo && this.$store.state.daoInfo.isDao) {
+					this.web3.rewardInfo()
+					this.web3.rewardDetail()
+				}
+			}, 1000)
+		}
+	},
+	beforeUnmount() {
+		console.log('beforeUnmount')
+		this.web3.onLogin = null
 	},
 	computed: {
 		elements() {
@@ -79,7 +91,6 @@ export default {
 			;(async () => {
 				if (this.$store.state.daoInfo && this.$store.state.daoInfo.isDao) {
 					let a = await this.web3.rewardDetail()
-					this.$store.dispatch('save', { k: 'rewardDetail', v: a })
 				}
 			})()
 		},
@@ -240,5 +251,17 @@ header.black > * {
 	line-height: 123%;
 	text-align: center;
 	color: #ffffff;
+}
+@media (max-width: 1120px) {
+	section.rewardDetails {
+		flex-direction: column;
+	}
+	aside.info {
+		width: 100%;
+		padding: 0;
+	}
+	.p4 img {
+		margin-left: 0;
+	}
 }
 </style>

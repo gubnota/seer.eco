@@ -49,7 +49,7 @@
 					Next Question
 				</div>
 			</section>
-			<aside class="warn" v-if="this.message">{{ this.message }}</aside>
+			<!-- <aside class="warn" v-if="this.message">{{ this.message }}</aside> -->
 		</main>
 	</Template>
 </template>
@@ -77,6 +77,9 @@ export default {
 		Template,
 	},
 	mounted() {
+		this.web3.onLogout = () => {
+			this.router.push({ path: '/dao' })
+		}
 		if (!this.$store.state.daoInfo) {
 			this.router.push({ path: '/dao' })
 			return
@@ -88,6 +91,18 @@ export default {
 				this.router.push('/reviewer/intro')
 			}
 		}, 1000)
+	},
+	computed: {
+		isStillLoggedIn() {
+			return !!this.$store.state.seerToken
+		},
+	},
+	watch: {
+		// whenever question changes, this function will run
+		isStillLoggedIn(newState, oldState) {
+			// if (!!newState) {
+			// }
+		},
 	},
 	methods: {
 		option(no) {
@@ -107,14 +122,27 @@ export default {
 		next() {
 			if (this.transition) return
 			let sel_opt = this.questions[this.current].options[this.selected]
-			if (typeof sel_opt.correct === 'boolean') {
+			if (sel_opt.hasOwnProperty('correct') && sel_opt.correct == true) {
 				this.score += 5
 			}
+
+			// console.log(
+			// 	'this.questions[this.current].options[this.selected]',
+			// 	sel_opt,
+			// 	this.score
+			// )
+			// return
+			// if (sel_opt.hasOwnProperty('correct') && sel_opt.correct == true) {
+			// 	this.score += 5
+			// }
 			// console.log('score.checksum()', score.checksum(this.score))
 			this.transition = true
+			console.log('this.current', this.current)
 			if (this.current == this.total - 1) {
+				//> 0
 				// TODO: API backend request
 				//last question
+				console.log('before examResult')
 				this.web3.examResult(score.checksum(this.score))
 				this.router.push(
 					this.score > 80 ? '/reviewer/success' : '/reviewer/failure'
@@ -162,10 +190,10 @@ section.review {
 	max-width: 1120px;
 }
 section.review.show {
-	animation: 1s ease-in-out 0s 1 slideInFromLeft;
+	animation: 0s ease-in-out 0s 1 slideInFromLeft;
 }
 section.review.hide {
-	animation: 1s ease-in-out 0s 1 slideOutFromLeft;
+	animation: 0s ease-in-out 0s 1 slideOutFromLeft;
 }
 .warn {
 	transition: all 1s ease;
@@ -356,7 +384,7 @@ h2 {
 }
 @media (max-width: 1024px) {
 	section.review {
-		max-width: calc(100vw - 2rem);
+		width: calc(100vw - 2rem);
 		align-self: center;
 	}
 	.block.style2 .option span:last-child {

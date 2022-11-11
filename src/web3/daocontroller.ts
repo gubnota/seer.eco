@@ -116,9 +116,13 @@ export default class DaoController extends UserController {
 			.then((response) => {
 				this.daoInfo = response.data.data
 				if (response.data.message == 'SystemBusy') {
-					setTimeout(() => {
-						this.info()
-					}, 1000)
+					this.popup({
+						text: `<span><b>System is busy</b></span>`,
+						timeout: 5000,
+					})
+					// setTimeout(() => {
+					// 	this.info()
+					// }, 1000)
 					return
 				} else if (response.data.message == 'UserNotFound') {
 					this.popup({
@@ -149,9 +153,9 @@ export default class DaoController extends UserController {
 
 	ticketsNumber = async () => {
 		if (!this.store.state.seerToken || !this.store.state.daoInfo) {
-			setTimeout(() => {
-				this.ticketsNumber()
-			}, 100)
+			// setTimeout(() => {
+			// 	this.ticketsNumber()
+			// }, 100)
 			return
 		}
 		const Contract = this.web3js2.eth.Contract

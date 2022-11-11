@@ -22,12 +22,12 @@
 					</div>
 				</div>
 				<div class="info">
-					{{ this.total }} exam opportunities. <i>{{ this.remain }}</i
+					{{ ui.total }} exam opportunities. <i>{{ ui.remain }}</i
 					>&nbsp; remaining
 				</div>
 				<div class="btn" @click="start">start answering</div>
 			</section>
-			<aside class="conditions_unmet" v-if="this.remain == 0">
+			<aside class="conditions_unmet" v-if="ui.remain == 0">
 				<span
 					>You have run out of exam opportunities and can no longer take the
 					exam</span
@@ -53,14 +53,27 @@ import Template from '../components/dao/reviewer/Template2.vue'
 // let data: question[] = d
 
 export default {
+	computed: {
+		ui() {
+			return {
+				remain: this.$store.state.daoInfo.remainTimes,
+				total: this.$store.state.daoInfo.configs.retryTimes,
+			}
+		},
+	},
 	data() {
 		return {
 			questions: this.questions_en,
-			remain: 0,
-			total: 0,
 		}
 	},
+	beforeUnmount() {
+		this.web3.onLogout = null
+	},
 	mounted() {
+		this.web3.info()
+		this.web3.onLogout = () => {
+			this.router.push({ path: '/dao' })
+		}
 		if (!this.$store.state.daoInfo) {
 			this.router.push({ path: '/dao' })
 			return
@@ -70,7 +83,14 @@ export default {
 	},
 	methods: {
 		start() {
-			this.router.push({ path: '/reviewer/test' })
+			if (this.ui.remain != 0) {
+				this.router.push({ path: '/reviewer/test' })
+			} else {
+				this.comingSoon({
+					text: `<span>You've run out of opportunities</span>`,
+					timeout: 3000,
+				})
+			}
 		},
 	},
 	components: { Template },

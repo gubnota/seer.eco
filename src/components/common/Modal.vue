@@ -126,6 +126,7 @@ export default {
 	.actual-message {
 		padding: 10px;
 		max-width: calc(100% - 10rem);
+		min-width: 320px;
 	}
 	.message-container .actual-message h2 {
 		font-size: 1.5rem;

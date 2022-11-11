@@ -3,7 +3,11 @@
 		class="detail"
 		ref="detail"
 		:style="`left:${left}px;top:${top}px;`"
-		:class="{ short: !ui.cover }"
+		:class="{
+			short: !ui.cover && !appearing,
+			alt: disappearing,
+			genie: appearing,
+		}"
 	>
 		<div class="bg" v-if="ui.video">
 			<video autoplay muted loop playsinline id="bgdetailvideo">
@@ -104,30 +108,34 @@ export default {
 	},
 	data() {
 		return {
-			detailSample,
-			userpicSample,
-			classify: '', //DAO
-			cover: '',
-			detail: '',
-			endTime: '',
-			hasAds: false,
-			hasAoe: false,
-			interestedCount: 0, //1
-			location: '', //"场所"
-			spaceLogo: '',
-			spaceName: '', //"Windows"
-			spaceUrl: '', //"https://app.seer.eco/#/room/!wLVoJfsqeCwhGRSqJo:genesis.seer.eco"
-			startTime: '', //"2022-11-08 09:00:00"
-			status: '', //"ongoing"
-			topic: '', //"标题"
-			userLogo: '',
-			userName: '',
-			video: '',
+			appearing: false,
+			disappearing: false,
+			// detailSample,
+			// userpicSample,
+			// classify: '', //DAO
+			// cover: '',
+			// detail: '',
+			// endTime: '',
+			// hasAds: false,
+			// hasAoe: false,
+			// interestedCount: 0, //1
+			// location: '', //"场所"
+			// spaceLogo: '',
+			// spaceName: '', //"Windows"
+			// spaceUrl: '', //"https://app.seer.eco/#/room/!wLVoJfsqeCwhGRSqJo:genesis.seer.eco"
+			// startTime: '', //"2022-11-08 09:00:00"
+			// status: '', //"ongoing"
+			// topic: '', //"标题"
+			// userLogo: '',
+			// userName: '',
+			// video: '',
 		}
 	},
 	mounted() {
-		console.log(this.$store.state.eventDetail)
-
+		this.appearing = true
+		setTimeout(() => {
+			this.appearing = false
+		}, 300)
 		if (this.$store.state.eventDetail) {
 			Object.entries(this.$store.state.eventDetail).forEach(([key, value]) => {
 				this[key] = value
@@ -153,14 +161,18 @@ export default {
 			window.open(this.ui.spaceUrl, '_blank')
 		},
 		close(e) {
-			this.$store.dispatch('save', {
-				k: 'detail',
-				v: false,
-			})
-			this.$store.dispatch('save', {
-				k: 'eventDetail',
-				v: false,
-			})
+			this.appearing = true
+			this.disappearing = true
+			setTimeout(() => {
+				this.$store.dispatch('save', {
+					k: 'detail',
+					v: false,
+				})
+				this.$store.dispatch('save', {
+					k: 'eventDetail',
+					v: false,
+				})
+			}, 300)
 		},
 	},
 }
@@ -326,6 +338,30 @@ h3 {
 	}
 	.ellipsis {
 		overflow: visible;
+	}
+}
+
+.genie {
+	animation: 0.3s ease-in-out none genie;
+}
+.alt {
+	animation-direction: reverse;
+}
+@keyframes genie {
+	from {
+		transform: scale(0.1);
+	}
+	25% {
+		transform: scale(0.3, 0.4);
+	}
+	50% {
+		transform: scale(0.3, 0.4);
+	}
+	75% {
+		transform: scale(0.95, 1.05);
+	}
+	to {
+		transform: scale(1, 1);
 	}
 }
 </style>

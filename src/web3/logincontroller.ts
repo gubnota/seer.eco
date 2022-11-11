@@ -90,7 +90,7 @@ export default class LoginController extends MetaController {
 					k: 'seerToken',
 					v: res.data.data,
 				})
-				console.log('this.seerToken', this.store.state.seerToken)
+				// console.log('this.seerToken', this.store.state.seerToken)
 				// return true
 				//   {
 				//     "code": 0,

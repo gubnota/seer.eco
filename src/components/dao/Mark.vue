@@ -1,5 +1,5 @@
 <template>
-	<div class="mark" @mouseenter="show" @mouseleave="show">
+	<div class="mark" @mouseenter="show" @mouseleave="show" @click="show">
 		<div class="hover" v-if="hovered != 0">
 			<span
 				>For the convenience of tracking the source, the space information in
@@ -44,17 +44,21 @@
 </template>
 <script>
 export default {
-	data() {
-		return {
-			hovered: 0,
-		}
+	computed: {
+		hovered() {
+			return this.$store.state.hovered || 0
+		},
 	},
 	methods: {
 		show(state) {
-			if (this.hovered == 0) {
-				this.hovered = setTimeout(() => {
-					this.hovered = 0
-				}, 800)
+			console.log('clicked')
+			if (!this.$store.state.hovered) {
+				this.$store.dispatch('save', {
+					k: 'hovered',
+					v: setTimeout(() => {
+						this.$store.dispatch('save', { k: 'hovered', v: 0 })
+					}, 800),
+				})
 			}
 		},
 	},
@@ -77,7 +81,6 @@ export default {
 	color: white;
 	padding: 10px;
 	top: 40px;
-	left: 10px;
 	left: 0;
 	display: flex;
 	flex-direction: row;
@@ -108,4 +111,10 @@ svg:hover path.mark {
   fill:url(#pushbtn2);
   cursor:pointer;
 } */
+@media (max-width: 550px) {
+	.hover {
+		left: -250px;
+		border-radius: 8px 0 8px 8px;
+	}
+}
 </style>

@@ -62,14 +62,8 @@ export default {
 				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
 			}
 			if (id == 2) {
-				if (!this.loggedIn()) {
-					this.web3.login()
-				} else {
-					this.router.push({
-						path: '/incentive-center',
-						params: { passed: true },
-					})
-				}
+				if (!this.loggedIn()) this.web3.login()
+				this.router.push('/incentive-center')
 			}
 		},
 	},
@@ -80,6 +74,8 @@ section.cols {
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 21px;
+	max-width: calc(100vw - 2rem);
+	align-self: center;
 }
 .col {
 	flex: 1;
@@ -89,6 +85,13 @@ section.cols {
 	padding: 0 40px;
 	position: relative;
 }
+.col:first-child {
+	padding: 0 40px 0 0;
+}
+.col:last-child {
+	padding: 0 0 0 40px;
+}
+
 .col::before {
 	display: block;
 	content: ' ';
@@ -108,7 +111,7 @@ p {
 button {
 	border-radius: 10px;
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	padding: 12px 24px;
+	padding: 12px 32px;
 	align-items: center;
 	justify-content: center;
 	display: flex;
@@ -125,7 +128,7 @@ button span {
 	flex-direction: row;
 	align-items: center;
 	gap: 24px;
-	justify-content: center;
+	justify-content: space-between;
 }
 h3 {
 	font-size: 26px;
@@ -135,12 +138,20 @@ button img {
 	width: 24px;
 	height: 24px;
 }
-@media (max-width: 950px) {
+@media (max-width: 1120px) {
 	section.cols {
 		flex-direction: column;
 		gap: 2rem 0;
 		width: 100vw;
 		align-self: center;
+	}
+	.col::before {
+		display: none;
+	}
+	.col:last-child,
+	.col:first-child,
+	.col {
+		padding: 0;
 	}
 	.col {
 		border-bottom: 1px #cdd0d4 solid;
@@ -156,6 +167,18 @@ button img {
 	}
 	p {
 		padding: 0 1rem;
+	}
+}
+@media (max-width: 550px) {
+	.col {
+		padding: 0 6px;
+		width: calc(100% - 12px);
+	}
+	h3 {
+		font-size: 14px;
+	}
+	button {
+		padding: 6px 12px;
 	}
 }
 </style>

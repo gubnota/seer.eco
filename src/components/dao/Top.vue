@@ -8,10 +8,10 @@
 			class="btn"
 			:class="{ disabled: !this.window.ethereum }"
 		>
-			<span class="loader" v-if="loading()" />
-			<img :src="loggedIn() ? metamask : lock" alt="wallet" />
+			<span class="loader" v-if="loading" />
+			<img :src="loggedIn ? metamask : lock" alt="wallet" />
 			<span>{{
-				loggedIn() ? this.web3.addressPartially() : this.ui._('Connect Wallet')
+				loggedIn ? this.web3.addressPartially() : this.ui._('Connect Wallet')
 			}}</span>
 		</button>
 	</nav>
@@ -32,18 +32,21 @@ export default {
 	mounted() {
 		this.web3.eventList()
 	},
-	methods: {
+	computed: {
+		loading() {
+			return this.$store.state.walletLoading || false
+		},
 		loggedIn() {
 			let loggedIn = this.$store.state.daoInfo != null
 			if (loggedIn)
 				this.$store.dispatch('save', { k: 'walletLoading', v: false })
 			return loggedIn
 		},
-		loading() {
-			return this.$store.state.walletLoading || false
-		},
+	},
+	methods: {
 		async connect() {
-			if (this.loggedIn()) {
+			if (this.$store.state.walletLoading) return
+			if (this.loggedIn) {
 				// window.location.reload()
 				this.web3.logout()
 				return
@@ -111,7 +114,7 @@ button span {
 .loader {
 	width: 24px;
 	height: 24px;
-	border: 5px solid #999;
+	border: 2px solid #999;
 	border-bottom-color: transparent;
 	border-radius: 50%;
 	display: inline-block;

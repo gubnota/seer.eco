@@ -5,14 +5,14 @@
 				<img src="/incentives/punch_rewards@2x.png" alt="punch rewards" />
 				<h3>Punch rewards</h3>
 				<span
-					>Bonus of the month : <b>{{ daily }}</b></span
+					>Bonus of the month : <b>{{ ui.daily }}</b></span
 				>
 			</div>
 			<div>
 				<img src="/incentives/judging_rewards@2x.png" alt="judging rewards" />
 				<h3>Judging Rewards</h3>
 				<span
-					>Cumulative days : <b>{{ votes }}</b></span
+					>Cumulative days : <b>{{ ui.votes }}</b></span
 				>
 			</div>
 			<div>
@@ -22,7 +22,7 @@
 				/>
 				<h3>Divide the prize pool</h3>
 				<span
-					>Cumulative votes : <b>{{ voteTickets }}</b></span
+					>Cumulative votes : <b>{{ ui.voteTickets }}</b></span
 				>
 			</div>
 		</div>
@@ -57,28 +57,38 @@
 <script lang="ts">
 export default {
 	mounted() {
-		;(async () => {
-			if (this.$store.state.daoInfo && this.$store.state.daoInfo.isDao) {
-				let a = await this.web3.rewardInfo()
-				this.$store.dispatch('save', { k: 'rewardInfo', v: a })
-			}
-		})()
+		this.web3.onLogin = () => {
+			setTimeout(() => {
+				this.fetch()
+			}, 1000)
+		}
+	},
+	beforeUnmount() {
+		this.web3.onLogin = null
 	},
 	computed: {
-		daily() {
-			return this.$store.state.rewardInfo
-				? this.$store.state.rewardInfo.daily
-				: 0
+		ui() {
+			let s = this.$store.state
+			if (!s.rewardInfo) {
+				return {
+					daily: 0,
+					votes: 0,
+					voteTickets: 0,
+				}
+			}
+			return {
+				daily: s.rewardInfo.daily,
+				votes: s.rewardInfo.votes,
+				voteTickets: s.rewardInfo.voteTickets,
+			}
 		},
-		votes() {
-			return this.$store.state.rewardInfo
-				? this.$store.state.rewardInfo.votes
-				: 0
-		},
-		voteTickets() {
-			return this.$store.state.rewardInfo
-				? this.$store.state.rewardInfo.voteTickets
-				: 0
+	},
+	methods: {
+		async fetch() {
+			console.log('fetch rewardInfo')
+			if (this.$store.state.daoInfo && this.$store.state.daoInfo.isDao) {
+				this.web3.rewardInfo()
+			}
 		},
 	},
 }
@@ -130,5 +140,14 @@ h2 {
 	font-weight: 400;
 	font-size: 15px;
 	line-height: 22px;
+}
+@media (max-width: 1120px) {
+	.row {
+		flex-direction: column;
+		align-items: center;
+	}
+	.prizeRow > div {
+		width: 100%;
+	}
 }
 </style>

@@ -103,6 +103,7 @@ unGot: number // can be claimed
   */
 	rewardDetail = async () => {
 		let res = await this.incentives('RewardDetail')
+		this.store.dispatch('save', { k: 'rewardDetail', v: res })
 		return res
 	}
 	claimReward = async () => {
@@ -112,6 +113,8 @@ unGot: number // can be claimed
 
 	rewardInfo = async () => {
 		let res = await this.incentives('RewardInfo')
+		this.store.dispatch('save', { k: 'rewardInfo', v: res })
+
 		return res
 	}
 }

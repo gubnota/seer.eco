@@ -11,6 +11,12 @@ export default class Web3Controller extends IncentiveController {
 			address.length - 5
 		)}`
 	}
+
+	async logout() {
+		await super.logout()
+		this.eventList({ tab: 0, from: 0, limit: 8 })
+	}
+
 	constructor() {
 		super()
 		let isLocal =
@@ -39,6 +45,7 @@ export default class Web3Controller extends IncentiveController {
 		const tickets = await this.ticketsNumber()
 		const events = await this.eventList()
 
+		if (this.onLogin) this.onLogin()
 		return true
 		// console.log({ connect, info, tickets, events })
 	}

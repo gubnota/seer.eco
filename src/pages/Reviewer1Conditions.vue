@@ -19,7 +19,7 @@
 							<span>{{ el.name }}</span>
 						</div>
 						<div class="val">
-							<passed v-if="getStatus(el.action)" />
+							<passed v-if="getStatus[el.action]" />
 							<div class="btn" v-else @click="callback(el.action)">
 								<arrow_right /> <span>{{ el.actionText }}</span>
 							</div>
@@ -27,10 +27,7 @@
 					</div>
 				</div>
 			</section>
-			<aside
-				class="conditions_unmet"
-				v-if="s.daoInfo ? !s.daoInfo.isDao : true"
-			>
+			<aside class="conditions_unmet" v-if="unmet">
 				<span>Please meet all the above conditions first</span>
 			</aside>
 		</div>
@@ -82,6 +79,36 @@ export default {
 			],
 		}
 	},
+	computed: {
+		unmet() {
+			if (!this.$store.state.daoInfo) return false
+			return !this.$store.state.daoInfo.isDao
+		},
+
+		getStatus() {
+			let d = this.$store.state.daoInfo
+			if (!d)
+				return {
+					nft: false,
+					twitter: false,
+					learn: false,
+					test: false,
+				}
+			if (d.isDao)
+				return {
+					nft: true,
+					twitter: true,
+					learn: true,
+					test: true,
+				}
+
+			return {
+				nft: d.steps.holdDSN,
+				twitter: d.steps.twitter,
+				learn: this.$store.state.daoRulesVisited,
+			}
+		},
+	},
 	mounted() {
 		if (!this.loggedIn()) {
 			// this.router.push('/dao')
@@ -95,36 +122,11 @@ export default {
 		// })()
 	},
 	methods: {
-		unmet() {
-			if (!this.$store.state.daoInfo) return false
-			return !this.$store.state.daoInfo.isDao
-		},
 		loggedIn() {
 			let loggedIn = this.$store.state.daoInfo != null
 			if (loggedIn)
 				this.$store.dispatch('save', { k: 'walletLoading', v: false })
 			return loggedIn
-		},
-
-		getStatus(field: String) {
-			console.log('getStatus', field)
-			if (!this.$store.state.daoInfo) return false
-			if (this.$store.state.daoInfo.isDao) return true
-
-			switch (field) {
-				case 'nft':
-					return this.$store.state.daoInfo.steps.holdDSN || false
-					break
-				case 'twitter':
-					return this.$store.state.daoInfo.steps.twitter || false
-					break
-				case 'learn':
-					return this.$store.state.daoRulesVisited || false
-					break
-				default:
-					return false
-					break
-			}
 		},
 		callback(e) {
 			if (!this.$store.state.daoInfo) {
@@ -141,7 +143,26 @@ export default {
 				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
 				this.router.push('/seer_dao.html')
 			}
-			if (e == 'test') this.router.push({ path: '/reviewer/intro' })
+			if (e == 'test') {
+				if (this.$store.state.daoInfo.steps.holdDSN == false) {
+					this.comingSoon({
+						text: `<span>Please, fulfill the requirement of <b class="rainbow">NFT duration</b> > 30 days</span>`,
+						timeout: 5000,
+					})
+				} else if (this.$store.state.daoInfo.steps.twitter == false) {
+					this.comingSoon({
+						text: `<span>Please, verify with the <b class="rainbow">Twitter</b> first</span>`,
+						timeout: 5000,
+					})
+				} else if (!this.$store.state.daoRulesVisited) {
+					this.comingSoon({
+						text: `<span>Please, read carefully <b class="rainbow">DAO rules</b></span>`,
+						timeout: 5000,
+					})
+				} else {
+					this.router.push({ path: '/reviewer/intro' })
+				}
+			}
 		},
 	},
 	components: {

@@ -8,7 +8,7 @@
 		</h3>
 		<h4>
 			<span>Your voting rights：</span>
-			<span>{{ getTicketsNumber() }}</span>
+			<span>{{ getTicketsNumber }}</span>
 			<span class="ticket"><Ticket /></span>
 		</h4>
 		<nav class="tabs">
@@ -21,7 +21,7 @@
 		</nav>
 		<div class="list">
 			<Item
-				v-for="(el, i) in fetch()"
+				v-for="(el, i) in fetch"
 				:daoEndTime="el.daoEndTime"
 				:showId="el.showId"
 				:eventId="el.eventId"
@@ -35,7 +35,7 @@
 				:showType="el.showType"
 				:key="el.showId"
 			/>
-			<div class="empty" v-if="fetch().length < 1">
+			<div class="empty" v-if="fetch.length < 1">
 				<img :src="EmptyPic" />
 				<p>
 					No Review <br />
@@ -45,9 +45,9 @@
 		</div>
 
 		<ItemsPagination
-			v-if="fetch().length > 0"
-			:total="getItemsNumber()"
-			:selected="getEventsPage()"
+			v-if="fetch.length > 0"
+			:total="getItemsNumber"
+			:selected="getEventsPage"
 		/>
 		<!-- TODO: change to dynamic -->
 	</section>
@@ -73,12 +73,9 @@ export default {
 			EmptyPic,
 		}
 	},
-	mounted() {
-		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
-	},
-	methods: {
+	computed: {
 		fetch() {
-			return this.$store.state.eventList.list || []
+			return this.$store.state.eventList ? this.$store.state.eventList.list : []
 		},
 		getTicketsNumber() {
 			return this.$store.state.ticketsNumber || 0
@@ -89,7 +86,11 @@ export default {
 		getEventsPage() {
 			return this.$store.state.eventsPage || 1
 		},
-
+	},
+	mounted() {
+		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
+	},
+	methods: {
 		hover(e: { target: HTMLSpanElement }) {
 			let els =
 				e.target.tagName == 'svg'
@@ -186,6 +187,7 @@ nav.tabs span.selected {
 .list {
 	display: flex;
 	flex-direction: column;
+	transition: all 0.3s ease-in-out;
 }
 .ticket svg {
 	width: 20px;
@@ -212,6 +214,19 @@ nav.tabs span.selected {
 		width: calc(100vw - 12px);
 		align-self: center;
 		padding: 6px;
+	}
+	nav.tabs {
+		width: 100%;
+		gap: 2px;
+		justify-content: space-between;
+		margin: 1rem 0;
+	}
+	nav.tabs > span {
+		text-align: center;
+		padding: 6px 0;
+	}
+	nav.tabs > span.selected {
+		box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
 	}
 }
 </style>

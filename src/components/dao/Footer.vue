@@ -121,15 +121,25 @@ img {
 }
 
 @media (max-width: 1120px) {
+	.front {
+		padding: 20px 28px 26px 25px;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	section.footer {
+		align-self: center;
+		width: calc(100% - 22px);
+	}
+	.front {
+		width: 100%;
+		transform: translateY(-5px);
+	}
 }
 @media (max-width: 550px) {
 	section.footer {
 		margin-top: 100px;
 		margin-bottom: 100px;
 		max-width: 100vw;
-	}
-	.front {
-		transform: translateX(-6px) translateY(-6px);
 	}
 }
 </style>

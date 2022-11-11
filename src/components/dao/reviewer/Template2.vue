@@ -69,4 +69,9 @@ section.main {
 		margin: 0 1rem !important;
 	}
 }
+@media (max-width: 550px) {
+	.oval {
+		display: none;
+	}
+}
 </style>
