@@ -53,6 +53,7 @@ export default class MetaController {
 	restoreWeb3 = () => {
 		this.web3js = new web3(window.ethereum) // - default provider
 		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
+		window.web3js = this.web3js
 		this.address = store.state.address
 	}
 	enable = async (cb?: () => {}) => {

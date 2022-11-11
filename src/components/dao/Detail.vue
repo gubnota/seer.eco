@@ -3,19 +3,19 @@
 		class="detail"
 		ref="detail"
 		:style="`left:${left}px;top:${top}px;`"
-		:class="{ short: !ui('cover') }"
+		:class="{ short: !ui.cover }"
 	>
-		<div class="bg" v-if="ui('video')">
+		<div class="bg" v-if="ui.video">
 			<video autoplay muted loop playsinline id="bgdetailvideo">
-				<source :src="ui('video') as string" id="videtailsource" />
+				<source :src="ui.video as string" id="videtailsource" />
 			</video>
 			<div class="close" @click="close"><Close /></div>
 		</div>
 		<div
 			class="bg"
 			:style="
-				ui('cover')
-					? `background-image:url(${ui('cover')});background-size: cover;`
+				ui.cover
+					? `background-image:url(${ui.cover});background-size: cover;`
 					: 'background:#e0e0e0'
 			"
 			v-else
@@ -24,7 +24,7 @@
 		</div>
 		<div class="head">
 			<h3>Event info</h3>
-			<div class="close" @click="close" v-if="!ui('cover')"><Close /></div>
+			<div class="close" @click="close" v-if="!ui.cover"><Close /></div>
 		</div>
 		<div class="main">
 			<div class="time">
@@ -32,7 +32,7 @@
 				<span class="value ellipsis">Happening now</span>
 			</div>
 			<div class="desc ellipsis">
-				{{ ui('detail', 120) }}
+				{{ ui2(ui.detail, 120) }}
 			</div>
 			<div class="username">
 				<span class="pic"><img :src="spaceLogo || userpicSample" /></span>
@@ -55,7 +55,7 @@
 				<span class="value ellipsis">{{ userName }}</span>
 			</div>
 			<div class="desc2 ellipsis">
-				{{ ui('detail', 126) }}
+				{{ ui2(ui.detail, 126) }}
 			</div>
 		</div>
 		<div class="footer">
@@ -78,6 +78,16 @@ export default {
 		},
 		top() {
 			return this.$store.state.detail.top
+		},
+		ui() {
+			var d = this.$store.state.eventDetail
+			return {
+				cover: (d && d.cover) || '',
+				video: (d && d.video) || '',
+				detail: (d && d.detail) || '',
+				'1': 'bbb',
+				'2': 'aaa',
+			}
 		},
 	},
 	data() {
@@ -104,6 +114,8 @@ export default {
 		}
 	},
 	mounted() {
+		console.log(this.$store.state.eventDetail)
+
 		if (this.$store.state.eventDetail) {
 			Object.entries(this.$store.state.eventDetail).forEach(([key, value]) => {
 				this[key] = value
@@ -118,20 +130,8 @@ export default {
 		Geo,
 	},
 	methods: {
-		ui(k: String, maxLength?: number) {
-			if (this.$store.state.eventDetail) {
-				Object.entries(this.$store.state.eventDetail).forEach(
-					([key, value]) => {
-						this[key] = value
-					}
-				)
-			}
-			let out = Object.entries(this).filter((el, i) => {
-				if (el[0] == k) return true
-			})
-			if (typeof out[0] != 'object') return out[0]
-			let o = out[0][1]
-
+		ui2(k: String, maxLength?: number) {
+			let o = k
 			if ((o as string).length > maxLength) {
 				o = (o as string).substring(0, maxLength - 2) + `…`
 			}
@@ -229,6 +229,7 @@ h3 {
 	font-size: 17px;
 	font-weight: 600;
 	color: #1f2226;
+	overflow: initial;
 }
 .main > .username {
 	gap: 4px;
@@ -251,6 +252,7 @@ h3 {
 .main > .creator {
 }
 .main > .desc2 {
+	overflow: initial;
 }
 
 .footer {
