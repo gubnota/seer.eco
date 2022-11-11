@@ -36,7 +36,7 @@
 				<span class="value ellipsis">Happening now</span>
 			</div>
 			<div class="desc ellipsis">
-				{{ ui2(ui.detail, 120) }}
+				{{ ui2(ui.topic, 120) }}
 			</div>
 			<div class="username">
 				<span class="pic" v-if="ui.spaceLogo || ui.userpicSample"
@@ -65,7 +65,7 @@
 				<span class="value ellipsis">{{ ui.userName }}</span>
 			</div>
 			<div class="desc2 ellipsis">
-				{{ ui2(ui.detail, 126) }}
+				{{ ui2(ui.detail, 526) }}
 			</div>
 		</div>
 		<div class="footer">
@@ -103,6 +103,7 @@ export default {
 				userName: (d && d.userName) || '',
 				openSpace: (d && d.openSpace) || '',
 				userLogo: (d && d.userLogo) || '',
+				topic: (d && d.topic) || '',
 			}
 		},
 	},
@@ -234,6 +235,8 @@ h3 {
 	flex-direction: column;
 	margin-top: 6px;
 	align-items: flex-start;
+	overflow: scroll;
+	overflow-x: hidden;
 }
 .main > div {
 	flex: 1;
