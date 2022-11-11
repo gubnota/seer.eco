@@ -35,24 +35,26 @@
 				{{ ui2(ui.detail, 120) }}
 			</div>
 			<div class="username">
-				<span class="pic"><img :src="spaceLogo || userpicSample" /></span>
-				<span class="value ellipsis">{{ spaceName }}</span>
+				<span class="pic"><img :src="ui.spaceLogo || ui.userpicSample" /></span>
+				<span class="value ellipsis">{{ ui.spaceName }}</span>
 			</div>
 			<div class="location">
 				<span class="pic"><Geo /></span>
 				<span class="value ellipsis"
-					><a :href="spaceUrl" target="_blank">{{ spaceUrl || '' }}</a></span
+					><a :href="ui.spaceUrl || '	'" target="_blank">{{
+						ui.spaceUrl || ''
+					}}</a></span
 				>
 			</div>
 			<div class="group">
 				<span class="pic"><TwoUsers /></span>
 				<span class="value ellipsis"
-					>{{ interestedCount }} person interested</span
+					>{{ ui.interestedCount }} person interested</span
 				>
 			</div>
 			<div class="creator">
-				<span class="pic"><img :src="userLogo || userpicSample" /></span>
-				<span class="value ellipsis">{{ userName }}</span>
+				<span class="pic"><img :src="ui.userLogo || ui.userpicSample" /></span>
+				<span class="value ellipsis">{{ ui.userName }}</span>
 			</div>
 			<div class="desc2 ellipsis">
 				{{ ui2(ui.detail, 126) }}
@@ -85,8 +87,14 @@ export default {
 				cover: (d && d.cover) || '',
 				video: (d && d.video) || '',
 				detail: (d && d.detail) || '',
-				'1': 'bbb',
-				'2': 'aaa',
+				spaceLogo: (d && d.spaceLogo) || '',
+				userpicSample: (d && d.userpicSample) || '',
+				spaceName: (d && d.spaceName) || '',
+				spaceUrl: (d && d.spaceUrl) || '',
+				interestedCount: (d && d.interestedCount) || '',
+				userName: (d && d.userName) || '',
+				openSpace: (d && d.openSpace) || '',
+				userLogo: (d && d.userLogo) || '',
 			}
 		},
 	},
@@ -138,7 +146,7 @@ export default {
 			return o || ''
 		},
 		openSpace() {
-			window.open(this.spaceUrl, '_blank')
+			window.open(this.ui.spaceUrl, '_blank')
 		},
 		close(e) {
 			this.$store.dispatch('save', {
