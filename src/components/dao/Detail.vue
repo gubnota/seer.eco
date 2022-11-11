@@ -35,7 +35,9 @@
 				{{ ui2(ui.detail, 120) }}
 			</div>
 			<div class="username">
-				<span class="pic"><img :src="ui.spaceLogo || ui.userpicSample" /></span>
+				<span class="pic" v-if="ui.spaceLogo || ui.userpicSample"
+					><img :src="ui.spaceLogo || ui.userpicSample"
+				/></span>
 				<span class="value ellipsis">{{ ui.spaceName }}</span>
 			</div>
 			<div class="location">
@@ -53,7 +55,9 @@
 				>
 			</div>
 			<div class="creator">
-				<span class="pic"><img :src="ui.userLogo || ui.userpicSample" /></span>
+				<span class="pic" v-if="ui.userLogo || ui.userpicSample"
+					><img :src="ui.userLogo || ui.userpicSample"
+				/></span>
 				<span class="value ellipsis">{{ ui.userName }}</span>
 			</div>
 			<div class="desc2 ellipsis">
