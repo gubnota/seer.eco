@@ -225,7 +225,7 @@ section.right {
 	text-overflow: ellipsis;
 	font-weight: 600;
 	font-size: 13px;
-	/* white-space: nowrap; */
+	white-space: nowrap;
 }
 .row {
 	display: flex;
@@ -244,6 +244,7 @@ section.right {
 	max-width: 58px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	max-height: 2rem;
 }
 .item:nth-child(2n) {
 	background-color: #fafafa;

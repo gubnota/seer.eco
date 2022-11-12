@@ -60,8 +60,9 @@ export default {
 		this.web3.onLogin = () => {
 			setTimeout(() => {
 				this.fetch()
-			}, 1000)
+			}, 2000)
 		}
+		this.fetch()
 	},
 	beforeUnmount() {
 		this.web3.onLogin = null

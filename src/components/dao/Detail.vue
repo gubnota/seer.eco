@@ -4,7 +4,7 @@
 		ref="detail"
 		:style="`left:${left}px;top:${top}px;`"
 		:class="{
-			short: !ui.cover && !appearing,
+			short: !ui.cover,
 			alt: disappearing,
 			genie: appearing,
 		}"
@@ -30,42 +30,44 @@
 			<h3>Event info</h3>
 			<div class="close" @click="close" v-if="!ui.cover"><Close /></div>
 		</div>
-		<div class="main">
-			<div class="time">
-				<span class="pic"><Calendar /></span>
-				<span class="value ellipsis">Happening now</span>
-			</div>
-			<div class="desc ellipsis">
-				{{ ui2(ui.topic, 120) }}
-			</div>
-			<div class="username">
-				<span class="pic" v-if="ui.spaceLogo || ui.userpicSample"
-					><img :src="ui.spaceLogo || ui.userpicSample"
-				/></span>
-				<span class="value ellipsis">{{ ui.spaceName }}</span>
-			</div>
-			<div class="location">
-				<span class="pic"><Geo /></span>
-				<span class="value ellipsis"
-					><a :href="ui.spaceUrl || '	'" target="_blank">{{
-						ui.spaceUrl || ''
-					}}</a></span
-				>
-			</div>
-			<div class="group">
-				<span class="pic"><TwoUsers /></span>
-				<span class="value ellipsis"
-					>{{ ui.interestedCount }} person interested</span
-				>
-			</div>
-			<div class="creator">
-				<span class="pic" v-if="ui.userLogo || ui.userpicSample"
-					><img :src="ui.userLogo || ui.userpicSample"
-				/></span>
-				<span class="value ellipsis">{{ ui.userName }}</span>
-			</div>
-			<div class="desc2 ellipsis">
-				{{ ui2(ui.detail, 526) }}
+		<div class="main scroll">
+			<div class="contents">
+				<div class="time">
+					<span class="pic"><Calendar /></span>
+					<span class="value ellipsis">Happening now</span>
+				</div>
+				<div class="desc ellipsis">
+					{{ ui2(ui.topic, 120) }}
+				</div>
+				<div class="username">
+					<span class="pic" v-if="ui.spaceLogo || ui.userpicSample"
+						><img :src="ui.spaceLogo || ui.userpicSample"
+					/></span>
+					<span class="value ellipsis">{{ ui.spaceName }}</span>
+				</div>
+				<div class="location">
+					<span class="pic"><Geo /></span>
+					<span class="value ellipsis"
+						><a :href="ui.spaceUrl || '	'" target="_blank">{{
+							ui.spaceUrl || ''
+						}}</a></span
+					>
+				</div>
+				<div class="group">
+					<span class="pic"><TwoUsers /></span>
+					<span class="value ellipsis"
+						>{{ ui.interestedCount }} person interested</span
+					>
+				</div>
+				<div class="creator">
+					<span class="pic" v-if="ui.userLogo || ui.userpicSample"
+						><img :src="ui.userLogo || ui.userpicSample"
+					/></span>
+					<span class="value ellipsis">{{ ui.userName }}</span>
+				</div>
+				<div class="desc2 ellipsis">
+					{{ ui2(ui.detail, 526) }}
+				</div>
 			</div>
 		</div>
 		<div class="footer">
@@ -162,7 +164,7 @@ export default {
 			window.open(this.ui.spaceUrl, '_blank')
 		},
 		close(e) {
-			this.appearing = true
+			this.appearing = false
 			this.disappearing = true
 			setTimeout(() => {
 				this.$store.dispatch('save', {
@@ -229,56 +231,61 @@ h3 {
 }
 .main {
 	height: 329px;
-	width: 100%;
-	padding: 20px 16px;
+	/* width: fit-content; */
+	/* padding: 20px 16px; */
+	overflow-x: hidden;
+}
+.contents {
 	display: flex;
 	flex-direction: column;
 	margin-top: 6px;
 	align-items: flex-start;
-	overflow: scroll;
-	overflow-x: hidden;
+	padding: 20px 16px;
 }
-.main > div {
+
+.contents > div {
 	flex: 1;
 	display: flex;
 	flex-direction: row;
 	gap: 2px;
 	align-items: center;
+	word-break: break-all;
+	margin: 1rem 0;
 }
 
-.main > .time {
+.contents > .time {
 	color: #17bb7f;
 	font-size: 15px;
 	font-weight: 600;
 	gap: 8px;
 }
-.main > .desc {
+.contents > .desc {
 	font-size: 17px;
 	font-weight: 600;
 	color: #1f2226;
 	overflow: initial;
 }
-.main > .username {
+.contents > .username {
 	gap: 4px;
 }
-.main > .username .pic img,
-.main > .creator .pic img {
+.contents > .username .pic img,
+.contents > .creator .pic img {
 	width: 20px;
 	height: 20px;
 	border-radius: 10px;
 }
-.main > .location {
+.contents > .location {
 	color: #17bb7f;
 }
-.main > .location a {
+.contents > .location a {
 	text-decoration: none;
 	color: #17bb7f;
 }
-.main > .group {
+.contents > .group {
 }
-.main > .creator {
+.contents > .creator {
 }
-.main > .desc2 {
+.contents > .desc2 {
 	overflow: initial;
 }
 
@@ -315,9 +322,31 @@ h3 {
 	width: 544px;
 }
 .scroll {
-	overflow: scroll;
-	text-overflow: clip;
+	/* overflow: scroll; */
+	/* text-overflow: clip; */
 }
+/* width */
+.scroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+.scroll::-webkit-scrollbar-track {
+	/* box-shadow: inset 0 0 5px grey; */
+	border-radius: 5px;
+}
+
+/* Handle */
+.scroll::-webkit-scrollbar-thumb {
+	background: #f0f0f0;
+	border-radius: 5px;
+}
+
+/* Handle on hover */
+.scroll::-webkit-scrollbar-thumb:hover {
+	background: #e0e0e0;
+}
+
 #bgdetailvideo {
 	height: 238.4px;
 	width: 100%;
@@ -348,23 +377,27 @@ h3 {
 	animation: 0.3s ease-in-out none genie;
 }
 .alt {
-	animation-direction: reverse;
+	animation: 0.5s ease-in-out none alt;
+	/* animation-direction: reverse; */
 }
 @keyframes genie {
 	from {
+		opacity: 0;
 		transform: scale(0.1);
 	}
-	25% {
-		transform: scale(0.3, 0.4);
+	to {
+		opacity: 1;
+		transform: scale(1);
 	}
-	50% {
-		transform: scale(0.3, 0.4);
-	}
-	75% {
-		transform: scale(0.95, 1.05);
+}
+@keyframes alt {
+	from {
+		opacity: 1;
+		transform: scale(1);
 	}
 	to {
-		transform: scale(1, 1);
+		opacity: 0;
+		transform: scale(0.1);
 	}
 }
 </style>

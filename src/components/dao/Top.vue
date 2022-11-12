@@ -9,7 +9,8 @@
 			:class="{ disabled: !this.window.ethereum }"
 		>
 			<span class="loader" v-if="loading" />
-			<img :src="loggedIn ? metamask : lock" alt="wallet" />
+			<Wallet v-if="!loggedIn" />
+			<img :src="metamask" alt="wallet" v-else />
 			<span>{{
 				loggedIn ? this.web3.addressPartially() : this.ui._('Connect Wallet')
 			}}</span>
@@ -20,6 +21,7 @@
 import logo from '/src/assets/dao/logodao.png'
 import lock from '/src/assets/dao/lock.png'
 import metamask from '/src/assets/dao/metamask@3x.png'
+import Wallet from '/src/assets/dao/wallet.svg'
 export default {
 	data() {
 		return {
@@ -30,8 +32,22 @@ export default {
 		}
 	},
 	mounted() {
-		this.web3.eventList()
+		const updateList = () => {
+			setTimeout(() => {
+				this.web3.eventList()
+				window.location.reload()
+				// this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
+				// this.$store.dispatch('save', { k: 'eventsPage', v: 1 })
+			}, 1000)
+		}
+		this.web3.onLogin = updateList
+		this.web3.onLogout = updateList
 	},
+	beforeUnmount() {
+		this.web3.onLogin = null
+		this.web3.onLogout = null
+	},
+
 	computed: {
 		loading() {
 			return this.$store.state.walletLoading || false
@@ -49,7 +65,6 @@ export default {
 			if (this.loggedIn) {
 				// window.location.reload()
 				this.web3.logout()
-				return
 			} else {
 				this.$store.dispatch('save', { k: 'walletLoading', v: true })
 				setTimeout(() => {
@@ -59,6 +74,9 @@ export default {
 				await this.web3.login()
 			}
 		},
+	},
+	components: {
+		Wallet,
 	},
 }
 </script>
@@ -131,5 +149,16 @@ button span {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+.top2 .btn svg {
+	fill: black;
+}
+.top2 .btn:hover {
+	color: white;
+	background: linear-gradient(96.45deg, #346dff 0%, #aa1fff 100%);
+}
+.top2 .btn:hover svg {
+	fill: white;
 }
 </style>

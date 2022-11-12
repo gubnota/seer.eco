@@ -71,6 +71,12 @@ const routes = [
 			return openExt('/seer_dao.html')
 		},
 	},
+	{
+		path: '/seer_space.html',
+		beforeEnter: () => {
+			return openExt('/seer_space.html')
+		},
+	},
 
 	{
 		path: '/brandkit',

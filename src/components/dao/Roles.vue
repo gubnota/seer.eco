@@ -4,7 +4,7 @@
 			<div class="row">
 				<h3>{{ el.name }}</h3>
 				<button @click="callback(el.action, i)" class="btn">
-					<img :src="arrow" />
+					<ArrowRight />
 					<span>{{ el.action }}</span>
 				</button>
 			</div>
@@ -13,25 +13,26 @@
 	</section>
 </template>
 <script lang="ts">
-import arrow from '/src/assets/dao/arrow-right.png'
+// import arrow from '/src/assets/dao/arrow-right.png'
+import ArrowRight from '/src/assets/dao/arrow-right.svg'
+
 export default {
 	data() {
 		return {
-			arrow,
 			roles: [
 				{
-					name: 'Reviewer',
+					name: 'DAO Application',
 					text: "The SEER DAO jury is the upper-level autonomous organization of SEER DAO and an important part of SEER's decentralized autonomy. Come and participate in the future construction of SEER DAO.",
 					action: 'Apply',
 				},
 				{
 					name: 'DAO Rules',
-					text: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
+					text: 'The rules determine the rights and obligations of the SEER DAO jury, so as to ensure the fairness and impartiality of proposal voting and the stable operation of the project.',
 					action: 'Details',
 				},
 				{
-					name: 'Incentive Center',
-					text: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
+					name: 'DAO reward',
+					text: 'The incentive center has given the SEER DAO jury a corresponding amount of rewards and remuneration to realize the governance structure of the community of interests.',
 					action: 'Details',
 				},
 			],
@@ -67,9 +68,16 @@ export default {
 			}
 		},
 	},
+	components: { ArrowRight },
 }
 </script>
 <style scoped>
+svg {
+	stroke: #000;
+}
+.btn:hover svg {
+	stroke: #fff;
+}
 section.cols {
 	display: flex;
 	flex-direction: row;
@@ -180,5 +188,10 @@ button img {
 	button {
 		padding: 6px 12px;
 	}
+}
+
+.btn:hover {
+	color: white;
+	background: linear-gradient(96.45deg, #346dff 0%, #aa1fff 100%);
 }
 </style>

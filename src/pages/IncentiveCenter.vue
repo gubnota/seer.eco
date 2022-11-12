@@ -3,20 +3,14 @@
 		<main class="meta">
 			<section class="incentive">
 				<nav class="actions">
-					<div
-						:class="{ selected: this.$store.state.currentTab == 0 }"
-						@click="setTab(0)"
-					>
+					<div :class="{ selected: firstTab }" @click="setTab(0)">
 						Incentive Center
 					</div>
-					<div
-						:class="{ selected: this.$store.state.currentTab == 1 }"
-						@click="setTab(1)"
-					>
+					<div :class="{ selected: !firstTab }" @click="setTab(1)">
 						Reward Details
 					</div>
 				</nav>
-				<IncentiveCenter v-if="this.$store.state.currentTab == 0" />
+				<IncentiveCenter v-if="firstTab" />
 				<RewardDetails v-else />
 			</section>
 			<aside class="warn">&nbsp;</aside>
@@ -30,7 +24,15 @@ import RewardDetails from '../components/incentives/RewardDetails.vue'
 
 export default {
 	components: { Template, IncentiveCenter, RewardDetails },
-	computed: {},
+	computed: {
+		firstTab() {
+			let a = this.$store.state.currentTab
+			if (a) {
+				return a == 0 || a == '0'
+			}
+			return true
+		},
+	},
 	mounted() {
 		let s = this.$store.state
 		if (!this.$store.state.daoInfo)

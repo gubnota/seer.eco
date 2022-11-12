@@ -88,6 +88,7 @@ export default {
 		},
 	},
 	mounted() {
+		this.web3.eventList()
 		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
 	},
 	methods: {
@@ -188,6 +189,7 @@ nav.tabs span.selected {
 	display: flex;
 	flex-direction: column;
 	transition: all 0.3s ease-in-out;
+	gap: 36px;
 }
 .ticket svg {
 	width: 20px;
@@ -227,6 +229,9 @@ nav.tabs span.selected {
 	}
 	nav.tabs > span.selected {
 		box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+	}
+	.list {
+		gap: 0;
 	}
 }
 </style>
