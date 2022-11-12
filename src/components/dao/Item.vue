@@ -137,7 +137,8 @@ export default {
 		calcTime() {
 			var date1 = new Date()
 			var date2 = new Date(this.daoEndTime) //new Date(this.time)
-			var diff = new Date(date2.getTime() - date1.getTime())
+			var offset = new Date().getTimezoneOffset() * 60000 // -480 minutes for UTC time from date2 compare to UTC+8
+			var diff = new Date(date2.getTime() - date1.getTime() - offset)
 
 			var years = diff.getUTCFullYear() - 1970 // Gives difference as year
 			var months = diff.getUTCMonth() // Gives month count of difference
