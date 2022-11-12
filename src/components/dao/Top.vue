@@ -35,7 +35,7 @@ export default {
 		const updateList = () => {
 			setTimeout(() => {
 				this.web3.eventList()
-				window.location.reload()
+				// window.location.reload()
 				// this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
 				// this.$store.dispatch('save', { k: 'eventsPage', v: 1 })
 			}, 1000)
