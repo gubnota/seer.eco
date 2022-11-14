@@ -49,7 +49,7 @@ export default class LoginController extends MetaController {
 		return hash
 	}
 
-	connect = async (cb?: () => {}) => {
+	async connect(cb?: () => {}) {
 		var res = await this.enable(cb)
 		if (!res) return Promise.resolve(false)
 		var x = new Date()
@@ -66,7 +66,7 @@ export default class LoginController extends MetaController {
 			stamp,
 		})
 
-		axios
+		let res2 = await axios
 			.post(this.servers.user[this.branch] + 'api/User/Connect', {
 				address: this.address,
 				node: this.node,
@@ -90,7 +90,8 @@ export default class LoginController extends MetaController {
 					k: 'seerToken',
 					v: res.data.data,
 				})
-				// console.log('this.seerToken', this.store.state.seerToken)
+				console.log('this.seerToken', this.store.state.seerToken)
+				return res.data.data
 				// return true
 				//   {
 				//     "code": 0,
@@ -106,6 +107,7 @@ export default class LoginController extends MetaController {
 				})
 				return false
 			})
+		return Promise.resolve(res2)
 		return false
 	}
 }

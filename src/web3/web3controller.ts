@@ -43,8 +43,7 @@ export default class Web3Controller extends IncentiveController {
 		const info = await this.info()
 		// setTimeout(async () => {
 		const tickets = await this.ticketsNumber()
-		// const events = await this.eventList()
-
+		const events = await this.eventList()
 		if (this.onLogin) this.onLogin()
 		return true
 		// console.log({ connect, info, tickets, events })

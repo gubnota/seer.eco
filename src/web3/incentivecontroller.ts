@@ -114,7 +114,6 @@ unGot: number // can be claimed
 	rewardInfo = async () => {
 		let res = await this.incentives('RewardInfo')
 		this.store.dispatch('save', { k: 'rewardInfo', v: res })
-
 		return res
 	}
 }

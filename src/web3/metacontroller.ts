@@ -34,36 +34,28 @@ export default class MetaController {
 	public branch: string = 'dev'
 	public node: string = 'genesis.seer.eco'
 	public seerToken: string
-	public onLogout: () => void
-	public onLogin: () => void
 	constructor() {
 		this.store = store
 		this.popup = comingSoon
 		this.vote_abi = vote_abi
 		this.servers = servers
-		if (window.ethereum) {
-			this.web3js = new web3(window.ethereum) // - default provider
-			this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
-			window.web3js = this.web3js
-		}
 	}
-	async logout() {
-		if (this.onLogout) this.onLogout()
+	logout = async () => {
 		this.store.dispatch('unset', [
 			'address',
 			'daoInfo',
 			'seerToken',
 			'rewardInfo',
 			'rewardDetail',
-			'ticketsNumber',
-			'eventList',
 		])
 	}
 
-	restoreWeb3() {
+	restoreWeb3 = () => {
+		this.web3js = new web3(window.ethereum) // - default provider
+		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
 		this.address = store.state.address
 	}
-	async enable(cb?: () => {}) {
+	enable = async (cb?: () => {}) => {
 		const startTime = new Date()
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Ethereum main network ethereum.chainId == '0x1'
@@ -72,11 +64,11 @@ export default class MetaController {
 				// 	timeout: 5000,
 				// 	text: `<p><b class="rainbow">${window.ethereum.chainId}</b> is not the correct chainId<br /> Connect to <strong>Ethereum Mainnet</strong>, please</p>`,
 				// })
-				// return Promise.resolve(false)
 				await this.web3js.currentProvider.request({
 					method: 'wallet_switchEthereumChain',
 					params: [{ chainId: '0x1' }],
 				})
+				// return Promise.resolve(false)
 			}
 
 			// STAGE 2: TODO: clean acc info after account has been changed
