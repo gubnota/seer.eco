@@ -24,7 +24,8 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 		display: flex;
-		padding: 50px 0.85rem 0 0.85rem;
+		padding: 0px 0 0 16px;
+		transform: translateY(86px);
 	}
 	.navtop > div {
 		cursor: pointer;

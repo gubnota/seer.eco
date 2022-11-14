@@ -11,7 +11,7 @@
 				<span class="desc" :class="{ cjk: detectCJK(ui(topic)) }">{{
 					ui(topic, 200)
 				}}</span>
-				<span class="row">
+				<span class="row nd">
 					<span class="user">{{ spaceName }}</span>
 					<span class="type">{{ classify }}</span>
 					<div class="token">
@@ -330,7 +330,7 @@ section.right {
 		padding: 1rem;
 	}
 }
-@media (max-width: 540px) {
+@media (max-width: 550px) {
 	.item {
 		margin-bottom: 1rem;
 		position: relative;
@@ -353,5 +353,9 @@ section.right {
 			'main main'
 			'imgpic remaining actions rate';
 } */
+	.row.nd {
+		justify-content: space-between;
+		padding: 1rem 1rem 1rem 0;
+	}
 }
 </style>
