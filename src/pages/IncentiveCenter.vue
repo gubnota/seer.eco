@@ -1,6 +1,7 @@
 <template>
 	<Template>
 		<main class="meta">
+			<BackButton />
 			<section class="incentive">
 				<nav class="actions">
 					<div :class="{ selected: firstTab }" @click="setTab(0)">
@@ -21,9 +22,9 @@
 import Template from '../components/dao/reviewer/Template2.vue'
 import IncentiveCenter from '../components/incentives/IncentiveCenter.vue'
 import RewardDetails from '../components/incentives/RewardDetails.vue'
-
+import BackButton from '../components/dao/BackButton.vue'
 export default {
-	components: { Template, IncentiveCenter, RewardDetails },
+	components: { Template, IncentiveCenter, RewardDetails, BackButton },
 	computed: {
 		firstTab() {
 			let a = this.$store.state.currentTab
@@ -121,6 +122,12 @@ nav.actions > div.selected {
 	font-size: 13px;
 	font-weight: 600;
 }
+@media (max-width: 550px) {
+	section.incentive {
+		margin: 26px 0 90px 0;
+	}
+}
+
 @media (max-width: 1120px) {
 	section.incentive {
 		width: calc(100vw - 20px);

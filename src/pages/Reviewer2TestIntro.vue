@@ -227,4 +227,13 @@ section.review {
 	font-size: 13px;
 	font-weight: 600;
 }
+@media (max-width: 550px) {
+	.book {
+		flex-direction: column;
+	}
+	section.review {
+		max-width: calc(100% - 2rem);
+		align-self: center;
+	}
+}
 </style>

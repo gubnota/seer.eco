@@ -48,7 +48,7 @@ section.footer {
 	flex-direction: column;
 	background: linear-gradient(257.98deg, #aa1fff 2.42%, #2ba1ff 95.24%);
 	border-radius: 16px;
-	margin-top: 60px;
+	margin-top: 80px;
 	margin-bottom: 20px;
 	/* transform: translateX(18px) translateY(18px); */
 	position: relative;

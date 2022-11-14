@@ -22,7 +22,12 @@ export default class EventsController extends DaoController {
 			})
 			.then((r) => {
 				let l: eventDetailT = r.data.data
-				// console.log(l)
+				if (r.data.message != 'Success') {
+					this.popup({ text: r.data.message })
+					if (r.data.message == 'EventStop') {
+						this.store.dispatch('unset', ['detail', 'eventDetail'])
+					}
+				}
 				this.store.dispatch('save', { k: 'eventDetail', v: l })
 			})
 			.catch((err: any) => {

@@ -121,11 +121,23 @@ button span {
 		padding: 0 1rem;
 	}
 }
-
-@media (max-width: 405px) {
+@media (max-width: 550px) {
 	nav.top2 {
-		flex-direction: column;
-		gap: 1rem;
+		flex-direction: row;
+		width: 100%;
+		align-self: center;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.logo {
+		width: calc(50vw - 3rem);
+		height: auto;
+	}
+	button.btn {
+		width: calc(50vw - 1rem);
+		gap: 4px;
+		height: 32px;
 	}
 }
 

@@ -90,14 +90,14 @@ section.cols {
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	padding: 0 40px;
+	padding: 0 55px;
 	position: relative;
 }
 .col:first-child {
-	padding: 0 40px 0 0;
+	padding: 0 55px 0 0;
 }
 .col:last-child {
-	padding: 0 0 0 40px;
+	padding: 0 0 0 55px;
 }
 
 .col::before {

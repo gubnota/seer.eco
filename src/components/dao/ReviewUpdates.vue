@@ -134,7 +134,7 @@ section.review {
 	transition: all 0.5s ease-in;
 	display: flex;
 	flex-direction: column;
-	margin: 61px 0 0 0;
+	margin: 80px 0 0 0;
 	background: #ffffff;
 	border-radius: 8px 8px 0px 0px;
 	/* height: 30vh; */

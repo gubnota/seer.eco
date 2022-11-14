@@ -1,6 +1,7 @@
 <template>
 	<Template>
 		<div class="meta">
+			<BackButton />
 			<section class="review">
 				<h1>DAO Reviewer</h1>
 				<h2>Together to achieve SEER DAO community</h2>
@@ -41,7 +42,7 @@ import twitter from '/src/assets/reviewer/twitter.svg'
 import figures from '/src/assets/reviewer/figures.svg'
 import medal_star from '/src/assets/reviewer/medal_star.svg'
 import arrow_right from '/src/assets/reviewer/arrow-right.svg'
-
+import BackButton from '../components/dao/BackButton.vue'
 export default {
 	data() {
 		return {
@@ -173,6 +174,7 @@ export default {
 		figures,
 		medal_star,
 		arrow_right,
+		BackButton,
 	},
 }
 </script>
@@ -294,5 +296,12 @@ section.review {
 	border-radius: 8px;
 	max-width: fit-content;
 	align-self: center;
+}
+@media (max-width: 550px) {
+	section.review {
+		width: calc(100% - 2rem);
+		align-self: center;
+		/* margin: 141px 0 0 0; */
+	}
 }
 </style>

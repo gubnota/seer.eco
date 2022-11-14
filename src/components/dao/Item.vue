@@ -8,7 +8,9 @@
 				<img :src="`${spaceLogo != '' ? spaceLogo : this.userpicSample}`" />
 			</span>
 			<div class="main">
-				<span class="desc">{{ ui(topic, 80) }}</span>
+				<span class="desc" :class="{ cjk: detectCJK(ui(topic)) }">{{
+					ui(topic, 200)
+				}}</span>
 				<span class="row">
 					<span class="user">{{ spaceName }}</span>
 					<span class="type">{{ classify }}</span>
@@ -62,7 +64,12 @@ export default {
 		setInterval(this.calcTime, 1000)
 	},
 	methods: {
-		ui(k: String, maxLength?: number) {
+		detectCJK(input: string) {
+			var rx =
+				/[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]/ //CJK
+			return input.match(rx)
+		},
+		ui(k: string, maxLength?: number) {
 			let o = k
 			if ((o as string).length > maxLength) {
 				o = (o as string).substring(0, maxLength - 2) + `…`
@@ -227,6 +234,15 @@ section.right {
 	font-weight: 600;
 	font-size: 13px;
 	white-space: nowrap;
+}
+.desc.cjk {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	height: 26px;
+	-webkit-box-orient: vertical;
+	white-space: initial;
 }
 .row {
 	display: flex;
