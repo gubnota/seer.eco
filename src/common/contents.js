@@ -5,7 +5,7 @@ const menu = [
 		hash: false,
 		children: [
 			{ name: 'SDID', hash: 'https://sdid.seer.eco/' },
-			{ name: 'NFT', hash: '/coming-soon' },
+			{ name: 'DSN', hash: '/dsn' },
 			{ name: 'DAO', hash: '/dao' },
 			{ name: 'AD Services', hash: '/coming-soon' },
 		],
@@ -41,7 +41,7 @@ const footer = {
 			items: [
 				{ name: 'Litepaper', hash: '/asset/litepaper.png' },
 				{ name: 'Download', hash: '/coming-soon' },
-				{ name: 'NFT', hash: '/coming-soon' },
+				{ name: 'DSN', hash: '/dsn' },
 				{ name: 'SDID', hash: 'https://sdid.seer.eco/' },
 				{ name: 'ADS', hash: '/coming-soon' },
 			],
@@ -60,7 +60,7 @@ const footer = {
 			header: 'Governance',
 			items: [
 				{ name: 'Apply for IDO', hash: '/coming-soon' },
-				{ name: 'SEER DAO', hash: '/coming-soon' },
+				{ name: 'SEER DAO', hash: '/dao' },
 				{ name: 'Overview', hash: '/coming-soon' },
 				{ name: 'Forum', hash: '/coming-soon' },
 				{

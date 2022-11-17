@@ -13,6 +13,7 @@ import Reviewer4 from './pages/Reviewer4Result.vue'
 import IncentiveCenter from './pages/IncentiveCenter.vue'
 
 import PageNotFound from './pages/404.vue'
+import Dsn from './pages/dsn.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
 
@@ -99,6 +100,7 @@ const routes = [
 	{ path: '/reviewer/failure', component: Reviewer4, props: { passed: false } },
 	{ path: '/:pathMatch(.*)*', component: PageNotFound },
 	{ path: '/incentive-center', component: IncentiveCenter },
+	{ path: '/dsn', component: Dsn },
 ]
 
 export default routes

@@ -71,7 +71,14 @@ export default {
 					if (this.$store.state.walletLoading)
 						this.$store.dispatch('save', { k: 'walletLoading', v: false })
 				}, 5000)
+				await this.web3.onLogin(() => {
+					// this.$store.dispatch('unset', ['eventList'])
+				})
 				await this.web3.login()
+
+				// setTimeout(() => {
+				// 	window.location.reload()
+				// }, 3000)
 			}
 		},
 	},

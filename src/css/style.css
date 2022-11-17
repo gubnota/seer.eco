@@ -80,7 +80,6 @@ body {
 	width: 100vw;
 	background: transparent url('/05ads/arrowbottom.png') no-repeat top center;
 	background-size: 100vw auto;
-	min-height: 200px;
 }
 @media (max-width: 800px) {
 	.arrow_down {
@@ -597,4 +596,12 @@ sup {
 }
 .btn.disabled:active {
 	transform: none;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+}
+.col {
+	display: flex;
+	flex-direction: row;
 }

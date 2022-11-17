@@ -35,7 +35,7 @@
 				<div
 					v-else
 					class="r r1"
-					style="background-image: url(/07nft/bored_ape.webp)"
+					style="background-image: url(/07nft/bored_ape.jpg)"
 				></div>
 
 				<div class="r r2">
@@ -250,7 +250,6 @@ div.slider-slide.last {
 	z-index: 1;
 	transform: translateX(10px) translateY(10px);
 	background-color: #aa1fff;
-	/* background: url(/07nft/bg2.svg); */
 	background: linear-gradient(90deg, #f94cb3, #aa1fff);
 }
 .next .back {

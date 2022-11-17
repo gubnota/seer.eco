@@ -1,0 +1,99 @@
+<template>
+	<section class="data">
+		<div class="row">
+			<h3>My DSN data</h3>
+			<div class="btn">
+				<arrow class="arrow" />
+				<span>View details</span>
+			</div>
+		</div>
+		<div class="cols">
+			<div class="col"><key>USERS</key><val class="rainbow">30,000</val></div>
+			<div class="col">
+				<key>Memory load</key><val class="rainbow">99%</val>
+			</div>
+			<div class="col">
+				<key>24h AOE SEER</key><val class="rainbow">99,000,00</val>
+			</div>
+			<div class="col">
+				<key>24h ADS SEER</key><val class="rainbow">30,000,00</val>
+			</div>
+		</div>
+	</section>
+</template>
+<script lang="ts">
+import arrow from '/src/assets/dsn/arrow-right.svg'
+
+export default {
+	components: { arrow },
+}
+</script>
+<style scoped>
+section.data {
+	width: 100%;
+	height: 265px;
+	background: #1f2226;
+	border-radius: 12px;
+	padding: 36px;
+	color: white;
+}
+.row {
+	align-items: center;
+	justify-content: space-between;
+}
+h3 {
+	font-weight: 600;
+	font-size: 32px;
+}
+svg {
+	stroke: white;
+}
+.btn {
+	gap: 13.5px;
+	display: flex;
+	flex-direction: row;
+	padding: 12px 24px;
+	gap: 10px;
+	border: 1px solid #dfe1e2;
+	border-radius: 10px;
+	align-items: center;
+}
+.btn span {
+	font-weight: 600;
+	font-size: 15px;
+}
+.cols {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	align-self: center;
+	margin: 58px 96px 0 96px;
+}
+
+.col::before {
+	display: block;
+	content: ' ';
+	background: #3a4048;
+	width: 1px;
+	height: 100px;
+	position: absolute;
+	left: 0;
+}
+.col {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+key {
+	font-weight: 600;
+	font-size: 24px;
+}
+val {
+	font-weight: 600;
+	font-size: 24px;
+}
+</style>

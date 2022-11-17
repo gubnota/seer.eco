@@ -34,19 +34,24 @@ export default class MetaController {
 	public branch: string = 'dev'
 	public node: string = 'genesis.seer.eco'
 	public seerToken: string
+	public onLogout: () => void
+	public onLogin: () => void
 	constructor() {
 		this.store = store
 		this.popup = comingSoon
 		this.vote_abi = vote_abi
 		this.servers = servers
 	}
-	logout = async () => {
+	async logout() {
+		if (this.onLogout) this.onLogout()
 		this.store.dispatch('unset', [
 			'address',
 			'daoInfo',
 			'seerToken',
 			'rewardInfo',
 			'rewardDetail',
+			'ticketsNumber',
+			'eventList',
 		])
 	}
 
@@ -55,7 +60,7 @@ export default class MetaController {
 		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
 		this.address = store.state.address
 	}
-	enable = async (cb?: () => {}) => {
+	async enable(cb?: () => {}) {
 		const startTime = new Date()
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Ethereum main network ethereum.chainId == '0x1'

@@ -5,22 +5,22 @@
 			<h2>Want to know more about us?</h2>
 			<div class="row">
 				<a href="https://discord.gg/zpy6tXP5Qt" target="_blank">
-					<img src="/08contact/discord.png" alt="discord" />
+					<img :src="discord" alt="discord" />
 				</a>
 				<a href="https://twitter.com/SeerFoundation" target="_blank">
-					<img src="/08contact/twitter.png" alt="twitter" />
+					<img :src="twitter" alt="twitter" />
 				</a>
 				<a href="https://t.me/seer_official" target="_blank">
-					<img src="/08contact/telegram.png" alt="telegram" />
+					<img :src="telegram" alt="telegram" />
 				</a>
 				<a @click="handleSubmit" href="#">
-					<img src="/08contact/youtube.png" alt="youtube" />
+					<img :src="youtube" alt="youtube" />
 				</a>
 				<a @click="handleSubmit" href="#">
-					<img src="/08contact/tiktok.png" alt="tiktok" />
+					<img :src="tiktok" alt="tiktok" />
 				</a>
 				<a @click="handleSubmit" href="#">
-					<img src="/08contact/instagram.png" alt="instagram" />
+					<img :src="instagram" alt="instagram" />
 				</a>
 			</div>
 			<form @submit.prevent="handleSubmit">
@@ -37,12 +37,24 @@
 <script>
 import { useRouter } from 'vue-router'
 import { router } from '/src/main'
+import discord from '/src/assets/08contact/discord.png'
+import instagram from '/src/assets/08contact/instagram.png'
+import telegram from '/src/assets/08contact/telegram.png'
+import tiktok from '/src/assets/08contact/tiktok.png'
+import twitter from '/src/assets/08contact/twitter.png'
+import youtube from '/src/assets/08contact/youtube.png'
 
 export default {
 	name: 'Contact',
 	data() {
 		return {
 			email: '',
+			discord,
+			instagram,
+			telegram,
+			tiktok,
+			twitter,
+			youtube,
 		}
 	},
 	methods: {

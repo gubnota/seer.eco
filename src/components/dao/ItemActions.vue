@@ -24,6 +24,8 @@ export default {
 	},
 
 	mounted() {
+		this.passed = false
+		this.rejected = false
 		this.updateVoted()
 		return this.passed
 	},

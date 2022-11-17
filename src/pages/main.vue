@@ -78,4 +78,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style>
+section.arrow_down {
+	min-height: 200px;
+}
+</style>

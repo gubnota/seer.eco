@@ -147,4 +147,7 @@ export default {
 .message-container strong {
 	font-weight: bold;
 }
+h2 {
+	font-size: 2rem;
+}
 </style>
