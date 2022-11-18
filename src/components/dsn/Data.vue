@@ -2,7 +2,7 @@
 	<section class="data">
 		<div class="row">
 			<h3>My DSN data</h3>
-			<div class="btn">
+			<div class="btn" @click="handler">
 				<arrow class="arrow" />
 				<span>View details</span>
 			</div>
@@ -26,12 +26,18 @@ import arrow from '/src/assets/dsn/arrow-right.svg'
 
 export default {
 	components: { arrow },
+	methods: {
+		handler() {
+			// this.comingSoon({ text: 'not implemented' })
+			this.router.push('/my_dsn')
+		},
+	},
 }
 </script>
 <style scoped>
 section.data {
 	width: 100%;
-	height: 265px;
+	min-height: 265px;
 	background: #1f2226;
 	border-radius: 12px;
 	padding: 36px;
@@ -95,5 +101,24 @@ key {
 val {
 	font-weight: 600;
 	font-size: 24px;
+}
+@media (max-width: 1130px) {
+	section.data {
+		width: calc(100% - 4rem);
+		align-self: center;
+		min-height: auto;
+		height: auto;
+	}
+	.col {
+		width: 100%;
+	}
+	.row,
+	.cols {
+		flex-direction: column;
+		gap: 30px;
+	}
+	.cols {
+		margin: 58px 0 0 0;
+	}
 }
 </style>

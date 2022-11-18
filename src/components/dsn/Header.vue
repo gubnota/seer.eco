@@ -67,4 +67,11 @@ ill {
 	width: 446px;
 	mix-blend-mode: darken;
 }
+@media (max-width: 1130px) {
+	section.header {
+		flex-direction: column;
+		width: calc(100% - 2rem);
+		align-self: center;
+	}
+}
 </style>

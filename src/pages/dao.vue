@@ -3,7 +3,7 @@
 	<main class="dao">
 		<section class="main">
 			<CheckIn />
-			<Top />
+			<Top :is-dao="true" />
 			<SectionTop />
 			<Roles />
 			<Announcements />

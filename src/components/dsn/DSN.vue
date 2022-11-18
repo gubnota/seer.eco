@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="dsn">
 		<h2>super strong</h2>
 		<p>
 			The world's latest blockchain technology - dynamic NFT is used as the SEER
@@ -33,7 +33,18 @@ p {
 	line-height: 123%;
 	color: #6c747f;
 }
+
 .row {
 	gap: 32px;
+}
+@media (max-width: 1130px) {
+	.row {
+		flex-direction: column;
+		align-items: center;
+	}
+	div.dsn {
+		width: calc(100% - 2rem);
+		align-self: center;
+	}
 }
 </style>

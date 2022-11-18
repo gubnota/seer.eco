@@ -176,6 +176,7 @@ line.b {
 	font-size: 15px;
 	border-radius: 10px;
 	z-index: 3;
+	border: 1px solid #dfe1e2;
 }
 @media screen and (max-width: 1024px) {
 	block.a {

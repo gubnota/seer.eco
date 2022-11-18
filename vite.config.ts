@@ -22,6 +22,21 @@ export default defineConfig({
 				transformAssetUrls: {
 					includeAbsolute: false,
 				},
+				compilerOptions: {
+					isCustomElement: (tag) => {
+						return [
+							'blockss',
+							'block',
+							'part',
+							'ill',
+							'val',
+							'key',
+							'stroke',
+							'heading',
+							'box',
+						].includes(tag) //tag.startsWith('ion-') // (return true)
+					},
+				},
 			},
 		}),
 	],

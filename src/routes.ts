@@ -11,13 +11,13 @@ import Reviewer3 from './pages/Reviewer3Test.vue'
 import Reviewer from './pages/Reviewer.vue'
 import Reviewer4 from './pages/Reviewer4Result.vue'
 import IncentiveCenter from './pages/IncentiveCenter.vue'
-
 import PageNotFound from './pages/404.vue'
 import Dsn from './pages/dsn.vue'
+import MyDsn from './pages/my_dsn.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
 
-const openExt = (link: string) => {
+export const openLink = (link: string) => {
 	let prev = window.location.hash
 	window.open(link, '_blank')
 	location.href = prev
@@ -39,50 +39,50 @@ const routes = [
 	{
 		path: '/sdid',
 		beforeEnter: () => {
-			return openExt('https://sdid.seer.eco')
+			return openLink('https://sdid.seer.eco')
 		},
 	},
 	{
 		path: '/asset/litepaper.png',
 		beforeEnter: () => {
-			return openExt('/asset/litepaper.png')
+			return openLink('/asset/litepaper.png')
 		},
 	},
 	{
 		path: '/seer_user.html',
 		beforeEnter: () => {
-			return openExt('/seer_user.html')
+			return openLink('/seer_user.html')
 		},
 	},
 	{
 		path: '/seer_q_and_a.html',
 		beforeEnter: () => {
-			return openExt('/seer_q_and_a.html')
+			return openLink('/seer_q_and_a.html')
 		},
 	},
 	{
 		path: '/seer_privacy.html',
 		beforeEnter: () => {
-			return openExt('/seer_privacy.html')
+			return openLink('/seer_privacy.html')
 		},
 	},
 	{
 		path: '/seer_dao.html',
 		beforeEnter: () => {
-			return openExt('/seer_dao.html')
+			return openLink('/seer_dao.html')
 		},
 	},
 	{
 		path: '/seer_space.html',
 		beforeEnter: () => {
-			return openExt('/seer_space.html')
+			return openLink('/seer_space.html')
 		},
 	},
 
 	{
 		path: '/brandkit',
 		beforeEnter: () => {
-			return openExt(
+			return openLink(
 				'https://www.figma.com/file/bAfVSpnLjzSRSWidF3YOrS/Project-Seer-Brand-Kit?node-id=3%3A347'
 			)
 		},
@@ -101,6 +101,7 @@ const routes = [
 	{ path: '/:pathMatch(.*)*', component: PageNotFound },
 	{ path: '/incentive-center', component: IncentiveCenter },
 	{ path: '/dsn', component: Dsn },
+	{ path: '/my_dsn', component: MyDsn },
 ]
 
 export default routes

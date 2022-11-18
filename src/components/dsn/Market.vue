@@ -7,7 +7,12 @@
 		<!-- <div class="col">
 			<div class="row"> -->
 		<blockss>
-			<block v-for="el in $data.blocks" v-bind:key="el.name">
+			<block
+				v-for="el in $data.blocks"
+				v-bind:key="el.name"
+				@click="this.openLink(el.link)"
+				class="btn"
+			>
 				<img :src="el.logo" :alt="el.name" class="logo" />
 				<h3>{{ el.name }}</h3>
 				<p>{{ el.text }}</p>
@@ -36,21 +41,25 @@ export default {
 					logo: opensealogo,
 					name: 'Open Sea',
 					text: '.web users can convert any of their accounts to Ethereum standard NFTs that can be traded on open sea',
+					link: 'https://opensea.io/',
 				},
 				{
 					logo: x2y2logo,
 					name: 'X2Y2',
 					text: '.web users can convert any of their accounts to Ethereum standard NFTs that can be traded on X2Y2',
+					link: 'https://x2y2.io/',
 				},
 				{
 					logo: looksrare,
 					name: 'Looksrare',
 					text: '.web users can convert any of their accounts to Ethereum standard NFTs that can be traded on Looksrare',
+					link: 'https://looksrare.org/',
 				},
 				{
 					logo: element,
 					name: 'Element',
 					text: '.web users can convert any of their accounts to Ethereum standard NFTs that can be traded on Element',
+					link: 'https://element.market/',
 				},
 			],
 		}
@@ -80,6 +89,11 @@ p {
 	font-size: 15px;
 	line-height: 123%;
 	color: #6c747f;
+	z-index: 1;
+}
+heading ~ p {
+	text-shadow: 1px 1px 0 white, -1px -1px 0 white, -1px 1px 0 white,
+		1px -1px 0 white;
 }
 .col {
 	gap: 30px;
@@ -98,6 +112,7 @@ blockss {
 	align-self: center;
 }
 block {
+	cursor: pointer;
 	position: relative;
 	color: #1f2226;
 	display: flex;
@@ -105,6 +120,7 @@ block {
 	align-items: flex-start;
 	padding: 50px 20px 20px 20px;
 	gap: 16px;
+	z-index: 1;
 }
 h3 {
 	font-weight: 600;
@@ -213,5 +229,25 @@ block {
 	top: 30px;
 	right: -40px;
 	animation-delay: 1200ms;
+}
+@media (max-width: 1130px) {
+	blockss {
+		align-self: center;
+		gap: 60px;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		grid-template-areas:
+			'col1'
+			'col2'
+			'col3'
+			'col4';
+	}
+	block {
+		width: calc(100% - 2rem);
+		justify-self: center;
+	}
+	.bee {
+		display: none;
+	}
 }
 </style>

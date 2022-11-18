@@ -1,7 +1,8 @@
 <template>
 	<nav class="top2">
-		<router-link to="/dao">
-			<img :src="logo" alt="logo" class="logo" />
+		<router-link :to="isDao ? '/dao' : '/'">
+			<img :src="logo" alt="logo" class="logo" v-if="isDao" />
+			<img src="/01head/seer.png" alt="logo" class="logo2" v-else />
 		</router-link>
 		<button
 			@click="connect()"
@@ -23,6 +24,9 @@ import lock from '/src/assets/dao/lock.png'
 import metamask from '/src/assets/dao/metamask@3x.png'
 import Wallet from '/src/assets/dao/wallet.svg'
 export default {
+	props: {
+		isDao: Boolean,
+	},
 	data() {
 		return {
 			logo,
@@ -122,6 +126,9 @@ button span {
 .logo {
 	width: 174px;
 	height: 32px;
+}
+.logo2 {
+	width: 117px;
 }
 @media (max-width: 1140px) {
 	nav.top2 {

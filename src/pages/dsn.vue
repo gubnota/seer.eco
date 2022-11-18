@@ -1,20 +1,22 @@
 <template>
-	<Modal />
-	<main class="dsn">
-		<section class="main">
-			<Top />
-			<Header />
-			<DSN />
-			<Market />
-			<Data />
-			<Database />
-			<Graph />
-		</section>
+	<div class="content">
+		<Modal />
+		<main class="dsn">
+			<section class="main">
+				<Top />
+				<Header />
+				<DSN />
+				<Market />
+				<Data />
+				<Database />
+				<Graph />
+			</section>
+		</main>
 		<section class="wrapper2"></section>
 		<section class="arrow_down"></section>
 		<Bottom />
-	</main>
-	<Footer />
+		<Footer />
+	</div>
 </template>
 <script>
 import Top from '../components/dao/Top.vue'
@@ -44,7 +46,7 @@ export default {
 </script>
 <style scoped>
 section.wrapper2 {
-	height: 100vh;
+	/* height: 100vh; */
 }
 main.dsn {
 	background: linear-gradient(
@@ -52,7 +54,7 @@ main.dsn {
 		#ffffff 0%,
 		#f8f7fd 28.54%,
 		#f8f7fd 68.63%,
-		#ffffff 76.81%
+		#f8f7fd 76.81%
 	);
 	width: 100%;
 	display: flex;
@@ -70,6 +72,13 @@ section.main {
 	/* overflow: hidden; */
 	position: relative;
 	overflow-x: visible;
-	min-height: 200vh;
+	/* min-height: 200vh; */
+}
+div.content {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	align-items: center;
 }
 </style>

@@ -13,6 +13,7 @@ import {
 import App from './App.vue'
 import store from './store'
 import routes from './routes'
+import { openLink } from './routes'
 import { comingSoon } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
@@ -54,6 +55,7 @@ app.config.globalProperties.questions_zh = questions_zh
 app.config.globalProperties.questions_en = questions_en
 app.config.globalProperties.ui = ui_
 app.config.globalProperties.web3 = new Web3Controller()
+app.config.globalProperties.openLink = openLink
 window.web3 = app.config.globalProperties.web3
 // a.load()
 // Make sure to _use_ the router instance to make the
