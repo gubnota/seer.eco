@@ -13,6 +13,14 @@ export const Vote = [
 	{ name: 'id', type: 'uint256' },
 	{ name: 'result', type: 'bool' },
 ]
+export const NodeWithdraw = [
+	{ name: 'contents', type: 'string' },
+	{ name: 'node', type: 'string' },
+	{ name: 'action', type: 'string' },
+	{ name: 'nonce', type: 'uint256' },
+	{ name: 'stamp', type: 'uint256' },
+	{ name: 'token', type: 'string' },
+]
 export const EIP712Domain = [
 	{ name: 'name', type: 'string' },
 	{ name: 'version', type: 'string' },

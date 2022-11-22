@@ -1,5 +1,7 @@
 <template>
 	<Modal />
+	<SetNameModal />
+	<OperateModal />
 	<div class="content">
 		<Modal />
 		<nav class="tophead">
@@ -13,11 +15,11 @@
 						<tr class="head">
 							<th v-for="el in fields">{{ el }}</th>
 						</tr>
-						<tr v-for="el in fetch" :key="el.no" class="item">
+						<tr v-for="(el, i) in fetch" :key="el.no" class="item">
 							<td>NO.00{{ el.no }}</td>
 							<td>
 								<div v-if="el.server == ''" class="fl">
-									<div class="btn">Set</div>
+									<div class="btn" @click="setName(i)">Set</div>
 								</div>
 								{{ el.server }}
 							</td>
@@ -25,15 +27,24 @@
 							<td>{{ el.memory }}</td>
 							<td>{{ el.h_aoe }}</td>
 							<td>{{ el.h_ads }}</td>
-							<td><Threedots :class="{ active: el.server !== '' }" /></td>
 							<td>
-								<On v-if="el.server !== ''" />
-								<Off v-else />
+								<Threedots
+									:class="{ active: el.server !== '' }"
+									@click="operateModal(i)"
+								/>
+							</td>
+							<td>
+								<On v-if="el.server !== ''" @click="exhibit(i)" />
+								<Off v-else @click="exhibit(i)" />
 							</td>
 						</tr>
 					</table>
 
-					<MyDsnPagination :total="samples.length / 9" :selected="1" />
+					<MyDsnPagination
+						:total="totalNumber"
+						:selected="1"
+						:per-page="this.perPage"
+					/>
 				</box>
 			</section>
 		</main>
@@ -50,6 +61,9 @@ import MyDsnPagination from '/src/components/dsn/MyDsnPagination.vue'
 import Threedots from '/src/assets/dsn/threedots.svg'
 import Off from '/src/assets/dsn/off.svg'
 import On from '/src/assets/dsn/on.svg'
+import SetNameModal from '../components/dsn/SetNameModal.vue'
+import OperateModal from '../components/dsn/OperateModal.vue'
+
 // import dsn_data_sample from '../common/dsn_data_sample.js'
 const dsn_data_sample = [
 	{
@@ -97,13 +111,46 @@ export default {
 		return { samples, fields }
 	},
 	computed: {
+		// totalNumber() {
+		// 	if (!this.$store.state.dsnList) return samples.length
+		// 	return this.$store.state.dsnList.total
+		// },
+
 		fetch() {
+			return []
 			return samples
 				.filter((el) => el.server.includes('')) //input.value.toLowerCase()
 				.slice(0, 9)
 		},
 	},
+	mounted() {
+		if (!this.$store.state.seerToken) {
+			this.router.push('/dsn')
+		}
+		// this.web3.MyDSNs(1,9)
+	},
+	methods: {
+		setName(id: number) {
+			this.$store.dispatch('save', {
+				k: 'setNameModal',
+				v: 'block',
+			})
 
+			console.log('setName', samples[id], id)
+		},
+		operateModal(id: number) {
+			this.$store.dispatch('save', {
+				k: 'operateModal',
+				v: 'block',
+			})
+
+			if (samples[id].server === '') return // for unset elements return empty
+		},
+		exhibit(id: number) {
+			console.log('exhibit', id, samples[id].active)
+			samples[id].active = !samples[id].active
+		},
+	},
 	components: {
 		Top,
 		Footer,
@@ -114,6 +161,8 @@ export default {
 		Threedots,
 		Off,
 		On,
+		SetNameModal,
+		OperateModal,
 	},
 }
 </script>

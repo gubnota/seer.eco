@@ -25,7 +25,12 @@
 			</div>
 			<form @submit.prevent="handleSubmit">
 				<div class="subscribe">
-					<input type="email" v-model="email" placeholder="Email Address" />
+					<input
+						type="email"
+						v-model="email"
+						placeholder="Email Address"
+						autocomplete="off"
+					/>
 					<div class="button">
 						<button class="submit" type="submit">Subscribe</button>
 					</div>

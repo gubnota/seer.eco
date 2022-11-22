@@ -2,18 +2,19 @@
 	<section class="database">
 		<h2>Database(1000) parameter has been determined</h2>
 		<div class="row bar">
-			<form action="">
-				<div class="search">
-					<magnifier />
-					<input
-						type="search"
-						name="search"
-						id="search"
-						v-model="input"
-						placeholder="Search"
-					/>
-				</div>
-			</form>
+			<div class="search">
+				<magnifier />
+				<input
+					type="search"
+					name="search"
+					id="search"
+					v-model="input"
+					placeholder="Search"
+					autocomplete="off"
+					@input="searchHandler"
+				/>
+			</div>
+			<!-- </form> -->
 		</div>
 		<table>
 			<tr class="head">
@@ -40,7 +41,11 @@
 			</tr>
 		</table>
 		<div class="row bar2">
-			<DatabasePagination :total="samples.length / 9" :selected="1" />
+			<DatabasePagination
+				:total="totalNumber"
+				:selected="1"
+				:per-page="this.perPage"
+			/>
 		</div>
 	</section>
 </template>
@@ -50,6 +55,8 @@ import seer from '/src/assets/dsn/seer.svg'
 import usdt from '/src/assets/dsn/usdt.svg'
 import dsn_data_sample from '../../common/dsn_data_sample.js'
 import DatabasePagination from './DatabasePagination.vue'
+import store from '../../store'
+
 const fields = [
 	'#',
 	'homeserver',
@@ -81,6 +88,7 @@ let samples = Array.from(Array(891), (el, i) => {
 	return { ...dsn_data_sample[0], ...{ no: i + 1, server: random() } }
 })
 import { ref } from 'vue'
+import { formatNumber } from '../../common/helper'
 let input = ref('')
 
 export default {
@@ -89,13 +97,81 @@ export default {
 			input,
 			samples,
 			fields,
+			perPage: 9,
 		}
 	},
 	computed: {
+		totalNumber() {
+			if (!store.state.dsnList) return samples.length
+			return store.state.dsnList.total
+		},
 		fetch() {
-			return samples
-				.filter((el) => el.server.includes(input.value.toLowerCase()))
-				.slice(0, 9)
+			if (typeof store.state.dsnList == 'undefined')
+				return samples
+					.filter((el) => el.server.includes(input.value.toLowerCase()))
+					.splice((this.selectedPage - 1) * this.perPage, this.perPage)
+			return this.formTable(store.state.dsnList.list)
+
+			//.splice((this.selectedPage - 1) * this.perPage,this.perPage)
+		},
+		selectedPage() {
+			return this.$store.state.databasePage || 1
+		},
+	},
+	methods: {
+		formTable(
+			input: [
+				{
+					cpu_average: number
+					daily_active_users: number
+					daily_income_seer: number
+					daily_income_usdt: number
+					daily_user_type_native: number // create/24h
+					homeserver: string
+					memory_rss: number
+					monthly_active_users: number
+					monthly_income_seer: number
+					monthly_income_usdt: number
+					no: number
+					total_users: number
+				}
+			]
+		) {
+			var out = []
+
+			for (let i = 0; i < input.length; i++) {
+				const el = input[i]
+				let obj = {
+					no: el.no,
+					server: el.homeserver,
+					users: el.total_users,
+					memory: Math.ceil(el.memory_rss * 100) + '%',
+					cpu_load: el.cpu_average,
+					create: el.daily_user_type_native,
+					active: el.daily_active_users + ' / ' + el.monthly_active_users,
+					income_seer:
+						formatNumber(el.daily_income_seer, 2) +
+						'  /  ' +
+						formatNumber(el.monthly_income_seer, 2),
+					income_usdt:
+						formatNumber(el.daily_income_usdt, 2) +
+						'  /  ' +
+						formatNumber(el.monthly_income_usdt, 2),
+				}
+				out.push(obj)
+			}
+			return out
+		},
+		searchHandler(inp) {
+			let i = this.input
+			if (i != '') {
+				this.$store.dispatch('save', { k: 'databasePage', v: 0 })
+			}
+			this.web3.DSNList(
+				(this.$store.state.databasePage || 0) * this.perPage,
+				this.perPage,
+				i
+			)
 		},
 	},
 	components: {
@@ -109,6 +185,7 @@ export default {
 <style scoped>
 section.database {
 	width: 1314px;
+	max-width: calc(100vw - 16px);
 	margin: 102px 0 0 0;
 	color: #1f2226;
 	display: flex;
@@ -162,7 +239,7 @@ th {
 .search svg {
 	position: absolute;
 	left: 20px;
-	top: 13px;
+	top: 10px;
 }
 input[type='search'] {
 	border: none;

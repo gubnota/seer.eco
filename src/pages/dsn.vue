@@ -18,7 +18,7 @@
 		<Footer />
 	</div>
 </template>
-<script>
+<script lang="ts">
 import Top from '../components/dao/Top.vue'
 import Footer from '../components/common/Footer.vue'
 import Modal from '../components/common/Modal.vue'
@@ -41,6 +41,19 @@ export default {
 		Data,
 		Database,
 		Graph,
+	},
+	mounted() {
+		;(async () => {
+			const dsnList1 = await this.web3.DSNList()
+			this.$store.dispatch('save', {
+				k: 'dsnListTop',
+				v: dsnList1.list.slice(0, 3),
+			})
+			if (this.$store.state.seerToken) {
+				//TODO: fetch My DSN Data
+				this.web3.MyDSNs()
+			}
+		})()
 	},
 }
 </script>

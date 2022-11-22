@@ -121,6 +121,10 @@ block {
 	padding: 50px 20px 20px 20px;
 	gap: 16px;
 	z-index: 1;
+	transition: all 0.2s ease-in-out;
+}
+block:hover {
+	transform: translateY(-10px);
 }
 h3 {
 	font-weight: 600;

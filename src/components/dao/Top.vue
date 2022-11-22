@@ -1,6 +1,6 @@
 <template>
 	<nav class="top2">
-		<router-link :to="isDao ? '/dao' : '/'">
+		<router-link :to="isDao ? '/' : '/'">
 			<img :src="logo" alt="logo" class="logo" v-if="isDao" />
 			<img src="/01head/seer.png" alt="logo" class="logo2" v-else />
 		</router-link>

@@ -169,7 +169,7 @@ line.b {
 	margin-bottom: 146px;
 }
 .btn {
-	background-color: white;
+	background: white;
 	padding: 24px 46px;
 	font-style: normal;
 	font-weight: 600;
@@ -177,6 +177,12 @@ line.b {
 	border-radius: 10px;
 	z-index: 3;
 	border: 1px solid #dfe1e2;
+	transition: all 0.4s linear;
+}
+.btn:hover,
+.btn:active {
+	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+	color: white;
 }
 @media screen and (max-width: 1024px) {
 	block.a {

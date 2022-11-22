@@ -8,26 +8,67 @@
 			</div>
 		</div>
 		<div class="cols">
-			<div class="col"><key>USERS</key><val class="rainbow">30,000</val></div>
 			<div class="col">
-				<key>Memory load</key><val class="rainbow">99%</val>
+				<key>USERS</key
+				><val class="rainbow">{{ numberWithCommas(total_users) }}</val>
 			</div>
 			<div class="col">
-				<key>24h AOE SEER</key><val class="rainbow">99,000,00</val>
+				<key>Memory load</key
+				><val class="rainbow">{{
+					memory_rss ? Math.ceil(memory_rss * 100) + '%' : '--'
+				}}</val>
 			</div>
 			<div class="col">
-				<key>24h ADS SEER</key><val class="rainbow">30,000,00</val>
+				<key>24h AOE SEER</key
+				><val class="rainbow">{{ formatNumber(daily_income_seer) }}</val>
+			</div>
+			<div class="col">
+				<key>24h ADS SEER</key
+				><val class="rainbow">{{ formatNumber(daily_income_usdt) }}</val>
 			</div>
 		</div>
 	</section>
 </template>
 <script lang="ts">
+import { numberWithCommas, formatNumber } from '../../common/helper'
 import arrow from '/src/assets/dsn/arrow-right.svg'
 
 export default {
 	components: { arrow },
+	computed: {
+		m() {
+			return this.$store.state.MyDSNData
+		},
+		memory_rss() {
+			if (this.m) return this.m.memory_rss
+			return false
+		},
+		total_users() {
+			if (this.m) return this.m.total_users
+			return false
+		},
+		daily_income_seer() {
+			if (this.m) return this.m.daily_income_seer
+			return false
+		},
+		daily_income_usdt() {
+			if (this.m) return this.m.daily_income_usdt
+			return false
+		},
+	},
 	methods: {
+		formatNumber(n) {
+			if (n === false) return '--'
+			return formatNumber(n)
+		},
+		numberWithCommas(n) {
+			if (n === false) return '--'
+			return numberWithCommas(n)
+		},
 		handler() {
+			if (!this.$store.state.seerToken) {
+				return this.comingSoon({ text: 'login first' })
+			}
 			// this.comingSoon({ text: 'not implemented' })
 			this.router.push('/my_dsn')
 		},

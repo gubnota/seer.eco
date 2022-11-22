@@ -69,6 +69,8 @@ store.dispatch('load', [
 	'ticketsNumber',
 	'eventsTab',
 	'daoRulesVisited',
+	'dsnListTop',
+	'dsnList',
 ])
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 

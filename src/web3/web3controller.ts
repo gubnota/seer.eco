@@ -1,6 +1,6 @@
-import IncentiveController from './incentivecontroller'
+import DSNController from './dsncontroller'
 declare const window: any
-export default class Web3Controller extends IncentiveController {
+export default class Web3Controller extends DSNController {
 	addressPartially(address) {
 		if (!address) address = this.store.state.address
 		if (typeof address != 'string') {

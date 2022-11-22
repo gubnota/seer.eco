@@ -2,7 +2,8 @@
 	<div class="modal" :style="`display:${this.$store.state.modal};`">
 		<div class="message-container" @click="bgClick">
 			<div class="actual-message" @click="floatClick">
-				{{ this.$store ? this.$store.state.modal : '' }}
+				<div v-html="msg"></div>
+				<!-- {{ this.$store ? this.$store.state.modal : '' }} -->
 				<!-- <h2>{{ this.message ? this.message : this.ui._('Coming soon') }}</h2> -->
 				<!-- <div class="close-button close_modal">&times;</div> -->
 				<!-- <button class="close_modal">OK</button> -->
@@ -12,9 +13,15 @@
 </template>
 
 <script lang="ts">
+import store from '../../store'
 export default {
 	props: {
 		message: String,
+	},
+	computed: {
+		msg: () => {
+			return store.state.comingSoon ? store.state.comingSoon.text : ''
+		},
 	},
 	methods: {
 		bgClick(e) {

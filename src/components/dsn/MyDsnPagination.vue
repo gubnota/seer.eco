@@ -41,6 +41,7 @@ export default {
 	props: {
 		total: Number,
 		selected: Number,
+		perPage: Number,
 	},
 	data() {
 		return {
@@ -48,28 +49,45 @@ export default {
 			sel: 1, // current page
 			prev: 1, // n-1
 			next: 1, // n+1
-			els: [],
 		}
 	},
-	computed: {},
+	computed: {
+		els() {
+			console.log('this.getNum', this.getNum, this.getTotal)
+			// els: []
+			let els = Array.from({ length: this.getNum }, (_, i) => {
+				// console.log('this.sel', this.sel)
+				// if (i > this.sel && i < this.getNum - 1) return '…'
+				return i + 1
+			}) //Array.from(Array(this.getNum).keys())
+			return els
+		},
+		getSearchTerm() {
+			let a = this.$store.state.myDSNSearch
+			if (!a) return ''
+			return a
+		},
+		getTotal() {
+			let a = this.$store.state.dsnList
+			if (!a) return this.total
+			return a.total
+		},
+		getNum() {
+			return Math.ceil(this.getTotal / this.perPage)
+		},
+	},
 	mounted() {
-		this.num = Math.ceil(this.total / 8)
+		// console.log(this.total, this.perPage)
 		// console.log(this.$store.eventList.total)
 		// this.num = Math.ceil(this.total / 15)
-		this.select(this.selected || 1, false)
+		// this.select(this.selected || 1, false)
 	},
 	updated() {
 		// console.log('updated', this.$store.eventList)
 	},
 
 	methods: {
-		pagination() {
-			this.els = Array.from({ length: this.num }, (_, i) => {
-				// console.log('this.sel', this.sel)
-				// if (i > this.sel && i < this.num - 1) return '…'
-				return i + 1
-			}) //Array.from(Array(this.num).keys())
-		},
+		pagination() {},
 		select(num: any, save: boolean = true) {
 			// this.$store.dispatch('unset', ['detail', 'eventDetail'])
 			if (save) {
@@ -82,11 +100,19 @@ export default {
 			}
 			this.sel = num
 			this.prev = this.sel > 1 ? this.sel - 1 : 0
-			this.next = this.sel < this.num ? this.sel + 1 : 0
-			this.pagination()
+			this.next = this.sel < this.getNum ? this.sel + 1 : 0
+			// this.pagination()
+			if (this.$store.state.myDSNPage != num) {
+				this.web3.DSNList(
+					(num - 1) * this.perPage,
+					this.perPage,
+					this.getSearchTerm
+				)
+				this.$store.dispatch('save', { k: 'myDSNPage', v: num })
+			}
 		},
 		goNext() {
-			if (this.sel < this.num) this.select(this.sel + 1)
+			if (this.sel < this.getNum) this.select(this.sel + 1)
 		},
 		goPrev() {
 			if (this.sel > 1) this.select(this.sel - 1)

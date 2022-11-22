@@ -8,11 +8,16 @@
 			accurately grasp the income changes. The first to establish a solid
 			pipeline income in the new world of web3.
 		</p>
-		<div class="row"><Nft_card /><Nft_card /><Nft_card /></div>
+		<div class="row">
+			<Nft_card :no="0" key="0" /><Nft_card :no="1" key="1" /><Nft_card
+				:no="2"
+				key="2"
+			/>
+		</div>
 	</div>
 </template>
 <script lang="ts">
-import Nft_card from '/src/assets/dsn/nft_card.svg'
+import Nft_card from '/src/components/dsn/NftCard.vue'
 
 export default {
 	components: { Nft_card },
