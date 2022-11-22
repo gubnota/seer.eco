@@ -16,22 +16,25 @@
 						<span>Extracted</span>
 						<span>&nbsp;</span>
 					</div>
-					<div class="row item">
-						<span>Seer</span>
-						<span>123943.55</span>
-						<span>436124.5</span>
-						<span><div class="btn success" @click="confirm">claim</div></span>
+					<div class="row item" v-for="el in rewards">
+						<span>{{ el.token }}</span>
+						<span>{{ format(el.unGot) }}</span>
+						<span>{{ format(el.got) }}</span>
+						<span
+							><div
+								class="btn success"
+								@click="claim(el)"
+								:class="{ disabled: !(el.unGot > el.minAmount) }"
+							>
+								claim
+							</div></span
+						>
 					</div>
-					<div class="row item">
-						<span>Usdt</span>
-						<span>123943.55</span>
-						<span>436124.5</span>
-						<span><div class="btn success" @click="confirm">claim</div></span>
-					</div>
+
 					<h2>Reward</h2>
 					<p>Set the node name and invite people to join your node.</p>
 					<div class="copyfield" @click="copy">
-						<span>https://to.seer.eco/?n=a.seer.eco</span>
+						<span>{{ `https://to.seer.eco/?n=${node || ''}` }}</span>
 						<div class="btn">Copy</div>
 					</div>
 					<div class="bottom">
@@ -46,7 +49,7 @@
 
 <script lang="ts">
 import CloseSquare from '/src/assets/dsn/close-square.svg'
-
+import { formatNumber, getFQN } from '../../common/helper'
 export default {
 	data() {
 		return {
@@ -56,7 +59,32 @@ export default {
 	props: {
 		message: String,
 	},
+	computed: {
+		node() {
+			let a = this.$store.state.Rewards
+			if (!a) return ''
+			return a.node
+		},
+		rewards() {
+			let a = this.$store.state.Rewards
+			if (!a) return []
+			return a.data
+		},
+	},
 	methods: {
+		format(n) {
+			return formatNumber(n)
+		},
+		async claim(el) {
+			// TODO: make a request to backend
+			console.log('claim…', el)
+			if (el.unGot > el.minAmount) {
+				await this.web3.Withdraw(getFQN(this.node), el.token)
+				// if (res) {
+				await this.web3.Rewards(this.node)
+				// }
+			}
+		},
 		cancel(e) {
 			console.log('bgClick', e.target)
 			this.$store.dispatch('save', {
@@ -65,29 +93,33 @@ export default {
 			})
 		},
 		floatClick(e) {
-			console.log('floatClick', e.target)
+			// console.log('floatClick', e.target)
 			e.stopPropagation()
 		},
 		confirm(e) {
 			// TODO: make a request to backend
-			console.log('sending data…', this.name)
+			// console.log('sending data…', this.name)
 		},
 		copy(e) {
 			e.stopPropagation()
 			// TODO: copy write value
-			navigator.clipboard.writeText('<empty clipboard>').then(
-				() => {
-					this.comingSoon({
-						timeout: 500,
-						text: `<b class="rainbow">copied!</b>`,
-					})
+			navigator.clipboard
+				.writeText(
+					`https://to.seer.eco/?n=${this.$store.state.Rewards.node || ''}`
+				)
+				.then(
+					() => {
+						this.comingSoon({
+							timeout: 500,
+							text: `<b class="rainbow">copied!</b>`,
+						})
 
-					/* clipboard successfully set */
-				},
-				() => {
-					/* clipboard write failed */
-				}
-			)
+						/* clipboard successfully set */
+					},
+					() => {
+						/* clipboard write failed */
+					}
+				)
 			// copy2('This is some cool text')
 		},
 	},
@@ -162,6 +194,9 @@ input[type='name']::placeholder {
 	border-radius: 8px;
 	justify-content: space-between;
 	align-items: center;
+}
+.btn.disabled {
+	cursor: not-allowed;
 }
 .row .btn,
 .copyfield .btn {

@@ -13,12 +13,22 @@
 					<p>Set the node name and invite people to join your node.</p>
 					<input
 						type="name"
-						v-model="this.name"
+						v-model="input"
 						placeholder="Please enter a name (within 12 characters)"
+						maxlength="12"
+						spellcheck="false"
+						@input="inputHandler"
+						:class="{ error }"
 					/>
 					<div class="bottom">
 						<div class="btn" @click="cancel">Cancel</div>
-						<div class="btn success" @click="confirm">Confirm</div>
+						<div
+							class="btn success"
+							@click="confirm"
+							:class="{ disabled: error }"
+						>
+							Confirm
+						</div>
 					</div>
 				</div>
 			</div>
@@ -31,27 +41,45 @@ import CloseSquare from '/src/assets/dsn/close-square.svg'
 export default {
 	data() {
 		return {
-			name: '',
+			input: '',
+			error: false,
 		}
 	},
 	props: {
 		message: String,
 	},
 	methods: {
-		cancel(e) {
-			console.log('bgClick', e.target)
+		cancel() {
 			this.$store.dispatch('save', {
 				k: 'setNameModal',
 				v: 'none',
 			})
 		},
 		floatClick(e) {
-			console.log('floatClick', e.target)
+			console.log('floatClick', this.data)
 			e.stopPropagation()
 		},
-		confirm(e) {
-			// TODO: make a request to backend
+		async confirm(e) {
+			if (!this.error) {
+				//TODO: send a request
+				let res = await this.web3.SetNodeName(
+					this.$store.state.setNameModalSelected.no,
+					this.input
+				)
+				console.log('confirm result', res)
+				if (res) {
+					await this.web3.MyDSNs(
+						(this.$store.state.myDSNPage || 1 - 1) * 8 + 1,
+						8
+					)
+					this.cancel()
+				}
+			}
 			console.log('sending data…', this.name)
+		},
+		inputHandler() {
+			this.error = !/^([a-z0-9]{1,12})$/.test(this.input)
+			console.log('inputhandler', this.input)
 		},
 	},
 	components: {
@@ -73,6 +101,13 @@ input[type='name'] {
 	/* color: #606771; */
 	font-size: 13px;
 	margin: 0 16px;
+}
+input[type='name'].error {
+	color: red;
+	font-weight: bold;
+}
+btn.disabled {
+	cursor: not-allowed;
 }
 input[type='name']::placeholder {
 	font-size: 13px;

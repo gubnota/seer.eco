@@ -103,7 +103,7 @@ export default class DSNController extends IncentiveController {
 	}
 
 	Withdraw = async (node: string, token: string) => {
-		node = getAlias(node)
+		node = getFQN(node)
 		var x = new Date()
 		var stamp = Math.floor(
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
@@ -134,7 +134,7 @@ export default class DSNController extends IncentiveController {
 
 		// TODO: axios
 		const res2 = await axios
-			.post(this.servers.business[this.branch] + 'api/dao/Withdraw', payload, {
+			.post(this.servers.business[this.branch] + 'api/Node/Withdraw', payload, {
 				headers: {
 					SeerToken: this.store.state.seerToken,
 					Domain: this.node,
@@ -143,7 +143,7 @@ export default class DSNController extends IncentiveController {
 				},
 			})
 			.then((res) => {
-				// console.log('/api/dao/Vote then', res)
+				// console.log('/api/Node/Vote then', res)
 				if (res.data.message != 'Success') {
 					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
 					return null
@@ -158,7 +158,8 @@ export default class DSNController extends IncentiveController {
 				})
 				return null
 			})
-		return Promise.resolve(res2)
+		let res3 = res2.message == 'Success'
+		return Promise.resolve(res3)
 		// return {
 		// 	address,
 		// 	nonce,
@@ -238,7 +239,7 @@ export default class DSNController extends IncentiveController {
 			})
 		this.store.dispatch('save', {
 			k: 'Rewards',
-			v: { node, data: res2.data.data },
+			v: { node, data: res2.data.data.list },
 		}) //initially, store first page of the DSNs
 		return res2.data.data || ''
 	}

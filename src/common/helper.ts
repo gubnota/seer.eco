@@ -45,9 +45,9 @@ export const numberWithCommas = (x: number | string) => {
 }
 
 export const formatNumber = (num, dec = 2, thousands = true) => {
-	var out = (Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec)).toFixed(
-		dec
-	)
+	var out = (
+		Math.round(parseFloat(num) * Math.pow(10, dec)) / Math.pow(10, dec)
+	).toFixed(dec)
 	if (thousands) out = numberWithCommas(out)
 	return out
 }

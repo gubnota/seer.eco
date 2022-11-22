@@ -1,6 +1,6 @@
 <template>
 	<nav class="pag">
-		<div class="btn">
+		<div class="btn" @click="goPrev">
 			<svg width="10" height="18" viewBox="0 0 10 18" fill="none">
 				<path
 					d="M8.49984 16.92L1.97984 10.4C1.20984 9.62996 1.20984 8.36996 1.97984 7.59996L8.49984 1.07996"
@@ -22,7 +22,7 @@
 				{{ el }}
 			</div>
 		</div>
-		<div class="btn">
+		<div class="btn" @click="goNext">
 			<svg width="10" height="18" viewBox="0 0 10 18" fill="none">
 				<path
 					d="M1.41016 16.92L7.93016 10.4C8.70016 9.62996 8.70016 8.36996 7.93016 7.59996L1.41016 1.07996"
@@ -45,10 +45,7 @@ export default {
 	},
 	data() {
 		return {
-			num: 0,
 			sel: 1, // current page
-			prev: 1, // n-1
-			next: 1, // n+1
 		}
 	},
 	computed: {
@@ -68,7 +65,7 @@ export default {
 			return a
 		},
 		getTotal() {
-			let a = this.$store.state.dsnList
+			let a = this.$store.state.MyDSNs
 			if (!a) return this.total
 			return a.total
 		},
@@ -76,34 +73,20 @@ export default {
 			return Math.ceil(this.getTotal / this.perPage)
 		},
 	},
-	mounted() {
-		// console.log(this.total, this.perPage)
-		// console.log(this.$store.eventList.total)
-		// this.num = Math.ceil(this.total / 15)
-		// this.select(this.selected || 1, false)
-	},
-	updated() {
-		// console.log('updated', this.$store.eventList)
-	},
+	mounted() {},
+	updated() {},
 
 	methods: {
 		pagination() {},
 		select(num: any, save: boolean = true) {
-			// this.$store.dispatch('unset', ['detail', 'eventDetail'])
 			if (save) {
-				// this.$store.dispatch('save', { k: 'eventsPage', v: num })
-				// this.web3.eventList({
-				// 	tab: this.$store.state.eventsTab,
-				// 	from: 8 * (num - 1) + 1,
-				// 	limit: 8,
-				// })
 			}
 			this.sel = num
 			this.prev = this.sel > 1 ? this.sel - 1 : 0
 			this.next = this.sel < this.getNum ? this.sel + 1 : 0
 			// this.pagination()
 			if (this.$store.state.myDSNPage != num) {
-				this.web3.DSNList(
+				this.web3.MyDSNs(
 					(num - 1) * this.perPage,
 					this.perPage,
 					this.getSearchTerm

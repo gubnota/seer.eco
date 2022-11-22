@@ -15,26 +15,33 @@
 						<tr class="head">
 							<th v-for="el in fields">{{ el }}</th>
 						</tr>
-						<tr v-for="(el, i) in fetch" :key="el.no" class="item">
-							<td>NO.00{{ el.no }}</td>
+						<tr v-for="(el, i) in els" :key="el.no" class="item">
+							<td>NO.{{ el.no.toString().padStart(3, '0') }}</td>
 							<td>
-								<div v-if="el.server == ''" class="fl">
+								<div v-if="el.homeserver == ''" class="fl">
 									<div class="btn" @click="setName(i)">Set</div>
 								</div>
-								{{ el.server }}
+								{{ el.homeserver }}
 							</td>
-							<td>{{ el.users }}</td>
-							<td>{{ el.memory }}</td>
-							<td>{{ el.h_aoe }}</td>
-							<td>{{ el.h_ads }}</td>
+							<td>{{ numberWithCommas(el.total_users) }}</td>
+							<td>
+								{{
+									el.memory_rss ? formatNumber(el.memory_rss * 100) + '%' : '--'
+								}}
+							</td>
+							<td>{{ formatNumber(el.daily_income_seer) }} Seer</td>
+							<td>{{ formatNumber(el.daily_income_usdt) }} Usdt</td>
 							<td>
 								<Threedots
-									:class="{ active: el.server !== '' }"
+									:class="{
+										active: el.homeserver !== '',
+										disabled: el.homeserver == '',
+									}"
 									@click="operateModal(i)"
 								/>
 							</td>
 							<td>
-								<On v-if="el.server !== ''" @click="exhibit(i)" />
+								<On v-if="el.show" @click="exhibit(i)" class="disabled" />
 								<Off v-else @click="exhibit(i)" />
 							</td>
 						</tr>
@@ -63,17 +70,18 @@ import Off from '/src/assets/dsn/off.svg'
 import On from '/src/assets/dsn/on.svg'
 import SetNameModal from '../components/dsn/SetNameModal.vue'
 import OperateModal from '../components/dsn/OperateModal.vue'
+import { formatNumber, numberWithCommas } from '../common/helper'
 
 // import dsn_data_sample from '../common/dsn_data_sample.js'
 const dsn_data_sample = [
 	{
 		no: 1,
-		server: 'MUltiFaycet NFT',
-		users: '1,000',
-		memory: '9.99%',
-		h_aoe: '200 Seer',
-		h_ads: '30 Usdt',
-		active: true,
+		homeserver: 'MUltiFaycet NFT',
+		total_users: 1000,
+		memory_rss: 0.0999,
+		daily_income_seer: 200,
+		daily_income_usdt: 30,
+		show: true,
 	},
 ]
 const fields = [
@@ -102,32 +110,36 @@ const random = () => {
 	]
 	return arr[id]
 }
-let samples = Array.from(Array(891), (el, i) => {
-	return { ...dsn_data_sample[0], ...{ no: i + 1, server: random() } }
-})
+// let els = Array.from(Array(891), (el, i) => {
+// 	return { ...dsn_data_sample[0], ...{ no: i + 1, homeserver: random() } }
+// })
 
 export default {
 	data() {
-		return { samples, fields }
+		return { fields, perPage: 8 }
 	},
 	computed: {
-		// totalNumber() {
-		// 	if (!this.$store.state.dsnList) return samples.length
-		// 	return this.$store.state.dsnList.total
-		// },
+		totalNumber() {
+			if (!this.$store.state.MyDSNs) return 0 //els.length
+			return this.$store.state.MyDSNs.total
+		},
 
-		fetch() {
-			return []
-			return samples
-				.filter((el) => el.server.includes('')) //input.value.toLowerCase()
-				.slice(0, 9)
+		els() {
+			if (typeof this.$store.state.MyDSNs == 'undefined') return []
+			return this.$store.state.MyDSNs.list //this.formTable()
+
+			if (!this.$store.state.MyDSNs)
+				return []
+
+					.filter((el) => el.homeserver.includes('')) //input.value.toLowerCase()
+					.slice(0, 8)
 		},
 	},
 	mounted() {
 		if (!this.$store.state.seerToken) {
 			this.router.push('/dsn')
 		}
-		// this.web3.MyDSNs(1,9)
+		this.web3.MyDSNs(1, 8)
 	},
 	methods: {
 		setName(id: number) {
@@ -135,20 +147,39 @@ export default {
 				k: 'setNameModal',
 				v: 'block',
 			})
+			this.$store.dispatch('save', {
+				k: 'setNameModalSelected',
+				v: this.els[id],
+			})
 
-			console.log('setName', samples[id], id)
+			console.log('setName', this.els[id], id)
 		},
 		operateModal(id: number) {
+			console.log(this.els[id])
+			if (this.els[id].homeserver === '') return // for unset elements return empty
 			this.$store.dispatch('save', {
 				k: 'operateModal',
 				v: 'block',
 			})
-
-			if (samples[id].server === '') return // for unset elements return empty
+			this.web3.Rewards(this.els[id].homeserver)
 		},
-		exhibit(id: number) {
-			console.log('exhibit', id, samples[id].active)
-			samples[id].active = !samples[id].active
+		async exhibit(id: number) {
+			if (this.els[id].show) return //can't disable, only enable another one
+			console.log('exhibit', this.els[id].show)
+			await this.web3.Show(this.els[id].no)
+			await this.web3.MyDSNs((this.$store.state.myDSNPage || 1 - 1) * 8 + 1, 8)
+			return
+
+			// console.log('exhibit', id, els[id].show)
+			// els[id].show = !els[id].show
+		},
+		formatNumber(n) {
+			if (n === false) return '--'
+			return formatNumber(n)
+		},
+		numberWithCommas(n) {
+			if (n === false) return '--'
+			return numberWithCommas(n)
 		},
 	},
 	components: {
@@ -284,6 +315,9 @@ svg.active:active {
 }
 svg.active {
 	fill: #17bb7f;
+}
+.disabled {
+	cursor: not-allowed;
 }
 @media (max-width: 1130px) {
 	tr.head,
