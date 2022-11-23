@@ -87,7 +87,7 @@ export default {
 			// this.pagination()
 			if (this.$store.state.myDSNPage != num) {
 				this.web3.MyDSNs(
-					(num - 1) * this.perPage,
+					(num - 1) * this.perPage + 1,
 					this.perPage,
 					this.getSearchTerm
 				)

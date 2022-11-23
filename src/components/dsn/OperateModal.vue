@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import CloseSquare from '/src/assets/dsn/close-square.svg'
-import { formatNumber, getFQN } from '../../common/helper'
+import { formatNumber, getFQN, copyToClipboard } from '../../common/helper'
 export default {
 	data() {
 		return {
@@ -103,10 +103,13 @@ export default {
 		copy(e) {
 			e.stopPropagation()
 			// TODO: copy write value
-			navigator.clipboard
-				.writeText(
-					`https://to.seer.eco/?n=${this.$store.state.Rewards.node || ''}`
-				)
+			copyToClipboard(
+				`https://to.seer.eco/?n=${this.$store.state.Rewards.node || ''}`
+			)
+				// navigator.clipboard
+				// 	.writeText(
+				// 		`https://to.seer.eco/?n=${this.$store.state.Rewards.node || ''}`
+				// 	)
 				.then(
 					() => {
 						this.comingSoon({
@@ -318,7 +321,7 @@ input[type='name']::placeholder {
 }
 </style>
 
-<style>
+<style scoped>
 .message-container a {
 	font-weight: 600;
 	line-height: 29px;
@@ -333,5 +336,22 @@ input[type='name']::placeholder {
 }
 h2 {
 	font-size: 2rem;
+}
+@media (max-width: 550px) {
+	.actual-message {
+		padding: 0;
+		max-width: calc(100% - 1rem);
+	}
+	.row {
+		height: auto;
+		padding: 0;
+		gap: 1rem;
+		margin: 0 1rem;
+	}
+	.row.item {
+		justify-content: space-around;
+		margin: 0;
+		padding: 0 0 10px 0;
+	}
 }
 </style>

@@ -2,7 +2,7 @@
 	<Modal />
 	<main class="reviewer">
 		<section class="main">
-			<Top />
+			<Top isDao="true" />
 			<slot />
 			<div class="crystal" />
 			<div class="oval" />

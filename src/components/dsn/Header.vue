@@ -63,6 +63,9 @@ ill {
 	/* background-color: firebrick; */
 	flex: 446;
 }
+ill img {
+	max-width: 100vw;
+}
 .nft_c {
 	width: 446px;
 	mix-blend-mode: darken;

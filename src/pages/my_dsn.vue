@@ -42,7 +42,11 @@
 							</td>
 							<td>
 								<On v-if="el.show" @click="exhibit(i)" class="disabled" />
-								<Off v-else @click="exhibit(i)" />
+								<Off
+									v-else
+									@click="exhibit(i)"
+									:class="{ disabled: el.homeserver === '' }"
+								/>
 							</td>
 						</tr>
 					</table>
@@ -136,6 +140,7 @@ export default {
 		},
 	},
 	mounted() {
+		this.$store.dispatch('save', { k: 'myDSNPage', v: 1 })
 		if (!this.$store.state.seerToken) {
 			this.router.push('/dsn')
 		}
@@ -165,11 +170,11 @@ export default {
 		},
 		async exhibit(id: number) {
 			if (this.els[id].show) return //can't disable, only enable another one
+			if (this.els[id].homeserver === '') return
 			console.log('exhibit', this.els[id].show)
 			await this.web3.Show(this.els[id].no)
-			await this.web3.MyDSNs((this.$store.state.myDSNPage || 1 - 1) * 8 + 1, 8)
-			return
-
+			await this.web3.MyDSNs((this.$store.state.myDSNPage - 1) * 8 + 1, 8)
+			// return
 			// console.log('exhibit', id, els[id].show)
 			// els[id].show = !els[id].show
 		},
@@ -289,7 +294,9 @@ tr {
 tr {
 	border-bottom: 1px solid #ebedef;
 }
-
+td {
+	align-items: center;
+}
 tr.item {
 	height: 92px;
 	line-height: 92px;

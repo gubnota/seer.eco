@@ -1,6 +1,6 @@
 <template>
 	<nav class="top2">
-		<router-link :to="isDao ? '/' : '/'">
+		<router-link :to="this.calcLink">
 			<img :src="logo" alt="logo" class="logo" v-if="isDao" />
 			<img src="/01head/seer.png" alt="logo" class="logo2" v-else />
 		</router-link>
@@ -53,6 +53,13 @@ export default {
 	},
 
 	computed: {
+		calcLink() {
+			if (this.$route.path.includes('/reviewer/')) return '/dao'
+			if (['/incentive-center'].find((a) => a === this.$route.path))
+				return '/dao'
+			if (this.$route.path === '/my_dsn') return '/dsn'
+			return '/'
+		},
 		loading() {
 			return this.$store.state.walletLoading || false
 		},

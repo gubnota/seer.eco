@@ -1,10 +1,23 @@
 <template>
 	<div class="card">
+		<img :src="getbg(this.dsn[no])" class="bg" />
+		<img :src="getlogo(this.dsn[no])" class="logo" />
+		<img
+			:src="getbadge(this.dsn[no])"
+			class="badge"
+			:class="{
+				badge1: grade(this.dsn[no]) == 1,
+				badge2: grade(this.dsn[no]) == 2,
+				badge3: grade(this.dsn[no]) == 3,
+			}"
+		/>
+		<img src="/dsn/nftcard.svg" v-if="1" class="card" />
 		<div class="skill user_bar">
 			<div
 				class="skill-bar"
-				:style="`width:${Math.ceil(
-					(this.dsn[no].total_users / 10000) * 100
+				:style="`width:${Math.max(
+					2,
+					Math.min(100, Math.ceil((this.dsn[no].total_users / 100000) * 100))
 				)}%;`"
 			></div>
 		</div>
@@ -30,7 +43,7 @@
 	</div>
 </template>
 <script lang="ts">
-import Nft_card from '/src/assets/dsn/nft_card.svg'
+import Nft_card from '/src/assets/dsn/nft-card.svg'
 import store from '../../store'
 import { formatNumber, numberWithCommas } from '../../common/helper'
 
@@ -58,6 +71,50 @@ export default {
 		},
 	},
 	methods: {
+		grade(no) {
+			if (no.total_users < 10000) return 1
+			if (no.total_users >= 10000 && no.total_users < 50000) return 2
+			return 3
+		},
+		getbg(no) {
+			switch (this.grade(no)) {
+				case 1:
+					return '/dsn/1a_bg.jpg'
+					break
+				case 2:
+					return '/dsn/2a_bg.jpg'
+					break
+				default:
+					return '/dsn/3a_bg.jpg'
+					break
+			}
+		},
+		getbadge(no) {
+			switch (this.grade(no)) {
+				case 1:
+					return '/dsn/1a_badge.png'
+					break
+				case 2:
+					return '/dsn/2a_badge.png'
+					break
+				default:
+					return '/dsn/3a_badge.png'
+					break
+			}
+		},
+		getlogo(no) {
+			switch (this.grade(no)) {
+				case 1:
+					return '/dsn/1a_logo.png'
+					break
+				case 2:
+					return '/dsn/2a_logo.png'
+					break
+				default:
+					return '/dsn/3a_logo.png'
+					break
+			}
+		},
 		numberWithCommas(n) {
 			return numberWithCommas(n)
 		},
@@ -75,8 +132,42 @@ export default {
 }
 </script>
 <style scoped>
+img.card {
+	z-index: 2;
+}
+img.bg {
+	z-index: 0;
+	position: absolute;
+	top: 7px;
+	left: 7px;
+}
+img.logo {
+	z-index: 1;
+	position: absolute;
+	top: 37px;
+	left: 137px;
+	width: 73px;
+}
+img.badge {
+	z-index: 3;
+	position: absolute;
+	top: 108px;
+	left: 23px;
+	width: 73px;
+	width: 46px;
+}
+img.badge2 {
+	width: 64px;
+	top: 108px;
+	left: 14px;
+}
+img.badge3 {
+	width: 70px;
+	top: 104px;
+	left: 11px;
+}
 .card {
-	background: #282737;
+	background: transparent; /*#282737;*/
 	border: 1px solid #555766;
 	border-radius: 16px;
 	width: 344px;
@@ -87,6 +178,7 @@ export default {
 }
 .card > * {
 	position: absolute;
+	z-index: 3;
 }
 .skill {
 	background-color: #000000;
@@ -105,10 +197,10 @@ export default {
 	top: 402px;
 }
 .daily_aoe_seer {
-	left: 69px;
+	left: 79px;
 }
 .daily_ads_seer {
-	left: 241px;
+	left: 252px;
 }
 .user_number {
 	left: 220px;
@@ -158,5 +250,10 @@ export default {
 	font-size: 18px;
 	padding: 3px 0;
 	font-weight: 500;
+}
+</style>
+<style>
+svg .tf {
+	color: white;
 }
 </style>

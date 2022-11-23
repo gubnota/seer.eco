@@ -68,10 +68,7 @@ export default {
 				)
 				console.log('confirm result', res)
 				if (res) {
-					await this.web3.MyDSNs(
-						(this.$store.state.myDSNPage || 1 - 1) * 8 + 1,
-						8
-					)
+					await this.web3.MyDSNs((this.$store.state.myDSNPage - 1) * 8 + 1, 8)
 					this.cancel()
 				}
 			}
@@ -229,6 +226,13 @@ input[type='name']::placeholder {
 	}
 	.message-container .actual-message h2 {
 		font-size: 1.5rem;
+	}
+}
+@media (max-width: 550px) {
+	.actual-message {
+		padding: 0;
+
+		max-width: calc(100% - 1rem);
 	}
 }
 </style>

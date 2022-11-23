@@ -226,6 +226,7 @@ tr {
 tr.item {
 	height: 88px;
 	line-height: 88px;
+	align-items: center;
 }
 
 th {
@@ -289,9 +290,65 @@ heading {
 	tr {
 		width: 100%;
 		display: flex;
-		flex-direction: column;
+		/* flex-direction: column; */
 		justify-content: space-between;
 	}
+	th,
+	td {
+		padding: 1rem;
+	}
+	tr.head,
+	tr.item {
+		/* overflow-x: scroll; */
+	}
+	tr > td {
+		text-align: center;
+	}
+	.r svg {
+		overflow: visible;
+	}
+
+	tr.item,
+	tr.head {
+		display: grid;
+		grid-template-columns: 1fr repeat(2, 3fr);
+		grid-template-rows: repeat(3, 1fr);
+		grid-column-gap: 0px;
+		grid-row-gap: 0px;
+		overflow-x: scroll;
+	}
+
+	tr > td:nth-child(1) {
+		grid-area: 1 / 1 / 2 / 2;
+	}
+	tr > td:nth-child(2) {
+		grid-area: 1 / 2 / 2 / 3;
+	}
+	tr > td:nth-child(3) {
+		grid-area: 2 / 2 / 3 / 3;
+	}
+	tr > td:nth-child(4) {
+		grid-area: 1 / 3 / 2 / 4;
+	}
+	tr > td:nth-child(5) {
+		grid-area: 2 / 1 / 3 / 2;
+	}
+	tr > td:nth-child(6) {
+		grid-area: 2 / 3 / 3 / 4;
+	}
+	tr > td:nth-child(7) {
+		grid-area: 3 / 1 / 4 / 2;
+	}
+	tr > td:nth-child(8) {
+		grid-area: 3 / 2 / 4 / 3;
+	}
+	tr > td:nth-child(9) {
+		grid-area: 3 / 3 / 4 / 4;
+	}
+	.r {
+		justify-content: center;
+	}
+
 	table {
 		display: flex;
 		flex-direction: column;
