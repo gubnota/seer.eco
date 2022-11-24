@@ -273,6 +273,7 @@ h3 {
 	width: 20px;
 	height: 20px;
 	border-radius: 10px;
+	object-fit: cover;
 }
 .contents > .location {
 	color: #17bb7f;

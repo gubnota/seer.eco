@@ -243,7 +243,7 @@ th {
 .search svg {
 	position: absolute;
 	left: 20px;
-	top: 12px;
+	top: 11px;
 }
 input[type='search'] {
 	border: none;
@@ -254,8 +254,6 @@ input[type='search'] {
 	font-size: 15px;
 	width: 298px;
 	padding: 0 1rem;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
 	box-sizing: border-box;
 }
 input[type='search']::-webkit-search-decoration {
