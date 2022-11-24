@@ -24,9 +24,12 @@ export const openLink = (link: string) => {
 	return
 }
 const routes = [
-	{ path: '/', component: Main },
-	{ path: '/nft', component: Nft },
-	{ path: '/test', component: Test },
+	{
+		path: '/',
+		component: Main,
+	},
+	// { path: '/nft', component: Nft },
+	// { path: '/test', component: Test },
 	{ path: '/q_and_a', component: QA },
 	{
 		path: '/coming-soon',
@@ -88,9 +91,9 @@ const routes = [
 		},
 	},
 
-	{ path: '/page1', component: Page1 },
-	{ path: '/page2', component: Page2 },
-	{ path: '/page2/page3.html', component: Page3 },
+	// { path: '/page1', component: Page1 },
+	// { path: '/page2', component: Page2 },
+	// { path: '/page2/page3.html', component: Page3 },
 	{ path: '/dao', component: Dao },
 	{ path: '/reviewer', component: Reviewer },
 	{ path: '/reviewer/conditions', component: Reviewer1 },

@@ -14,7 +14,7 @@ import App from './App.vue'
 import store from './store'
 import routes from './routes'
 import { openLink } from './routes'
-import { comingSoon } from './common/helper'
+import { comingSoon, setTitle } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
 export { store }
@@ -33,6 +33,7 @@ const router = createRouter({
 	routes, // short for `routes: routes`
 })
 router.afterEach((to, from) => {
+	setTitle(to)
 	if (to.path.search('/https://') === 0) {
 		window.open(to.path.substring(1), '_blank')
 		router.back()

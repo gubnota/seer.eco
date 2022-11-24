@@ -71,6 +71,10 @@ ill img {
 	mix-blend-mode: darken;
 }
 @media (max-width: 1130px) {
+	h1 {
+		font-size: 3rem;
+		line-height: 150%;
+	}
 	section.header {
 		flex-direction: column;
 		width: calc(100% - 2rem);

@@ -29,7 +29,16 @@
 			</block>
 		</line>
 		<line class="b"
-			><button class="btn"><span>Click to apply for DAO</span></button></line
+			><button
+				class="btn"
+				@click="
+					() => {
+						this.router.push('/dao')
+					}
+				"
+			>
+				<span>Click to apply for DAO</span>
+			</button></line
 		>
 	</section>
 </template>
@@ -110,7 +119,7 @@ img.shadow {
 	/* transform: translateY(0px); */
 }
 img.mainpicbg {
-	max-width: 340px;
+	width: 340px;
 	z-index: 1;
 	mix-blend-mode: normal;
 }
@@ -156,9 +165,9 @@ stroke.b {
 	width: 100%;
 	align-items: center;
 }
-/* stroke.b > svg {
-	width: 16px;
-} */
+stroke.b > svg {
+	overflow: visible;
+}
 stroke.b > span {
 	max-width: 300px;
 }
@@ -184,6 +193,11 @@ line.b {
 	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
 	color: white;
 }
+@media screen and (max-width: 1130px) {
+	section.bottom {
+		padding: 0 1rem;
+	}
+}
 @media screen and (max-width: 1024px) {
 	block.a {
 		margin-top: 0;
@@ -191,6 +205,7 @@ line.b {
 	line.a {
 		flex-direction: column;
 		align-items: center;
+		gap: 2rem;
 	}
 }
 </style>

@@ -42,6 +42,7 @@ export default {
 				timeout: 5000,
 			})
 		else if (this.$store.state.daoInfo && !this.$store.state.daoInfo.isDao) {
+			this.router.push({ path: '/dao' })
 			this.comingSoon({
 				text: `<p>Please, go to <a href="/#/reviewer/conditions">/reviewer/conditions</a> and become a DAO reviewer</p>`,
 				timeout: 5000,

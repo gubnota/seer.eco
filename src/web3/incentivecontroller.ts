@@ -39,7 +39,7 @@ unGot: number // can be claimed
 					headers: {
 						SeerToken: this.store.state.seerToken,
 						Domain: this.node,
-						Language: 'zh',
+						Language: 'en',
 						Terminal: 'web',
 					},
 				}

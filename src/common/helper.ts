@@ -88,5 +88,18 @@ export const copyToClipboard = (textToCopy) => {
 		})
 	}
 }
-
+const setWindowTitle = (title) => {
+	window.top.document.title = title
+}
+export const setTitle = (to) => {
+	console.log('setTitle', to.path)
+	if (
+		to.path.includes('reviewer') ||
+		to.path.includes('dao') ||
+		to.path.includes('incentive-center')
+	)
+		setWindowTitle('Seer DAO')
+	else if (to.path == '/dsn' || to.path == '/my_dsn') setWindowTitle('Seer DSN')
+	else setWindowTitle('Seer')
+}
 export { comingSoon, getFQN, getAlias }

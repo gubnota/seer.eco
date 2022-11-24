@@ -235,22 +235,33 @@ th {
 .search {
 	border-radius: 24px;
 	position: relative;
+	min-width: 298px;
+	display: flex;
+	flex-direction: row;
 	/* border: 1px solid #ddd; */
 }
 .search svg {
 	position: absolute;
 	left: 20px;
-	top: 10px;
+	top: 12px;
 }
 input[type='search'] {
 	border: none;
 	border-radius: 24px;
 	padding: 0px;
 	text-align: right;
-	min-width: 298px;
 	line-height: 36px;
 	font-size: 15px;
+	width: 298px;
+	padding: 0 1rem;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
 }
+input[type='search']::-webkit-search-decoration {
+	display: none;
+}
+
 input[type='search']::after {
 }
 line,
@@ -295,7 +306,7 @@ heading {
 	}
 	th,
 	td {
-		padding: 1rem;
+		padding: 0 1rem;
 	}
 	tr.head,
 	tr.item {
