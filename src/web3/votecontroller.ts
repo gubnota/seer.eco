@@ -49,6 +49,6 @@ export default class VoteController extends LoginController {
 				JSON.stringify(msgParams),
 			],
 		})
-		return hash
+		return Promise.resolve(hash)
 	}
 }

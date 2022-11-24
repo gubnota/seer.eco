@@ -129,7 +129,7 @@ export default {
 				this.$store.dispatch('save', { k: 'walletLoading', v: false })
 			return loggedIn
 		},
-		callback(e) {
+		async callback(e) {
 			if (!this.$store.state.daoInfo) {
 				this.comingSoon({
 					text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
@@ -138,8 +138,10 @@ export default {
 				return
 			}
 			console.log('callback', e)
-			if (e == 'twitter')
-				window.open('https://developer.twitter.com/', '_blank')
+			if (e == 'twitter') {
+				let link = await this.web3.PreTwitter()
+				window.open(link, '_blank')
+			}
 			if (e == 'learn') {
 				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
 				this.router.push('/seer_dao.html')

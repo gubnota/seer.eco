@@ -26,7 +26,7 @@ export default class DaoController extends UserController {
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
-		var chain = 1
+		var chain = window.ethereum.chainId || 1
 		var address = this.address
 		var signature = await this.signVote({
 			chain,
@@ -43,7 +43,7 @@ export default class DaoController extends UserController {
 			nonce,
 			stamp,
 			signature,
-			chainId: chain,
+			chainId: parseInt(window.ethereum.chainId),
 			version: '1',
 			id: showId,
 			result: vote,
@@ -117,7 +117,13 @@ export default class DaoController extends UserController {
 				this.daoInfo = response.data.data
 				if (response.data.message == 'SystemBusy') {
 					setTimeout(() => {
-						this.info()
+						;() => {
+							this.info()
+							this.popup({
+								text: `<p>System is busy, trying again…</p>`,
+								timeout: 500,
+							})
+						}
 					}, 1000)
 					return
 				} else if (response.data.message == 'UserNotFound') {
@@ -170,5 +176,29 @@ export default class DaoController extends UserController {
 		})
 
 		return balance
+	}
+
+	PreTwitter = async () => {
+		let res2 = await axios
+			.get(this.servers.business[this.branch] + 'api/dao/PreTwitter', {
+				headers: {
+					SeerToken: this.store.state.seerToken,
+					Domain: this.node,
+					Language: 'en',
+					Terminal: 'web',
+				},
+			})
+			.then((response) => {
+				if (response.data.message == 'Success') {
+					return response.data.data
+				} else {
+					this.popup(response.data.message)
+					return false
+				}
+			})
+			.catch((error) => {
+				this.popup(error.message)
+			})
+		return Promise.resolve(res2)
 	}
 }

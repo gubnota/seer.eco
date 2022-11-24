@@ -46,7 +46,7 @@ export default class LoginController extends MetaController {
 				JSON.stringify(msgParams),
 			],
 		})
-		return hash
+		return Promise.resolve(hash)
 	}
 
 	async connect(cb?: () => {}) {
@@ -58,7 +58,7 @@ export default class LoginController extends MetaController {
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
 
-		var chain = 1
+		var chain = window.ethereum.chainId || 1
 		// var address = window.ethereum.selectedAddress.toLocaleLowerCase()
 		var signature = await this.signLogin({
 			chain,
@@ -73,7 +73,7 @@ export default class LoginController extends MetaController {
 				nonce: nonce,
 				stamp: stamp,
 				signature,
-				chain: 1,
+				chainId: parseInt(window.ethereum.chainId),
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
@@ -90,7 +90,7 @@ export default class LoginController extends MetaController {
 					k: 'seerToken',
 					v: res.data.data,
 				})
-				console.log('this.seerToken', this.store.state.seerToken)
+				// console.log('this.seerToken', this.store.state.seerToken)
 				return res.data.data
 				// return true
 				//   {

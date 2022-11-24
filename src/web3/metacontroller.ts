@@ -60,21 +60,66 @@ export default class MetaController {
 		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
 		this.address = store.state.address
 	}
+	async switch() {
+		// check if 0x13881 polygon Mumbai testnet
+		try {
+			// Try to switch to the Mumbai testnet
+			await window.ethereum.request({
+				method: 'wallet_switchEthereumChain',
+				params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
+			})
+		} catch (error) {
+			// This error code means that the chain we want has not been added to MetaMask
+			// In this case we ask the user to add it to their MetaMask
+			if (error.code === 4902) {
+				try {
+					window.ethereum
+						.request({
+							method: 'wallet_addEthereumChain',
+							params: [
+								{
+									chainId: '0x13881',
+									chainName: 'Polygon Mumbai Testnet',
+									rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+									nativeCurrency: {
+										name: 'Mumbai Matic',
+										symbol: 'MATIC',
+										decimals: 18,
+									},
+									blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+								},
+							],
+						})
+						.then(async () => {
+							await window.ethereum.request({
+								method: 'wallet_switchEthereumChain',
+								params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
+							})
+						})
+				} catch (error) {
+					console.log(error)
+				}
+			}
+		}
+		return Promise.resolve(true)
+	}
 	async enable(cb?: () => {}) {
 		const startTime = new Date()
 		if (window.ethereum) {
-			// STAGE 1: check if connected to Ethereum main network ethereum.chainId == '0x1'
-			if (window.ethereum.chainId !== '0x1') {
-				// this.popup({
-				// 	timeout: 5000,
-				// 	text: `<p><b class="rainbow">${window.ethereum.chainId}</b> is not the correct chainId<br /> Connect to <strong>Ethereum Mainnet</strong>, please</p>`,
-				// })
-				await this.web3js.currentProvider.request({
-					method: 'wallet_switchEthereumChain',
-					params: [{ chainId: '0x1' }],
-				})
-				// return Promise.resolve(false)
-			}
+			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == '0x13881'
+			await this.switch()
+			// if (window.ethereum.chainId !== '0x13881') {
+			// 	//'0x1'
+			// 	// this.popup({
+			// 	// 	timeout: 5000,
+			// 	// 	text: `<p><b class="rainbow">${window.ethereum.chainId}</b> is not the correct chainId<br /> Connect to <strong>Ethereum Mainnet</strong>, please</p>`,
+			// 	// })
+			// 	await this.web3js.currentProvider.request({
+			// 		method: 'wallet_switchEthereumChain',
+			// 		params: [{ chainId: '0x13881' }],
+			// 	})
+			// 	// return Promise.resolve(false)
+			// }
 
 			// STAGE 2: TODO: clean acc info after account has been changed
 			window.ethereum.on('accountsChanged', (accounts) => {

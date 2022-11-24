@@ -17,10 +17,10 @@
 			<!-- </form> -->
 		</div>
 		<table>
-			<tr class="head">
+			<tr class="head" :ref="'head'">
 				<th v-for="el in fields">{{ el }}</th>
 			</tr>
-			<tr v-for="el in fetch" :key="el.no" class="item">
+			<tr v-for="(el, i) in fetch" :key="el.no" class="item" :ref="'item' + i">
 				<td>{{ el.no }}</td>
 				<td>{{ el.server }}</td>
 				<td>{{ el.users }}</td>
@@ -98,6 +98,7 @@ export default {
 			samples,
 			fields,
 			perPage: 9,
+			sync: [],
 		}
 	},
 	computed: {
@@ -118,7 +119,34 @@ export default {
 			return this.$store.state.databasePage || 1
 		},
 	},
+	mounted() {
+		this.scroll()
+	},
 	methods: {
+		scroll() {
+			let a = this.$refs
+			var b = Object.keys(a)
+			for (let i = 0; i < b.length; i++) {
+				this.sync.push(b[i] == 'head' ? a[b[i]] : a[b[i]][0])
+			}
+			window.a = this.sync
+			let c = this.sync
+			for (let i = 0; i < c.length; i++) {
+				if (i > 0) {
+					let d = c.filter((el, j) => {
+						return j != i
+					})
+					c[i].onscroll = (e) => {
+						c[0].scrollTo(e.target.scrollLeft, 0)
+
+						for (let j = 0; j < d.length; j++) {
+							if (j == 0) continue
+							d[j].scrollTo(e.target.scrollLeft, 0)
+						}
+					}
+				}
+			}
+		},
 		formTable(
 			input: [
 				{
@@ -302,13 +330,17 @@ heading {
 		/* flex-direction: column; */
 		justify-content: space-between;
 	}
+	tr.head {
+		background-color: #f8f7fc;
+	}
 	th,
 	td {
-		padding: 0 1rem;
+		/* padding: 0 1rem; */
+		min-width: 200px;
 	}
 	tr.head,
 	tr.item {
-		/* overflow-x: scroll; */
+		overflow-x: scroll;
 	}
 	tr > td {
 		text-align: center;
@@ -317,8 +349,8 @@ heading {
 		overflow: visible;
 	}
 
-	tr.item,
-	tr.head {
+	/* tr.item, */
+	/* tr.head {
 		display: grid;
 		grid-template-columns: 1fr repeat(2, 3fr);
 		grid-template-rows: repeat(3, 1fr);
@@ -353,7 +385,7 @@ heading {
 	}
 	tr > td:nth-child(9) {
 		grid-area: 3 / 3 / 4 / 4;
-	}
+	} */
 	.r {
 		justify-content: center;
 	}
@@ -372,5 +404,29 @@ heading {
 		gap: 1rem;
 		align-items: flex-start;
 	}
+}
+tr.head {
+	padding: 1rem 0;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+/* width */
+tr.head::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+tr.item::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+/* Handle */
+tr.item::-webkit-scrollbar-thumb {
+	background: #000;
+}
+/* Track */
+tr.item::-webkit-scrollbar-track {
+	background: white;
 }
 </style>

@@ -109,7 +109,7 @@ export default class DSNController extends IncentiveController {
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
-		var chain = 1
+		var chain = window.ethereum.chainId || 1
 		var address = this.address
 		var signature = await this.signWithdraw({
 			node,
