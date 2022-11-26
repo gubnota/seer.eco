@@ -5,7 +5,7 @@
 	<div class="content">
 		<Modal />
 		<nav class="tophead">
-			<div><Top /></div>
+			<div><Top isDsn="true" /></div>
 		</nav>
 		<main class="dsndata">
 			<section class="main">

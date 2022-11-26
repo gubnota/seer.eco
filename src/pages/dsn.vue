@@ -3,7 +3,7 @@
 		<Modal />
 		<main class="dsn">
 			<section class="main">
-				<Top />
+				<Top isDsn="true" />
 				<Header />
 				<DSN />
 				<Market />

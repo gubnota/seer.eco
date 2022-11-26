@@ -2,6 +2,12 @@
 	<nav class="top2">
 		<router-link :to="this.calcLink">
 			<img :src="logo" alt="logo" class="logo" v-if="isDao" />
+			<img
+				src="/01head/seer.dsn.png"
+				alt="logo"
+				class="logo"
+				v-else-if="isDsn"
+			/>
 			<img src="/01head/seer.png" alt="logo" class="logo2" v-else />
 		</router-link>
 		<button
@@ -27,6 +33,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
 	props: {
 		isDao: Boolean,
+		isDsn: Boolean,
 	},
 	data() {
 		return {
