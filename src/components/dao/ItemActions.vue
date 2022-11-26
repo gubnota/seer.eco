@@ -11,8 +11,9 @@
 </template>
 <script lang="ts">
 import Ticket from '/src/assets/dao/ticket.svg'
+import { defineComponent } from 'vue'
 declare const window: any
-export default {
+export default defineComponent({
 	data() {
 		return {
 			passed: false,
@@ -102,7 +103,7 @@ export default {
 		},
 	},
 	components: { Ticket },
-}
+})
 </script>
 <style scoped>
 .actions {

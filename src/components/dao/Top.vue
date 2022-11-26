@@ -23,7 +23,8 @@ import logo from '/src/assets/dao/logodao.png'
 import lock from '/src/assets/dao/lock.png'
 import metamask from '/src/assets/dao/metamask@3x.png'
 import Wallet from '/src/assets/dao/wallet.svg'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	props: {
 		isDao: Boolean,
 	},
@@ -96,7 +97,7 @@ export default {
 	components: {
 		Wallet,
 	},
-}
+})
 </script>
 <style scoped>
 nav.top2 {

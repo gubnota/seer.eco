@@ -50,8 +50,9 @@ import shadow_jpg from '/src/assets/dsn/zikkurat_shadow_w.jpg'
 import alphablock_w from '/src/assets/dsn/zikkurat_cube.webp'
 import alphablock_jpg from '/src/assets/dsn/zikkurat_cube.png'
 import checkmark from '/src/assets/dsn/checkmark.svg'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			smaller_w,
@@ -63,7 +64,7 @@ export default {
 		}
 	},
 	components: { checkmark },
-}
+})
 </script>
 <style scoped>
 section.bottom {
@@ -197,6 +198,9 @@ line.b {
 	section.bottom {
 		padding: 0 1rem;
 	}
+	line.b {
+		margin-bottom: 100px;
+	}
 }
 @media screen and (max-width: 1024px) {
 	block.a {
@@ -212,5 +216,10 @@ line.b {
 <style>
 section.arrow_down {
 	min-height: 120px;
+}
+@media screen and (max-width: 1130px) {
+	section.arrow_down.dsn {
+		min-height: 70px;
+	}
 }
 </style>

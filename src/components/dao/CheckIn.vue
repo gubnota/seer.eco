@@ -11,8 +11,10 @@
 <script lang="ts">
 import checkin from '/src/assets/reviewer/checkin.svg'
 import checkin_success from '/src/assets/reviewer/checkin_success.svg'
+import { defineComponent } from 'vue'
+
 declare const window: any
-export default {
+export default defineComponent({
 	data() {
 		return {
 			isDismissed: false,
@@ -43,7 +45,7 @@ export default {
 		},
 	},
 	components: { checkin, checkin_success },
-}
+})
 </script>
 <style scoped>
 aside.float {

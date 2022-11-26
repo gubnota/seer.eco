@@ -37,15 +37,19 @@
 			>{{ numberWithCommas(this.dsn[no].total_users) }} / 100,000</span
 		>
 		<span class="no"
-			>NO. {{ this.dsn[no].no.toString().padStart(8, '0') }}</span
+			>NO. {{ this.dsn[no].no.toString().padStart(5, '0') }}</span
 		>
 		<span class="name">{{ this.dsn[no].homeserver }}</span>
+		<span class="memory_label">{{
+			Math.ceil(this.dsn[no].memory_rss * 100) + '%'
+		}}</span>
 	</div>
 </template>
 <script lang="ts">
 import Nft_card from '/src/assets/dsn/nft-card.svg'
 import store from '../../store'
 import { formatNumber, numberWithCommas } from '../../common/helper'
+import { defineComponent } from 'vue'
 
 const sampleDsn = {
 	cpu_average: 0,
@@ -62,7 +66,7 @@ const sampleDsn = {
 	total_users: 0,
 }
 
-export default {
+export default defineComponent({
 	props: { no: Number },
 	computed: {
 		dsn() {
@@ -129,7 +133,7 @@ export default {
 		}
 	},
 	components: { Nft_card },
-}
+})
 </script>
 <style scoped>
 img.card {
@@ -205,6 +209,12 @@ img.badge3 {
 .user_number {
 	left: 220px;
 	top: 244px;
+	color: #e3e5e8;
+	font-weight: 600;
+}
+.memory_label {
+	right: 40px;
+	top: 303px;
 	color: #e3e5e8;
 	font-weight: 600;
 }

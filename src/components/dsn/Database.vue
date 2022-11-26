@@ -29,7 +29,7 @@
 				<td>{{ el.create }}</td>
 				<td>{{ el.active }}</td>
 				<td>
-					<span class="r">
+					<span class="r r2">
 						<seer /><span>{{ el.income_seer }}</span></span
 					>
 				</td>
@@ -56,7 +56,8 @@ import usdt from '/src/assets/dsn/usdt.svg'
 import dsn_data_sample from '../../common/dsn_data_sample.js'
 import DatabasePagination from './DatabasePagination.vue'
 import store from '../../store'
-
+import { scroll } from '../../common/helper'
+declare const window: any
 const fields = [
 	'#',
 	'homeserver',
@@ -89,9 +90,12 @@ let samples = Array.from(Array(891), (el, i) => {
 })
 import { ref } from 'vue'
 import { formatNumber } from '../../common/helper'
+import { setInterval } from 'timers/promises'
+import { timeStamp } from 'console'
+import { defineComponent } from 'vue'
 let input = ref('')
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			input,
@@ -120,33 +124,11 @@ export default {
 		},
 	},
 	mounted() {
-		this.scroll()
+		setTimeout(() => {
+			scroll()
+		}, 200)
 	},
 	methods: {
-		scroll() {
-			let a = this.$refs
-			var b = Object.keys(a)
-			for (let i = 0; i < b.length; i++) {
-				this.sync.push(b[i] == 'head' ? a[b[i]] : a[b[i]][0])
-			}
-			window.a = this.sync
-			let c = this.sync
-			for (let i = 0; i < c.length; i++) {
-				if (i > 0) {
-					let d = c.filter((el, j) => {
-						return j != i
-					})
-					c[i].onscroll = (e) => {
-						c[0].scrollTo(e.target.scrollLeft, 0)
-
-						for (let j = 0; j < d.length; j++) {
-							if (j == 0) continue
-							d[j].scrollTo(e.target.scrollLeft, 0)
-						}
-					}
-				}
-			}
-		},
 		formTable(
 			input: [
 				{
@@ -200,6 +182,10 @@ export default {
 				this.perPage,
 				i
 			)
+			console.log('scroll()')
+			setTimeout(() => {
+				scroll()
+			}, 200)
 		},
 	},
 	components: {
@@ -208,7 +194,7 @@ export default {
 		seer,
 		DatabasePagination,
 	},
-}
+})
 </script>
 <style scoped>
 section.database {
@@ -234,6 +220,7 @@ table {
 	width: 100%;
 	font-size: 15px;
 	text-align: center;
+	font-weight: 500;
 	/* border: none; */
 }
 .table td,
@@ -248,7 +235,7 @@ tr {
 	position: relative;
 }
 tr {
-	border-bottom: 1px solid #cdd0d4;
+	/* border-bottom: 1px solid #cdd0d4; */
 }
 
 tr.item {
@@ -256,7 +243,14 @@ tr.item {
 	line-height: 88px;
 	align-items: center;
 }
-
+tr.item td {
+	height: 60px;
+	line-height: 60px;
+	border-bottom: 1px solid #cdd0d4;
+}
+.r2 {
+	font-weight: 800 !important;
+}
 th {
 	color: #71757a;
 }
@@ -310,8 +304,22 @@ heading {
 	flex-direction: row;
 	gap: 14px;
 	align-items: center;
-	height: 87px;
+	/* height: 87px; */
+	justify-content: center;
+	font-weight: 500;
 }
+
+th:nth-child(1),
+td:nth-child(1) {
+	min-width: 36px;
+	text-align: left;
+}
+th:nth-child(2),
+td:nth-child(2) {
+	text-align: left;
+	font-weight: 600;
+}
+
 @media (max-width: 1131px) {
 	section.database {
 		width: 100%;
@@ -319,9 +327,23 @@ heading {
 }
 
 @media (max-width: 1130px) {
+	.bar {
+		justify-content: flex-end;
+		margin: 30px 0 18px 0;
+	}
+	input[type='search'] {
+		width: 208px;
+	}
+	.search {
+		min-width: 208px;
+	}
+
 	section.database {
 		width: calc(100% - 2rem);
 		align-self: center;
+	}
+	table {
+		overflow-x: scroll;
 	}
 	tr.head,
 	tr {
@@ -331,6 +353,9 @@ heading {
 		justify-content: space-between;
 	}
 	tr.head {
+		font-weight: bold;
+	}
+	tr.head {
 		background-color: #f8f7fc;
 	}
 	th,
@@ -338,56 +363,33 @@ heading {
 		/* padding: 0 1rem; */
 		min-width: 200px;
 	}
+	th:nth-child(1),
+	td:nth-child(1) {
+		min-width: 60px;
+	}
+	th:nth-child(3),
+	td:nth-child(3),
+	th:nth-child(4),
+	td:nth-child(4),
+	th:nth-child(5),
+	td:nth-child(5),
+	th:nth-child(6),
+	td:nth-child(6) {
+		min-width: 120px;
+	}
+	th:last-child,
+	td:last-child {
+		min-width: 240px;
+	}
 	tr.head,
 	tr.item {
-		overflow-x: scroll;
+		/* overflow-x: scroll; */
 	}
 	tr > td {
 		text-align: center;
 	}
 	.r svg {
 		overflow: visible;
-	}
-
-	/* tr.item, */
-	/* tr.head {
-		display: grid;
-		grid-template-columns: 1fr repeat(2, 3fr);
-		grid-template-rows: repeat(3, 1fr);
-		grid-column-gap: 0px;
-		grid-row-gap: 0px;
-		overflow-x: scroll;
-	}
-
-	tr > td:nth-child(1) {
-		grid-area: 1 / 1 / 2 / 2;
-	}
-	tr > td:nth-child(2) {
-		grid-area: 1 / 2 / 2 / 3;
-	}
-	tr > td:nth-child(3) {
-		grid-area: 2 / 2 / 3 / 3;
-	}
-	tr > td:nth-child(4) {
-		grid-area: 1 / 3 / 2 / 4;
-	}
-	tr > td:nth-child(5) {
-		grid-area: 2 / 1 / 3 / 2;
-	}
-	tr > td:nth-child(6) {
-		grid-area: 2 / 3 / 3 / 4;
-	}
-	tr > td:nth-child(7) {
-		grid-area: 3 / 1 / 4 / 2;
-	}
-	tr > td:nth-child(8) {
-		grid-area: 3 / 2 / 4 / 3;
-	}
-	tr > td:nth-child(9) {
-		grid-area: 3 / 3 / 4 / 4;
-	} */
-	.r {
-		justify-content: center;
 	}
 
 	table {
@@ -405,28 +407,15 @@ heading {
 		align-items: flex-start;
 	}
 }
-tr.head {
-	padding: 1rem 0;
-	position: sticky;
-	top: 0;
-	z-index: 1;
-}
-/* width */
-tr.head::-webkit-scrollbar {
-	width: 0;
-	height: 0;
-}
-tr.item::-webkit-scrollbar {
-	width: 4px;
-	height: 4px;
-}
 
 /* Handle */
-tr.item::-webkit-scrollbar-thumb {
+section.database *::-webkit-scrollbar-thumb {
+	width: 4px;
+	height: 4px;
 	background: #000;
 }
 /* Track */
-tr.item::-webkit-scrollbar-track {
+section.database *::-webkit-scrollbar-track {
 	background: white;
 }
 </style>

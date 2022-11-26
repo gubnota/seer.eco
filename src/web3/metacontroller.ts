@@ -1,28 +1,27 @@
 import web3 from 'web3'
-import login from './login'
-import vote from './vote'
+// import login from './login'
+// import vote from './vote'
 import vote_abi from './vote_abi.json'
-import { store } from '../main'
+import { isDev, store } from '../main'
 import { comingSoon, messageType } from '../common/helper'
 import { provider } from 'web3-core'
-import { servers } from './common'
-
+import {
+	servers,
+	Polygon,
+	PolygonDev,
+	web3js2NetDev,
+	web3js2Net,
+} from './common'
 // store.dispatch('save', {
 // 	k: 'modal',
 // 	v: 'none',
 // })
 // store.state.modal
 
-declare const window: {
-	ethereum: any //{ chainId: string; on: any; selectedAddress?: string }
-	web3js2: any
-	web3js: any
-	location: any
-	localStorage: any
-}
+declare const window: any
+window.web3j = web3
 
 export default class MetaController {
-	public MumbaiProvider: any
 	public web3js: web3
 	public web3js2: web3
 	public DSNContract: any
@@ -56,8 +55,8 @@ export default class MetaController {
 	}
 
 	restoreWeb3 = () => {
-		this.web3js = new web3(window.ethereum) // - default provider
-		this.web3js2 = new web3(this.MumbaiProvider) //window.ethereum - default provider
+		this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
+		this.web3js2 = new web3(isDev() ? web3js2NetDev : web3js2Net) // only to check ticketsNumber(): window.ethereum release, Polygon test dev
 		this.address = store.state.address
 	}
 	async switch() {
@@ -66,7 +65,7 @@ export default class MetaController {
 			// Try to switch to the Mumbai testnet
 			await window.ethereum.request({
 				method: 'wallet_switchEthereumChain',
-				params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
+				params: [{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId }], // Check networks.js for hexadecimal network ids
 			})
 		} catch (error) {
 			// This error code means that the chain we want has not been added to MetaMask
@@ -76,24 +75,14 @@ export default class MetaController {
 					window.ethereum
 						.request({
 							method: 'wallet_addEthereumChain',
-							params: [
-								{
-									chainId: '0x13881',
-									chainName: 'Polygon Mumbai Testnet',
-									rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
-									nativeCurrency: {
-										name: 'Mumbai Matic',
-										symbol: 'MATIC',
-										decimals: 18,
-									},
-									blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-								},
-							],
+							params: [isDev() ? PolygonDev : Polygon],
 						})
 						.then(async () => {
 							await window.ethereum.request({
 								method: 'wallet_switchEthereumChain',
-								params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
+								params: [
+									{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId },
+								], // Check networks.js for hexadecimal network ids
 							})
 						})
 				} catch (error) {
@@ -106,9 +95,9 @@ export default class MetaController {
 	async enable(cb?: () => {}) {
 		const startTime = new Date()
 		if (window.ethereum) {
-			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == '0x13881'
+			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == isDev() ? PolygonDev.chainId : Polygon.chainId
 			await this.switch()
-			// if (window.ethereum.chainId !== '0x13881') {
+			// if (window.ethereum.chainId !== isDev() ? PolygonDev.chainId : Polygon.chainId) {
 			// 	//'0x1'
 			// 	// this.popup({
 			// 	// 	timeout: 5000,
@@ -116,7 +105,7 @@ export default class MetaController {
 			// 	// })
 			// 	await this.web3js.currentProvider.request({
 			// 		method: 'wallet_switchEthereumChain',
-			// 		params: [{ chainId: '0x13881' }],
+			// 		params: [{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId }],
 			// 	})
 			// 	// return Promise.resolve(false)
 			// }
@@ -132,9 +121,6 @@ export default class MetaController {
 			})
 
 			// STAGE 3: add a contract to read possible tickets value from balanceOf the contract
-			this.MumbaiProvider = new web3.providers.HttpProvider(
-				'https://matic-mumbai.chainstacklabs.com'
-			)
 			this.restoreWeb3()
 			try {
 				// // STAGE 4: add a contract to read possible tickets value from balanceOf the contract

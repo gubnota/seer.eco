@@ -34,7 +34,7 @@
 					<h2>Reward</h2>
 					<p>Set the node name and invite people to join your node.</p>
 					<div class="copyfield" @click="copy">
-						<span>{{ `https://to.seer.eco/?n=${node || ''}` }}</span>
+						<span>{{ `https://${this.domain}/?n=${node || ''}` }}</span>
 						<div class="btn">Copy</div>
 					</div>
 					<div class="bottom">
@@ -50,10 +50,15 @@
 <script lang="ts">
 import CloseSquare from '/src/assets/dsn/close-square.svg'
 import { formatNumber, getFQN, copyToClipboard } from '../../common/helper'
-export default {
+import { defineComponent } from 'vue'
+import { isDev } from '../../main'
+import { locationLink, locationLinkDev } from '../../web3/common'
+
+export default defineComponent({
 	data() {
 		return {
 			name: '',
+			domain: isDev() ? locationLinkDev : locationLink,
 		}
 	},
 	props: {
@@ -104,7 +109,7 @@ export default {
 			e.stopPropagation()
 			// TODO: copy write value
 			copyToClipboard(
-				`https://to.seer.eco/?n=${this.$store.state.Rewards.node || ''}`
+				`https://${this.domain}/?n=${this.$store.state.Rewards.node || ''}`
 			)
 				// navigator.clipboard
 				// 	.writeText(
@@ -129,7 +134,7 @@ export default {
 	components: {
 		CloseSquare,
 	},
-}
+})
 </script>
 
 <style scoped>

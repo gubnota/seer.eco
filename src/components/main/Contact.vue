@@ -48,8 +48,9 @@ import telegram from '/src/assets/08contact/telegram.png'
 import tiktok from '/src/assets/08contact/tiktok.png'
 import twitter from '/src/assets/08contact/twitter.png'
 import youtube from '/src/assets/08contact/youtube.png'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'Contact',
 	data() {
 		return {
@@ -69,7 +70,7 @@ export default {
 			router.push({ path: '/coming-soon' })
 		},
 	},
-}
+})
 </script>
 <style scoped>
 section.contact {

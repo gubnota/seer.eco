@@ -43,7 +43,8 @@
 	</div>
 </template>
 <script>
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	computed: {
 		hovered() {
 			return this.$store.state.hovered || 0
@@ -62,7 +63,7 @@ export default {
 			}
 		},
 	},
-}
+})
 </script>
 <style>
 .mark {

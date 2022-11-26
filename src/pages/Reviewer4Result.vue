@@ -59,6 +59,10 @@ export default {
 			this.router.push({ path: '/dao' })
 			return
 		}
+		// TODO: get DaoInfo
+		setTimeout(() => {
+			this.web3.info()
+		}, 2000)
 	},
 	// this.passed = this.score > 4 ? true : false
 	methods: {

@@ -36,8 +36,9 @@ import ItemActions from './ItemActions.vue'
 import ItemRate from './ItemRate.vue'
 import userpicSample from '/src/assets/dao/defaultUserPic@2x.png'
 import { time } from 'console'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			userpicSample,
@@ -159,7 +160,7 @@ export default {
 		},
 	},
 	components: { Ads, Aoe, ItemActions, ItemRate },
-}
+})
 </script>
 <style scoped>
 .item {
@@ -223,6 +224,7 @@ section.right {
 	text-transform: uppercase;
 	font-weight: 600;
 	font-size: 13px;
+	margin-top: -4px;
 }
 .desc {
 	height: 30px;
@@ -342,6 +344,7 @@ section.right {
 	.actions {
 		align-self: flex-end;
 		width: 100%;
+		margin: 0;
 	}
 	.rate {
 		width: 100%;

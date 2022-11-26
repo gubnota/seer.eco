@@ -18,7 +18,9 @@
 <script>
 // import { router } from '../../main.ts'
 import arrow from '/src/assets/dao/arrow-right_white.png'
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	name: 'Footer',
 	data() {
 		return {
@@ -37,7 +39,7 @@ export default {
 			// router.push({ path: '/coming-soon' })
 		},
 	},
-}
+})
 </script>
 <style scoped>
 section.footer {
@@ -141,5 +143,7 @@ img {
 		margin-bottom: 100px;
 		max-width: 100vw;
 	}
+}
+@media (max-width: 1130px) {
 }
 </style>

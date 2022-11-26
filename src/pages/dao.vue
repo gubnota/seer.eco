@@ -21,12 +21,12 @@ import ReviewUpdates from '../components/dao/ReviewUpdates.vue'
 import FooterDao from '../components/dao/Footer.vue'
 import Modal from '../components/common/Modal.vue'
 import CheckIn from '../components/dao/CheckIn.vue'
-
+import { defineComponent } from 'vue'
 // import CheckIn from
 // import Top from '/src/components/dao/Top.vue'
 // import Top from '/src/components/dao/Top.vue'
 
-export default {
+export default defineComponent({
 	name: 'DAO',
 
 	components: {
@@ -39,7 +39,7 @@ export default {
 		Modal,
 		CheckIn,
 	},
-}
+})
 </script>
 <style scoped>
 main.dao {

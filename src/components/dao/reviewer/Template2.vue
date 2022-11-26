@@ -14,7 +14,8 @@ import Top from '../Top.vue'
 import Modal from '../../common/Modal.vue'
 import oval from '/src/assets/reviewer/oval@2x.png'
 import crystal from '/src/assets/reviewer/crystal@2x.png'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	data() {
 		return {
 			oval: `url(${oval})`,
@@ -22,7 +23,7 @@ export default {
 		}
 	},
 	components: { Top, Modal },
-}
+})
 </script>
 <style scoped>
 main.reviewer {

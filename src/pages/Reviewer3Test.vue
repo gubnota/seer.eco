@@ -119,7 +119,7 @@ export default {
 			let secs = (this.remainedTime % 60).toString()
 			return `${mins.padStart(2, '0')}:${secs.padStart(2, '0')}`
 		},
-		next() {
+		async next() {
 			if (this.transition) return
 			let sel_opt = this.questions[this.current].options[this.selected]
 			if (sel_opt.hasOwnProperty('correct') && sel_opt.correct == true) {
@@ -143,7 +143,7 @@ export default {
 				// TODO: API backend request
 				//last question
 				console.log('before examResult')
-				this.web3.examResult(score.checksum(this.score))
+				await this.web3.examResult(score.checksum(this.score))
 				this.router.push(
 					this.score > 80 ? '/reviewer/success' : '/reviewer/failure'
 				)

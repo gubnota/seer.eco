@@ -50,7 +50,8 @@
 <script lang="ts">
 import money from '/src/assets/reviewer/money.png'
 import wallet from '/src/assets/reviewer/wallet.svg'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	data() {
 		return { money }
 	},
@@ -102,7 +103,7 @@ export default {
 		},
 	},
 	components: { wallet },
-}
+})
 </script>
 <style scoped>
 section.rewardDetails {

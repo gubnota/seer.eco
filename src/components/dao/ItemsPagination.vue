@@ -37,7 +37,8 @@
 	</nav>
 </template>
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	props: {
 		total: Number,
 		selected: Number,
@@ -92,7 +93,7 @@ export default {
 			if (this.sel > 1) this.select(this.sel - 1)
 		},
 	},
-}
+})
 </script>
 <style scoped>
 nav.pag {

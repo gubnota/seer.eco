@@ -143,12 +143,12 @@
 <script>
 import { menu } from '../../common/contents'
 import MobileNav from '../MobileNav.vue'
-
+import { defineComponent } from 'vue'
 var onscroll = (evt) => {
 	console.log('nounte', evt)
 }
 
-export default {
+export default defineComponent({
 	name: 'Nav',
 	data() {
 		return { menu, isSticky: false }
@@ -175,7 +175,7 @@ export default {
 		},
 	},
 	components: { MobileNav },
-}
+})
 </script>
 
 <style scoped>

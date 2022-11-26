@@ -53,13 +53,13 @@
 
 <script lang="ts">
 import { footer } from '../../common/contents.js'
-
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	name: 'Footer',
 	data() {
 		return { footer }
 	},
-}
+})
 </script>
 
 <style scoped>
@@ -272,7 +272,7 @@ a {
 		flex-direction: column;
 	}
 	.sitemap .columns .column {
-		margin-top: 3rem;
+		margin-top: 0; /*xiaoliao 3rem */
 	}
 }
 @media (max-width: 550px) {
@@ -302,5 +302,7 @@ a {
 	.column:nth-child(4) {
 		grid-area: c4;
 	} */
+}
+footer aside {
 }
 </style>

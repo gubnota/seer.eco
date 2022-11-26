@@ -1,6 +1,6 @@
 <template>
 	<div class="dsn">
-		<h2>super strong</h2>
+		<h2 class="rainbow">super strong</h2>
 		<p>
 			The world's latest blockchain technology - dynamic NFT is used as the SEER
 			(DSN) social data distributed storage node equity container, and the
@@ -18,10 +18,11 @@
 </template>
 <script lang="ts">
 import Nft_card from '/src/components/dsn/NftCard.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	components: { Nft_card },
-}
+})
 </script>
 <style scoped>
 h2 {
@@ -29,6 +30,8 @@ h2 {
 	font-size: 32px;
 	text-transform: capitalize;
 	text-align: left;
+	min-height: 36px;
+	display: inline;
 }
 p {
 	margin-block-start: 1rem;
@@ -43,6 +46,10 @@ p {
 	gap: 32px;
 }
 @media (max-width: 1130px) {
+	h2 {
+		min-height: 36px;
+		margin-top: 4rem;
+	}
 	.row {
 		flex-direction: column;
 		align-items: center;

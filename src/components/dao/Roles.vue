@@ -15,8 +15,9 @@
 <script lang="ts">
 // import arrow from '/src/assets/dao/arrow-right.png'
 import ArrowRight from '/src/assets/dao/arrow-right.svg'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			roles: [
@@ -60,16 +61,26 @@ export default {
 			}
 			if (id == 1) {
 				this.router.push('/seer_dao.html')
-				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
+				let daoRulesVisitedList = {}
+				daoRulesVisitedList[this.$store.state.address || 'empty'] = true
+				Object.assign(daoRulesVisitedList, this.$store.state.daoRulesVisited)
+
+				this.$store.dispatch('save', {
+					k: 'daoRulesVisited',
+					v: daoRulesVisitedList,
+				})
 			}
 			if (id == 2) {
-				if (!this.loggedIn()) this.web3.login()
+				if (!this.loggedIn()) {
+					this.web3.login()
+					return
+				}
 				this.router.push('/incentive-center')
 			}
 		},
 	},
 	components: { ArrowRight },
-}
+})
 </script>
 <style scoped>
 svg {

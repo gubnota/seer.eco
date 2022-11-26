@@ -37,7 +37,7 @@
 					<span class="value ellipsis">Happening now</span>
 				</div>
 				<div class="desc ellipsis">
-					{{ ui2(ui.topic, 120) }}
+					{{ ui.topic /*ui2(, 120)*/ }}
 				</div>
 				<div class="username">
 					<span class="pic" v-if="ui.spaceLogo || ui.userpicSample"
@@ -47,11 +47,15 @@
 				</div>
 				<div class="location">
 					<span class="pic"><Geo /></span>
-					<span class="value ellipsis"
-						><a :href="ui.spaceUrl || '	'" target="_blank">{{
-							ui.spaceUrl || ''
-						}}</a></span
-					>
+					<span class="value ellipsis">
+						<a
+							:href="ui.location"
+							target="_blank"
+							v-if="this.isLink(ui.location)"
+							>{{ ui.location }}</a
+						>
+						<span v-else>{{ ui.location }}</span>
+					</span>
 				</div>
 				<div class="group">
 					<span class="pic"><TwoUsers /></span>
@@ -66,7 +70,7 @@
 					<span class="value ellipsis">{{ ui.userName }}</span>
 				</div>
 				<div class="desc2 ellipsis">
-					{{ ui2(ui.detail, 526) }}
+					{{ ui.detail /*ui2(, 526)*/ }}
 				</div>
 			</div>
 		</div>
@@ -82,8 +86,9 @@ import TwoUsers from '/src/assets/dao/twousers.svg'
 import Geo from '/src/assets/dao/geo.svg'
 import detailSample from '/src/assets/dao/detail.jpg'
 import userpicSample from '/src/assets/dao/defaultUserPic@2x.png'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	computed: {
 		left() {
 			return this.$store.state.detail.left
@@ -101,6 +106,7 @@ export default {
 				userpicSample: (d && d.userpicSample) || '',
 				spaceName: (d && d.spaceName) || '',
 				spaceUrl: (d && d.spaceUrl) || '',
+				location: (d && d.location) || '',
 				interestedCount: (d && d.interestedCount) || '',
 				userName: (d && d.userName) || '',
 				openSpace: (d && d.openSpace) || '',
@@ -153,6 +159,12 @@ export default {
 		Geo,
 	},
 	methods: {
+		isLink(url: string) {
+			const isLink =
+				url.substring(0, 7) === 'http://' || url.substring(0, 8) === 'https://'
+			return isLink
+			// return isLink ? `<a href="${url}" target="_blank">${url}</a>` : url
+		},
 		ui2(k: String, maxLength?: number) {
 			let o = k
 			if ((o as string).length > maxLength) {
@@ -178,7 +190,7 @@ export default {
 			}, 300)
 		},
 	},
-}
+})
 </script>
 <style scoped>
 .detail {
@@ -251,6 +263,7 @@ h3 {
 	align-items: center;
 	word-break: break-all;
 	margin: 1rem 0;
+	width: 100%;
 }
 
 .contents > .time {

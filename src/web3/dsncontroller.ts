@@ -1,3 +1,4 @@
+import { isDev } from './../main'
 import IncentiveController from './incentivecontroller'
 import axios from 'axios'
 import {
@@ -5,6 +6,7 @@ import {
 	EIP712Domain,
 	verifyingContract,
 	contents,
+	verifyingContractDev,
 } from './common'
 import { getAlias, getFQN } from '../common/helper'
 
@@ -73,7 +75,7 @@ export default class DSNController extends IncentiveController {
 			domain: {
 				chainId: parseInt(param.chain.toString()),
 				name: 'SEER',
-				verifyingContract,
+				verifyingContract: isDev() ? verifyingContractDev : verifyingContract,
 				version: '1',
 			},
 			message: {

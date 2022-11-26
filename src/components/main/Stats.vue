@@ -25,8 +25,8 @@
 import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
 import store from '../../store'
-
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	name: 'Stats',
 	mounted() {
 		window.addEventListener('resize', this.myEvtHandler)
@@ -50,7 +50,7 @@ export default {
 			})
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

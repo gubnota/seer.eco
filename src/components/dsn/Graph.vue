@@ -12,8 +12,9 @@
 import Diagram from '/src/assets/dsn/diagram.svg'
 import diagram_j from '/src/assets/dsn/diagram.jpg'
 import diagram_w from '/src/assets/dsn/diagram.webp'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			diagram_j,
@@ -21,7 +22,7 @@ export default {
 		}
 	},
 	components: { Diagram },
-}
+})
 </script>
 <style scoped>
 .graph {
@@ -48,6 +49,11 @@ h2 {
 @media (max-width: 1130px) {
 	h2 {
 		width: calc(100% - 2rem);
+		font-size: 20px;
+	}
+	.graph {
+		margin: 130px 0 0 0;
+		gap: 130px;
 	}
 }
 </style>

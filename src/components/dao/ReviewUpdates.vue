@@ -60,8 +60,9 @@ import Mark from './Mark.vue'
 import Ticket from '/src/assets/dao/ticket.svg'
 import Detail from './Detail.vue'
 import EmptyPic from '/src/assets/dao/seer_noitems@2x.png'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			shownMark: false,
@@ -127,7 +128,7 @@ export default {
 	},
 
 	components: { Item, Mark, Ticket, Detail, ItemsPagination },
-}
+})
 </script>
 <style scoped>
 section.review {

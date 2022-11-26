@@ -23,7 +23,8 @@ import Template from '../components/dao/reviewer/Template2.vue'
 import IncentiveCenter from '../components/incentives/IncentiveCenter.vue'
 import RewardDetails from '../components/incentives/RewardDetails.vue'
 import BackButton from '../components/dao/BackButton.vue'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	components: { Template, IncentiveCenter, RewardDetails, BackButton },
 	computed: {
 		firstTab() {
@@ -54,7 +55,7 @@ export default {
 			this.$store.dispatch('save', { k: 'currentTab', v: no })
 		},
 	},
-}
+})
 </script>
 <style scoped>
 .meta {

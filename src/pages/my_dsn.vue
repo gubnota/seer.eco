@@ -75,7 +75,7 @@ import On from '/src/assets/dsn/on.svg'
 import SetNameModal from '../components/dsn/SetNameModal.vue'
 import OperateModal from '../components/dsn/OperateModal.vue'
 import { formatNumber, numberWithCommas } from '../common/helper'
-
+import { defineComponent } from 'vue'
 // import dsn_data_sample from '../common/dsn_data_sample.js'
 const dsn_data_sample = [
 	{
@@ -118,9 +118,9 @@ const random = () => {
 // 	return { ...dsn_data_sample[0], ...{ no: i + 1, homeserver: random() } }
 // })
 
-export default {
+export default defineComponent({
 	data() {
-		return { fields, perPage: 8 }
+		return { fields, perPage: 8, onProcess: false }
 	},
 	computed: {
 		totalNumber() {
@@ -171,7 +171,11 @@ export default {
 		async exhibit(id: number) {
 			if (this.els[id].show) return //can't disable, only enable another one
 			if (this.els[id].homeserver === '') return
-			console.log('exhibit', this.els[id].show)
+			if (this.onProcess) return // on process prev request
+			this.onProcess = true
+			setTimeout(() => {
+				this.onProcess = false
+			}, 1000)
 			await this.web3.Show(this.els[id].no)
 			await this.web3.MyDSNs((this.$store.state.myDSNPage - 1) * 8 + 1, 8)
 			// return
@@ -200,7 +204,7 @@ export default {
 		SetNameModal,
 		OperateModal,
 	},
-}
+})
 </script>
 <style scoped>
 main.dsndata {
@@ -273,6 +277,7 @@ table {
 	text-align: center;
 	margin-bottom: 17px;
 	/* border: none; */
+	font-weight: 600;
 }
 .table td,
 .table th {
@@ -292,10 +297,15 @@ tr {
 	position: relative;
 }
 tr {
-	border-bottom: 1px solid #ebedef;
 }
 td {
 	align-items: center;
+}
+td,
+th {
+	border-bottom: 1px solid #ebedef;
+	/* text-align: left; */
+	text-align: center;
 }
 tr.item {
 	height: 92px;
@@ -312,6 +322,14 @@ th {
 	background: #17bb7f;
 	border-radius: 4px;
 	color: white;
+	text-align: center;
+}
+td:nth-child(2),
+th:nth-child(2) {
+	text-align: center;
+	width: 160px;
+}
+.fl {
 }
 svg {
 	cursor: pointer;
@@ -327,26 +345,125 @@ svg.active {
 	cursor: not-allowed;
 }
 @media (max-width: 1130px) {
+	h1 {
+		margin: 40px 0 0 10px;
+	}
+	th {
+		font-weight: bold;
+	}
 	tr.head,
 	tr {
 		width: 100%;
 		display: flex;
-		flex-direction: column;
+		/* flex-direction: column; */
 		justify-content: space-between;
 	}
 	table {
 		display: flex;
 		flex-direction: column;
+		overflow-x: scroll;
+		overflow-y: hidden;
 	}
 	tr.item,
 	tr {
-		line-height: normal;
+		line-height: 50px;
 		height: initial;
+		align-items: center;
+		height: 50px;
 	}
 	thead tr {
-		flex-direction: column;
+		/* flex-direction: column; */
 		gap: 1rem;
 		align-items: flex-start;
 	}
+	td,
+	th {
+		min-width: 120px;
+		height: 50px;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	td:nth-child(1),
+	th:nth-child(1) {
+		text-align: left;
+	}
+	td:nth-child(2),
+	th:nth-child(2) {
+		min-width: 180px;
+		text-align: center;
+	}
+	td:nth-child(3),
+	th:nth-child(3) {
+		text-align: center;
+	}
+	td:nth-child(7),
+	th:nth-child(7),
+	td:last-child,
+	th:last-child {
+		text-align: center;
+		min-width: 90px;
+	}
+	box {
+		padding: 1rem 1rem;
+	}
+
+	/* tr.item,
+	tr.head {
+		display: grid;
+		grid-template-columns: 1.7fr 0.3fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+		gap: 0px 0px;
+		grid-template-areas:
+			'no operate'
+			'name operate'
+			'users operate'
+			'memory exhibit'
+			'aoe exhibit'
+			'ads exhibit';
+		padding: 1rem 0;
+	}
+	tr.head {
+		padding: 1rem 0;
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		background-color: white;
+	}
+	tr > td:nth-child(1),
+	tr > th:nth-child(1) {
+		grid-area: no;
+	}
+	tr > td:nth-child(2),
+	tr > th:nth-child(2) {
+		grid-area: name;
+	}
+	tr > td:nth-child(3),
+	tr > th:nth-child(3) {
+		grid-area: users;
+	}
+	tr > td:nth-child(4),
+	tr > th:nth-child(4) {
+		grid-area: memory;
+	}
+	tr > td:nth-child(5),
+	tr > th:nth-child(5) {
+		grid-area: aoe;
+	}
+	tr > td:nth-child(6),
+	tr > th:nth-child(6) {
+		grid-area: ads;
+	}
+	tr > td:nth-child(7),
+	tr > th:nth-child(7) {
+		grid-area: operate;
+		align-self: center;
+	}
+	tr > td:nth-child(8),
+	tr > th:nth-child(8) {
+		grid-area: exhibit;
+		align-self: center;
+	} */
 }
 </style>

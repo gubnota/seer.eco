@@ -14,8 +14,8 @@
 					<input
 						type="name"
 						v-model="input"
-						placeholder="Please enter a name (within 12 characters)"
-						maxlength="12"
+						placeholder="Please enter a name (within 16 characters)"
+						maxlength="16"
 						spellcheck="false"
 						@input="inputHandler"
 						:class="{ error }"
@@ -38,7 +38,8 @@
 
 <script lang="ts">
 import CloseSquare from '/src/assets/dsn/close-square.svg'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	data() {
 		return {
 			input: '',
@@ -75,14 +76,14 @@ export default {
 			console.log('sending data…', this.name)
 		},
 		inputHandler() {
-			this.error = !/^([a-z0-9]{1,12})$/.test(this.input)
+			this.error = !/^([a-z0-9]{1,16})$/.test(this.input)
 			console.log('inputhandler', this.input)
 		},
 	},
 	components: {
 		CloseSquare,
 	},
-}
+})
 </script>
 
 <style scoped>

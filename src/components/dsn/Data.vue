@@ -23,7 +23,7 @@
 				><val class="rainbow">{{ formatNumber(daily_income_seer) }}</val>
 			</div>
 			<div class="col">
-				<key>24h ADS SEER</key
+				<key>24h ADS USDT</key
 				><val class="rainbow">{{ formatNumber(daily_income_usdt) }}</val>
 			</div>
 		</div>
@@ -32,8 +32,8 @@
 <script lang="ts">
 import { numberWithCommas, formatNumber } from '../../common/helper'
 import arrow from '/src/assets/dsn/arrow-right.svg'
-
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	components: { arrow },
 	computed: {
 		m() {
@@ -73,7 +73,7 @@ export default {
 			this.router.push('/my_dsn')
 		},
 	},
-}
+})
 </script>
 <style scoped>
 section.data {

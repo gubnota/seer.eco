@@ -92,7 +92,6 @@ const setWindowTitle = (title) => {
 	window.top.document.title = title
 }
 export const setTitle = (to) => {
-	console.log('setTitle', to.path)
 	if (
 		to.path.includes('reviewer') ||
 		to.path.includes('dao') ||
@@ -101,5 +100,35 @@ export const setTitle = (to) => {
 		setWindowTitle('Seer DAO')
 	else if (to.path == '/dsn' || to.path == '/my_dsn') setWindowTitle('Seer DSN')
 	else setWindowTitle('Seer')
+}
+
+export const scroll = () => {
+	return
+	// let a = this.$refs
+	// var b = Object.keys(a)
+	// for (let i = 0; i < b.length; i++) {
+	// 	this.sync.push(b[i] == 'head' ? a[b[i]] : a[b[i]][0])
+	// }
+	// window.a = this.sync
+	// let c = this.sync
+	let c = Array.prototype.slice.call(
+		document.querySelectorAll('tr.head,tr.item'),
+		0
+	)
+	for (let i = 0; i < c.length; i++) {
+		if (i > 0) {
+			let d = c.filter((el, j) => {
+				return j != i
+			})
+			c[i].onscroll = (e) => {
+				c[0].scrollTo(e.target.scrollLeft, 0)
+
+				for (let j = 0; j < d.length; j++) {
+					if (j == 0) continue
+					d[j].scrollTo(e.target.scrollLeft, 0)
+				}
+			}
+		}
+	}
 }
 export { comingSoon, getFQN, getAlias }

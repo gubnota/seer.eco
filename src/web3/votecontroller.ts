@@ -1,4 +1,4 @@
-import { store } from '../main'
+import { isDev, store } from '../main'
 import { comingSoon, messageType } from '../common/helper'
 
 declare const window: any
@@ -7,6 +7,7 @@ import {
 	Vote,
 	EIP712Domain,
 	verifyingContract,
+	verifyingContractDev,
 	contents,
 } from './common'
 import LoginController from './logincontroller'
@@ -23,7 +24,8 @@ export default class VoteController extends LoginController {
 			domain: {
 				chainId: parseInt(param.chain.toString()),
 				name: 'SEER',
-				verifyingContract,
+				verifyingContract: isDev() ? verifyingContractDev : verifyingContract,
+
 				version: '1',
 			},
 			message: {

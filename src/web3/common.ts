@@ -28,7 +28,8 @@ export const EIP712Domain = [
 	{ name: 'verifyingContract', type: 'address' },
 ]
 
-export const verifyingContract = '0x6c106583B7079794Aa80F947FC09FEbc5276c9C5'
+export const verifyingContractDev = '0x6c106583B7079794Aa80F947FC09FEbc5276c9C5'
+export const verifyingContract = '0x'
 export const contents =
 	'This request will not trigger a blockchain transaction or cost any gas fees.'
 
@@ -109,3 +110,47 @@ export type eventListParams = {
 	from: number
 	limit: number
 }
+
+export type networkType = {
+	chainId: string
+	chainName: string
+	rpcUrls: [string]
+	nativeCurrency: {
+		name: string
+		symbol: string
+		decimals: number
+	}
+	blockExplorerUrls: [string]
+}
+
+export const PolygonDev = {
+	chainId: '0x13881',
+	chainName: 'Polygon Mumbai Testnet',
+	rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+	nativeCurrency: {
+		name: 'Mumbai Matic',
+		symbol: 'MATIC',
+		decimals: 18,
+	},
+	blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+}
+export const Polygon = {
+	chainId: '0x89',
+	chainName: 'Polygon Mainnet',
+	rpcUrls: [
+		'https://polygon-rpc.com/',
+		'https://polygon-mainnet-public.unifra.io',
+		'https://rpc.ankr.com/polygon',
+	],
+	nativeCurrency: {
+		name: 'Mumbai Matic',
+		symbol: 'MATIC',
+		decimals: 18,
+	},
+	blockExplorerUrls: ['https://polygonscan.com/'],
+}
+
+export const web3js2NetDev = 'https://matic-mumbai.chainstacklabs.com'
+export const web3js2Net = 'https://rpc.ankr.com/eth' //'https://cloudflare-eth.com', 'https://eth-mainnet-public.unifra.io',
+export const locationLinkDev = 'devapp.seer.eco'
+export const locationLink = 'app.seer.eco'

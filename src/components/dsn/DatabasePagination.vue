@@ -37,11 +37,16 @@
 	</nav>
 </template>
 <script lang="ts">
-export default {
+import { scroll } from '../../common/helper'
+import { defineComponent } from 'vue'
+declare const window: any
+
+export default defineComponent({
 	props: {
 		total: Number,
 		selected: Number,
 		perPage: Number,
+		refs: [HTMLDivElement],
 	},
 	data() {
 		return {
@@ -88,6 +93,9 @@ export default {
 					this.getSearchTerm
 				)
 				this.$store.dispatch('save', { k: 'databasePage', v: num })
+				setTimeout(() => {
+					scroll()
+				}, 200)
 			}
 		},
 		goNext() {
@@ -97,7 +105,7 @@ export default {
 			if (this.sel > 1) this.select(this.sel - 1)
 		},
 	},
-}
+})
 </script>
 <style scoped>
 nav.pag {

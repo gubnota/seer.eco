@@ -106,7 +106,9 @@ export default {
 			return {
 				nft: d.steps.holdDSN,
 				twitter: d.steps.twitter,
-				learn: this.$store.state.daoRulesVisited,
+				learn: (this.$store.state.daoRulesVisited || {}).hasOwnProperty(
+					this.$store.state.address || 'empty'
+				),
 			}
 		},
 	},
@@ -137,13 +139,19 @@ export default {
 				})
 				return
 			}
-			console.log('callback', e)
+			// console.log('callback', e)
 			if (e == 'twitter') {
 				let link = await this.web3.PreTwitter()
 				window.open(link, '_blank')
 			}
 			if (e == 'learn') {
-				this.$store.dispatch('save', { k: 'daoRulesVisited', v: true })
+				let daoRulesVisitedList = {}
+				daoRulesVisitedList[this.$store.state.address || 'empty'] = true
+				Object.assign(daoRulesVisitedList, this.$store.state.daoRulesVisited)
+				this.$store.dispatch('save', {
+					k: 'daoRulesVisited',
+					v: daoRulesVisitedList,
+				})
 				this.router.push('/seer_dao.html')
 			}
 			if (e == 'test') {

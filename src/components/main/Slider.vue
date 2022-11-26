@@ -33,12 +33,13 @@
 		</div>
 	</div>
 </template>
-<script>
+<script lang="ts">
 import VanillaSwipe from 'vanilla-swipe'
 const isTouchEventsSupported = VanillaSwipe.isTouchEventsSupported()
 import { ref } from 'vue'
 import slide from './Slide.vue'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	name: 'Carousel',
 	data() {
 		return {
@@ -154,7 +155,7 @@ export default {
 			this.goTo(this.current - 1)
 		},
 	},
-}
+})
 </script>
 <style scoped>
 div.carousel {

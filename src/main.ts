@@ -1,6 +1,5 @@
 import Web3Controller from './web3/web3controller'
 import MetaController from './web3/metacontroller'
-import { store } from '/src/main.ts'
 import { createApp } from 'vue'
 import './css/reset.css'
 import './css/style.css'
@@ -18,6 +17,11 @@ import { comingSoon, setTitle } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
 export { store }
+
+export const isDev = () => {
+	return (window.env || []).includes('dev') // production || release
+}
+
 let ui_ = new ui()
 
 declare const window: any
@@ -57,7 +61,8 @@ app.config.globalProperties.questions_en = questions_en
 app.config.globalProperties.ui = ui_
 app.config.globalProperties.web3 = new Web3Controller()
 app.config.globalProperties.openLink = openLink
-window.web3 = app.config.globalProperties.web3
+app.config.globalProperties.isDev = isDev
+let web3obj = app.config.globalProperties.web3
 // a.load()
 // Make sure to _use_ the router instance to make the
 // whole app router-aware.
@@ -75,8 +80,8 @@ store.dispatch('load', [
 ])
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 
-if (store.state.daoInfo) window.web3.info()
-if (store.state.address) window.web3.restoreWeb3() // otherwise after refreshing a page signing doesn't work
+if (store.state.daoInfo) web3obj.info()
+if (store.state.address) web3obj.restoreWeb3() // otherwise after refreshing a page signing doesn't work
 store.dispatch('save', {
 	k: 'modal',
 	v: 'none',

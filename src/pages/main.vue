@@ -36,11 +36,11 @@ import Contact from '../components/main/Contact.vue'
 import Factory from '../components/main/Factory.vue'
 import Nft from '../components/main/Nft.vue'
 import Contact from '../components/main/Contact.vue'
-
+import { defineComponent } from 'vue'
 // import { fileURLToPath, URL } from 'url'
 // import uniswap from '../assets/uniswap.jpg'
 // gsap.registerPlugin([ScrollTrigger])
-export default {
+export default defineComponent({
 	name: 'Main',
 	data() {
 		return {
@@ -75,7 +75,7 @@ export default {
 		Nft,
 		Contact,
 	},
-}
+})
 </script>
 
 <style>

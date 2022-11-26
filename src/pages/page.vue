@@ -1,39 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-
 defineProps({
 	msg: String,
 })
 
 const count = ref(0)
 </script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import VideoPlaceholder from '../components/main/VideoPlaceholder.vue'
+// normal <script>, executed in module scope (only once)
 
+// declare additional options
+export default defineComponent({
+	// inheritAttrs: false,
+	// customOptions: {},
+	components: {
+		VideoPlaceholder,
+	},
+})
+</script>
 <template>
-	<g-carousel>a</g-carousel>
-	<h1>Page1 {{ $store.state.count }}</h1>
-
-	<div class="card">
-		<button type="button" @click="this.$store.dispatch('increment')">
-			count is {{ $store.state.count }}
-		</button>
-		<p>
-			Edit
-			<code>components/HelloWorld.vue</code> to test HMR
-		</p>
-	</div>
-
-	<p>
-		<router-link to="/page2/">Check out page2</router-link>
-	</p>
-	<button
-		v-on:click="
-			$store.dispatch('save', { k: 'a', v: { a: $store.state.count } })
-		"
-	>
-		Save
-	</button>
-	&nbsp;
-	<button v-on:click="$router.push('page2/page3.html')">Page3</button>
+	<h1>f</h1>
 </template>
 
 <style scoped>

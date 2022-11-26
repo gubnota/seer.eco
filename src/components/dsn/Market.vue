@@ -33,7 +33,8 @@ import opensealogo from '/src/assets/dsn/opensealogo.png'
 import x2y2logo from '/src/assets/dsn/x2y2logo.png'
 import looksrare from '/src/assets/dsn/looksrare.png'
 import element from '/src/assets/dsn/element.png'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	data() {
 		return {
 			blocks: [
@@ -64,7 +65,7 @@ export default {
 			],
 		}
 	},
-}
+})
 </script>
 <style scoped>
 section.market {
@@ -235,6 +236,9 @@ block {
 	animation-delay: 1200ms;
 }
 @media (max-width: 1130px) {
+	p {
+		padding: 0 1rem;
+	}
 	blockss {
 		align-self: center;
 		gap: 60px;

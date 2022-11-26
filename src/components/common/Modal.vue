@@ -14,7 +14,8 @@
 
 <script lang="ts">
 import store from '../../store'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	props: {
 		message: String,
 	},
@@ -36,7 +37,7 @@ export default {
 			e.stopPropagation()
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

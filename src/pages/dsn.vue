@@ -13,7 +13,7 @@
 			</section>
 		</main>
 		<section class="wrapper2"></section>
-		<section class="arrow_down"></section>
+		<section class="arrow_down dsn"></section>
 		<Bottom />
 		<Footer />
 	</div>
@@ -29,7 +29,8 @@ import Data from '../components/dsn/Data.vue'
 import Database from '../components/dsn/Database.vue'
 import Graph from '../components/dsn/Graph.vue'
 import Bottom from '../components/dsn/Bottom.vue'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	components: {
 		Top,
 		Footer,
@@ -55,7 +56,7 @@ export default {
 			}
 		})()
 	},
-}
+})
 </script>
 <style scoped>
 section.wrapper2 {

@@ -55,7 +55,8 @@
 	</section>
 </template>
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	mounted() {
 		this.web3.onLogin = () => {
 			setTimeout(() => {
@@ -92,7 +93,7 @@ export default {
 			}
 		},
 	},
-}
+})
 </script>
 <style scoped>
 .row {

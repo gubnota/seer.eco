@@ -4,13 +4,14 @@
 	</div>
 </template>
 <script type="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	methods: {
 		back(){
       this.router.go(-1)
 		}
 	},
-}
+})
 </script>
 <style scoped>
 .navtop {

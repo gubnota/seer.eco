@@ -14,15 +14,16 @@
 <script lang="ts">
 import nft_cube_j from '/src/assets/dsn/nft_cube_white@2x.jpg'
 import nft_cube_w from '/src/assets/dsn/nft_cube_white@2x.webp'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			nft_cube_j,
 			nft_cube_w,
 		}
 	},
-}
+})
 </script>
 <style scoped>
 section.header {
@@ -79,6 +80,12 @@ ill img {
 		flex-direction: column;
 		width: calc(100% - 2rem);
 		align-self: center;
+	}
+	part {
+		margin-top: 10px;
+	}
+	section.header {
+		gap: 30px;
 	}
 }
 </style>

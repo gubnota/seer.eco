@@ -31,13 +31,14 @@
 			</Slider>
 		</div>
 
-		<a @click="comingSoon" class="cta">Explore More Space</a>
+		<a @click="this.comingSoon" class="cta">Explore More Space</a>
 	</section>
 </template>
-<script>
+<script lang="ts">
 import Slider from './Slider.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'Nft',
 	data() {
 		return {
@@ -53,7 +54,7 @@ export default {
 			this.activeTab = id
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

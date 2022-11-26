@@ -1,11 +1,12 @@
 <template>
 	<div class="rate">
 		<div class="script">Passing rate : {{ percentage.toString() }}%</div>
-		<div class="bar" :style="`width: ${this.getWidth()}px`">&nbsp;</div>
+		<div class="bar" :style="`width: ${this.percentage}%`">&nbsp;</div>
 	</div>
 </template>
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
 	data() {
 		return {
 			percentage: 0,
@@ -35,10 +36,10 @@ export default {
 				})
 			this.rate = filtered[0].voteRate
 			this.percentage = Math.round(this.rate * 100)
-			this.width = Math.round(209 * this.rate)
+			// this.width = Math.round(209 * this.rate)
 		},
 	},
-}
+})
 </script>
 
 <style scoped>
