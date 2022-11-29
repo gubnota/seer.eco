@@ -151,8 +151,8 @@ export default defineComponent({
 	mounted() {
 		setTimeout(() => {
 			scroll()
+			this.sortTable()
 		}, 200)
-		this.sortTable()
 	},
 	methods: {
 		sortFieldState(el: string) {
@@ -183,8 +183,6 @@ export default defineComponent({
 			let asc = this.asc
 			let table = this.$store.state.dsnList.list
 			table.sort((a, b) => {
-				console.log(a, col, a[col])
-				// console.log(`a.col = ${a[col]}, b.col = ${b[col]}, ${asc}`)
 				return asc ? (b[col] > a[col] ? -1 : 1) : b[col] > a[col] ? 1 : -1 //desc numeric
 			})
 

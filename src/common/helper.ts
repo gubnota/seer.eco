@@ -151,4 +151,9 @@ export const fancyError = (error: { message: string }) => {
 	}
 	return error.message
 }
+export const countdownFormatter = (time: number) => {
+	let mins = Math.floor(time / 60)
+	let secs = time % 60
+	return `${mins}m ${secs}s`
+}
 export { comingSoon, getFQN, getAlias }

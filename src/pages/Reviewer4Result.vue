@@ -68,7 +68,7 @@ export default {
 	methods: {
 		intro() {
 			if (!this.passed) this.router.push('/reviewer/intro')
-			else this.router.push('/dao')
+			else this.router.push('/reviewer/conditions') // /dao
 			setTimeout(() => {
 				// window.location.reload()
 			}, 0)

@@ -56,8 +56,12 @@ export default {
 	computed: {
 		ui() {
 			return {
-				remain: this.$store.state.daoInfo.remainTimes,
-				total: this.$store.state.daoInfo.configs.retryTimes,
+				remain: this.$store.state.daoInfo
+					? this.$store.state.daoInfo.remainTimes
+					: 0,
+				total: this.$store.state.daoInfo
+					? this.$store.state.daoInfo.configs.retryTimes
+					: 0,
 			}
 		},
 	},
@@ -70,16 +74,17 @@ export default {
 		this.web3.onLogout = null
 	},
 	mounted() {
-		this.web3.info()
-		this.web3.onLogout = () => {
-			this.router.push({ path: '/dao' })
-		}
 		if (!this.$store.state.daoInfo) {
 			this.router.push({ path: '/dao' })
 			return
+		} else {
+			this.web3.info()
+			this.web3.onLogout = () => {
+				this.router.push({ path: '/dao' })
+			}
+			this.total = this.$store.state.daoInfo.configs.retryTimes
+			this.remain = this.$store.state.daoInfo.remainTimes
 		}
-		this.total = this.$store.state.daoInfo.configs.retryTimes
-		this.remain = this.$store.state.daoInfo.remainTimes
 	},
 	methods: {
 		start() {

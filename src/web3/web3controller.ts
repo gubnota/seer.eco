@@ -14,7 +14,7 @@ export default class Web3Controller extends DSNController {
 
 	async logout() {
 		await super.logout()
-		this.eventList({ tab: 0, from: 0, limit: 8 })
+		// this.eventList({ tab: 0, from: 0, limit: 8 })
 		window.location.reload()
 	}
 

@@ -2,10 +2,19 @@
 	<section class="review">
 		<!-- <Detail :left="this.left" :top="this.top" /> -->
 		<Detail v-if="this.$store.state.detail" />
-		<h3>
-			<span>Review updates</span>
-			<Mark />
-		</h3>
+		<div class="row">
+			<h3>
+				<span>Review updates</span>
+				<Mark />
+			</h3>
+			<div class="countdown" v-if="this.tab == 0">
+				<span>auto refresh after</span>
+				<b>{{ countdownFormatter(this.countdown) }}</b>
+				<span :class="{ loading: this.loading }" @click="refresh()"
+					>&nbsp;</span
+				>
+			</div>
+		</div>
 		<h4>
 			<span>Your voting rights：</span>
 			<span>{{ getTicketsNumber }}</span>
@@ -49,6 +58,7 @@
 			v-if="fetch.length > 0"
 			:total="getItemsNumber"
 			:selected="getEventsPage"
+			:per-page="this.perPage"
 		/>
 		<!-- TODO: change to dynamic -->
 	</section>
@@ -62,6 +72,7 @@ import Ticket from '/src/assets/dao/ticket.svg'
 import Detail from './Detail.vue'
 import EmptyPic from '/src/assets/dao/seer_noitems@2x.png'
 import { defineComponent } from 'vue'
+import { countdownFormatter } from '../../common/helper'
 
 export default defineComponent({
 	data() {
@@ -73,6 +84,10 @@ export default defineComponent({
 			left: 400,
 			totalNo: 1,
 			EmptyPic,
+			perPage: 8,
+			countdownFormatter,
+			countdown: 600,
+			loading: false,
 		}
 	},
 	computed: {
@@ -89,11 +104,26 @@ export default defineComponent({
 			return this.$store.state.eventsPage || 1
 		},
 	},
+
 	mounted() {
 		this.web3.eventList()
 		this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
+		setInterval(() => {
+			this.countdown--
+			if (this.countdown == 0) this.refresh()
+		}, 1000)
 	},
 	methods: {
+		refresh() {
+			if (this.loading) return
+			this.loading = true
+			this.tab = 0
+			this.web3.eventList()
+			setTimeout(() => {
+				this.countdown = 600
+				this.loading = false
+			}, 1000)
+		},
 		hover(e: { target: HTMLSpanElement }) {
 			let els =
 				e.target.tagName == 'svg'
@@ -118,7 +148,7 @@ export default defineComponent({
 			})
 
 			this.tab = tab
-			this.web3.eventList({ tab, from: 0, limit: 8 }) // TODO: disable to show no review state
+			this.web3.eventList({ tab, from: 0, limit: this.perPage }) // TODO: disable to show no review state
 
 			// this.web3.eventList({
 			// 	tab: this.$store.state.eventsTab || 0,
@@ -132,6 +162,47 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+.row {
+	align-items: center;
+	justify-content: space-between;
+}
+.row *::selection {
+	background-color: transparent;
+}
+
+.countdown {
+	display: flex;
+	flex-direction: row;
+	margin-right: 12px;
+	gap: 12px;
+	align-items: center;
+}
+b {
+	font-weight: 600;
+	min-width: 60px;
+}
+.countdown > span:last-child {
+	background: url(/src/assets/ui/spin.svg);
+	background-size: contain;
+	width: 19px;
+	height: 21px;
+	cursor: pointer;
+}
+.countdown > span:last-child:active {
+	transform: translateY(3px);
+}
+.countdown > span.loading:last-child:active {
+	transform: none;
+	cursor: not-allowed;
+}
+.countdown > span.loading:last-child {
+	animation: rotate 1s linear infinite;
+}
+@keyframes rotate {
+	to {
+		transform: rotate(360deg);
+	}
+}
 section.review {
 	transition: all 0.5s ease-in;
 	display: flex;
@@ -214,6 +285,14 @@ nav.tabs span.selected {
 	width: 89px;
 }
 @media (max-width: 550px) {
+	.row {
+		flex-direction: column;
+		gap: 1rem;
+		margin-block-end: 1rem;
+	}
+	.countdown {
+		align-self: flex-start;
+	}
 	section.review {
 		width: calc(100vw - 12px);
 		align-self: center;

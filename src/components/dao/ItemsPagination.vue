@@ -42,6 +42,7 @@ export default defineComponent({
 	props: {
 		total: Number,
 		selected: Number,
+		perPage: Number,
 	},
 	data() {
 		return {
@@ -54,7 +55,7 @@ export default defineComponent({
 	},
 	computed: {},
 	mounted() {
-		this.num = Math.ceil(this.total / 8)
+		this.num = Math.ceil(this.total / this.perPage)
 		// console.log(this.$store.eventList.total)
 		// this.num = Math.ceil(this.total / 15)
 		this.select(this.selected || 1, false)
@@ -77,8 +78,8 @@ export default defineComponent({
 				this.$store.dispatch('save', { k: 'eventsPage', v: num })
 				this.web3.eventList({
 					tab: this.$store.state.eventsTab,
-					from: 8 * (num - 1) + 1,
-					limit: 8,
+					from: this.perPage * (num - 1) + 1,
+					limit: this.perPage,
 				})
 			}
 			this.sel = num
