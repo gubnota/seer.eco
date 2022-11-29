@@ -23,7 +23,7 @@ export default class Web3Controller extends DSNController {
 		let isLocal =
 			window.location.host.substring(0, 9) === 'localhost' ||
 			window.location.host.substring(0, 1) === '1'
-		this.branch = isLocal ? 'local' : 'dev' // local || dev || release
+		this.branch = isLocal ? 'dev' : 'dev' // local || dev || release
 	}
 
 	fetchRelated = async () => {
