@@ -41,7 +41,7 @@ export default class Web3Controller extends DSNController {
 				this.fetchRelated()
 				return true
 			})
-			console.log('login connect', connect)
+			// console.log('login connect', connect)
 		} catch (error) {
 			if (error.code == 4001) {
 				this.store.dispatch('save', { k: 'walletLoading', v: false })
