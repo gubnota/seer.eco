@@ -1,7 +1,17 @@
 <template>
 	<div class="rate">
-		<div class="script">Passing rate : {{ percentage.toString() }}%</div>
-		<div class="bar" :style="`width: ${this.percentage}%`">&nbsp;</div>
+		<div class="script">
+			Passing rate :
+			{{ Math.round(this.$store.state.eventList.list[id].voteRate * 100) }}%
+		</div>
+		<div
+			class="bar"
+			:style="`width: ${Math.round(
+				this.$store.state.eventList.list[id].voteRate * 100
+			)}%`"
+		>
+			&nbsp;
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -19,23 +29,32 @@ export default defineComponent({
 		// rate: Number, // passing rate
 	},
 	mounted() {
-		this.updateValues()
+		// this.updateValues()
 	},
 
 	unmounted() {},
-
+	computed: {
+		getPercentage() {
+			// var filtered = this.$store.state.eventList.list.filter((el) => {
+			// 	return el.showId == this.id
+			// })
+			// let rate = filtered[0].voteRate
+			// let percentage = Math.round(this.rate * 100)
+			// return percentage
+		},
+	},
 	methods: {
 		getWidth() {
-			this.updateValues()
+			// this.updateValues()
 			return this.width
 		},
 		updateValues() {
-			if (this.$store.state.eventList)
-				var filtered = this.$store.state.eventList.list.filter((el) => {
-					return el.showId == this.id
-				})
-			this.rate = filtered[0].voteRate
-			this.percentage = Math.round(this.rate * 100)
+			// if (this.$store.state.eventList)
+			// 	var filtered = this.$store.state.eventList.list.filter((el) => {
+			// 		return el.showId == this.id
+			// 	})
+			// this.rate = filtered[0].voteRate
+			// this.percentage = Math.round(this.rate * 100)
 			// this.width = Math.round(209 * this.rate)
 		},
 	},

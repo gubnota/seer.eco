@@ -91,7 +91,7 @@ h1 {
 	width: 100%;
 	/* background-color: aqua; */
 	max-width: 1120px !important;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Poppins', Arial, Helvetica, sans-serif;
 	display: flex;
 	flex-direction: column;
 }

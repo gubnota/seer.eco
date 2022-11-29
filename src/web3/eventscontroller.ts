@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { fancyError } from '../common/helper'
 import {
 	eventDetailT,
 	eventListParams,
@@ -23,7 +24,7 @@ export default class EventsController extends DaoController {
 			.then((r) => {
 				let l: eventDetailT = r.data.data
 				if (r.data.message != 'Success') {
-					this.popup({ text: r.data.message })
+					this.popup({ text: fancyError(r.data) })
 					if (r.data.message == 'EventStop') {
 						this.store.dispatch('unset', ['detail', 'eventDetail'])
 					}
@@ -32,7 +33,7 @@ export default class EventsController extends DaoController {
 			})
 			.catch((err: any) => {
 				// console.log('err', err)
-				this.popup({ text: err.message })
+				this.popup({ text: fancyError(err) })
 			})
 	}
 
@@ -70,7 +71,7 @@ export default class EventsController extends DaoController {
 			})
 			.catch((err: any) => {
 				console.log('err', err)
-				this.popup({ text: err.message })
+				this.popup({ text: fancyError(err) })
 			})
 
 		//  this.totalPages =  Math.ceil(da.totalPages / p.limit)

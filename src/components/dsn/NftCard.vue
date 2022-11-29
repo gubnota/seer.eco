@@ -17,14 +17,14 @@
 				class="skill-bar"
 				:style="`width:${Math.max(
 					2,
-					Math.min(100, Math.ceil((this.dsn[no].total_users / 100000) * 100))
+					Math.min(100, Math.round((this.dsn[no].total_users / 100000) * 100))
 				)}%;`"
 			></div>
 		</div>
 		<div class="skill memory_bar">
 			<div
 				class="skill-bar"
-				:style="`width:${Math.ceil(this.dsn[no].memory_rss * 100)}%;`"
+				:style="`width:${Math.round(this.dsn[no].memory_rss * 100)}%;`"
 			></div>
 		</div>
 		<span class="daily_aoe_seer rainbow">{{
@@ -41,7 +41,7 @@
 		>
 		<span class="name">{{ this.dsn[no].homeserver }}</span>
 		<span class="memory_label">{{
-			Math.ceil(this.dsn[no].memory_rss * 100) + '%'
+			Math.round(this.dsn[no].memory_rss * 100) + '%'
 		}}</span>
 	</div>
 </template>
@@ -172,7 +172,7 @@ img.badge3 {
 }
 .card {
 	background: transparent; /*#282737;*/
-	border: 1px solid #555766;
+	/* border: 1px solid #555766; */
 	border-radius: 16px;
 	width: 344px;
 	height: 441px;

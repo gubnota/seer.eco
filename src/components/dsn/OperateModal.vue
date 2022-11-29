@@ -31,8 +31,11 @@
 						>
 					</div>
 
-					<h2>Reward</h2>
-					<p>Set the node name and invite people to join your node.</p>
+					<h2>Invitation link</h2>
+					<p>
+						Copy the link below to invite everyone to join your node. <br />The
+						number of nodes will directly affect your income
+					</p>
 					<div class="copyfield" @click="copy">
 						<span>{{ `https://${this.domain}/?n=${node || ''}` }}</span>
 						<div class="btn">Copy</div>
@@ -139,6 +142,9 @@ export default defineComponent({
 
 <style scoped>
 /*--------------------- MODAL & POP-UP ----------------------*/
+.modal2 {
+	font-family: 'Poppins';
+}
 svg {
 	cursor: pointer;
 }
@@ -163,7 +169,7 @@ input[type='name']::placeholder {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 .body {
 	display: flex;
@@ -176,16 +182,20 @@ input[type='name']::placeholder {
 .row {
 	height: 66px;
 	align-items: center;
-	/* justify-content: space-between; */
-	padding: 0 16px 0 24px;
+	padding: 0 24px 0 26px;
 	gap: 60px;
 }
 .row.item {
 	border-bottom: 1px solid #e3e5e8;
+	justify-content: space-between;
 	font-weight: 500;
+	gap: 69px;
+}
+.row.item > span {
+	min-width: 10px;
 }
 .row.item > span:last-child {
-	margin-left: 36px;
+	/* margin-left: 36px; */
 }
 .row.item > span:nth-child(3) {
 	color: #acacac;
@@ -285,7 +295,6 @@ input[type='name']::placeholder {
 	line-height: 24px;
 	padding: 0 27px;
 	align-self: flex-start;
-	width: 343px;
 	text-align: left;
 }
 

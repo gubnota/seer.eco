@@ -15,6 +15,7 @@ export default class Web3Controller extends DSNController {
 	async logout() {
 		await super.logout()
 		this.eventList({ tab: 0, from: 0, limit: 8 })
+		window.location.reload()
 	}
 
 	constructor() {
@@ -34,11 +35,19 @@ export default class Web3Controller extends DSNController {
 	}
 
 	login = async (cb?: () => {}) => {
-		const connect = await this.connect(() => {
-			cb()
-			this.fetchRelated()
-			return true
-		})
+		try {
+			const connect = await this.connect(() => {
+				cb()
+				this.fetchRelated()
+				return true
+			})
+			console.log('login connect', connect)
+		} catch (error) {
+			if (error.code == 4001) {
+				this.store.dispatch('save', { k: 'walletLoading', v: false })
+				this.popup({ text: error.message })
+			}
+		}
 		// setTimeout(async () => {
 		const info = await this.info()
 		// setTimeout(async () => {

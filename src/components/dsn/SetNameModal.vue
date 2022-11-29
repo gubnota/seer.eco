@@ -119,7 +119,7 @@ input[type='name']::placeholder {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 .body {
 	display: flex;

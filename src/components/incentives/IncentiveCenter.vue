@@ -43,13 +43,7 @@
 			<p class="cond">3. Divide the prize pool</p>
 			<p class="desc">
 				Divide the prize pool according to the monthly ranking of the reviewers.
-				The monthly prize pool is 50,000 SEER.<br />Algorithm: Divide the reward
-				= the cumulative number of votes for personal activities (month) / the
-				total number of votes for the event (month) * 50000 SEER<br />
-				Example: <br />The reviewers participated in the review last month and
-				accumulated 300 votes.The total number of votes for the last month's
-				event review was 6,000.Then the judges were awarded
-				300/6000*50000=2500SEER last month
+				The monthly prize pool is 50,000 SEER.
 			</p>
 		</section>
 	</section>

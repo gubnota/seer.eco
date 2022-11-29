@@ -72,7 +72,7 @@ section.incentive {
 	border-radius: 8px 8px 0px 0px;
 	/* height: 30vh; */
 	align-items: stretch;
-	padding: 26px 24px;
+	padding: 26px 24px 56px 24px;
 	gap: 38px;
 	min-height: 384px;
 	z-index: 1;

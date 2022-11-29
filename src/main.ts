@@ -13,7 +13,7 @@ import App from './App.vue'
 import store from './store'
 import routes from './routes'
 import { openLink } from './routes'
-import { comingSoon, setTitle } from './common/helper'
+import { comingSoon, popup, setTitle } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
 export { store }
@@ -55,6 +55,7 @@ const app = createApp(App)
 
 app.config.globalProperties.window = window
 app.config.globalProperties.comingSoon = comingSoon
+app.config.globalProperties.popup = popup
 app.config.globalProperties.router = router
 app.config.globalProperties.questions_zh = questions_zh
 app.config.globalProperties.questions_en = questions_en

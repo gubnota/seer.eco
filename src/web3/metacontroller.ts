@@ -169,9 +169,9 @@ export default class MetaController {
 			// alert('Please open the MetaMask')
 		}
 
-		this.web3js.eth.getBlockNumber().then((result: any) => {
-			// console.log('Latest Ethereum Block is ', result)
-		})
+		// this.web3js.eth.getBlockNumber().then((result: any) => {
+		// console.log('Latest Ethereum Block is ', result)
+		// })
 		return Promise.resolve(false)
 	}
 

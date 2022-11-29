@@ -8,7 +8,7 @@ import {
 	contents,
 	verifyingContractDev,
 } from './common'
-import { getAlias, getFQN } from '../common/helper'
+import { fancyError, getAlias, getFQN } from '../common/helper'
 
 declare const window: any
 export default class DSNController extends IncentiveController {
@@ -40,7 +40,7 @@ export default class DSNController extends IncentiveController {
 			.catch((error) => {
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p>${fancyError(error)}</p>`,
 				})
 				return null //Promise.resolve(null)
 			})
@@ -111,7 +111,7 @@ export default class DSNController extends IncentiveController {
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
-		var chain = window.ethereum.chainId || 1
+		var chain = parseInt(window.ethereum.chainId) || 1
 		var address = this.address
 		var signature = await this.signWithdraw({
 			node,
@@ -156,7 +156,7 @@ export default class DSNController extends IncentiveController {
 				// console.log('error', error.message)
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p>${fancyError(error)}</p>`,
 				})
 				return null
 			})
@@ -199,7 +199,7 @@ export default class DSNController extends IncentiveController {
 			.catch((error) => {
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p>${fancyError(error)}</p>`,
 				})
 				return null //Promise.resolve(null)
 			})
@@ -235,7 +235,7 @@ export default class DSNController extends IncentiveController {
 			.catch((error) => {
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p>${fancyError(error)}</p>`,
 				})
 				return null //Promise.resolve(null)
 			})
@@ -266,7 +266,10 @@ export default class DSNController extends IncentiveController {
 			)
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p>${fancyError(res.data)}</p>`,
+						timeout: 3000,
+					})
 					return null //Promise.resolve(null)
 				}
 				return res //Promise.resolve()
@@ -274,7 +277,7 @@ export default class DSNController extends IncentiveController {
 			.catch((error) => {
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p><b>Error</b><br />${fancyError(error)}</p>`,
 				})
 				return null //Promise.resolve(null)
 			})
@@ -304,7 +307,7 @@ export default class DSNController extends IncentiveController {
 			.catch((error) => {
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p>${fancyError(error)}</p>`,
 				})
 				return null //Promise.resolve(null)
 			})

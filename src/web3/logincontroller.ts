@@ -108,6 +108,7 @@ export default class LoginController extends MetaController {
 				})
 				return false
 			})
+		console.log('connect', res2)
 		return Promise.resolve(res2)
 		return false
 	}

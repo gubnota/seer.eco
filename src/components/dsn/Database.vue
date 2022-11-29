@@ -18,7 +18,16 @@
 		</div>
 		<table>
 			<tr class="head" :ref="'head'">
-				<th v-for="el in fields">{{ el }}</th>
+				<th
+					v-for="(el2, j) in fields"
+					:class="{
+						//						asc: j == 2,
+						desc: j == 7,
+						nosort: j == 0 || j == 1,
+					}"
+				>
+					<span>{{ el2 }}</span>
+				</th>
 			</tr>
 			<tr v-for="(el, i) in fetch" :key="el.no" class="item" :ref="'item' + i">
 				<td>{{ el.no }}</td>
@@ -53,10 +62,22 @@
 import magnifier from '/src/assets/dsn/magnifier.svg'
 import seer from '/src/assets/dsn/seer.svg'
 import usdt from '/src/assets/dsn/usdt.svg'
+// import arrow from '/src/assets/ui/arrow.svg'
+// import spin from '/src/assets/ui/spin.svg'
 import dsn_data_sample from '../../common/dsn_data_sample.js'
 import DatabasePagination from './DatabasePagination.vue'
 import store from '../../store'
 import { scroll } from '../../common/helper'
+const arrow = `
+<svg width="6px" height="4px" viewBox="0 0 6 4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>arrowhead</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="arrowhead" transform="translate(3.000000, 2.000000) rotate(-270.000000) translate(-3.000000, -2.000000) translate(1.000000, -1.000000)" fill="#000000" fill-rule="nonzero">
+            <polygon id="Path" points="4 3 0 0 0 6"></polygon>
+        </g>
+    </g>
+</svg>
+`
 declare const window: any
 const fields = [
 	'#',
@@ -66,8 +87,8 @@ const fields = [
 	'cpu_Average',
 	'create/24h',
 	'active/24h/30day',
-	'income_Seer/24h/30day',
-	'income_Usdt/24h/30day',
+	'Seer/24h/30day', //income_
+	'Usdt/24h/30day', //income_
 ]
 const random = () => {
 	let id = Math.floor(Math.random() * 10)
@@ -103,6 +124,7 @@ export default defineComponent({
 			fields,
 			perPage: 9,
 			sync: [],
+			sortState: 1,
 		}
 	},
 	computed: {
@@ -129,6 +151,21 @@ export default defineComponent({
 		}, 200)
 	},
 	methods: {
+		sortFieldState(el: string) {
+			if (el == 'income_Seer/24h/30day') return this.sortState
+			return 0
+		},
+		sortClick(i: number) {
+			if (i == 8) {
+				this.sortState = this.sortState == 1 ? 2 : 1 // 1,2 3,4  'income_Seer/24h/30day'
+			}
+			if (i == 9) {
+				this.sortState = this.sortState == 3 ? 4 : 3 // 5,6 7,8  'income_Usdt/24h/30day'
+			}
+			if (i == 3) {
+				this.sortState = this.sortState == 3 ? 4 : 3 // 9,10  'income_Usdt/24h/30day'
+			}
+		},
 		formTable(
 			input: [
 				{
@@ -170,6 +207,8 @@ export default defineComponent({
 				}
 				out.push(obj)
 			}
+			// here sort out values
+			// out.filter()
 			return out
 		},
 		searchHandler(inp) {
@@ -208,6 +247,37 @@ section.database {
 }
 h2 {
 }
+th > span {
+	position: relative;
+}
+th > span::after,
+th > span::before {
+	background: url(/src/assets/ui/arrow_unselected.svg) 100% no-repeat;
+	display: block;
+	background-size: contain;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	right: -16px;
+	top: 9px;
+	content: '';
+}
+th.desc > span::after {
+	background: url(/src/assets/ui/arrow.svg) 100% no-repeat;
+	background-size: contain;
+}
+th.asc > span::before {
+	background: url(/src/assets/ui/arrow.svg) 100% no-repeat;
+	background-size: contain;
+}
+th.nosort > span::after,
+th.nosort > span::before {
+	display: none;
+}
+th > span::before {
+	transform: rotate(180deg);
+	top: -1px;
+}
 .bar {
 	justify-content: flex-end;
 	margin: 66px 0 38px 0;
@@ -237,7 +307,12 @@ tr {
 tr {
 	/* border-bottom: 1px solid #cdd0d4; */
 }
-
+th {
+	cursor: pointer;
+}
+th *::selection {
+	background-color: transparent;
+}
 tr.item {
 	height: 88px;
 	line-height: 88px;

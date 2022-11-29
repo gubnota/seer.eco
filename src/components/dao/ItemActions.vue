@@ -73,8 +73,9 @@ export default defineComponent({
 				) {
 					this.comingSoon({
 						text: !this.$store.state.daoInfo
-							? `<p>Please, login first</p>`
+							? `<p>Please log in to your wallet account first</p>`
 							: `<p>Please, become a DAO reviewer first</p>`,
+						timeout: 3000,
 					})
 					if (!this.$store.state.daoInfo) this.web3.login()
 					return
@@ -83,14 +84,18 @@ export default defineComponent({
 					var voteResult = await this.web3.vote(this.id, true)
 					// if (voteResult !== true) return
 					console.log('voteResult', voteResult)
-					this.passed = true
-					this.rejected = false
+					if (voteResult) {
+						this.passed = true
+						this.rejected = false
+					}
 				} else {
 					var voteResult = await this.web3.vote(this.id, false)
 					console.log('voteResult', voteResult)
 					// if (voteResult !== false) return
-					this.passed = false
-					this.rejected = true
+					if (voteResult) {
+						this.passed = false
+						this.rejected = true
+					}
 				}
 				setTimeout(() => {
 					this.web3.eventList({

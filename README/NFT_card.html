@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>NFT card</title>
+		<style>
+			body,
+			html {
+				/* background-color: rgb(140, 140, 140); */
+				margin: 0;
+				padding: 0;
+			}
+			#card,
+			.container {
+				width: 344px;
+				height: 441px;
+			}
+			.container {
+				position: relative;
+			}
+			#card {
+				left: 0;
+				top: 0;
+			}
+			.container > * {
+				position: absolute;
+				z-index: 2;
+			}
+
+			.container {
+				font-family: Poppins, Arial, Helvetica, sans-serif;
+			}
+			.rainbow {
+				background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+				background-clip: text;
+				text-fill-color: transparent;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			img.card {
+				z-index: 2;
+			}
+			img.bg {
+				z-index: 0;
+				position: absolute;
+				top: 7px;
+				left: 7px;
+			}
+			img.logo {
+				z-index: 1;
+				position: absolute;
+				top: 37px;
+				left: 137px;
+				width: 73px;
+			}
+			img.badge {
+				z-index: 3;
+				position: absolute;
+				top: 108px;
+				left: 23px;
+				width: 73px;
+				width: 46px;
+			}
+			img.badge2 {
+				width: 64px;
+				top: 108px;
+				left: 14px;
+			}
+			img.badge3 {
+				width: 70px;
+				top: 104px;
+				left: 11px;
+			}
+			.card {
+				background: transparent; /*#282737;*/
+				border: 1px solid #555766;
+				border-radius: 16px;
+				width: 344px;
+				height: 441px;
+				position: relative;
+				font-weight: 600;
+				font-size: 13px;
+			}
+			.card > * {
+				position: absolute;
+				z-index: 3;
+			}
+			.skill {
+				background-color: #000000;
+				width: 294px;
+				border-radius: 4px;
+				position: absolute;
+				left: 25px;
+				height: 8px;
+				top: 271px;
+			}
+			.memory_bar {
+				top: 331px;
+			}
+			.daily_aoe_seer,
+			.daily_ads_seer {
+				top: 402px;
+				font-weight: bold;
+			}
+			.daily_aoe_seer {
+				left: 79px;
+			}
+			.daily_ads_seer {
+				left: 252px;
+			}
+			.user_number {
+				left: 220px;
+				top: 244px;
+				color: #e3e5e8;
+				font-weight: 600;
+				font-size: 14px;
+				width: 106px;
+				text-align: right;
+			}
+			.memory_label {
+				right: 40px;
+				top: 303px;
+				color: #e3e5e8;
+				font-weight: 600;
+			}
+			.no {
+				left: 249px;
+				top: 212px;
+				font-weight: 400;
+				font-size: 13px;
+				color: #626174;
+				text-shadow: 0px 1px 2px #1c1b30;
+			}
+			.name {
+				left: 14px;
+				top: 179px;
+				font-weight: 800;
+				font-size: 17px;
+				color: #ffffff;
+			}
+			.skill:before {
+				width: 100%;
+				content: '';
+				display: block;
+				position: absolute;
+				background: #000000;
+				border-radius: 4px;
+				bottom: 0;
+			}
+
+			.skill-bar {
+				height: 10px;
+				background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
+				display: block;
+				position: relative;
+				width: 0;
+				height: 8px;
+				border-radius: 4px;
+			}
+
+			.skill-bar span {
+				position: absolute;
+				top: -30px;
+				padding: 0;
+				font-size: 18px;
+				padding: 3px 0;
+				font-weight: 500;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<img src="" id="bg" class="bg" />
+			<img src="" id="logo" class="logo" />
+			<img src="" id="badge" class="badge" />
+			<img src="" alt="NFT Seer card" id="card" class="card" />
+			<div class="skill user_bar">
+				<div class="skill-bar" id="user_bar"></div>
+			</div>
+			<div class="skill memory_bar">
+				<div class="skill-bar" id="memory_bar"></div>
+			</div>
+			<span class="daily_aoe_seer rainbow" id="daily_aoe_seer">0.00</span>
+			<span class="daily_ads_seer rainbow" id="daily_ads_seer">0.00</span>
+			<span class="user_number" id="user_number">0 / 100,000</span>
+			<span class="no" id="no">NO. 000000</span>
+			<span class="name" id="name"></span>
+			<span class="memory_label" id="memory_label">0%</span>
+		</div>
+		<script>
+			let baseUrl = 'https://test.seer.eco/dsn/'
+			let fetchUrl = 'https://devhost.seer.eco/'
+			let d = document,
+				g = 'getElementById'
+
+			const numberWithCommas = (x) => {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+			}
+			const formatNumber = (num, dec = 2, thousands = true) => {
+				var out = (
+					Math.round(parseFloat(num) * Math.pow(10, dec)) / Math.pow(10, dec)
+				).toFixed(dec)
+				if (thousands) out = numberWithCommas(out)
+				return out
+			}
+
+			const grade = (el) => {
+				if (!el) return 1
+				if (el.total_users > 50000) return 3
+				if (el.total_users >= 10000 && el.total_users < 50000) return 2
+				return 1
+			}
+			const getbg = (el) => {
+				switch (grade(el)) {
+					case 3:
+						return '3a_bg.jpg'
+						break
+					case 2:
+						return '2a_bg.jpg'
+						break
+					default:
+						return '1a_bg.jpg'
+						break
+				}
+			}
+			const getbadge = (el) => {
+				switch (grade(el)) {
+					case 3:
+						d[g]('badge').classList.add('badge3')
+						return '3a_badge.png'
+						break
+					case 2:
+						d[g]('badge').classList.add('badge2')
+						return '2a_badge.png'
+						break
+					default:
+						d[g]('badge').classList.add('badge1')
+						return '1a_badge.png'
+						break
+				}
+			}
+			const getlogo = (el) => {
+				switch (grade(el)) {
+					case 3:
+						return '3a_logo.png'
+						break
+					case 2:
+						return '2a_logo.png'
+						break
+					default:
+						return '1a_logo.png'
+						break
+				}
+			}
+			const setBars = (el) => {
+				d[g]('user_bar').setAttribute(
+					'style',
+					`width:${Math.max(
+						2,
+						Math.min(100, Math.ceil((el.total_users / 100000) * 100))
+					)}%;`
+				)
+				let memory_rss = `${Math.round(el.memory_rss * 10000) / 100}%`
+				d[g]('memory_bar').setAttribute('style', `width:${memory_rss};`)
+				d[g]('memory_label').innerText = memory_rss
+			}
+
+			const setRest = (el) => {
+				let daily_aoe_seer = `${formatNumber(el.daily_income_seer)}`
+				let daily_ads_seer = `${formatNumber(el.daily_income_usdt)}`
+				let user_number = `${numberWithCommas(el.total_users)} / 100,000`
+				let no = `NO. ${el.no.toString().padStart(5, '0')}`
+				let name = el.homeserver
+				d[g]('daily_aoe_seer').innerText = daily_aoe_seer
+				d[g]('daily_ads_seer').innerText = daily_ads_seer
+				d[g]('user_number').innerText = user_number
+				d[g]('no').innerText = no
+				d[g]('name').innerText = name
+			}
+			const setPics = (el) => {
+				d[g]('bg').setAttribute('src', `${baseUrl}${getbg(el)}`)
+				d[g]('logo').setAttribute('src', `${baseUrl}${getlogo(el)}`)
+				d[g]('badge').setAttribute('src', `${baseUrl}${getbadge(el)}`)
+				// getlogo(this.dsn[no])
+			}
+
+			const parseInfo = (data) => {
+				if (data.message != 'Success') return
+				let k = data.data.list[0]
+				console.log(k)
+				setPics(k)
+				setBars(k)
+				setRest(k)
+				/*
+  {
+  "no":1,
+  "homeserver":"lcl.seer.eco",
+  "total_users":1,
+  "memory_rss":0.05,
+  "cpu_average":5,
+  "daily_user_type_native":0,
+  "daily_active_users":0,
+  "monthly_active_users":0,
+  "daily_income_seer":0,
+  "daily_income_usdt":0,
+  "monthly_income_seer":0,
+  "monthly_income_usdt":0
+  }
+*/
+			}
+			function findGetParameter(parameterName) {
+				var result = null,
+					tmp = []
+				var items = location.search.substr(1).split('&')
+				for (var index = 0; index < items.length; index++) {
+					tmp = items[index].split('=')
+					if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1])
+				}
+				return result
+			}
+
+			let no = parseInt(findGetParameter('no')) || -1
+
+			d[g]('card').setAttribute('src', `${baseUrl}nftcard.svg`)
+
+			if (no > 0) {
+				fetch(`${fetchUrl}api/Node/DSNList`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Domain: 'genesis.seer.eco',
+						Language: 'en',
+						Terminal: 'web',
+					},
+					body: JSON.stringify({
+						from: 1,
+						limit: 1,
+						search: '',
+						TokenId: no,
+					}),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						console.log('Success:', data)
+						parseInfo(data)
+					})
+					.catch((error) => {
+						console.error('Error:', error)
+					})
+			} else {
+				setPics()
+			}
+		</script>
+	</body>
+</html>

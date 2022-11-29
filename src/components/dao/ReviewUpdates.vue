@@ -34,6 +34,7 @@
 				:spaceName="el.spaceName"
 				:showType="el.showType"
 				:key="el.showId"
+				:id="i"
 			/>
 			<div class="empty" v-if="fetch.length < 1">
 				<img :src="EmptyPic" />

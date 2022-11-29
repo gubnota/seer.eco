@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { fancyError } from '../common/helper'
 import TestController from './testcontroller'
 
 export default class IncentiveController extends TestController {
@@ -86,10 +87,10 @@ unGot: number // can be claimed
 				return Promise.resolve(true)
 			})
 			.catch((error) => {
-				console.log('error', error.message)
+				// console.log('error', error.message)
 				this.popup({
 					timeout: 5000,
-					text: `<p><b>Error</b><br />${error.message}</p>`,
+					text: `<p><b>Error</b><br />${fancyError(error)}</p>`,
 				})
 				return Promise.resolve(false)
 			})

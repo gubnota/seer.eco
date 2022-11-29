@@ -50,7 +50,7 @@ export default class DaoController extends UserController {
 		}
 
 		// TODO: axios
-		axios
+		let res2 = await axios
 			.post(this.servers.business[this.branch] + 'api/dao/Vote', payload, {
 				headers: {
 					SeerToken: this.store.state.seerToken,
@@ -63,9 +63,9 @@ export default class DaoController extends UserController {
 				// console.log('/api/dao/Vote then', res)
 				if (res.data.message != 'Success') {
 					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
-					return Promise.resolve(null)
+					return false
 				}
-				return Promise.resolve(vote)
+				return vote
 			})
 			.catch((error) => {
 				// console.log('error', error.message)
@@ -73,9 +73,9 @@ export default class DaoController extends UserController {
 					timeout: 5000,
 					text: `<p><b>Error</b><br />${error.message}</p>`,
 				})
-				return Promise.resolve(null)
+				return false
 			})
-
+		return Promise.resolve(res2)
 		// return {
 		// 	address,
 		// 	nonce,
@@ -145,7 +145,7 @@ export default class DaoController extends UserController {
 				}
 			})
 			.catch((error) => {
-				console.log(error.message)
+				// console.log(error.message)
 				//     {
 				//     "code": 10000,
 				//     "message": "InvalidParameter",

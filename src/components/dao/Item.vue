@@ -25,7 +25,8 @@
 				remaining
 			}}</span>
 			<ItemActions v-if="this.$store.state.eventsTab == 0" :id="showId" />
-			<ItemRate :id="showId" />
+			<!-- {{ fetch[id].classify }} -->
+			<ItemRate :id="id" />
 		</section>
 	</div>
 </template>
@@ -59,6 +60,12 @@ export default defineComponent({
 		spaceName: String,
 		showType: String,
 		daoEndTime: String,
+		id: Number,
+	},
+	computed: {
+		fetch() {
+			return this.$store.state.eventList ? this.$store.state.eventList.list : []
+		},
 	},
 	mounted() {
 		this.calcTime()
@@ -207,6 +214,7 @@ section.right {
 .imgpic img {
 	width: 100%;
 	height: 100%;
+	object-fit: cover;
 }
 .main {
 	display: flex;

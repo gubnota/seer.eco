@@ -3,14 +3,14 @@ import { store } from '../main'
 export type messageType = {
 	timeout?: number
 	text?: string
+	type?: string
 }
 
-const comingSoon = (message?: messageType) => {
+export const popup = (message?: messageType) => {
 	store.dispatch('save', {
 		k: 'modal',
 		v: 'block',
 	})
-	console.log('comingSoon', message)
 	store.dispatch('save', {
 		k: 'comingSoon',
 		v: message,
@@ -25,21 +25,27 @@ const comingSoon = (message?: messageType) => {
 		a.querySelector('.actual-message').innerHTML = '<h2>Coming soon</h2>'
 	}
 	if (message.timeout === 0) return
-	setTimeout(
-		() => {
-			// a.style.display = 'none'
-			store.dispatch('save', {
-				k: 'modal',
-				v: 'none',
-			})
-		},
-		message.timeout ? message.timeout : 1000
-	)
+	let timeout = 1000
+	timeout = !!message ? 3000 : 1000
+	if (message.timeout) timeout = message.timeout
+	if (message.type) timeout = 1000 // passed click event – coming soon condition
+	console.log('popup', { message, timeout })
+	setTimeout(() => {
+		// a.style.display = 'none'
+		store.dispatch('save', {
+			k: 'modal',
+			v: 'none',
+		})
+	}, timeout)
 
 	// setTimeout(() => {
 	// 	a.style.display = 'none'
 	// }, 1000)
 }
+const comingSoon = (message?: messageType) => {
+	popup(message)
+}
+
 export const numberWithCommas = (x: number | string) => {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
@@ -130,5 +136,19 @@ export const scroll = () => {
 			}
 		}
 	}
+}
+export const fancyError = (error: { message: string }) => {
+	// if (error.message === 'EventStop') return 'This event has been stopped'
+	// if (error.message === 'DSNNameHasBeenSet')
+	// 	return 'The node name is already in use, please reset it'
+	// if (error.message === 'VoteExist')
+	// 	return 'This event has already been voted on'
+	// if (error.message === 'SignatureInvalid')
+	// 	return 'Please sign with the corresponding wallet account'
+
+	if (error.message.includes('code 401')) {
+		return 'Please log in to your wallet account first'
+	}
+	return error.message
 }
 export { comingSoon, getFQN, getAlias }

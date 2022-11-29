@@ -332,7 +332,7 @@ h3 {
 }
 .ellipsis {
 	text-overflow: ellipsis;
-	overflow: hidden;
+	/* overflow: hidden; */
 	width: 544px;
 }
 .scroll {
