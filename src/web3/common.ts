@@ -123,33 +123,16 @@ export type networkType = {
 	blockExplorerUrls: [string]
 }
 
-// export const PolygonDev = {
-// 	chainId: '0x13881',
-// 	chainName: 'Polygon Mumbai Testnet',
-// 	rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
-// 	nativeCurrency: {
-// 		name: 'Mumbai Matic',
-// 		symbol: 'MATIC',
-// 		decimals: 18,
-// 	},
-// 	blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-// }
 export const PolygonDev = {
-	chainId: '0x1', //'0x89',
-	chainName: 'Ethereum Mainnet', //'Polygon Mainnet',
-	rpcUrls: [
-		'https://rpc.ankr.com/eth',
-		'https://api.securerpc.com/v1',
-		// 'https://polygon-rpc.com/',
-		// 'https://polygon-mainnet-public.unifra.io',
-		// 'https://rpc.ankr.com/polygon',
-	],
+	chainId: '0x13881',
+	chainName: 'Polygon Mumbai Testnet',
+	rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
 	nativeCurrency: {
-		name: 'Ethereum', //'Mumbai Matic',
-		symbol: 'ETH', //'MATIC',
+		name: 'Mumbai Matic',
+		symbol: 'MATIC',
 		decimals: 18,
 	},
-	blockExplorerUrls: ['https://polygonscan.com/'],
+	blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
 }
 export const Polygon = {
 	chainId: '0x1', //'0x89',

@@ -93,8 +93,10 @@ export default defineComponent({
 				await this.web3.onLogin(() => {
 					// this.$store.dispatch('unset', ['eventList'])
 				})
-				await this.web3.login()
-
+				const loginRes = await this.web3.login()
+				// console.log('loginRes', loginRes)
+				// if (!loginRes)
+				this.$store.dispatch('save', { k: 'walletLoading', v: false })
 				// setTimeout(() => {
 				// 	window.location.reload()
 				// }, 3000)

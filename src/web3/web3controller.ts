@@ -42,12 +42,14 @@ export default class Web3Controller extends DSNController {
 				return true
 			})
 			// console.log('login connect', connect)
+			if (!connect) return Promise.resolve(false)
 		} catch (error) {
 			if (error.code == 4001) {
 				this.store.dispatch('save', { k: 'walletLoading', v: false })
 				this.popup({ text: error.message })
 			}
 		}
+
 		// setTimeout(async () => {
 		const info = await this.info()
 		// setTimeout(async () => {

@@ -52,13 +52,14 @@ export default class LoginController extends MetaController {
 
 	async connect(cb?: () => {}) {
 		var res = await this.enable(cb)
+		// console.log('await enable', res)
 		if (!res) return Promise.resolve(false)
 		var x = new Date()
 		var stamp = Math.floor(
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
-
+		// console.log('this.enable res', res)
 		var chain = window.ethereum.chainId || 1
 		// var address = window.ethereum.selectedAddress.toLocaleLowerCase()
 		var signature = await this.signLogin({

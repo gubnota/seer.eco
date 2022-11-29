@@ -8,8 +8,9 @@
 				<Mark />
 			</h3>
 			<div class="countdown" v-if="this.tab == 0">
-				<span>auto refresh after</span>
-				<b>{{ countdownFormatter(this.countdown) }}</b>
+				<b v-if="this.loading">Data refreshing</b>
+				<span v-if="!this.loading">auto refresh after</span>
+				<b v-if="!this.loading">{{ countdownFormatter(this.countdown) }}</b>
 				<span :class="{ loading: this.loading }" @click="refresh()"
 					>&nbsp;</span
 				>

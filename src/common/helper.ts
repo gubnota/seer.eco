@@ -156,4 +156,7 @@ export const countdownFormatter = (time: number) => {
 	let secs = time % 60
 	return `${mins}m ${secs}s`
 }
+export const pause = async (ms) => {
+	return new Promise((resolve) => setTimeout(resolve, ms))
+}
 export { comingSoon, getFQN, getAlias }

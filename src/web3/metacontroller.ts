@@ -1,3 +1,4 @@
+import { pause } from './../common/helper'
 import web3 from 'web3'
 // import login from './login'
 // import vote from './vote'
@@ -63,11 +64,21 @@ export default class MetaController {
 		// check if 0x13881 polygon Mumbai testnet
 		try {
 			// Try to switch to the Mumbai testnet
-			await window.ethereum.request({
+			const res1 = await window.ethereum.request({
 				method: 'wallet_switchEthereumChain',
 				params: [{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId }], // Check networks.js for hexadecimal network ids
 			})
+			await pause(1000)
+			// console.log(
+			// 	'changing chain id…',
+			// 	isDev() ? PolygonDev.chainId : Polygon.chainId,
+			// 	window.ethereum.chainId
+			// )
 		} catch (error) {
+			if (error.code === 4001) {
+				this.popup({ text: 'User rejected' })
+				return Promise.resolve(false)
+			} //user rejected
 			// This error code means that the chain we want has not been added to MetaMask
 			// In this case we ask the user to add it to their MetaMask
 			if (error.code === 4902) {
@@ -77,13 +88,18 @@ export default class MetaController {
 							method: 'wallet_addEthereumChain',
 							params: [isDev() ? PolygonDev : Polygon],
 						})
-						.then(async () => {
-							await window.ethereum.request({
+						.then(async (res3) => {
+							// console.log('res3', res3)
+							const res4 = await window.ethereum.request({
 								method: 'wallet_switchEthereumChain',
 								params: [
 									{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId },
 								], // Check networks.js for hexadecimal network ids
 							})
+							// console.log('res4', res4)
+						})
+						.then(() => {
+							return Promise.resolve(true)
 						})
 				} catch (error) {
 					console.log(error)
@@ -96,7 +112,9 @@ export default class MetaController {
 		const startTime = new Date()
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == isDev() ? PolygonDev.chainId : Polygon.chainId
-			await this.switch()
+			const switchRes = await this.switch()
+			console.log('switchRes', switchRes)
+			if (!switchRes) return Promise.resolve(false)
 			// if (window.ethereum.chainId !== isDev() ? PolygonDev.chainId : Polygon.chainId) {
 			// 	//'0x1'
 			// 	// this.popup({
