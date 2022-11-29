@@ -87,11 +87,12 @@ export default defineComponent({
 			this.next = this.sel < this.getNum ? this.sel + 1 : 0
 			// this.pagination()
 			if (this.$store.state.databasePage != num) {
-				this.web3.DSNList(
-					(num - 1) * this.perPage + 1,
-					this.perPage,
-					this.getSearchTerm
-				)
+				//TODO: remove per page logic
+				// this.web3.DSNList(
+				// 	(num - 1) * this.perPage + 1,
+				// 	this.perPage,
+				// 	this.getSearchTerm
+				// )
 				this.$store.dispatch('save', { k: 'databasePage', v: num })
 				setTimeout(() => {
 					scroll()

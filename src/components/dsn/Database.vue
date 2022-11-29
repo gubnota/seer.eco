@@ -124,7 +124,7 @@ export default defineComponent({
 			input,
 			samples,
 			fields,
-			perPage: 9,
+			perPage: 9, //9,
 			sync: [],
 			sortColumn: 7,
 			asc: false,
@@ -152,6 +152,7 @@ export default defineComponent({
 		setTimeout(() => {
 			scroll()
 		}, 200)
+		this.sortTable()
 	},
 	methods: {
 		sortFieldState(el: string) {
@@ -166,6 +167,7 @@ export default defineComponent({
 				this.asc = false
 				this.sortColumn = i
 			}
+			this.sortTable()
 			// if (i == 8) {
 			// 	this.sortState = this.sortState == 1 ? 2 : 1 // 1,2 3,4  'income_Seer/24h/30day'
 			// }
@@ -176,15 +178,20 @@ export default defineComponent({
 			// 	this.sortState = this.sortState == 3 ? 4 : 3 // 9,10  'income_Usdt/24h/30day'
 			// }
 		},
-		sortTable(table: [any]) {
+		sortTable() {
 			let col = Object.keys(this.fields)[this.sortColumn]
 			let asc = this.asc
-
+			let table = this.$store.state.dsnList.list
 			table.sort((a, b) => {
-				return asc ? (b.no > a.no ? 1 : -1) : b.no > a.no ? -1 : 1 //desc numeric
+				console.log(a, col, a[col])
+				// console.log(`a.col = ${a[col]}, b.col = ${b[col]}, ${asc}`)
+				return asc ? (b[col] > a[col] ? -1 : 1) : b[col] > a[col] ? 1 : -1 //desc numeric
 			})
 
-			return table
+			this.$store.dispatch('save', {
+				list: table,
+				total: this.$store.state.dsnList.total,
+			})
 		},
 		formTable(
 			input: [
@@ -229,7 +236,8 @@ export default defineComponent({
 			}
 			// here sort out values
 			// out.filter()
-			return this.sortTable(out)
+			let page = this.$store.state.databasePage || 1
+			return out.splice((page - 1) * this.perPage, this.perPage)
 		},
 		searchHandler(inp) {
 			let i = this.input
