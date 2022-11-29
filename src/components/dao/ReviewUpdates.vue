@@ -215,7 +215,7 @@ section.review {
 	align-items: stretch;
 	justify-content: center;
 	padding: 26px 24px;
-	min-height: 40vh;
+	/* min-height: 40vh; */
 }
 h3 {
 	font-weight: 600;
@@ -231,6 +231,7 @@ h3 {
 	overflow: visible;
 }
 h4 {
+	margin-top: 28px;
 	font-weight: 600;
 	font-size: 15px;
 	color: #1f2226;

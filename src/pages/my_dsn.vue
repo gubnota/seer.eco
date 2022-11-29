@@ -50,7 +50,12 @@
 							</td>
 						</tr>
 					</table>
-
+					<div class="row" v-if="this.els.length === 0">
+						<div class="empty">
+							<img :src="EmptyPic" style="margin-top: 100px" />
+							<p style="margin-bottom: 100px">No Data to show</p>
+						</div>
+					</div>
 					<MyDsnPagination
 						:total="totalNumber"
 						:selected="1"
@@ -72,6 +77,7 @@ import MyDsnPagination from '/src/components/dsn/MyDsnPagination.vue'
 import Threedots from '/src/assets/dsn/threedots.svg'
 import Off from '/src/assets/dsn/off.svg'
 import On from '/src/assets/dsn/on.svg'
+import EmptyPic from '/src/assets/dao/seer_noitems@2x.png'
 import SetNameModal from '../components/dsn/SetNameModal.vue'
 import OperateModal from '../components/dsn/OperateModal.vue'
 import { formatNumber, numberWithCommas } from '../common/helper'
@@ -120,7 +126,7 @@ const random = () => {
 
 export default defineComponent({
 	data() {
-		return { fields, perPage: 8, onProcess: false }
+		return { fields, perPage: 8, onProcess: false, EmptyPic }
 	},
 	computed: {
 		totalNumber() {
@@ -207,6 +213,25 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+.empty p {
+	font-size: 15px;
+	line-height: 22px;
+	text-align: center;
+	color: #9eadbe;
+}
+.empty {
+	gap: 17px;
+	flex-direction: column;
+	align-items: center;
+	display: flex;
+}
+.empty img {
+	height: 120px;
+	width: 89px;
+}
+.row {
+	justify-content: center;
+}
 main.dsndata {
 	color: #1f2226;
 	background: #f8f7fd;
