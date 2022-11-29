@@ -19,7 +19,7 @@ import { ui } from './assets/reviewer/ui'
 export { store }
 
 export const isDev = () => {
-	return (window.env || []).includes('dev') // production || release
+	return (window.env || 'production').includes('dev') // production || release
 }
 
 let ui_ = new ui()

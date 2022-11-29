@@ -8,11 +8,16 @@
 			accurately grasp the income changes. The first to establish a solid
 			pipeline income in the new world of web3.
 		</p>
-		<div class="row" v-if="this.$store.state.dsnList.list.length > 0">
-			<Nft_card :no="0" key="0" /><Nft_card :no="1" key="1" /><Nft_card
+		<div class="row" v-if="this.$store.state.dsnListTop.length > 0">
+			<Nft_card
+				:no="i"
+				key="i"
+				v-for="(el, i) in this.$store.state.dsnListTop"
+			/>
+			<!-- <Nft_card :no="1" key="1" /><Nft_card
 				:no="2"
 				key="2"
-			/>
+			/> -->
 		</div>
 	</div>
 </template>
@@ -44,6 +49,7 @@ p {
 
 .row {
 	gap: 32px;
+	justify-content: center;
 }
 @media (max-width: 1130px) {
 	h2 {

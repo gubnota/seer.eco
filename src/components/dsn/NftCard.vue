@@ -73,6 +73,9 @@ export default defineComponent({
 			if (!store.state.dsnListTop) return new Array(3).fill(sampleDsn)
 			return store.state.dsnListTop
 		},
+		count() {
+			return !store.state.dsnListTop ? 3 : store.state.dsnListTop.length
+		},
 	},
 	methods: {
 		grade(no) {

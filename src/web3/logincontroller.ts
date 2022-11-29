@@ -47,7 +47,6 @@ export default class LoginController extends MetaController {
 				JSON.stringify(msgParams),
 			],
 		})
-		console.log({ hash, msgParams })
 		return Promise.resolve(hash)
 	}
 
@@ -109,7 +108,7 @@ export default class LoginController extends MetaController {
 				})
 				return false
 			})
-		console.log('connect', res2)
+		// console.log('connect', res2)
 		return Promise.resolve(res2)
 		return false
 	}
