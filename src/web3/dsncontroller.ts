@@ -13,8 +13,8 @@ import { fancyError, getAlias, getFQN } from '../common/helper'
 declare const window: any
 export default class DSNController extends IncentiveController {
 	DSNList = async (
-		from: number = 1,
-		limit: number = 9,
+		from: number = 0, //1
+		limit: number = 0, //9
 		search: string = ''
 	) => {
 		const payload = {

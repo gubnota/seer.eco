@@ -19,12 +19,13 @@
 		<table>
 			<tr class="head" :ref="'head'">
 				<th
-					v-for="(el2, j) in fields"
+					v-for="(el2, j) in Object.values(fields)"
 					:class="{
-						//						asc: j == 2,
-						desc: j == 7,
+						desc: j == this.sortColumn && !this.asc,
+						asc: j == this.sortColumn && this.asc,
 						nosort: j == 0 || j == 1,
 					}"
+					@click="sortClick(j)"
 				>
 					<span>{{ el2 }}</span>
 				</th>
@@ -79,17 +80,18 @@ const arrow = `
 </svg>
 `
 declare const window: any
-const fields = [
-	'#',
-	'homeserver',
-	'total_Users',
-	'memory_Rss',
-	'cpu_Average',
-	'create/24h',
-	'active/24h/30day',
-	'Seer/24h/30day', //income_
-	'Usdt/24h/30day', //income_
-]
+const fields = {
+	no: '#',
+	homeserver: 'homeserver',
+	total_users: 'total_Users',
+	memory_rss: 'memory_Rss',
+	cpu_average: 'cpu_Average',
+	daily_user_type_native: 'create/24h',
+	monthly_active_users: 'active/24h/30day',
+	monthly_income_seer: 'Seer/24h/30day', //income_
+	monthly_income_usdt: 'Usdt/24h/30day', //income_
+}
+
 const random = () => {
 	let id = Math.floor(Math.random() * 10)
 	let arr = [
@@ -124,7 +126,8 @@ export default defineComponent({
 			fields,
 			perPage: 9,
 			sync: [],
-			sortState: 1,
+			sortColumn: 7,
+			asc: false,
 		}
 	},
 	computed: {
@@ -156,15 +159,32 @@ export default defineComponent({
 			return 0
 		},
 		sortClick(i: number) {
-			if (i == 8) {
-				this.sortState = this.sortState == 1 ? 2 : 1 // 1,2 3,4  'income_Seer/24h/30day'
+			if (i < 2) return
+			if (i == this.sortColumn) {
+				this.asc = !this.asc
+			} else {
+				this.asc = false
+				this.sortColumn = i
 			}
-			if (i == 9) {
-				this.sortState = this.sortState == 3 ? 4 : 3 // 5,6 7,8  'income_Usdt/24h/30day'
-			}
-			if (i == 3) {
-				this.sortState = this.sortState == 3 ? 4 : 3 // 9,10  'income_Usdt/24h/30day'
-			}
+			// if (i == 8) {
+			// 	this.sortState = this.sortState == 1 ? 2 : 1 // 1,2 3,4  'income_Seer/24h/30day'
+			// }
+			// if (i == 9) {
+			// 	this.sortState = this.sortState == 3 ? 4 : 3 // 5,6 7,8  'income_Usdt/24h/30day'
+			// }
+			// if (i == 3) {
+			// 	this.sortState = this.sortState == 3 ? 4 : 3 // 9,10  'income_Usdt/24h/30day'
+			// }
+		},
+		sortTable(table: [any]) {
+			let col = Object.keys(this.fields)[this.sortColumn]
+			let asc = this.asc
+
+			table.sort((a, b) => {
+				return asc ? (b.no > a.no ? 1 : -1) : b.no > a.no ? -1 : 1 //desc numeric
+			})
+
+			return table
 		},
 		formTable(
 			input: [
@@ -209,7 +229,7 @@ export default defineComponent({
 			}
 			// here sort out values
 			// out.filter()
-			return out
+			return this.sortTable(out)
 		},
 		searchHandler(inp) {
 			let i = this.input
