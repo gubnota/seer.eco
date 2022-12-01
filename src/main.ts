@@ -93,3 +93,13 @@ store.dispatch('save', {
 })
 
 app.mount('#app')
+window.onload = () => {
+	const docEnd = new Date().getTime()
+	const docStart = window.docStart ?? docEnd
+	const delay = docEnd - docStart > 1000 ? 0 : 1000 - (docEnd - docStart)
+	window.delay = delay
+	setTimeout(() => {
+		document.querySelector('#app').style.opacity = ''
+		document.body.classList.remove('loading')
+	}, delay)
+}

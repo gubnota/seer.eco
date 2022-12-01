@@ -2,7 +2,7 @@
 	<section class="data">
 		<div class="row">
 			<h3>My DSN data</h3>
-			<div class="btn" @click="handler">
+			<div class="btn cta" @click="handler">
 				<arrow class="arrow" />
 				<span>View details</span>
 			</div>
@@ -15,7 +15,7 @@
 			<div class="col">
 				<key>Memory load</key
 				><val class="rainbow">{{
-					memory_rss ? Math.ceil(memory_rss * 100) + '%' : '--'
+					memory_rss ? Math.round(memory_rss * 100) + '%' : '--'
 				}}</val>
 			</div>
 			<div class="col">
@@ -107,6 +107,9 @@ svg {
 	border: 1px solid #dfe1e2;
 	border-radius: 10px;
 	align-items: center;
+}
+.cta::after {
+	background-image: none;
 }
 .btn span {
 	font-weight: 600;

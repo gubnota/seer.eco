@@ -217,7 +217,7 @@ export default defineComponent({
 					no: el.no,
 					server: el.homeserver,
 					users: el.total_users,
-					memory: Math.ceil(el.memory_rss * 100) + '%',
+					memory: Math.round(el.memory_rss * 100) + '%',
 					cpu_load: el.cpu_average,
 					create: el.daily_user_type_native,
 					active: el.daily_active_users + ' / ' + el.monthly_active_users,

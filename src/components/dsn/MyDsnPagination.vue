@@ -1,5 +1,5 @@
 <template>
-	<nav class="pag">
+	<nav class="pag" v-if="els.length > 0">
 		<div class="btn" @click="goPrev">
 			<svg width="10" height="18" viewBox="0 0 10 18" fill="none">
 				<path

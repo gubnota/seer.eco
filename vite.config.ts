@@ -34,6 +34,7 @@ export default defineConfig({
 							'stroke',
 							'heading',
 							'box',
+							'action',
 						].includes(tag) //tag.startsWith('ion-') // (return true)
 					},
 				},

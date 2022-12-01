@@ -26,6 +26,19 @@
 		<img src="/03value/cube2.svg" alt="bee2" class="bee bee2" />
 		<img src="/03value/cube3.svg" alt="bee3" class="bee bee3" />
 		<img src="/03value/cube4.svg" alt="bee4" class="bee bee4" />
+
+		<div class="row row2">
+			<div
+				class="btn cta"
+				@click="
+					() => {
+						this.router.push('/pay')
+					}
+				"
+			>
+				<Cart /> <span>Quick entry</span>
+			</div>
+		</div>
 	</section>
 </template>
 <script lang="ts">
@@ -33,6 +46,7 @@ import opensealogo from '/src/assets/dsn/opensealogo.png'
 import x2y2logo from '/src/assets/dsn/x2y2logo.png'
 import looksrare from '/src/assets/dsn/looksrare.png'
 import element from '/src/assets/dsn/element.png'
+import Cart from '/src/assets/dsn/cart.svg'
 import { defineComponent } from 'vue'
 export default defineComponent({
 	data() {
@@ -65,9 +79,27 @@ export default defineComponent({
 			],
 		}
 	},
+	components: { Cart },
 })
 </script>
 <style scoped>
+.row2 {
+	justify-content: center;
+	margin-top: 34px;
+}
+div.btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 20px 45px;
+	gap: 10px;
+	border: 1px solid black;
+	border-radius: 10px;
+	font-weight: 600;
+	font-size: 15px;
+}
+
 section.market {
 	margin: 108px 0 124px;
 	position: relative;
@@ -235,6 +267,18 @@ block {
 	right: -40px;
 	animation-delay: 1200ms;
 }
+.btn svg {
+	fill: #1f2226;
+}
+
+.btn:hover svg,
+.btn:active svg {
+	fill: #ffffff !important;
+}
+.btn.cta::after {
+	background-image: none;
+}
+
 @media (max-width: 1130px) {
 	p {
 		padding: 0 1rem;

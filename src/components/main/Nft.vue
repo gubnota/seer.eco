@@ -136,6 +136,9 @@ h2 {
 	text-decoration: none;
 	color: black;
 }
+.cta::after {
+	background-image: none;
+}
 .cta:active {
 	transform: scale(0.95);
 }

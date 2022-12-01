@@ -16,6 +16,7 @@ import Dsn from './pages/dsn.vue'
 import MyDsn from './pages/my_dsn.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
+import Pay from './pages/pay.vue'
 
 export const openLink = (link: string) => {
 	let prev = window.location.hash
@@ -105,6 +106,7 @@ const routes = [
 	{ path: '/incentive-center', component: IncentiveCenter },
 	{ path: '/dsn', component: Dsn },
 	{ path: '/my_dsn', component: MyDsn },
+	{ path: '/pay', component: Pay },
 ]
 
 export default routes
