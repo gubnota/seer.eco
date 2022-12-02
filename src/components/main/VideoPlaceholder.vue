@@ -46,7 +46,7 @@ export default defineComponent({
 	name: 'VideoPlaceHolder',
 	data() {
 		return {
-			top: store.state.statsOffsetTop || 1000,
+			top: store.state.statsOffsetTop ?? 0, //1000
 			width: window.innerWidth,
 			video: '',
 			isMobile: window.innerWidth > 550 ? false : true,
@@ -60,11 +60,11 @@ export default defineComponent({
 		let video = document.querySelector('#bgvid')
 		this.video = '/asset/bg.mp4'
 		video.addEventListener('loadedmetadata', (e) => {
-			console.log('loadedmetadata')
 			let player = e.target as HTMLVideoElement
 			player.width = player.clientWidth
 			player.height = player.clientHeight
 		})
+		this.adjustStatsOffsetTop()
 	},
 	unmounted() {
 		window.removeEventListener('resize', this.myEvtHandler)
@@ -74,6 +74,16 @@ export default defineComponent({
 		myEvtHandler(e: Event) {
 			this.width = window.innerWidth
 			this.switch_bg_videos(e)
+		},
+		adjustStatsOffsetTop() {
+			if (!this.$store.state.statsOffsetTop) {
+				const a = document.querySelector('.stats')
+				if (!a) return
+				this.$store.dispatch('save', {
+					k: 'statsOffsetTop',
+					v: a.offsetTop + 55,
+				})
+			}
 		},
 		switch_bg_videos(e: Event) {
 			this.isMobile = this.width > 550 ? false : true

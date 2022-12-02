@@ -69,9 +69,7 @@
 					/></span>
 					<span class="value ellipsis">{{ ui.userName }}</span>
 				</div>
-				<div class="desc2 ellipsis">
-					{{ ui.detail /*ui2(, 526)*/ }}
-				</div>
+				<div class="desc2 ellipsis" v-html="detailHTML"></div>
 			</div>
 		</div>
 		<div class="footer">
@@ -90,6 +88,14 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
 	computed: {
+		detailHTML() {
+			let text = this.$store.state.eventDetail.detail
+			text = text.replace(/\n/g, '<br />')
+			var expression = /(https?:\/\/[^ <]+)/gi
+			var regex = new RegExp(expression)
+			text = text.replaceAll(regex, '<a href="$1" target="_blank">$1</a>')
+			return text
+		},
 		left() {
 			return this.$store.state.detail.left
 		},
@@ -301,6 +307,8 @@ h3 {
 }
 .contents > .desc2 {
 	overflow: initial;
+	display: block;
+	line-height: 140%;
 }
 
 .footer {

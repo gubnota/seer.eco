@@ -162,7 +162,7 @@ export default defineComponent({
 	},
 	methods: {
 		toggleMenu(evt) {
-			console.log(evt.target, 'toggleMenu')
+			// console.log(evt.target, 'toggleMenu')
 		},
 		onscroll(e) {
 			this.isSticky =

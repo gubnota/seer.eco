@@ -1,6 +1,6 @@
-import DSNController from './dsncontroller'
+import PayController from './paycontroller'
 declare const window: any
-export default class Web3Controller extends DSNController {
+export default class Web3Controller extends PayController {
 	addressPartially(address) {
 		if (!address) address = this.store.state.address
 		if (typeof address != 'string') {

@@ -66,6 +66,7 @@ export default defineComponent({
 			if (['/incentive-center'].find((a) => a === this.$route.path))
 				return '/dao'
 			if (this.$route.path === '/my_dsn') return '/dsn'
+			if (this.$route.path === '/pay') return '/dsn'
 			return '/'
 		},
 		loading() {

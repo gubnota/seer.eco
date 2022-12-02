@@ -59,6 +59,7 @@ export default class MetaController {
 		this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
 		this.web3js2 = new web3(isDev() ? web3js2NetDev : web3js2Net) // only to check ticketsNumber(): window.ethereum release, Polygon test dev
 		this.address = store.state.address
+		window.web3js = this.web3js
 	}
 	async switch() {
 		// check if 0x13881 polygon Mumbai testnet

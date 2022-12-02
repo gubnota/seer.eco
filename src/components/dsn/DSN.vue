@@ -1,5 +1,5 @@
 <template>
-	<div class="dsn">
+	<div class="dsn" v-if="this.$store.state.dsnListTop">
 		<h2 class="rainbow">super strong</h2>
 		<p>
 			The world's latest blockchain technology - dynamic NFT is used as the SEER
