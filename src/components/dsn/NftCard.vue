@@ -70,12 +70,28 @@ export default defineComponent({
 	props: { no: Number },
 	computed: {
 		dsn() {
-			if (!store.state.dsnListTop) return new Array(3).fill(sampleDsn)
+			if (!store.state.dsnListTop) return new Array(1).fill(sampleDsn) //3
 			return store.state.dsnListTop
 		},
 		count() {
 			return !store.state.dsnListTop ? 3 : store.state.dsnListTop.length
 		},
+	},
+	mounted() {
+		var a = document.querySelectorAll('.skill-bar')[0]
+		console.log('a', a)
+		var b = a.style.width
+		a.style.width = '0%'
+		setTimeout(() => {
+			a.style.width = b
+		}, 1000)
+		var c = document.querySelectorAll('.skill-bar')[1]
+		console.log('c', c)
+		var d = c.style.width
+		c.style.width = '0%'
+		setTimeout(() => {
+			c.style.width = d
+		}, 1000)
 	},
 	methods: {
 		grade(no) {
@@ -254,6 +270,7 @@ img.badge3 {
 	width: 0;
 	height: 8px;
 	border-radius: 4px;
+	transition: all 1s ease-in-out;
 }
 
 .skill-bar span {

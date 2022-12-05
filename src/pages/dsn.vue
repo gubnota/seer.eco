@@ -4,9 +4,14 @@
 		<main class="dsn">
 			<section class="main">
 				<Top isDsn="true" />
+			</section>
+			<div class="bg">
+				<div class="front"></div>
+				<img :src="dsnBg" />
+			</div>
+			<section class="main main2">
 				<Header />
-				<DSN />
-				<Market />
+				<DSNEl />
 				<Data />
 				<Database />
 				<Graph />
@@ -23,22 +28,25 @@ import Top from '../components/dao/Top.vue'
 import Footer from '../components/common/Footer.vue'
 import Modal from '../components/common/Modal.vue'
 import Header from '../components/dsn/Header.vue'
-import DSN from '../components/dsn/DSN.vue'
-import Market from '../components/dsn/Market.vue'
+import DSNEl from '../components/dsn/DSN.vue'
 import Data from '../components/dsn/Data.vue'
 import Database from '../components/dsn/Database.vue'
 import Graph from '../components/dsn/Graph.vue'
 import Bottom from '../components/dsn/Bottom.vue'
+import dsnBg from '/src/assets/dsn/dsn_bg.jpg'
+
 import { defineComponent } from 'vue'
 export default defineComponent({
+	data() {
+		return { dsnBg }
+	},
 	components: {
 		Top,
 		Footer,
 		Modal,
 		Bottom,
 		Header,
-		DSN,
-		Market,
+		DSNEl,
 		Data,
 		Database,
 		Graph,
@@ -62,6 +70,44 @@ export default defineComponent({
 section.wrapper2 {
 	/* height: 100vh; */
 }
+.bg {
+	/* background-color: aquamarine; */
+	content: '';
+	width: 100%;
+	height: 808px;
+	position: absolute;
+	left: 0;
+	top: 64px;
+	right: 0;
+	align-self: flex-start;
+}
+.bg .front {
+	height: 408px;
+	content: '';
+	z-index: 2;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	background: linear-gradient(
+		0deg,
+		#fcfcff 29.01%,
+		rgba(252, 252, 255, 0) 113.48%
+	);
+}
+.bg img {
+	z-index: 1;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	height: 408px;
+	width: 100%;
+	object-fit: cover;
+}
 main.dsn {
 	background: linear-gradient(
 		180deg,
@@ -75,6 +121,9 @@ main.dsn {
 	flex-direction: column;
 	flex: 1;
 	align-items: center;
+}
+main.dsn {
+	position: relative;
 }
 section.main {
 	flex: 1;

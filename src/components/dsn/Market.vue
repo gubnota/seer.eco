@@ -1,9 +1,5 @@
 <template>
 	<section class="market">
-		<heading class="rainbow">Market</heading>
-		<p>
-			On-line display of the world's three major open nft trading platforms.
-		</p>
 		<!-- <div class="col">
 			<div class="row"> -->
 		<blockss>
@@ -15,19 +11,19 @@
 			>
 				<img :src="el.logo" :alt="el.name" class="logo" />
 				<h3>{{ el.name }}</h3>
-				<p>{{ el.text }}</p>
+				<!-- <p>{{ el.text }}</p> -->
 				<!-- <router-link :to="{ path: el.hash }">{{ el.name }}</router-link> -->
 			</block>
 		</blockss>
 
 		<!-- </div> -->
 		<!-- </div> -->
-		<img src="/03value/cube1.svg" alt="bee1" class="bee bee1" />
+		<!-- <img src="/03value/cube1.svg" alt="bee1" class="bee bee1" />
 		<img src="/03value/cube2.svg" alt="bee2" class="bee bee2" />
 		<img src="/03value/cube3.svg" alt="bee3" class="bee bee3" />
-		<img src="/03value/cube4.svg" alt="bee4" class="bee bee4" />
+		<img src="/03value/cube4.svg" alt="bee4" class="bee bee4" /> -->
 
-		<div class="row row2">
+		<!-- <div class="row row2">
 			<div
 				class="btn cta"
 				@click="
@@ -38,7 +34,7 @@
 			>
 				<Cart /> <span>Quick entry</span>
 			</div>
-		</div>
+		</div> -->
 	</section>
 </template>
 <script lang="ts">
@@ -92,7 +88,7 @@ div.btn {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	padding: 20px 45px;
+	padding: 14px 20px;
 	gap: 10px;
 	border: 1px solid black;
 	border-radius: 10px;
@@ -101,7 +97,7 @@ div.btn {
 }
 
 section.market {
-	margin: 108px 0 124px;
+	margin: 0 0 124px;
 	position: relative;
 	gap: 16px;
 	flex-direction: column;
@@ -136,28 +132,44 @@ heading ~ p {
 }
 blockss {
 	margin-top: 21px;
-	display: grid;
+	/* display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
 	grid-template-areas: 'col1 col2' 'col3 col4';
-	gap: 60px 30px;
+	gap: 60px 30px; */
 	max-width: 790px;
 	align-self: center;
+	display: flex;
+	flex-direction: row;
+	gap: 33px;
+	height: 169px;
 }
 block {
 	cursor: pointer;
 	position: relative;
 	color: #1f2226;
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	padding: 50px 20px 20px 20px;
+	flex-direction: row;
+	align-items: center;
+	padding: 14px 20px;
 	gap: 16px;
 	z-index: 1;
 	transition: all 0.2s ease-in-out;
+	width: 99px;
+	height: 89.47px;
+}
+block h3 {
+	display: none;
+	transition: all 1s linear;
+	width: 10px;
 }
 block:hover {
-	transform: translateY(-10px);
+	width: 218.84px;
+	/* transform: translateY(-10px); */
+}
+block:hover h3 {
+	display: block;
+	width: auto;
 }
 h3 {
 	font-weight: 600;
@@ -216,16 +228,15 @@ block:nth-child(4) {
 	box-shadow: 1px -1px 0 #00f9a688, 0 0 10px rgba(171, 171, 171, 0.35);
 }
 block {
-	width: 377px;
-	height: 169px;
+	/* width: 377px; */
 	position: relative;
 	border: 1px solid #ffffff;
 	border-radius: 10px;
 }
 .logo {
-	position: absolute;
+	/* position: absolute;
 	left: 18px;
-	top: -30px;
+	top: -30px; */
 	width: 60px;
 	height: 60px;
 	z-index: 1;

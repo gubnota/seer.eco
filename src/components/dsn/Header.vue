@@ -2,18 +2,29 @@
 	<section class="header">
 		<part>
 			<h1>SEER-DSN</h1>
-			<text class="rainbow"
-				>Configure a yield machine for your WEB3 traffic</text
-			>
+			<text>Configure a yield machine for your WEB3 traffic</text>
+			<h2>Brief Introduction</h2>
+			<p>
+				The world's latest blockchain technology - dynamic NFT is used as the
+				SEER (DSN) social data distributed storage node equity container, and
+				the server value changes are synchronized in real time on the chain to
+				accurately grasp the income changes. The first to establish a solid
+				pipeline income in the new world of web3.
+			</p>
+			<Countdown />
 		</part>
 		<ill>
-			<img :src="nft_cube_j" :srcset="nft_cube_w" class="nft_c" />
+			<NftSample />
+			<!-- <img :src="nft_cube_j" :srcset="nft_cube_w" class="nft_c" /> -->
 		</ill>
 	</section>
 </template>
 <script lang="ts">
 import nft_cube_j from '/src/assets/dsn/nft_cube_white@2x.jpg'
 import nft_cube_w from '/src/assets/dsn/nft_cube_white@2x.webp'
+import NftSample from '/src/assets/dsn/nft_sample.svg'
+import Countdown from './Countdown.vue'
+
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -23,17 +34,25 @@ export default defineComponent({
 			nft_cube_w,
 		}
 	},
+
+	components: { NftSample, Countdown },
 })
 </script>
 <style scoped>
+svg {
+	filter: drop-shadow(1px 19px 24px rgba(149, 149, 149, 0.67));
+}
 section.header {
+	z-index: 3;
+	/* min-height: 550px; */
 	color: #1f2226;
 	margin-top: 39px;
 	display: flex;
 	flex-direction: row;
-	gap: 67px;
-	align-items: center;
-	/* background-color: aquamarine; */
+	gap: 120px;
+	align-items: flex-start;
+	min-height: 813px;
+	padding-top: 112px;
 }
 h1 {
 	font-weight: 600;
@@ -41,11 +60,29 @@ h1 {
 	text-align: left;
 }
 text {
-	font-weight: 600;
 	font-size: 25px;
+	font-weight: 400;
 	line-height: 123%;
 	font-family: 'Poppins';
 	text-transform: capitalize;
+}
+h2 {
+	font-weight: 600;
+	font-size: 18px;
+	margin-block-start: 12px;
+	margin-block-end: 8px;
+}
+p {
+	font-weight: 400;
+	font-size: 15px;
+	line-height: 123%;
+	margin-block-end: 54px;
+	max-width: 606px;
+}
+h3 {
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 123%;
 }
 part,
 ill {
@@ -55,14 +92,18 @@ ill {
 	justify-content: center;
 }
 part {
-	flex: 607;
+	/* flex: 607; */
 	align-items: flex-start;
 	/* background-color: firebrick; */
 }
 ill {
-	height: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	/* height: 400px; */
 	/* background-color: firebrick; */
-	flex: 446;
+	/* flex: 446; */
 }
 ill img {
 	max-width: 100vw;

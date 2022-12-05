@@ -11,9 +11,9 @@
 			<section>
 				<main class="l">
 					<h2>Confirm your order</h2>
-					<h3>Redemption Code</h3>
+					<h3>Invitation code</h3>
 					<p>
-						If you have coupons, you can use them to get discounts on your
+						If you have invite codes, you can use them to get discounts on
 						purchases.
 					</p>
 					<form spellcheck="false">
@@ -21,13 +21,14 @@
 							type="text"
 							name="coupon"
 							id="coupon"
-							placeholder="enter coupon"
+							placeholder="Enter invitation code"
 							v-model="coupon"
+							maxlength="6"
 							autocomplete="off"
 							@input="couponHandler"
 							:class="{ error: couponError }"
 						/>
-						<h4>Enter Address</h4>
+						<!-- <h4>Enter Address</h4>
 						<input
 							type="text"
 							name="address"
@@ -37,7 +38,7 @@
 							autocomplete="off"
 							@input="addressHandler"
 							:class="{ error: addressError }"
-						/>
+						/> -->
 						<h4>Enter the Quantity</h4>
 						<input
 							type="text"
@@ -139,6 +140,7 @@ export default defineComponent({
 			// this.router.push('/dsn')
 			// let r1 = await this.web3.enable()
 		}
+		await this.web3.createPayContracts()
 		let r1 = await this.web3.testPayNetwork()
 		if (!r1) this.router.push('/dsn')
 		this.unitPrice = (await this.web3.payPrice()) ?? 0
@@ -295,8 +297,8 @@ export default defineComponent({
 			}
 			let r3 = await this.web3.payBuy(
 				this.quantity,
-				this.coupon.trim(),
-				this.addr
+				this.coupon.trim()
+				// this.addr
 			)
 			if (r3) {
 				this.popup({ text: 'Success!' })
@@ -417,6 +419,7 @@ main.l p {
 }
 main.l h4 {
 	margin-block-start: 22px;
+	margin-block-end: 11px;
 }
 section.wrapper > *:first-child {
 	flex: 678;

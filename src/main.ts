@@ -36,8 +36,21 @@ const router = createRouter({
 	// history: createWebHistory(),
 	routes, // short for `routes: routes`
 })
+router.beforeEach((to, from) => {
+	if (!['/sdid', '/coming-soon'].includes(to.path)) {
+		// console.log('beforeEach', to, from)
+		// document.body.classList.add('loading')
+		document.querySelector('#app').style.opacity = 0
+		setTimeout(() => {
+			// document.body.classList.remove('loading')
+			document.querySelector('#app').style.opacity = 1
+		}, 500)
+	}
+})
+
 router.afterEach((to, from) => {
 	setTitle(to)
+
 	if (to.path.search('/https://') === 0) {
 		window.open(to.path.substring(1), '_blank')
 		router.back()
@@ -78,6 +91,7 @@ store.dispatch('load', [
 	'daoRulesVisited',
 	'dsnListTop',
 	'dsnList',
+	'paySellInfo',
 ])
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 

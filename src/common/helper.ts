@@ -36,6 +36,10 @@ export const popup = (message?: messageType) => {
 			k: 'modal',
 			v: 'none',
 		})
+		store.dispatch('save', {
+			k: 'loading',
+			v: false,
+		})
 	}, timeout)
 
 	// setTimeout(() => {
@@ -156,7 +160,23 @@ export const countdownFormatter = (time: number) => {
 	let secs = time % 60
 	return `${mins}m ${secs}s`
 }
+export const countdownObj = (time: number) => {
+	// days, hrs, mins, secs
+	let days = Math.floor(time / (24 * 3600))
+	let hours = Math.floor((time - days * 24 * 3600) / 3600)
+	let mins = Math.floor((time - days * 24 * 3600 - hours * 3600) / 60)
+	let secs = time % 60
+	return { days, hours, mins, secs }
+}
+
 export const pause = async (ms) => {
 	return new Promise((resolve) => setTimeout(resolve, ms))
+}
+export const convertUTCString = (time: number) => {
+	const a = new Date(time * 1000)
+	return `${a.getUTCFullYear()}/${
+		a.getUTCMonth() + 1
+	}/${a.getUTCDate()} ${a.getUTCHours()}:${a.getUTCMinutes()} (UTC)`
+	// 1670234400
 }
 export { comingSoon, getFQN, getAlias }

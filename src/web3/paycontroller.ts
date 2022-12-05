@@ -8,10 +8,17 @@ import usdtAbi from '../common/usdt_abi.json'
 declare const window: any
 export default class PayController extends DSNController {
 	USDT = '0xa8c497D6A54fbe3cce944417C87d1cFba0419B3E'
-	PayDSN = '0xf2Aa7DE215b15Ce42f41ABfC49268B9F0Cb8B416'
+	PayDSN = '0x2FD4e2833b30b79b150d8D39D6bC4Dcd8230868B'
 	public PayDSNContract: any
 	public USDTContract: any
 
+	async createPayContracts() {
+		const Contract = this.web3js.eth.Contract // @ts-ignore
+		this.PayDSNContract = new Contract(dsnAbi, this.PayDSN) // @ts-ignore
+		this.USDTContract = new Contract(usdtAbi, this.USDT)
+		window.PayDSNContract = this.PayDSNContract
+		window.USDTContract = this.USDTContract
+	}
 	async testPayNetwork() {
 		try {
 			// Try to switch to the Mumbai testnet
@@ -21,12 +28,6 @@ export default class PayController extends DSNController {
 					params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
 				})
 			}
-
-			const Contract = this.web3js.eth.Contract // @ts-ignore
-			this.PayDSNContract = new Contract(dsnAbi, this.PayDSN) // @ts-ignore
-			this.USDTContract = new Contract(usdtAbi, this.USDT)
-			window.PayDSNContract = this.PayDSNContract
-			window.USDTContract = this.USDTContract
 			return Promise.resolve(true)
 		} catch (error) {
 			console.log('testPayNetwork err', error)
@@ -37,15 +38,41 @@ export default class PayController extends DSNController {
 		}
 	}
 
-	async payPrice() {
-		//get unit price
+	async paySellInfo() {
+		const a = this.store.state.paySellInfo,
+			b = Math.ceil(new Date().getTime() / 1000)
+
+		if (a && a.expiry > b) {
+			return Promise.resolve(this.store.state.paySellInfo.data)
+		}
+
 		try {
-			const a = await this.PayDSNContract.methods.price().call()
-			return Promise.resolve(parseFloat(this.web3js.utils.fromWei(a, 'mwei')))
+			const c = await this.PayDSNContract.methods.sellInfo().call()
+			this.store.dispatch('save', {
+				k: 'paySellInfo',
+				v: {
+					expiry: b + 1000,
+					data: c,
+				},
+			})
+			return Promise.resolve(c)
 		} catch (e) {
 			this.popup({ text: e.toString() })
-			return Promise.resolve(0)
+			return Promise.resolve({
+				price: '0',
+				selled: '0',
+				stopTime: '0',
+				total: '0',
+			})
 		}
+	}
+
+	async payPrice() {
+		//get unit price
+		const a = await this.paySellInfo()
+		return Promise.resolve(
+			parseFloat(this.web3js.utils.fromWei(a['price'], 'mwei'))
+		)
 	}
 	async payDiscount(coupon: string) {
 		//get multiplier, multi*price = totalPrice
@@ -65,17 +92,19 @@ export default class PayController extends DSNController {
 		return Promise.resolve(parseFloat(this.web3js.utils.fromWei(a, 'mwei'))) // 1500
 	}
 
-	async payBuy(qty: number = 1, coupon: string = '', ref: string = '') {
-		if (ref == '' || !this.web3js.utils.isAddress(ref))
-			ref = `0x${new Array(40).fill(0).join('')}`
-		console.log('buy', qty.toString(), coupon, ref)
+	async payBuy(qty: number = 1, coupon: string = '') {
+		//, ref: string = ''
+		// if (ref == '' || !this.web3js.utils.isAddress(ref))
+		// 	ref = `0x${new Array(40).fill(0).join('')}`
+		// console.log('buy', qty.toString(), coupon, ref)
 		try {
 			const a = await this.PayDSNContract.methods
-				.buy(qty.toString(), coupon, ref) //buy(数量，口令，邀请人)
+				.buy(qty.toString(), coupon) //buy(数量，口令) before ref邀请人)
 				.send({ from: this.address })
 			return Promise.resolve(true)
 		} catch (e) {
 			this.popup({ text: e.code + ' ' + e.message })
+			console.log('payBuy false')
 			this.store.dispatch('save', {
 				k: 'loading',
 				v: false,
