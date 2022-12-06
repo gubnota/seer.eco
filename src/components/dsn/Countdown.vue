@@ -65,7 +65,7 @@ const convertUTCString = (time: number) => {
 export default defineComponent({
 	data() {
 		return {
-			isNotExpired: true,
+			isNotExpired: false,
 			s: { price: '0', selled: '0', stopTime: '0', total: '0' },
 			cd: { days: '0', hours: '0', mins: '0', secs: '0' },
 			diff: 0,
