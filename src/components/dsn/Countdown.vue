@@ -1,68 +1,92 @@
 <template>
 	<div v-if="isNotExpired" class="main">
 		<div class="col">
-			<h3>STOP TIME {{ getStopTime }}</h3>
+			<h3>STOP TIME {{ this.stopTime }}</h3>
 			<div class="row r1">
 				<div class="row r3">
 					<div class="cal">
 						<span class="k"><span>Days</span></span>
-						<span class="v rainbow">{{ countdownObj.days }}</span>
+						<span class="v rainbow">{{ this.cd.days }}</span>
 					</div>
 					<div class="sep">:</div>
 					<div class="cal">
 						<span class="k"><span> Hrs</span></span>
-						<span class="v rainbow">{{ countdownObj.hours }}</span>
+						<span class="v rainbow">{{ this.cd.hours }}</span>
 					</div>
 					<div class="sep">:</div>
 					<div class="cal">
 						<span class="k"><span>Mins</span></span>
-						<span class="v rainbow">{{ countdownObj.mins }}</span>
+						<span class="v rainbow">{{ this.cd.mins }}</span>
 					</div>
 				</div>
 				<div class="divider">&nbsp;</div>
 				<div class="r2 row">
 					<div class="pair">
 						<div class="k">PRICE:</div>
-						<div class="v">{{ this.fromWei(s.price) }}USDT</div>
+						<div class="v">{{ this.fromWei(this.s.price) }}USDT</div>
 					</div>
 					<div class="pair">
 						<div class="k">Minted:</div>
-						<div class="v">{{ s.selled }}/{{ s.total }}</div>
+						<div class="v">{{ this.s.selled }}/{{ this.s.total }}</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="btn" @click="goToPay"><Coin /><span>Mint</span></div>
+		<div class="btn" @click="goToPay">
+			<Coin class="coin" /><span>Mint</span>
+		</div>
 	</div>
 	<h3 v-else>The Event Has Ended <br />Please Stay Tuned！</h3>
 </template>
 <script lang="ts">
-import { convertUTCString, countdownObj } from '../../common/helper'
+// import { convertUTCString, countdownObj } from '../../common/helper' // hmr stops working if used
 import Coin from '/src/assets/dsn/coin.svg'
+import { defineComponent } from 'vue'
 
-export default {
+const countdownObj = (time: number) => {
+	// days, hrs, mins, secs
+	let days = Math.floor(time / (24 * 3600))
+	let hours = Math.floor((time - days * 24 * 3600) / 3600)
+	let mins = Math.floor((time - days * 24 * 3600 - hours * 3600) / 60)
+	let secs = time % 60
+	return { days, hours, mins, secs }
+}
+const convertUTCString = (time: number) => {
+	const a = new Date(time * 1000)
+	return `${a.getUTCFullYear()}/${(a.getUTCMonth() + 1)
+		.toString()
+		.padStart(2, '0')}/${a.getUTCDate().toString().padStart(2, '0')} ${a
+		.getUTCHours()
+		.toString()
+		.padStart(2, '0')}:${a.getUTCMinutes().toString().padStart(2, '0')} (UTC)`
+	// 1670234400
+}
+
+export default defineComponent({
 	data() {
 		return {
 			isNotExpired: true,
 			s: { price: '0', selled: '0', stopTime: '0', total: '0' },
+			cd: { days: '0', hours: '0', mins: '0', secs: '0' },
 			diff: 0,
+			stopTime: '',
 		}
 	},
-	computed: {
-		countdownObj() {
-			return countdownObj(this.diff)
-		},
-		getStopTime() {
-			return convertUTCString(this.s.stopTime ?? new Date().getTime() / 1000)
-		},
-	},
 	async mounted() {
-		await this.web3.createPayContracts()
-		this.s = await this.web3.paySellInfo()
-		const x = new Date()
-		this.diff =
-			Math.floor(parseInt(this.s.stopTime)) - Math.floor(x.getTime() / 1000)
-		if (this.diff > 0) this.isNotExpired = true
+		try {
+			await this.web3.createPayContracts()
+			this.s = await this.web3.paySellInfo()
+			const x = new Date()
+			this.diff =
+				Math.floor(parseInt(this.s.stopTime)) - Math.floor(x.getTime() / 1000)
+			if (this.diff > 0) this.isNotExpired = true
+			this.cd = countdownObj(this.diff)
+			this.stopTime = convertUTCString(
+				this.s.stopTime ?? new Date().getTime() / 1000
+			)
+		} catch (error) {
+			console.log(error)
+		}
 	},
 	methods: {
 		goToPay() {
@@ -72,16 +96,13 @@ export default {
 			if (this.web3.web3js) {
 				return this.web3.web3js.utils.fromWei(a, 'mwei')
 			} else {
-				return parseInt(a) / 1000000
+				return parseInt(a.toString()) / 1000000
 			}
-		},
-		convertUTCString() {
-			convertUTCString(this.s.stopTime)
 		},
 	},
 
 	components: { Coin },
-}
+})
 </script>
 <style scoped>
 div.main {
@@ -98,6 +119,17 @@ div.main {
 	border: 1px solid #1f2226;
 	border-radius: 10px;
 	align-self: flex-start;
+	background: transparent;
+}
+.btn svg {
+	fill-rule: evenodd;
+	clip-rule: evenodd;
+	fill: #1f2226;
+}
+
+.btn:hover {
+	color: white;
+	background: linear-gradient(-90deg, #aa1fff, #2ba1ff);
 }
 .col {
 	display: flex;
@@ -206,5 +238,10 @@ h3 {
 	.btn {
 		align-self: center;
 	}
+}
+</style>
+<style>
+.btn:hover svg.coin path {
+	fill: white;
 }
 </style>
