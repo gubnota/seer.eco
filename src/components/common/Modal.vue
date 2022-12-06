@@ -26,7 +26,7 @@ export default defineComponent({
 	},
 	methods: {
 		bgClick(e) {
-			console.log('bgClick', e.target)
+			// console.log('bgClick', e.target)
 			this.$store.dispatch('save', {
 				k: 'modal',
 				v: 'none',

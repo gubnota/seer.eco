@@ -50,7 +50,8 @@ const comingSoon = (message?: messageType) => {
 	popup(message)
 }
 
-export const numberWithCommas = (x: number | string) => {
+export const numberWithCommas = (x: number | string | boolean) => {
+	if (!x) return ''
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
@@ -174,9 +175,12 @@ export const pause = async (ms) => {
 }
 export const convertUTCString = (time: number) => {
 	const a = new Date(time * 1000)
-	return `${a.getUTCFullYear()}/${
-		a.getUTCMonth() + 1
-	}/${a.getUTCDate()} ${a.getUTCHours()}:${a.getUTCMinutes()} (UTC)`
+	return `${a.getUTCFullYear()}/${(a.getUTCMonth() + 1)
+		.toString()
+		.padStart(2, '0')}/${a.getUTCDate().toString().padStart(2, '0')} ${a
+		.getUTCHours()
+		.toString()
+		.padStart(2, '0')}:${a.getUTCMinutes().toString().padStart(2, '0')} (UTC)`
 	// 1670234400
 }
 export { comingSoon, getFQN, getAlias }

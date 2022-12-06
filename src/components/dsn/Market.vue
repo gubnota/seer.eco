@@ -18,10 +18,6 @@
 
 		<!-- </div> -->
 		<!-- </div> -->
-		<!-- <img src="/03value/cube1.svg" alt="bee1" class="bee bee1" />
-		<img src="/03value/cube2.svg" alt="bee2" class="bee bee2" />
-		<img src="/03value/cube3.svg" alt="bee3" class="bee bee3" />
-		<img src="/03value/cube4.svg" alt="bee4" class="bee bee4" /> -->
 
 		<!-- <div class="row row2">
 			<div
@@ -157,11 +153,12 @@ block {
 	transition: all 0.2s ease-in-out;
 	width: 99px;
 	height: 89.47px;
+	overflow: hidden;
 }
 block h3 {
 	display: none;
 	transition: all 1s linear;
-	width: 10px;
+	opacity: 0;
 }
 block:hover {
 	width: 218.84px;
@@ -170,6 +167,7 @@ block:hover {
 block:hover h3 {
 	display: block;
 	width: auto;
+	opacity: 1;
 }
 h3 {
 	font-weight: 600;
@@ -241,73 +239,34 @@ block {
 	height: 60px;
 	z-index: 1;
 }
-@keyframes buzybuzz {
-	0% {
-		transform: rotate(0deg); /*360*/
-	}
-	100% {
-		transform: rotate(360deg); /*0 */
-	}
-}
-
-.bee {
-	animation: buzybuzz 2.5s infinite linear;
-	position: absolute;
-	animation-play-state: running;
-}
-.bee:hover {
-	animation-play-state: paused;
-}
-.bee4 {
-	top: 276px;
-	left: 58px;
-	width: 50px;
-}
-.bee1 {
-	top: 436px;
-	left: 0px;
-	animation-delay: 400ms;
-}
-.bee2 {
-	top: -59px;
-	right: 100px;
-	animation-delay: 800ms;
-}
-.bee3 {
-	top: 30px;
-	right: -40px;
-	animation-delay: 1200ms;
-}
-.btn svg {
-	fill: #1f2226;
-}
-
-.btn:hover svg,
-.btn:active svg {
-	fill: #ffffff !important;
-}
-.btn.cta::after {
-	background-image: none;
-}
 
 @media (max-width: 1130px) {
 	p {
 		padding: 0 1rem;
 	}
 	blockss {
-		align-self: center;
-		gap: 60px;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
+		flex-direction: column;
+		width: 100%;
+		height: auto;
+		align-items: center;
+		/* align-self: center; */
+		/* gap: 10px;
+		grid-template-columns: 2fr;
+		grid-template-rows: 2fr;
 		grid-template-areas:
-			'col1'
-			'col2'
-			'col3'
-			'col4';
+			'col1 col2'
+			'col3 col4'; */
 	}
 	block {
-		width: calc(100% - 2rem);
+		/* width: calc(100% - 2rem); */
 		justify-self: center;
+	}
+	block {
+		width: 218.84px;
+	}
+	block h3 {
+		display: block;
+		opacity: 1;
 	}
 	.bee {
 		display: none;

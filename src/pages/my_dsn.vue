@@ -5,7 +5,7 @@
 	<div class="content">
 		<Modal />
 		<nav class="tophead">
-			<div><Top isDsn="true" /></div>
+			<div><Top :isDsn="true" /></div>
 		</nav>
 		<main class="dsndata">
 			<section class="main">
@@ -163,7 +163,7 @@ export default defineComponent({
 				v: this.els[id],
 			})
 
-			console.log('setName', this.els[id], id)
+			// console.log('setName', this.els[id], id)
 		},
 		operateModal(id: number) {
 			console.log(this.els[id])

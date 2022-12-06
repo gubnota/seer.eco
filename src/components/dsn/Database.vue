@@ -1,6 +1,6 @@
 <template>
 	<section class="database">
-		<h2>Database(1000) parameter has been determined</h2>
+		<h2>List of DSN Data</h2>
 		<div class="row bar">
 			<div class="search">
 				<magnifier />
@@ -181,14 +181,15 @@ export default defineComponent({
 		sortTable() {
 			let col = Object.keys(this.fields)[this.sortColumn]
 			let asc = this.asc
-			let table = this.$store.state.dsnList.list
+			let a = this.$store.state.dsnList
+			let table = a ? a.list : []
 			table.sort((a, b) => {
 				return asc ? (b[col] > a[col] ? -1 : 1) : b[col] > a[col] ? 1 : -1 //desc numeric
 			})
 
 			this.$store.dispatch('save', {
 				list: table,
-				total: this.$store.state.dsnList.total,
+				total: a ? a.total : 0,
 			})
 		},
 		formTable(

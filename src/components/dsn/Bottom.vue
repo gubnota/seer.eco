@@ -97,7 +97,7 @@ block.b {
 	display: flex;
 	flex-direction: column;
 	gap: 36px;
-	width: 100%;
+	width: 351px;
 	flex: 1;
 	height: 100%;
 }
@@ -205,6 +205,7 @@ line.b {
 @media screen and (max-width: 1024px) {
 	block.a {
 		margin-top: 0;
+		align-self: center;
 	}
 	line.a {
 		flex-direction: column;

@@ -89,8 +89,10 @@ h3 {
 		align-items: center;
 	}
 	div.dsn {
+		margin-top: 2rem;
 		width: calc(100% - 2rem);
 		align-self: center;
+		flex-direction: column;
 	}
 }
 </style>

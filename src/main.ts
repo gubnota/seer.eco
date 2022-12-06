@@ -37,7 +37,7 @@ const router = createRouter({
 	routes, // short for `routes: routes`
 })
 router.beforeEach((to, from) => {
-	if (!['/sdid', '/coming-soon'].includes(to.path)) {
+	if (!['/sdid', '/coming-soon', '/pay', '/dsn', '/dao'].includes(to.path)) {
 		// console.log('beforeEach', to, from)
 		// document.body.classList.add('loading')
 		document.querySelector('#app').style.opacity = 0

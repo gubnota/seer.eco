@@ -156,3 +156,7 @@ export const web3js2NetDev = 'https://rpc.ankr.com/eth' // 'https://matic-mumbai
 export const web3js2Net = 'https://rpc.ankr.com/eth' //'https://cloudflare-eth.com', 'https://eth-mainnet-public.unifra.io',
 export const locationLinkDev = 'app.seer.eco' //dev
 export const locationLink = 'app.seer.eco'
+export const payDev = 'https://rpc.ankr.com/eth_goerli' // for /pay page and dsn related paycontroller
+export const pay = 'https://rpc.ankr.com/eth_goerli' //
+export const eth = 'https://rpc.ankr.com/eth' // main network for non-Metamask browsers
+export const ethDev = 'https://rpc.ankr.com/eth' // main network for non-Metamask browsers

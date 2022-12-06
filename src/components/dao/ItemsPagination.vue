@@ -1,6 +1,6 @@
 <template>
 	<nav class="pag" v-if="els.length > 0">
-		<div class="btn">
+		<div class="btn" @click="goPrev">
 			<svg width="10" height="18" viewBox="0 0 10 18" fill="none">
 				<path
 					d="M8.49984 16.92L1.97984 10.4C1.20984 9.62996 1.20984 8.36996 1.97984 7.59996L8.49984 1.07996"
@@ -22,7 +22,7 @@
 				{{ el }}
 			</div>
 		</div>
-		<div class="btn">
+		<div class="btn" @click="goNext">
 			<svg width="10" height="18" viewBox="0 0 10 18" fill="none">
 				<path
 					d="M1.41016 16.92L7.93016 10.4C8.70016 9.62996 8.70016 8.36996 7.93016 7.59996L1.41016 1.07996"

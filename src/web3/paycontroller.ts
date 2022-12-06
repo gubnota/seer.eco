@@ -4,6 +4,7 @@ import { Polygon, PolygonDev } from './common'
 import DSNController from './dsncontroller'
 import dsnAbi from '../common/dsn_sell_abi.json'
 import usdtAbi from '../common/usdt_abi.json'
+import web3 from 'web3'
 
 declare const window: any
 export default class PayController extends DSNController {
@@ -13,7 +14,9 @@ export default class PayController extends DSNController {
 	public USDTContract: any
 
 	async createPayContracts() {
-		const Contract = this.web3js.eth.Contract // @ts-ignore
+		const web = new web3('https://rpc.ankr.com/eth_goerli') // only to check ticketsNumber(): window.ethereum release, Polygon test dev
+
+		const Contract = web.eth.Contract // @ts-ignore
 		this.PayDSNContract = new Contract(dsnAbi, this.PayDSN) // @ts-ignore
 		this.USDTContract = new Contract(usdtAbi, this.USDT)
 		window.PayDSNContract = this.PayDSNContract
@@ -21,6 +24,15 @@ export default class PayController extends DSNController {
 	}
 	async testPayNetwork() {
 		try {
+			if (!window.ethereum) {
+				var a = await this.enable()
+				if (!a) return Promise.resolve(false)
+				console.log('this.enable()', a)
+				// this.popup({ text: 'Use Metamask enabled browser' })
+				// setTimeout(() => {
+				// 	return Promise.resolve(false)
+				// }, 1000)
+			}
 			// Try to switch to the Mumbai testnet
 			if (window.ethereum.chainId != '0x5') {
 				const res1 = await window.ethereum.request({
@@ -28,6 +40,11 @@ export default class PayController extends DSNController {
 					params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
 				})
 			}
+			// change contract to write (Metamask-backed one)
+			const Contract = this.web3js.eth.Contract // @ts-ignore
+			this.PayDSNContract = new Contract(dsnAbi, this.PayDSN) // @ts-ignore
+			this.USDTContract = new Contract(usdtAbi, this.USDT)
+
 			return Promise.resolve(true)
 		} catch (error) {
 			console.log('testPayNetwork err', error)
@@ -51,7 +68,7 @@ export default class PayController extends DSNController {
 			this.store.dispatch('save', {
 				k: 'paySellInfo',
 				v: {
-					expiry: b + 1000,
+					expiry: b + 30,
 					data: c,
 				},
 			})

@@ -1,7 +1,7 @@
 <template>
 	<div v-if="isNotExpired" class="main">
 		<div class="col">
-			<h3>START TIME 2022/12/10 12:00(UTC){{}}</h3>
+			<h3>STOP TIME {{ getStopTime }}</h3>
 			<div class="row r1">
 				<div class="row r3">
 					<div class="cal">
@@ -51,6 +51,9 @@ export default {
 	computed: {
 		countdownObj() {
 			return countdownObj(this.diff)
+		},
+		getStopTime() {
+			return convertUTCString(this.s.stopTime ?? new Date().getTime() / 1000)
 		},
 	},
 	async mounted() {
@@ -185,5 +188,23 @@ h3 {
 	justify-self: center;
 }
 .column {
+}
+@media (max-width: 1130px) {
+	div.main {
+		width: 100%;
+	}
+	.col {
+		align-items: center;
+	}
+	.row.r1 {
+		flex-direction: column;
+	}
+	.divider {
+		width: 150px;
+		height: 2px;
+	}
+	.btn {
+		align-self: center;
+	}
 }
 </style>

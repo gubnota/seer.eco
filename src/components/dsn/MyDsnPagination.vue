@@ -52,7 +52,7 @@ export default defineComponent({
 	},
 	computed: {
 		els() {
-			console.log('this.getNum', this.getNum, this.getTotal)
+			// console.log('this.getNum', this.getNum, this.getTotal)
 			// els: []
 			let els = Array.from({ length: this.getNum }, (_, i) => {
 				// console.log('this.sel', this.sel)

@@ -3,7 +3,7 @@
 		<Modal />
 		<main class="dsn">
 			<section class="main">
-				<Top isDsn="true" />
+				<Top :isDsn="true" />
 			</section>
 			<div class="bg">
 				<div class="front"></div>

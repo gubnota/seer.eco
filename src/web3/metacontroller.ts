@@ -12,6 +12,10 @@ import {
 	PolygonDev,
 	web3js2NetDev,
 	web3js2Net,
+	pay,
+	payDev,
+	eth,
+	ethDev,
 } from './common'
 // store.dispatch('save', {
 // 	k: 'modal',
@@ -24,7 +28,8 @@ window.web3j = web3
 
 export default class MetaController {
 	public web3js: web3
-	public web3js2: web3
+	public web3js2: web3 // ticketsNumber contract
+	public web3Pay: web3 // paycontroller related
 	public DSNContract: any
 	public address: String
 	public store
@@ -56,8 +61,13 @@ export default class MetaController {
 	}
 
 	restoreWeb3 = () => {
-		this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
+		if (window.ethereum) {
+			this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
+		} else {
+			this.web3js = new web3(isDev() ? ethDev : eth) // - default provider with Metamask to sign
+		}
 		this.web3js2 = new web3(isDev() ? web3js2NetDev : web3js2Net) // only to check ticketsNumber(): window.ethereum release, Polygon test dev
+		this.web3Pay = new web3(isDev() ? payDev : pay) // paycontroller related
 		this.address = store.state.address
 		window.web3js = this.web3js
 	}
@@ -111,6 +121,8 @@ export default class MetaController {
 	}
 	async enable(cb?: () => {}) {
 		const startTime = new Date()
+		// STAGE 3: add a contract to read possible tickets value from balanceOf the contract
+		this.restoreWeb3()
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == isDev() ? PolygonDev.chainId : Polygon.chainId
 			const switchRes = await this.switch()
@@ -139,8 +151,6 @@ export default class MetaController {
 				console.log('eth.message', message)
 			})
 
-			// STAGE 3: add a contract to read possible tickets value from balanceOf the contract
-			this.restoreWeb3()
 			try {
 				// // STAGE 4: add a contract to read possible tickets value from balanceOf the contract
 				// this.popup({

@@ -4,7 +4,7 @@
 	<div class="content">
 		<main class="dsn">
 			<section class="main">
-				<Top isDsn="true" />
+				<Top :isDsn="true" />
 			</section>
 		</main>
 		<section class="wrapper">
@@ -28,17 +28,6 @@
 							@input="couponHandler"
 							:class="{ error: couponError }"
 						/>
-						<!-- <h4>Enter Address</h4>
-						<input
-							type="text"
-							name="address"
-							id="address"
-							placeholder="Please enter the Ethereum address"
-							v-model="addr"
-							autocomplete="off"
-							@input="addressHandler"
-							:class="{ error: addressError }"
-						/> -->
 						<h4>Enter the Quantity</h4>
 						<input
 							type="text"
@@ -501,6 +490,12 @@ input.error:focus {
 	outline: none;
 }
 @media (max-width: 1100px) {
+	input {
+		width: calc(100vw - 2rem);
+	}
+	box.b {
+		margin-top: 28px;
+	}
 	action.back.btn {
 		border: none;
 		border-bottom: 1px solid #ebedef;
@@ -514,6 +509,9 @@ input.error:focus {
 	main.l,
 	main.r {
 		padding: 0 16px;
+	}
+	main.r {
+		margin-bottom: 24px;
 	}
 	action.back.btn svg {
 		display: block;

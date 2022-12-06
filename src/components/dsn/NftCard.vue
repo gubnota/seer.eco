@@ -79,14 +79,12 @@ export default defineComponent({
 	},
 	mounted() {
 		var a = document.querySelectorAll('.skill-bar')[0]
-		console.log('a', a)
 		var b = a.style.width
 		a.style.width = '0%'
 		setTimeout(() => {
 			a.style.width = b
 		}, 1000)
 		var c = document.querySelectorAll('.skill-bar')[1]
-		console.log('c', c)
 		var d = c.style.width
 		c.style.width = '0%'
 		setTimeout(() => {
@@ -238,12 +236,13 @@ img.badge3 {
 	font-weight: 600;
 }
 .no {
-	left: 249px;
+	right: 16px;
 	top: 212px;
 	font-weight: 400;
 	font-size: 13px;
 	color: #626174;
 	text-shadow: 0px 1px 2px #1c1b30;
+	text-align: right;
 }
 .name {
 	left: 14px;

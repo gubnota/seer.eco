@@ -124,9 +124,17 @@ ill img {
 	}
 	part {
 		margin-top: 10px;
+		width: 100%;
+	}
+	p {
+		max-width: initial;
 	}
 	section.header {
 		gap: 30px;
+		padding-top: 0;
+	}
+	svg {
+		transform: scale(0.8);
 	}
 }
 </style>
