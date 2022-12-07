@@ -4,12 +4,6 @@
 		<main class="dsn">
 			<section class="main">
 				<Top :isDsn="true" />
-			</section>
-			<div class="bg">
-				<div class="front"></div>
-				<img :src="dsnBg" />
-			</div>
-			<section class="main main2">
 				<Header />
 				<DSNEl />
 				<Data />

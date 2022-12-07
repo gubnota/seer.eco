@@ -9,7 +9,7 @@ import web3 from 'web3'
 declare const window: any
 export default class PayController extends DSNController {
 	USDT = '0xa8c497D6A54fbe3cce944417C87d1cFba0419B3E'
-	PayDSN = '0x2FD4e2833b30b79b150d8D39D6bC4Dcd8230868B'
+	PayDSN = '0xf91b84c72F7800C575Ecce3e50A0A587C9EB1540'
 	public PayDSNContract: any
 	public USDTContract: any
 
@@ -78,6 +78,7 @@ export default class PayController extends DSNController {
 			return Promise.resolve({
 				price: '0',
 				selled: '0',
+				startTime: '0',
 				stopTime: '0',
 				total: '0',
 			})

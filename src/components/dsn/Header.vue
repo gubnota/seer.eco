@@ -14,15 +14,16 @@
 			<Countdown />
 		</part>
 		<ill>
-			<NftSample />
-			<!-- <img :src="nft_cube_j" :srcset="nft_cube_w" class="nft_c" /> -->
+			<!-- <NftSample /> -->
+			<img :src="nft_cube_j" :srcset="nft_cube_w" class="nft_c" />
+			<div class="shadow"></div>
 		</ill>
 	</section>
 </template>
 <script lang="ts">
-import nft_cube_j from '/src/assets/dsn/nft_cube_white@2x.jpg'
-import nft_cube_w from '/src/assets/dsn/nft_cube_white@2x.webp'
-import NftSample from '/src/assets/dsn/nft_sample.svg'
+import nft_cube_j from '/src/assets/dsn/nft_cube.png'
+import nft_cube_w from '/src/assets/dsn/nft_cube@2x.webp'
+
 import Countdown from './Countdown.vue'
 
 import { defineComponent } from 'vue'
@@ -35,12 +36,23 @@ export default defineComponent({
 		}
 	},
 
-	components: { NftSample, Countdown },
+	components: { Countdown },
 })
 </script>
 <style scoped>
 svg {
 	filter: drop-shadow(1px 19px 24px rgba(149, 149, 149, 0.67));
+}
+.shadow {
+	position: absolute;
+	width: 414px;
+	height: 268.5px;
+	left: 28px;
+	top: 212px;
+	z-index: 0;
+	background: #b08aff;
+	opacity: 0.5;
+	filter: blur(150px);
 }
 section.header {
 	z-index: 3;
@@ -101,6 +113,7 @@ ill {
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	position: relative;
 	/* height: 400px; */
 	/* background-color: firebrick; */
 	/* flex: 446; */
@@ -110,7 +123,8 @@ ill img {
 }
 .nft_c {
 	width: 446px;
-	mix-blend-mode: darken;
+	/* mix-blend-mode: darken; */
+	z-index: 1;
 }
 @media (max-width: 1130px) {
 	h1 {

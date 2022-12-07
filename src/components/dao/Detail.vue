@@ -10,7 +10,7 @@
 		}"
 	>
 		<div class="bg" v-if="ui.video">
-			<video autoplay muted loop playsinline id="bgdetailvideo">
+			<video autoplay muted controls loop playsinline id="bgdetailvideo">
 				<source :src="ui.video as string" id="videtailsource" />
 			</video>
 			<div class="close" @click="close"><Close /></div>

@@ -1,7 +1,7 @@
 <template>
-	<div v-if="isNotExpired" class="main">
+	<div class="main">
 		<div class="col">
-			<h3>STOP TIME {{ this.stopTime }}</h3>
+			<h3>START TIME {{ this.startTime }}</h3>
 			<div class="row r1">
 				<div class="row r3">
 					<div class="cal">
@@ -27,7 +27,11 @@
 					</div>
 					<div class="pair">
 						<div class="k">Minted:</div>
-						<div class="v">{{ this.s.selled }}/{{ this.s.total }}</div>
+						<div class="v">
+							{{ this.isNotExpired ? this.s.total : this.s.selled }}/{{
+								this.s.total
+							}}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -36,7 +40,7 @@
 			<Coin class="coin" /><span>Mint</span>
 		</div>
 	</div>
-	<h3 v-else>The Event Has Ended <br />Please Stay Tuned！</h3>
+	<!-- <h3 v-else>The Event Has Ended <br />Please Stay Tuned！</h3> -->
 </template>
 <script lang="ts">
 // import { convertUTCString, countdownObj } from '../../common/helper' // hmr stops working if used
@@ -65,11 +69,11 @@ const convertUTCString = (time: number) => {
 export default defineComponent({
 	data() {
 		return {
-			isNotExpired: false,
-			s: { price: '0', selled: '0', stopTime: '0', total: '0' },
+			isExpired: false, // true – all are sold out (stopTime already passed)
+			s: { price: '0', selled: '0', stopTime: '0', startTime: '0', total: '0' },
 			cd: { days: '0', hours: '0', mins: '0', secs: '0' },
-			diff: 0,
-			stopTime: '',
+			diff: 0, // diff with startTime before begin
+			startTime: '',
 		}
 	},
 	async mounted() {
@@ -78,11 +82,17 @@ export default defineComponent({
 			this.s = await this.web3.paySellInfo()
 			const x = new Date()
 			this.diff =
-				Math.floor(parseInt(this.s.stopTime)) - Math.floor(x.getTime() / 1000)
-			if (this.diff > 0) this.isNotExpired = true
-			this.cd = countdownObj(this.diff)
-			this.stopTime = convertUTCString(
-				this.s.stopTime ?? new Date().getTime() / 1000
+				Math.floor(parseInt(this.s.startTime)) - Math.floor(x.getTime() / 1000)
+			// if (this.diff > 0)
+			const stopTimeDiff = Math.floor(
+				parseInt(this.s.stopTime) - Math.floor(x.getTime() / 1000)
+			)
+			if (stopTimeDiff < 0) {
+				this.isExpired = true
+			}
+			if (this.diff > 0) this.cd = countdownObj(this.diff)
+			this.startTime = convertUTCString(
+				this.s.startTime ?? new Date().getTime() / 1000
 			)
 		} catch (error) {
 			console.log(error)
@@ -90,6 +100,10 @@ export default defineComponent({
 	},
 	methods: {
 		goToPay() {
+			if (this.isExpired) {
+				this.popup({ text: 'All items are already sold out' })
+				return
+			}
 			this.router.push('/pay')
 		},
 		fromWei(a: number) {
