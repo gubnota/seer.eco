@@ -127,13 +127,13 @@ export default defineComponent({
 	},
 	async mounted() {
 		console.log('mounted')
-		if (!this.$store.state.addr) {
-			// this.router.push('/dsn')
+		if (!this.$store.state.address) {
+			this.router.push('/dsn')
 			// let r1 = await this.web3.enable()
 		}
 		this.coupon = ''
-		this.qty = '1'
-		this.quantity = 1
+		this.qty = ''
+		this.quantity = 0
 		await this.web3.createPayContracts()
 		let r1 = await this.web3.testPayNetwork()
 		if (!r1) {
@@ -253,6 +253,7 @@ export default defineComponent({
 			})
 
 			await this.web3.testPayNetwork()
+			this.balance = await this.web3.payBalance()
 			if (this.balance < this.totalPrice) {
 				this.popup({
 					text: `Insufficient balance: ${formatNumber(
