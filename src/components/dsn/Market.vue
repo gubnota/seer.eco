@@ -134,7 +134,7 @@ blockss {
 	grid-template-areas: 'col1 col2' 'col3 col4';
 	gap: 60px 30px; */
 	max-width: 790px;
-	align-self: center;
+	align-self: flex-start;
 	display: flex;
 	flex-direction: row;
 	gap: 33px;

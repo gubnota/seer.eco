@@ -7,6 +7,10 @@ export default class Web3Controller extends PayController {
 			this.logout()
 			return
 		}
+		if (window.innerWidth < 571)
+			return `${address.substring(0, 3)}...${address.substring(
+				address.length - 2
+			)}`
 		return `${address.substring(0, 5)}.....${address.substring(
 			address.length - 5
 		)}`

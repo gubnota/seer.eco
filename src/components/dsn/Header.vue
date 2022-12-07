@@ -11,9 +11,15 @@
 				accurately grasp the income changes. The first to establish a solid
 				pipeline income in the new world of web3.
 			</p>
+			<ill class="mobile">
+				<!-- <NftSample /> -->
+				<img :src="nft_cube_j" :srcset="nft_cube_w" class="nft_c" />
+				<div class="shadow"></div>
+			</ill>
+
 			<Countdown />
 		</part>
-		<ill>
+		<ill class="desktop">
 			<!-- <NftSample /> -->
 			<img :src="nft_cube_j" :srcset="nft_cube_w" class="nft_c" />
 			<div class="shadow"></div>
@@ -43,6 +49,9 @@ export default defineComponent({
 svg {
 	filter: drop-shadow(1px 19px 24px rgba(149, 149, 149, 0.67));
 }
+.mobile {
+	display: none;
+}
 .shadow {
 	position: absolute;
 	width: 414px;
@@ -53,6 +62,7 @@ svg {
 	background: #b08aff;
 	opacity: 0.5;
 	filter: blur(150px);
+	max-width: 80vw;
 }
 section.header {
 	z-index: 3;
@@ -61,10 +71,11 @@ section.header {
 	margin-top: 39px;
 	display: flex;
 	flex-direction: row;
-	gap: 120px;
+	gap: 85px;
 	align-items: flex-start;
 	min-height: 813px;
 	padding-top: 112px;
+	margin-bottom: 90px;
 }
 h1 {
 	font-weight: 600;
@@ -114,6 +125,11 @@ ill {
 	align-items: center;
 	width: 100%;
 	position: relative;
+	max-width: 450px;
+	align-self: center;
+	justify-content: flex-start;
+	min-height: 558px;
+	/* overflow: hidden; */
 	/* height: 400px; */
 	/* background-color: firebrick; */
 	/* flex: 446; */
@@ -127,6 +143,18 @@ ill img {
 	z-index: 1;
 }
 @media (max-width: 1130px) {
+	div.main {
+		gap: 30px;
+	}
+	.desktop {
+		display: none;
+	}
+	.mobile {
+		display: block;
+		width: 100vw;
+		min-height: 413px;
+	}
+
 	h1 {
 		font-size: 3rem;
 		line-height: 150%;
@@ -135,6 +163,9 @@ ill img {
 		flex-direction: column;
 		width: calc(100% - 2rem);
 		align-self: center;
+		margin-bottom: 0;
+		gap: 30px;
+		padding-top: 0;
 	}
 	part {
 		margin-top: 10px;
@@ -142,10 +173,6 @@ ill img {
 	}
 	p {
 		max-width: initial;
-	}
-	section.header {
-		gap: 30px;
-		padding-top: 0;
 	}
 	svg {
 		transform: scale(0.8);

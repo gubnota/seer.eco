@@ -16,7 +16,9 @@
 					<div class="sep">:</div>
 					<div class="cal">
 						<span class="k"><span>Mins</span></span>
-						<span class="v rainbow">{{ this.cd.mins }}</span>
+						<span class="v rainbow">{{
+							this.diff > 0 ? this.cd.mins : 0
+						}}</span>
 					</div>
 				</div>
 				<div class="divider">&nbsp;</div>
@@ -28,7 +30,7 @@
 					<div class="pair">
 						<div class="k">Minted:</div>
 						<div class="v">
-							{{ this.isNotExpired ? this.s.total : this.s.selled }}/{{
+							{{ this.isExpired ? this.s.total : this.s.selled }}/{{
 								this.s.total
 							}}
 						</div>
@@ -53,6 +55,7 @@ const countdownObj = (time: number) => {
 	let hours = Math.floor((time - days * 24 * 3600) / 3600)
 	let mins = Math.floor((time - days * 24 * 3600 - hours * 3600) / 60)
 	let secs = time % 60
+	if (hours < 1) mins += 1
 	return { days, hours, mins, secs }
 }
 const convertUTCString = (time: number) => {
@@ -90,7 +93,10 @@ export default defineComponent({
 			if (stopTimeDiff < 0) {
 				this.isExpired = true
 			}
-			if (this.diff > 0) this.cd = countdownObj(this.diff)
+			if (this.diff > 0) {
+				this.cd = countdownObj(this.diff)
+				setTimeout(this.recalcTime, 1000)
+			}
 			this.startTime = convertUTCString(
 				this.s.startTime ?? new Date().getTime() / 1000
 			)
@@ -99,9 +105,21 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		recalcTime() {
+			const x = new Date()
+			this.diff =
+				Math.floor(parseInt(this.s.startTime)) - Math.floor(x.getTime() / 1000)
+			if (this.diff > 0) {
+				this.cd = countdownObj(this.diff)
+				setTimeout(this.recalcTime, 1000)
+			}
+		},
 		goToPay() {
-			if (this.isExpired) {
-				this.popup({ text: 'All items are already sold out' })
+			if (this.diff > 0) {
+				this.popup({ text: "The event hasn't started yet" })
+				return
+			} else if (this.isExpired) {
+				this.popup({ text: 'Sold out' })
 				return
 			}
 			this.router.push('/pay')

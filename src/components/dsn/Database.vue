@@ -429,6 +429,15 @@ td:nth-child(2) {
 }
 
 @media (max-width: 1130px) {
+	th > span::after,
+	th > span::before {
+		right: -10px;
+		top: 10px;
+	}
+	th > span::before {
+		top: 1px;
+	}
+
 	.bar {
 		justify-content: flex-end;
 		margin: 30px 0 18px 0;

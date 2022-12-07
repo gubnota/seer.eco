@@ -1,27 +1,35 @@
 <template>
 	<nav class="top2">
 		<router-link :to="this.calcLink">
-			<img :src="logo" alt="logo" class="logo" v-if="isDao" />
+			<img :src="logoMobile" alt="logo" class="logo mobile" />
+			<img :src="logo" alt="logo" class="logo desktop" v-if="isDao" />
 			<img
 				src="/01head/seer.dsn.png"
 				alt="logo"
-				class="logo"
+				class="logo desktop"
 				v-else-if="isDsn"
 			/>
-			<img src="/01head/seer.png" alt="logo" class="logo2" v-else />
+			<img src="/01head/seer.png" alt="logo" class="logo2 desktop" v-else />
 		</router-link>
-		<button
-			@click="connect()"
-			class="btn"
-			:class="{ disabled: !this.window.ethereum }"
-		>
-			<span class="loader" v-if="loading" />
-			<Wallet v-if="!loggedIn" />
-			<img :src="metamask" alt="wallet" v-else />
-			<span>{{
-				loggedIn ? this.web3.addressPartially() : this.ui._('Connect Wallet')
-			}}</span>
-		</button>
+		<div class="r">
+			<button v-if="isDsn" @click="myDsn" class="btn fsq">
+				<Foursquare class="foursquare" />
+				<span>My DSN</span>
+			</button>
+
+			<button
+				@click="connect()"
+				class="btn"
+				:class="{ disabled: !this.window.ethereum }"
+			>
+				<span class="loader" v-if="loading" />
+				<Wallet v-if="!loggedIn" />
+				<img :src="metamask" alt="wallet" v-else />
+				<span>{{
+					loggedIn ? this.web3.addressPartially() : this.ui._('Connect Wallet')
+				}}</span>
+			</button>
+		</div>
 	</nav>
 </template>
 <script lang="ts">
@@ -29,6 +37,9 @@ import logo from '/src/assets/dao/logodao.png'
 import lock from '/src/assets/dao/lock.png'
 import metamask from '/src/assets/dao/metamask@3x.png'
 import Wallet from '/src/assets/dao/wallet.svg'
+import Foursquare from '/src/assets/dsn/foursquare.svg'
+import logoMobile from '/src/assets/dao/logo.png'
+
 import { defineComponent } from 'vue'
 export default defineComponent({
 	props: {
@@ -40,6 +51,7 @@ export default defineComponent({
 			logo,
 			lock,
 			metamask,
+			logoMobile,
 			// loading: false,
 		}
 	},
@@ -80,6 +92,17 @@ export default defineComponent({
 		},
 	},
 	methods: {
+		myDsn() {
+			if (!this.$store.state.seerToken) {
+				return this.comingSoon({
+					text: 'Please log in to your wallet account first',
+					timeout: 3000,
+				})
+			}
+			// this.comingSoon({ text: 'not implemented' })
+			this.router.push('/my_dsn')
+		},
+
 		async connect() {
 			if (this.$store.state.walletLoading) return
 			if (this.loggedIn) {
@@ -106,10 +129,22 @@ export default defineComponent({
 	},
 	components: {
 		Wallet,
+		Foursquare,
 	},
 })
 </script>
 <style scoped>
+img.logo.mobile {
+	display: none;
+	width: 32px;
+	height: 32px;
+}
+.r {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 18px;
+}
 nav.top2 {
 	z-index: 1;
 	margin: 15px 0 0 0;
@@ -133,6 +168,9 @@ button {
 	justify-content: center; /* horizontally*/
 	position: relative;
 }
+button.fsq {
+	width: 134px;
+}
 button img {
 	width: 18px;
 	height: 18px;
@@ -152,6 +190,18 @@ button span {
 	nav.top2 {
 		padding: 0 1rem;
 	}
+	img.logo.mobile {
+		display: block;
+	}
+	.desktop {
+		display: none;
+	}
+}
+@media (max-width: 570px) {
+	.r {
+		/* flex-direction: column-reverse; */
+		align-items: flex-end;
+	}
 }
 @media (max-width: 550px) {
 	nav.top2 {
@@ -159,7 +209,7 @@ button span {
 		width: 100%;
 		align-self: center;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-start;
 	}
 
 	.logo {
@@ -167,7 +217,8 @@ button span {
 		height: auto;
 	}
 	button.btn {
-		width: calc(50vw - 1rem);
+		width: auto;
+		/* width: calc(50vw - 1rem); */
 		gap: 4px;
 		height: 32px;
 	}
@@ -204,5 +255,13 @@ button span {
 }
 .top2 .btn:hover svg {
 	fill: white;
+}
+</style>
+<style>
+.top2 .btn.fsq svg rect {
+	fill: #741fff;
+}
+.top2 .btn.fsq:hover svg rect {
+	fill: #ffffff;
 }
 </style>

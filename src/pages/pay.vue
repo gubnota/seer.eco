@@ -67,7 +67,7 @@
 						</div>
 						<div class="row">
 							<span>Discount</span>
-							<span>{{ formatNumber(discount) }} Usdt</span>
+							<span>{{ this.discount }}</span>
 						</div>
 					</box>
 					<box class="b">
@@ -122,21 +122,33 @@ export default defineComponent({
 			balance: 0,
 			loading: false,
 			errorMessage: '',
+			selfDestructedTimeout: 0,
 		}
 	},
 	async mounted() {
+		console.log('mounted')
 		if (!this.$store.state.addr) {
 			// this.router.push('/dsn')
 			// let r1 = await this.web3.enable()
 		}
+		this.coupon = ''
+		this.qty = '1'
+		this.quantity = 1
 		await this.web3.createPayContracts()
 		let r1 = await this.web3.testPayNetwork()
-		if (!r1) this.router.push('/dsn')
+		if (!r1) {
+			this.popup({ text: 'Please, proceed with Metamask' })
+			// this.router.push('/dsn')
+		}
 		this.unitPrice = (await this.web3.payPrice()) ?? 0
 		this.totalPrice = this.quantity * this.unitPrice * this.multiplier
 		this.allowance = await this.web3.payAllowance()
 		this.balance = await this.web3.payBalance()
 		this.disabled = false
+		this.selfDestructedTimeout = setInterval(this.checkAll, 1000)
+	},
+	beforeUnmount() {
+		clearInterval(this.selfDestructedTimeout)
 	},
 	beforeRouteLeave() {
 		this.web3.swichBackNetwork()
@@ -163,10 +175,10 @@ export default defineComponent({
 	},
 	methods: {
 		recalcPrice() {
-			this.discount =
-				this.quantity *
-				this.unitPrice *
-				(Math.round((1 - this.multiplier) * 10000) / 10000)
+			this.discount = this.multiplier != 1 ? `${this.multiplier * 100}%` : '0'
+			// this.quantity *
+			// this.unitPrice *
+			// (Math.round((1 - this.multiplier) * 10000) / 10000)
 			this.totalPrice = this.quantity * this.unitPrice * this.multiplier
 		},
 		checkAll() {
@@ -179,8 +191,13 @@ export default defineComponent({
 			return formatNumber(n, 2, false)
 		},
 		async tryGetDiscount(coupon) {
-			console.log('tryGet', `${'coupon'}`)
-			if (!this.runningDiscountCheck && this.prevCoupon != coupon) {
+			// console.log('tryGet', `${'coupon'}`)
+			if (coupon.trim().length != 6) {
+				this.multiplier = 1
+				return
+			}
+			if (!this.runningDiscountCheck) {
+				// && this.prevCoupon != coupon
 				let multi = await this.web3.payDiscount(coupon.trim())
 				if (multi == 0) multi = 1
 				this.multiplier = multi
@@ -291,6 +308,7 @@ export default defineComponent({
 			)
 			if (r3) {
 				this.popup({ text: 'Success!' })
+				this.router.push('/my_dsn')
 			}
 			this.$store.dispatch('save', {
 				k: 'loading',
