@@ -6,12 +6,16 @@
 				<div class="row r3">
 					<div class="cal">
 						<span class="k"><span>Days</span></span>
-						<span class="v rainbow">{{ this.cd.days }}</span>
+						<span class="v rainbow">{{
+							this.diff > 0 ? this.cd.days : 0
+						}}</span>
 					</div>
 					<div class="sep">:</div>
 					<div class="cal">
 						<span class="k"><span> Hrs</span></span>
-						<span class="v rainbow">{{ this.cd.hours }}</span>
+						<span class="v rainbow">{{
+							this.diff > 0 ? this.cd.hours : 0
+						}}</span>
 					</div>
 					<div class="sep">:</div>
 					<div class="cal">
@@ -77,6 +81,8 @@ export default defineComponent({
 			cd: { days: '0', hours: '0', mins: '0', secs: '0' },
 			diff: 0, // diff with startTime before begin
 			startTime: '',
+			stopTimeDiff: 0, // diff with stopTime before begin
+			timeout: 0,
 		}
 	},
 	async mounted() {
@@ -87,15 +93,15 @@ export default defineComponent({
 			this.diff =
 				Math.floor(parseInt(this.s.startTime)) - Math.floor(x.getTime() / 1000)
 			// if (this.diff > 0)
-			const stopTimeDiff = Math.floor(
+			this.stopTimeDiff = Math.floor(
 				parseInt(this.s.stopTime) - Math.floor(x.getTime() / 1000)
 			)
-			if (stopTimeDiff < 0) {
+			if (this.stopTimeDiff < 0) {
 				this.isExpired = true
 			}
 			if (this.diff > 0) {
 				this.cd = countdownObj(this.diff)
-				setTimeout(this.recalcTime, 1000)
+				this.timeout = setTimeout(this.recalcTime, 1000)
 			}
 			this.startTime = convertUTCString(
 				this.s.startTime ?? new Date().getTime() / 1000
@@ -104,6 +110,7 @@ export default defineComponent({
 			console.log(error)
 		}
 	},
+	beforeUnmount() {},
 	methods: {
 		recalcTime() {
 			const x = new Date()
@@ -115,6 +122,14 @@ export default defineComponent({
 			}
 		},
 		goToPay() {
+			const x = new Date()
+			this.stopTimeDiff = Math.floor(
+				parseInt(this.s.stopTime) - Math.floor(x.getTime() / 1000)
+			)
+			if (this.stopTimeDiff < 0) {
+				this.isExpired = true
+			}
+
 			if (!this.$store.state.address) {
 				this.popup({ text: 'Please connect to your wallet account first' })
 				return
@@ -122,7 +137,7 @@ export default defineComponent({
 			if (this.diff > 0) {
 				this.popup({ text: "The event hasn't started yet" })
 				return
-			} else if (this.isExpired) {
+			} else if (this.isExpired || this.stopTimeDiff < 0) {
 				this.popup({ text: 'Sold out' })
 				return
 			}
