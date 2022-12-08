@@ -85,7 +85,7 @@ export default defineComponent({
 		},
 		async claim(el) {
 			// TODO: make a request to backend
-			console.log('claim…', el)
+			// console.log('claim…', el)
 			if (el.unGot > el.minAmount) {
 				await this.web3.Withdraw(getFQN(this.node), el.token)
 				// if (res) {
@@ -94,7 +94,7 @@ export default defineComponent({
 			}
 		},
 		cancel(e) {
-			console.log('bgClick', e.target)
+			// console.log('bgClick', e.target)
 			this.$store.dispatch('save', {
 				k: 'operateModal',
 				v: 'none',
@@ -120,7 +120,7 @@ export default defineComponent({
 				// 	)
 				.then(
 					() => {
-						this.comingSoon({
+						this.popup({
 							timeout: 500,
 							text: `<b class="rainbow">copied!</b>`,
 						})

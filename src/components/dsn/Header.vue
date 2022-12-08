@@ -58,7 +58,7 @@ svg {
 	height: 268.5px;
 	left: 28px;
 	top: 212px;
-	z-index: 0;
+	z-index: -1;
 	background: #b08aff;
 	opacity: 0.5;
 	filter: blur(150px);

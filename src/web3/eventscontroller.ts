@@ -54,9 +54,11 @@ export default class EventsController extends DaoController {
 		}
 		if (this.store.state.seerToken)
 			config = {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-				},
+				headers: this.store.state.notAppUser
+					? {}
+					: {
+							SeerToken: this.store.state.seerToken, //only if AppUser
+					  },
 			}
 		axios
 			.post(

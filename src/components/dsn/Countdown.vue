@@ -115,6 +115,10 @@ export default defineComponent({
 			}
 		},
 		goToPay() {
+			if (!this.$store.state.address) {
+				this.popup({ text: 'Please connect to your wallet account first' })
+				return
+			}
 			if (this.diff > 0) {
 				this.popup({ text: "The event hasn't started yet" })
 				return

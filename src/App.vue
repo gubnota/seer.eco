@@ -3,7 +3,8 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 export default {
 	mounted() {
-		this.web3.restoreWeb3()
+		// if (store.state.daoInfo) web3obj.info()
+		this.web3.restoreWeb3() // otherwise after refreshing a page signing doesn't work if (store.state.address)
 	},
 }
 </script>

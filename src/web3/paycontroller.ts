@@ -27,7 +27,7 @@ export default class PayController extends DSNController {
 			if (!window.ethereum) {
 				var a = await this.enable()
 				if (!a) return Promise.resolve(false)
-				console.log('this.enable()', a)
+				// console.log('this.enable()', a)
 				// this.popup({ text: 'Use Metamask enabled browser' })
 				// setTimeout(() => {
 				// 	return Promise.resolve(false)
@@ -49,7 +49,7 @@ export default class PayController extends DSNController {
 		} catch (error) {
 			console.log('testPayNetwork err', error)
 			if (error.code === 4001) {
-				this.popup({ text: 'User rejected' })
+				this.popup({ text: error.message, code: error.code }) //{ text: 'User rejected' })
 				return Promise.reject(false)
 			} //user rejected
 		}
@@ -164,7 +164,7 @@ export default class PayController extends DSNController {
 			})
 		} catch (error) {
 			if (error.code === 4001) {
-				this.popup({ text: 'User rejected' })
+				this.popup({ text: error.message, code: error.code }) //{ text: 'User rejected' })
 				this.store.dispatch('save', {
 					k: 'loading',
 					v: false,

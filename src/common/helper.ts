@@ -4,6 +4,7 @@ export type messageType = {
 	timeout?: number
 	text?: string
 	type?: string
+	code?: number
 }
 
 export const popup = (message?: messageType) => {
@@ -19,17 +20,29 @@ export const popup = (message?: messageType) => {
 	let a = document.querySelector('.modal') as HTMLDivElement
 	if (!a) return
 	a.style.display = ''
-	if (typeof message == 'object' && message.text) {
+	// console.log('popup', message)
+	if (
+		(message && message.text && message.text.includes('UserNotFound')) ||
+		(message && message.code === 10002)
+	) {
+		a.querySelector(
+			'.actual-message'
+		).innerHTML = `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`
+	} else if (typeof message == 'object' && message.text) {
 		a.querySelector('.actual-message').innerHTML = message.text
 	} else {
 		a.querySelector('.actual-message').innerHTML = '<h2>Coming soon</h2>'
 	}
-	if (message.timeout === 0) return
+	if (message && message.timeout === 0) return
 	let timeout = 1000
 	timeout = !!message ? 3000 : 1000
-	if (message.timeout) timeout = message.timeout
-	if (message.type) timeout = 1000 // passed click event – coming soon condition
-	console.log('popup', { message, timeout })
+	if (message && message.timeout) timeout = message.timeout
+	if (message && message.type) timeout = 1000 // passed click event – coming soon condition
+	if (
+		(message && message.text && message.text.includes('UserNotFound')) ||
+		(message && message.code === 10002)
+	)
+		timeout = 5000
 	setTimeout(() => {
 		// a.style.display = 'none'
 		store.dispatch('save', {
@@ -142,7 +155,7 @@ export const scroll = () => {
 		}
 	}
 }
-export const fancyError = (error: { message: string }) => {
+export const fancyError = (error: { message: string; code?: number }) => {
 	// if (error.message === 'EventStop') return 'This event has been stopped'
 	// if (error.message === 'DSNNameHasBeenSet')
 	// 	return 'The node name is already in use, please reset it'
@@ -152,7 +165,7 @@ export const fancyError = (error: { message: string }) => {
 	// 	return 'Please sign with the corresponding wallet account'
 
 	if (error.message.includes('code 401')) {
-		return 'Please log in to your wallet account first'
+		return 'Please connect to your wallet account first'
 	}
 	return error.message
 }

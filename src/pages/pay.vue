@@ -126,26 +126,26 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		console.log('mounted')
 		if (!this.$store.state.address) {
 			this.router.push('/dsn')
 			// let r1 = await this.web3.enable()
+		} else {
+			this.coupon = ''
+			this.qty = ''
+			this.quantity = 0
+			await this.web3.createPayContracts()
+			let r1 = await this.web3.testPayNetwork()
+			if (!r1) {
+				this.popup({ text: 'Please, proceed with Metamask' })
+				// this.router.push('/dsn')
+			}
+			this.unitPrice = (await this.web3.payPrice()) ?? 0
+			this.totalPrice = this.quantity * this.unitPrice * this.multiplier
+			this.allowance = await this.web3.payAllowance()
+			this.balance = await this.web3.payBalance()
+			// this.disabled = false
+			this.selfDestructedTimeout = setInterval(this.checkAll, 1000)
 		}
-		this.coupon = ''
-		this.qty = ''
-		this.quantity = 0
-		await this.web3.createPayContracts()
-		let r1 = await this.web3.testPayNetwork()
-		if (!r1) {
-			this.popup({ text: 'Please, proceed with Metamask' })
-			// this.router.push('/dsn')
-		}
-		this.unitPrice = (await this.web3.payPrice()) ?? 0
-		this.totalPrice = this.quantity * this.unitPrice * this.multiplier
-		this.allowance = await this.web3.payAllowance()
-		this.balance = await this.web3.payBalance()
-		this.disabled = false
-		this.selfDestructedTimeout = setInterval(this.checkAll, 1000)
 	},
 	beforeUnmount() {
 		clearInterval(this.selfDestructedTimeout)
@@ -182,7 +182,8 @@ export default defineComponent({
 			this.totalPrice = this.quantity * this.unitPrice * this.multiplier
 		},
 		checkAll() {
-			if (this.addressError) this.disabled = true
+			if (this.quantity == 0) this.disabled = true
+			else if (this.addressError) this.disabled = true
 			else if (this.qtyError) this.disabled = true
 			else if (this.couponError) this.disabled = true
 			else this.disabled = false
@@ -256,9 +257,12 @@ export default defineComponent({
 			this.balance = await this.web3.payBalance()
 			if (this.balance < this.totalPrice) {
 				this.popup({
-					text: `Insufficient balance: ${formatNumber(
+					text: `Insufficient balance`,
+					/*
+					: ${formatNumber(
 						this.balance
-					)} USDT, required: ${formatNumber(this.totalPrice)} USDT`,
+					)} USDT, required: ${formatNumber(this.totalPrice)} USDT
+					*/
 				})
 				this.$store.dispatch('save', {
 					k: 'loading',
@@ -308,8 +312,16 @@ export default defineComponent({
 				// this.addr
 			)
 			if (r3) {
-				this.popup({ text: 'Success!' })
-				this.router.push('/my_dsn')
+				if (this.$store.state.notAppUser) {
+					// user is not registered as app.seer.eco user
+					this.popup({
+						text: `<p>Successful purchase, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
+						timeout: 5000,
+					})
+				} else {
+					this.popup({ text: 'Success!' })
+					this.router.push('/my_dsn')
+				}
 			}
 			this.$store.dispatch('save', {
 				k: 'loading',

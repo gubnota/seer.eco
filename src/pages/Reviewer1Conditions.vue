@@ -17,7 +17,7 @@
 								<figures v-if="el.icon == 'figures'" />
 								<medal_star v-if="el.icon == 'medal_star'" />
 							</span>
-							<span>{{ el.name }}</span>
+							<span>{{ ui(el.name) }}</span>
 						</div>
 						<div class="val">
 							<passed v-if="getStatus[el.action]" />
@@ -50,7 +50,7 @@ export default {
 			// unmet: true,
 			conds: [
 				{
-					name: 'NFT duration > 30 days',
+					name: 'DSN duration > 30 days',
 					icon: 'nft_calendar',
 					actionText: 'Approve',
 					// passed: this.getStatus('nft'),
@@ -114,8 +114,8 @@ export default {
 	},
 	mounted() {
 		if (!this.loggedIn()) {
-			// this.router.push('/dao')
-			this.web3.login()
+			this.router.push('/dao')
+			// this.web3.login()
 		}
 		if (this.$store.state.daoInfo) this.unmet = !this.$store.state.daoInfo.isDao
 		// ;(async () => {
@@ -125,6 +125,11 @@ export default {
 		// })()
 	},
 	methods: {
+		ui(name) {
+			if (name.includes('DSN') && this.$store.state.daoInfo)
+				return `DSN duration > ${this.$store.state.daoInfo.configs.dsnHoldDay} days`
+			return name
+		},
 		loggedIn() {
 			let loggedIn = this.$store.state.daoInfo != null
 			if (loggedIn)
@@ -133,7 +138,7 @@ export default {
 		},
 		async callback(e) {
 			if (!this.$store.state.daoInfo) {
-				this.comingSoon({
+				this.popup({
 					text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
 					timeout: 5000,
 				})
@@ -156,17 +161,19 @@ export default {
 			}
 			if (e == 'test') {
 				if (this.$store.state.daoInfo.steps.holdDSN == false) {
-					this.comingSoon({
-						text: `<span>Please, fulfill the requirement of <b class="rainbow">NFT duration</b> > 30 days</span>`,
+					this.popup({
+						text: `<span>Please, fulfill the requirement of <b class="rainbow">NFT duration</b> > ${
+							this.$store.state.daoInfo.configs.dsnHoldDay ?? 0
+						} days</span>`,
 						timeout: 5000,
 					})
 				} else if (this.$store.state.daoInfo.steps.twitter == false) {
-					this.comingSoon({
+					this.popup({
 						text: `<span>Please, verify with the <b class="rainbow">Twitter</b> first</span>`,
 						timeout: 5000,
 					})
 				} else if (!this.$store.state.daoRulesVisited) {
-					this.comingSoon({
+					this.popup({
 						text: `<span>Please, read carefully <b class="rainbow">DAO rules</b></span>`,
 						timeout: 5000,
 					})

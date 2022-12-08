@@ -67,12 +67,12 @@ export default defineComponent({
 		},
 		handler() {
 			if (!this.$store.state.seerToken) {
-				return this.comingSoon({
-					text: 'Please log in to your wallet account first',
+				return this.popup({
+					text: 'Please connect to your wallet account first',
 					timeout: 3000,
 				})
 			}
-			// this.comingSoon({ text: 'not implemented' })
+			// this.popup({ text: 'not implemented' })
 			this.router.push('/my_dsn')
 		},
 	},

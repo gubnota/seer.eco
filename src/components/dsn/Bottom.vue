@@ -3,7 +3,7 @@
 		<line class="a">
 			<block class="a">
 				<stroke class="b">
-					<checkmark /> <span>NFT held for more than 30 days</span>
+					<checkmark /> <span>DSN held for more than 30 days</span>
 				</stroke>
 				<stroke class="b">
 					<checkmark /> <span>Authenticated by Twitter</span>

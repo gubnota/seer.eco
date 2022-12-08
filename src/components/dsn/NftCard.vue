@@ -74,7 +74,7 @@ export default defineComponent({
 			return store.state.dsnListTop
 		},
 		count() {
-			return !store.state.dsnListTop ? 3 : store.state.dsnListTop.length
+			return !store.state.dsnListTop ? 1 : store.state.dsnListTop.length
 		},
 	},
 	mounted() {

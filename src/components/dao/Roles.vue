@@ -41,21 +41,25 @@ export default defineComponent({
 	},
 	methods: {
 		loggedIn() {
-			let loggedIn = this.$store.state.daoInfo != null
-			if (loggedIn)
-				this.$store.dispatch('save', { k: 'walletLoading', v: false })
-			return loggedIn
+			let loggedIn = this.$store.state.address
+			return !!loggedIn
+		},
+		notAppUser() {
+			return this.$store.state.notAppUser
 		},
 
 		callback(action: String, id: number) {
-			if (id == 0) {
+			if (id == 0 || id == 2) {
 				;(async () => {
 					// check if user is logged in
 					if (!this.loggedIn()) {
-						this.$store.dispatch('save', { k: 'walletLoading', v: true })
 						await this.web3.login()
+					} else if (this.notAppUser()) {
+						this.popup({ code: 10002 })
 					} else {
-						this.router.push('/reviewer/conditions')
+						id == 0
+							? this.router.push('/reviewer/conditions')
+							: this.router.push('/incentive-center')
 					}
 				})()
 			}
@@ -69,13 +73,6 @@ export default defineComponent({
 					k: 'daoRulesVisited',
 					v: daoRulesVisitedList,
 				})
-			}
-			if (id == 2) {
-				if (!this.loggedIn()) {
-					this.web3.login()
-					return
-				}
-				this.router.push('/incentive-center')
 			}
 		},
 	},

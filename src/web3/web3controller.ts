@@ -18,8 +18,22 @@ export default class Web3Controller extends PayController {
 
 	async logout() {
 		await super.logout()
-		// this.eventList({ tab: 0, from: 0, limit: 8 })
 		window.location.reload()
+	}
+
+	async restoreWeb3() {
+		await super.restoreWeb3()
+		if (this.store.state.address) {
+			// console.log('restoreWeb3')
+			// if it's defined (already logged on)
+			let a = await this.enable()
+			// if (a) {
+			// 	let b = await window.ethereum.request({ method: 'eth_requestAccounts' })
+			// 	if (b[0] != this.store.state.address) {
+			// 		//address is not the same
+			// 	}
+			// }
+		}
 	}
 
 	constructor() {
@@ -38,28 +52,38 @@ export default class Web3Controller extends PayController {
 		}
 	}
 
-	login = async (cb?: () => {}) => {
+	async login(cb?: () => {}) {
 		try {
 			const connect = await this.connect(() => {
 				cb()
 				this.fetchRelated()
-				return true
+				return Promise.resolve(true)
 			})
-			// console.log('login connect', connect)
 			if (!connect) return Promise.resolve(false)
 		} catch (error) {
 			if (error.code == 4001) {
+				// logout
+				this.logout()
 				this.store.dispatch('save', { k: 'walletLoading', v: false })
 				this.popup({ text: error.message })
+				return Promise.resolve(false)
 			}
 		}
 
 		// setTimeout(async () => {
-		const info = await this.info()
+		if (this.store.state.path == '/dao') {
+			const info = await this.info()
+		}
+		if (this.store.state.path == '/dsn') {
+			this.store.dispatch('unset', ['notAppUser'])
+			console.log("this.store.state.path == '/dsn'")
+			const info = await this.MyDSNs()
+		}
 		// setTimeout(async () => {
 		const tickets = await this.ticketsNumber()
-		const events = await this.eventList()
+		// const events = await this.eventList()
 		if (this.onLogin) this.onLogin()
+
 		return true
 		// console.log({ connect, info, tickets, events })
 	}

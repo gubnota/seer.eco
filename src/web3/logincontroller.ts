@@ -79,7 +79,10 @@ export default class LoginController extends MetaController {
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					this.address = null
 					this.store.dispatch('save', {
 						k: 'address',

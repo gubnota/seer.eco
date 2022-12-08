@@ -52,12 +52,14 @@ export default class DaoController extends UserController {
 		// TODO: axios
 		let res2 = await axios
 			.post(this.servers.business[this.branch] + 'api/dao/Vote', payload, {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-					Domain: this.node,
-					Language: 'en',
-					Terminal: 'web',
-				},
+				headers: this.store.state.notAppUser
+					? { Domain: this.node, Language: 'en', Terminal: 'web' }
+					: {
+							SeerToken: this.store.state.seerToken,
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  },
 			})
 			.then((res) => {
 				// console.log('/api/dao/Vote then', res)
@@ -92,11 +94,13 @@ export default class DaoController extends UserController {
 
 	// }
 
-	info = async () => {
+	async info() {
+		// console.log('info()')
 		if (!this.store.state.seerToken) {
-			setTimeout(() => {
-				return this.info()
-			}, 100)
+			// console.log('info() !this.store.state.seerToken')
+			setTimeout(async () => {
+				return Promise.resolve(await this.info())
+			}, 1000)
 			return
 		}
 		let x = new Date()
@@ -117,34 +121,36 @@ export default class DaoController extends UserController {
 				this.daoInfo = response.data.data
 				if (response.data.message == 'SystemBusy') {
 					setTimeout(() => {
-						;() => {
-							this.info()
+						;async () => {
 							this.popup({
 								text: `<p>System is busy, trying again…</p>`,
 								timeout: 500,
 							})
+							return Promise.resolve(await this.info())
 						}
 					}, 1000)
-					return
+					return Promise.resolve(false)
 				} else if (response.data.message == 'UserNotFound') {
-					this.popup({
-						text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
-						timeout: 5000,
-					})
+					// this.popup({
+					// 	text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
+					// 	timeout: 5000,
+					// })
+					this.store.dispatch('save', { k: 'notAppUser', v: true }) // make a mark this user isn't registered on app.seer.eco
 					this.store.dispatch('save', { k: 'walletLoading', v: false })
-
-					this.store.dispatch('save', { k: 'address', v: null })
-					this.address = null
-					return
+					// this.store.dispatch('save', { k: 'address', v: null })
+					// this.address = null
+					return Promise.resolve(false)
 				} else {
 					this.store.dispatch('save', {
 						k: 'daoInfo',
 						v: response.data.data,
 					})
-					return response.data.data
+					this.store.dispatch('save', { k: 'notAppUser', v: false })
+					return Promise.resolve(response.data.data)
 				}
 			})
 			.catch((error) => {
+				return Promise.resolve(false)
 				// console.log(error.message)
 				//     {
 				//     "code": 10000,
@@ -181,12 +187,18 @@ export default class DaoController extends UserController {
 	PreTwitter = async () => {
 		let res2 = await axios
 			.get(this.servers.business[this.branch] + 'api/dao/PreTwitter', {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-					Domain: this.node,
-					Language: 'en',
-					Terminal: 'web',
-				},
+				headers: this.store.state.notAppUser
+					? {
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  }
+					: {
+							SeerToken: this.store.state.seerToken,
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  },
 			})
 			.then((response) => {
 				if (response.data.message == 'Success') {

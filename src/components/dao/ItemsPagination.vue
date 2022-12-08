@@ -91,6 +91,7 @@ export default defineComponent({
 			if (this.sel < this.num) this.select(this.sel + 1)
 		},
 		goPrev() {
+			console.log('goPrev')
 			if (this.sel > 1) this.select(this.sel - 1)
 		},
 	},

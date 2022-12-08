@@ -2,7 +2,7 @@
 	<div class="modal" :style="`display:${this.$store.state.modal};`">
 		<div class="message-container" @click="bgClick">
 			<div class="actual-message" @click="floatClick">
-				<div v-html="msg"></div>
+				<div v-html="msg" class="msg"></div>
 				<!-- {{ this.$store ? this.$store.state.modal : '' }} -->
 				<!-- <h2>{{ this.message ? this.message : this.ui._('Coming soon') }}</h2> -->
 				<!-- <div class="close-button close_modal">&times;</div> -->
@@ -33,7 +33,7 @@ export default defineComponent({
 			})
 		},
 		floatClick(e) {
-			console.log('floatClick', e.target)
+			// console.log('floatClick', e.target)
 			e.stopPropagation()
 		},
 	},
@@ -139,6 +139,10 @@ export default defineComponent({
 	.message-container .actual-message h2 {
 		font-size: 1.5rem;
 	}
+}
+.msg {
+	white-space: nowrap;
+	/* overflow: scroll; */
 }
 </style>
 

@@ -96,5 +96,10 @@ h3 {
 		gap: 100px;
 		margin-top: 100px;
 	}
+	.r {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 }
 </style>

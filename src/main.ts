@@ -37,15 +37,16 @@ const router = createRouter({
 	routes, // short for `routes: routes`
 })
 router.beforeEach((to, from) => {
-	if (!['/sdid', '/coming-soon', '/pay', '/dsn', '/dao'].includes(to.path)) {
-		// console.log('beforeEach', to, from)
-		// document.body.classList.add('loading')
-		document.querySelector('#app').style.opacity = 0
-		setTimeout(() => {
-			// document.body.classList.remove('loading')
-			document.querySelector('#app').style.opacity = 1
-		}, 500)
-	}
+	store.dispatch('save', { k: 'path', v: to.path })
+	// if (!['/sdid', '/coming-soon', '/pay', '/dsn', '/dao'].includes(to.path)) {
+	// 	// console.log('beforeEach', to, from)
+	// 	// document.body.classList.add('loading')
+	// 	document.querySelector('#app').style.opacity = 0
+	// 	setTimeout(() => {
+	// 		// document.body.classList.remove('loading')
+	// 		document.querySelector('#app').style.opacity = 1
+	// 	}, 500)
+	// }
 })
 
 router.afterEach((to, from) => {
@@ -92,11 +93,10 @@ store.dispatch('load', [
 	'dsnListTop',
 	'dsnList',
 	'paySellInfo',
+	'notAppUser',
 ])
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 
-if (store.state.daoInfo) web3obj.info()
-if (store.state.address) web3obj.restoreWeb3() // otherwise after refreshing a page signing doesn't work
 store.dispatch('save', {
 	k: 'modal',
 	v: 'none',

@@ -1,5 +1,4 @@
 <template>
-	<Modal />
 	<SetNameModal />
 	<OperateModal />
 	<div class="content">
@@ -148,9 +147,13 @@ export default defineComponent({
 	mounted() {
 		this.$store.dispatch('save', { k: 'myDSNPage', v: 1 })
 		if (!this.$store.state.seerToken) {
+			this.popup({ text: 'Please connect to your wallet account first' })
 			this.router.push('/dsn')
+		} else if (this.$store.state.notAppUser) {
+			this.popup({ text: 'UserNotFound' })
+		} else {
+			this.web3.MyDSNs(1, 8)
 		}
-		this.web3.MyDSNs(1, 8)
 	},
 	methods: {
 		setName(id: number) {

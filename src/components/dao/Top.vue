@@ -58,7 +58,6 @@ export default defineComponent({
 	mounted() {
 		const updateList = () => {
 			setTimeout(() => {
-				this.web3.eventList()
 				// window.location.reload()
 				// this.$store.dispatch('save', { k: 'eventsTab', v: 0 })
 				// this.$store.dispatch('save', { k: 'eventsPage', v: 1 })
@@ -85,7 +84,7 @@ export default defineComponent({
 			return this.$store.state.walletLoading || false
 		},
 		loggedIn() {
-			let loggedIn = this.$store.state.daoInfo != null
+			let loggedIn = !!this.$store.state.address
 			if (loggedIn)
 				this.$store.dispatch('save', { k: 'walletLoading', v: false })
 			return loggedIn
@@ -93,13 +92,13 @@ export default defineComponent({
 	},
 	methods: {
 		myDsn() {
-			if (!this.$store.state.seerToken) {
-				return this.comingSoon({
-					text: 'Please log in to your wallet account first',
+			if (!this.$store.state.address) {
+				return this.popup({
+					text: 'Please connect to your wallet account first',
 					timeout: 3000,
 				})
 			}
-			// this.comingSoon({ text: 'not implemented' })
+			// this.popup({ text: 'not implemented' })
 			this.router.push('/my_dsn')
 		},
 

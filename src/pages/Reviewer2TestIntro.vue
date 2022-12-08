@@ -91,7 +91,7 @@ export default {
 			if (this.ui.remain != 0) {
 				this.router.push({ path: '/reviewer/test' })
 			} else {
-				this.comingSoon({
+				this.popup({
 					text: `<span>You've run out of opportunities</span>`,
 					timeout: 3000,
 				})

@@ -50,7 +50,7 @@ export default defineComponent({
 			const dsnList1 = await this.web3.DSNList()
 			this.$store.dispatch('save', {
 				k: 'dsnListTop',
-				v: dsnList1.list.slice(0, 3),
+				v: dsnList1.list.slice(0, 1),
 			})
 			if (this.$store.state.seerToken) {
 				//TODO: fetch My DSN Data

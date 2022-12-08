@@ -37,17 +37,22 @@ unGot: number // can be claimed
 				this.servers.business[this.branch] + 'api/dao/' + call,
 				{},
 				{
-					headers: {
-						SeerToken: this.store.state.seerToken,
-						Domain: this.node,
-						Language: 'en',
-						Terminal: 'web',
-					},
+					headers: this.store.state.notAppUser
+						? { Domain: this.node, Language: 'en', Terminal: 'web' }
+						: {
+								SeerToken: this.store.state.seerToken,
+								Domain: this.node,
+								Language: 'en',
+								Terminal: 'web',
+						  },
 				}
 			)
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return false
 				}
 				return call == 'daily' || call == 'ClaimReward' ? true : res.data.data
@@ -71,17 +76,22 @@ unGot: number // can be claimed
 				this.servers.business[this.branch] + 'api/dao/daily',
 				{},
 				{
-					headers: {
-						SeerToken: this.store.state.seerToken,
-						Domain: this.node,
-						Language: 'en',
-						Terminal: 'web',
-					},
+					headers: this.store.state.notAppUser
+						? { Domain: this.node, Language: 'en', Terminal: 'web' }
+						: {
+								SeerToken: this.store.state.seerToken,
+								Domain: this.node,
+								Language: 'en',
+								Terminal: 'web',
+						  },
 				}
 			)
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return Promise.resolve(false)
 				}
 				return Promise.resolve(true)

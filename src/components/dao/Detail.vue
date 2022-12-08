@@ -89,6 +89,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
 	computed: {
 		detailHTML() {
+			if (!this.$store.state.eventDetail) return
 			let text = this.$store.state.eventDetail.detail
 			text = text.replace(/\n/g, '<br />')
 			var expression = /(https?:\/\/[^ <]+)/gi

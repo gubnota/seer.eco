@@ -11,12 +11,14 @@ export default class TestController extends EventsController {
 					msg: signature,
 				},
 				{
-					headers: {
-						SeerToken: this.store.state.seerToken,
-						Domain: this.node,
-						Language: 'en',
-						Terminal: 'web',
-					},
+					headers: this.store.state.notAppUser
+						? { Domain: this.node, Language: 'en', Terminal: 'web' }
+						: {
+								SeerToken: this.store.state.seerToken,
+								Domain: this.node,
+								Language: 'en',
+								Terminal: 'web',
+						  },
 				}
 			)
 			.then((res) => {

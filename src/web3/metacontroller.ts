@@ -17,11 +17,6 @@ import {
 	eth,
 	ethDev,
 } from './common'
-// store.dispatch('save', {
-// 	k: 'modal',
-// 	v: 'none',
-// })
-// store.state.modal
 
 declare const window: any
 window.web3j = web3
@@ -36,7 +31,7 @@ export default class MetaController {
 	public popup
 	protected vote_abi
 	public servers
-	public branch: string = 'dev'
+	public branch: string = 'local' //dev
 	public node: string = 'genesis.seer.eco'
 	public seerToken: string
 	public onLogout: () => void
@@ -49,6 +44,7 @@ export default class MetaController {
 	}
 	async logout() {
 		if (this.onLogout) this.onLogout()
+
 		this.store.dispatch('unset', [
 			'address',
 			'daoInfo',
@@ -60,7 +56,9 @@ export default class MetaController {
 		])
 	}
 
-	restoreWeb3 = () => {
+	async restoreWeb3() {
+		// 1. restore all read-only contracts to connect appropriate networks
+		// 2. connect to a network if it's enabled (see in web3controller)
 		if (window.ethereum) {
 			this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
 		} else {
@@ -80,14 +78,9 @@ export default class MetaController {
 				params: [{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId }], // Check networks.js for hexadecimal network ids
 			})
 			await pause(1000)
-			// console.log(
-			// 	'changing chain id…',
-			// 	isDev() ? PolygonDev.chainId : Polygon.chainId,
-			// 	window.ethereum.chainId
-			// )
 		} catch (error) {
 			if (error.code === 4001) {
-				this.popup({ text: 'User rejected' })
+				this.popup({ text: error.message, code: error.code }) //{ text: 'User rejected' })
 				return Promise.resolve(false)
 			} //user rejected
 			// This error code means that the chain we want has not been added to MetaMask
@@ -119,32 +112,19 @@ export default class MetaController {
 		}
 		return Promise.resolve(true)
 	}
+
 	async enable(cb?: () => {}) {
-		const startTime = new Date()
 		// STAGE 3: add a contract to read possible tickets value from balanceOf the contract
-		this.restoreWeb3()
+		// this.restoreWeb3()
 		if (window.ethereum) {
 			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == isDev() ? PolygonDev.chainId : Polygon.chainId
 			const switchRes = await this.switch()
-			console.log('switchRes', switchRes)
 			if (!switchRes) return Promise.resolve(false)
-			// if (window.ethereum.chainId !== isDev() ? PolygonDev.chainId : Polygon.chainId) {
-			// 	//'0x1'
-			// 	// this.popup({
-			// 	// 	timeout: 5000,
-			// 	// 	text: `<p><b class="rainbow">${window.ethereum.chainId}</b> is not the correct chainId<br /> Connect to <strong>Ethereum Mainnet</strong>, please</p>`,
-			// 	// })
-			// 	await this.web3js.currentProvider.request({
-			// 		method: 'wallet_switchEthereumChain',
-			// 		params: [{ chainId: isDev() ? PolygonDev.chainId : Polygon.chainId }],
-			// 	})
-			// 	// return Promise.resolve(false)
-			// }
 
 			// STAGE 2: TODO: clean acc info after account has been changed
 			window.ethereum.on('accountsChanged', (accounts) => {
 				this.logout()
-				// window.location.reload()
+				window.location.reload()
 			})
 
 			window.ethereum.on('message', (message) => {
@@ -153,14 +133,11 @@ export default class MetaController {
 
 			try {
 				// // STAGE 4: add a contract to read possible tickets value from balanceOf the contract
-				// this.popup({
-				// 	timeout: 5000,
-				// 	text: 'Your <a href=//app.seer.eco target=_blank>app.seer.eco account</a> is not registered',
-				// })
-				// return false
 				store.dispatch('save', {
 					k: 'address',
-					v: (await window.ethereum.enable())[0], // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
+					v: (
+						await window.ethereum.request({ method: 'eth_requestAccounts' })
+					)[0], // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
 				})
 				this.address = store.state.address
 				// if (cb) {
@@ -175,9 +152,6 @@ export default class MetaController {
 				// 		}, 1000)
 				// 	)
 				// }
-				const elapsedTime = new Date().getTime() - startTime.getTime()
-
-				console.log(`enable() took ${elapsedTime}ms`)
 				Promise.resolve(true)
 			} catch (error: any) {
 				this.popup({
@@ -203,11 +177,6 @@ export default class MetaController {
 		// })
 		return Promise.resolve(false)
 	}
-
-	// connect = async () => {
-	// 	await this.load()
-	// 	await this.login2()
-	// }
 
 	// disconnect = () => {
 	// this.address = null

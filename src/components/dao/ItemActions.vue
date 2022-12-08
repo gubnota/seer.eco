@@ -31,6 +31,14 @@ export default defineComponent({
 		return this.passed
 	},
 	methods: {
+		loggedIn() {
+			let loggedIn = this.$store.state.address
+			return !!loggedIn
+		},
+		notAppUser() {
+			return this.$store.state.notAppUser
+		},
+
 		isRejected() {
 			this.updateVoted()
 			return this.rejected
@@ -58,11 +66,23 @@ export default defineComponent({
 		},
 		pass(e: any) {
 			e.stopPropagation()
-			this.vote(true)
+			if (!this.loggedIn()) {
+				this.popup({ text: 'Please connect to your wallet account first' })
+			} else if (this.notAppUser()) {
+				this.popup({ code: 10002 })
+			} else {
+				this.vote(true)
+			}
 		},
 		reject(e: any) {
 			e.stopPropagation()
-			this.vote(false)
+			if (!this.loggedIn()) {
+				this.popup({ text: 'Please connect to your wallet account first' })
+			} else if (this.notAppUser()) {
+				this.popup({ code: 10002 })
+			} else {
+				this.vote(false)
+			}
 		},
 		vote(pass: true) {
 			if (this.passed || this.rejected) return
@@ -71,10 +91,10 @@ export default defineComponent({
 					!this.$store.state.daoInfo ||
 					this.$store.state.daoInfo.isDao != true
 				) {
-					this.comingSoon({
+					this.popup({
 						text: !this.$store.state.daoInfo
 							? `<p>Please log in to your wallet account first</p>`
-							: `<p>Please, become a DAO reviewer first</p>`,
+							: `<p>Please, become a <b class="rainbow">DAO reviewer</b> first</p>`,
 						timeout: 3000,
 					})
 					if (!this.$store.state.daoInfo) this.web3.login()

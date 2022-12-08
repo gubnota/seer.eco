@@ -31,7 +31,7 @@
 			</Slider>
 		</div>
 
-		<a @click="this.comingSoon" class="cta">Explore More Space</a>
+		<a @click="this.popup" class="cta">Explore More Space</a>
 	</section>
 </template>
 <script lang="ts">

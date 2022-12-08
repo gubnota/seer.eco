@@ -32,7 +32,10 @@ export default class DSNController extends IncentiveController {
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return null //Promise.resolve(null)
 				}
 				return res //Promise.resolve()
@@ -137,17 +140,22 @@ export default class DSNController extends IncentiveController {
 		// TODO: axios
 		const res2 = await axios
 			.post(this.servers.business[this.branch] + 'api/Node/Withdraw', payload, {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-					Domain: this.node,
-					Language: 'en',
-					Terminal: 'web',
-				},
+				headers: this.store.state.notAppUser
+					? { Domain: this.node, Language: 'en', Terminal: 'web' }
+					: {
+							SeerToken: this.store.state.seerToken,
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  },
 			})
 			.then((res) => {
 				// console.log('/api/Node/Vote then', res)
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return null
 				}
 				return res.data
@@ -174,29 +182,43 @@ export default class DSNController extends IncentiveController {
 		// }
 	}
 
-	MyDSNs = async (from: number = 1, limit: number = 1, search: string = '') => {
+	async MyDSNs(from: number = 1, limit: number = 1, search: string = '') {
 		const payload = {
 			from,
 			limit,
 			search,
 		}
+		if (this.store.state.notAppUser) return Promise.resolve(false)
 		let res2 = await axios
 			.post(this.servers.business[this.branch] + 'api/Node/MyDSNs', payload, {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-					Domain: this.node,
-					Language: 'en',
-					Terminal: 'web',
-				},
+				headers: this.store.state.notAppUser
+					? { Domain: this.node, Language: 'en', Terminal: 'web' }
+					: {
+							SeerToken: this.store.state.seerToken,
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  },
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					if (res.data.code === 10002) {
+						this.store.dispatch('save', { k: 'notAppUser', v: true })
+						return // supress UserNotFound error
+					}
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return null //Promise.resolve(null)
 				}
 				return res //Promise.resolve()
 			})
 			.catch((error) => {
+				if (error.message == 'Request failed with status code 401') {
+					this.store.dispatch('save', { k: 'notAppUser', v: true })
+					return Promise.resolve(false)
+				}
 				this.popup({
 					timeout: 5000,
 					text: `<p>${fancyError(error)}</p>`,
@@ -204,6 +226,7 @@ export default class DSNController extends IncentiveController {
 				return null //Promise.resolve(null)
 			})
 		// when from=1, limit = 1, it fetches only enabled NFT for My DSN Data widget
+		if (!res2) return Promise.resolve(false)
 		this.store.dispatch('save', {
 			k: from == 1 && limit == 1 ? 'MyDSNData' : 'MyDSNs',
 			v: from == 1 && limit == 1 ? res2.data.data.list[0] : res2.data.data,
@@ -218,16 +241,21 @@ export default class DSNController extends IncentiveController {
 		}
 		let res2 = await axios
 			.post(this.servers.business[this.branch] + 'api/Node/Rewards', payload, {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-					Domain: this.node,
-					Language: 'en',
-					Terminal: 'web',
-				},
+				headers: this.store.state.notAppUser
+					? { Domain: this.node, Language: 'en', Terminal: 'web' }
+					: {
+							SeerToken: this.store.state.seerToken,
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  },
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return null //Promise.resolve(null)
 				}
 				return res //Promise.resolve()
@@ -256,12 +284,14 @@ export default class DSNController extends IncentiveController {
 				this.servers.business[this.branch] + 'api/Node/SetNodeName',
 				payload,
 				{
-					headers: {
-						SeerToken: this.store.state.seerToken,
-						Domain: this.node,
-						Language: 'en',
-						Terminal: 'web',
-					},
+					headers: this.store.state.notAppUser
+						? { Domain: this.node, Language: 'en', Terminal: 'web' }
+						: {
+								SeerToken: this.store.state.seerToken,
+								Domain: this.node,
+								Language: 'en',
+								Terminal: 'web',
+						  },
 				}
 			)
 			.then((res) => {
@@ -290,16 +320,21 @@ export default class DSNController extends IncentiveController {
 		}
 		let res2 = await axios
 			.post(this.servers.business[this.branch] + 'api/Node/Show', payload, {
-				headers: {
-					SeerToken: this.store.state.seerToken,
-					Domain: this.node,
-					Language: 'en',
-					Terminal: 'web',
-				},
+				headers: this.store.state.notAppUser
+					? { Domain: this.node, Language: 'en', Terminal: 'web' }
+					: {
+							SeerToken: this.store.state.seerToken,
+							Domain: this.node,
+							Language: 'en',
+							Terminal: 'web',
+					  },
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
-					this.popup({ text: `<p><b>Error</b><br />${res.data.message}</p>` })
+					this.popup({
+						text: `<p><b>Error</b><br />${res.data.message}</p>`,
+						code: res.data.code,
+					})
 					return null //Promise.resolve(null)
 				}
 				return res //Promise.resolve()

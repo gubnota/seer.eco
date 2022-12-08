@@ -36,15 +36,16 @@ export default defineComponent({
 		},
 	},
 	mounted() {
+		if (!this.$store.address) this.router.push({ path: '/dao' })
 		let s = this.$store.state
 		if (!this.$store.state.daoInfo)
-			this.comingSoon({
+			this.popup({
 				text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
 				timeout: 5000,
 			})
 		else if (this.$store.state.daoInfo && !this.$store.state.daoInfo.isDao) {
 			this.router.push({ path: '/dao' })
-			this.comingSoon({
+			this.popup({
 				text: `<p>Please, go to <a href="/#/reviewer/conditions">/reviewer/conditions</a> and become a DAO reviewer</p>`,
 				timeout: 5000,
 			})
