@@ -1,5 +1,6 @@
 <template>
 	<Modal />
+	<Loading v-if="this.$store.state.loading" />
 	<main class="reviewer">
 		<section class="main">
 			<Top isDao="true" />
@@ -12,6 +13,7 @@
 <script lang="ts">
 import Top from '../Top.vue'
 import Modal from '../../common/Modal.vue'
+import Loading from '../../common/Loading.vue'
 import oval from '/src/assets/reviewer/oval@2x.png'
 import crystal from '/src/assets/reviewer/crystal@2x.png'
 import { defineComponent } from 'vue'
@@ -22,7 +24,7 @@ export default defineComponent({
 			crystal: `url(${crystal})`,
 		}
 	},
-	components: { Top, Modal },
+	components: { Top, Modal, Loading },
 })
 </script>
 <style scoped>

@@ -47,7 +47,8 @@ export default class DSNController extends IncentiveController {
 				})
 				return null //Promise.resolve(null)
 			})
-		this.store.dispatch('save', { k: 'dsnList', v: res2.data.data }) //initially, store first page of the DSNs
+		if (res2 && res2.data && res2.data.data)
+			this.store.dispatch('save', { k: 'dsnList', v: res2.data.data }) //initially, store first page of the DSNs
 		return res2.data.data || ''
 		/*
 {

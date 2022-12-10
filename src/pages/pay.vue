@@ -126,10 +126,11 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		if (!this.$store.state.address) {
+		if (!this.$store.state.nonDirect || !this.$store.state.address) {
 			this.router.push('/dsn')
 			// let r1 = await this.web3.enable()
 		} else {
+			this.$store.dispatch('unset', ['nonDirect'])
 			this.coupon = ''
 			this.qty = ''
 			this.quantity = 0

@@ -34,7 +34,10 @@
 			formatNumber(this.dsn[no].daily_income_usdt)
 		}}</span>
 		<span class="user_number"
-			>{{ numberWithCommas(this.dsn[no].total_users) }} / 100,000</span
+			><span class="total_users" ref="total_users">{{
+				this.shown ? this.shown : numberWithCommas(this.dsn[no].total_users)
+			}}</span>
+			<span> / 100,000</span></span
 		>
 		<span class="no"
 			>NO. {{ this.dsn[no].no.toString().padStart(5, '0') }}</span
@@ -48,9 +51,10 @@
 <script lang="ts">
 import Nft_card from '/src/assets/dsn/nft-card.svg'
 import store from '../../store'
-import { formatNumber, numberWithCommas } from '../../common/helper'
+import { countUp, formatNumber, numberWithCommas } from '../../common/helper'
 import { defineComponent } from 'vue'
 
+declare const window: any
 const sampleDsn = {
 	cpu_average: 0,
 	daily_active_users: 0,
@@ -90,8 +94,34 @@ export default defineComponent({
 		setTimeout(() => {
 			c.style.width = d
 		}, 1000)
+		this.countUp.goal = this.dsn[this.no].total_users
+
+		// setTimeout(() => {
+		// this.shown = 'false'
+		setTimeout(() => {
+			this.callCountUp()
+		}, this.countUp.interval)
+
+		// this.$refs.total_users.innerText =
+		// 	setTimeout(() => {
+		// 		cb
+		// 	}, window.countUpS.interval)
+		// }, 1000)
 	},
 	methods: {
+		callCountUp() {
+			this.countUp = countUp(this.countUp)
+			if (this.countUp.no < this.countUp.total / this.countUp.interval) {
+				setTimeout(() => {
+					if (this.$refs.total_users) {
+						this.$refs.total_users.innerText = numberWithCommas(
+							this.countUp.shown
+						)
+						this.callCountUp()
+					}
+				}, this.countUp.interval)
+			}
+		},
 		grade(no) {
 			if (no.total_users < 10000) return 1
 			if (no.total_users >= 10000 && no.total_users < 50000) return 2
@@ -147,6 +177,8 @@ export default defineComponent({
 		return {
 			user_percent: 0.6,
 			memory_percent: 0.4,
+			shown: false,
+			countUp: { no: 0, total: 4000, shown: 0, goal: 0, interval: 10 },
 		}
 	},
 	components: { Nft_card },
@@ -228,6 +260,11 @@ img.badge3 {
 	top: 244px;
 	color: #e3e5e8;
 	font-weight: 600;
+	text-emphasis: justify;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 104px;
 }
 .memory_label {
 	right: 40px;

@@ -141,7 +141,7 @@ export default defineComponent({
 	}
 }
 .msg {
-	white-space: nowrap;
+	/* white-space: nowrap; */
 	/* overflow: scroll; */
 }
 </style>

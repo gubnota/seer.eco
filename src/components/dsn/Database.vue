@@ -82,12 +82,12 @@ const arrow = `
 declare const window: any
 const fields = {
 	no: '#',
-	homeserver: 'homeserver',
-	total_users: 'total_Users',
-	memory_rss: 'memory_Rss',
-	cpu_average: 'cpu_Average',
-	daily_user_type_native: 'create/24h',
-	monthly_active_users: 'active/24h/30day',
+	homeserver: 'Homeserver',
+	total_users: 'Total_Users',
+	memory_rss: 'Memory_Rss',
+	cpu_average: 'Cpu_Average',
+	daily_user_type_native: 'Create/24h',
+	monthly_active_users: 'Active/24h/30day',
 	monthly_income_seer: 'Seer/24h/30day', //income_
 	monthly_income_usdt: 'Usdt/24h/30day', //income_
 }

@@ -1,3 +1,4 @@
+import { addressPartially } from '../common/helper'
 import PayController from './paycontroller'
 declare const window: any
 export default class Web3Controller extends PayController {
@@ -7,18 +8,12 @@ export default class Web3Controller extends PayController {
 			this.logout()
 			return
 		}
-		if (window.innerWidth < 571)
-			return `${address.substring(0, 3)}...${address.substring(
-				address.length - 2
-			)}`
-		return `${address.substring(0, 5)}.....${address.substring(
-			address.length - 5
-		)}`
+		return addressPartially(address)
 	}
 
-	async logout() {
+	async logout(forceReload: boolean = true) {
 		await super.logout()
-		window.location.reload()
+		if (forceReload) window.location.reload()
 	}
 
 	async restoreWeb3() {
@@ -41,7 +36,7 @@ export default class Web3Controller extends PayController {
 		let isLocal =
 			window.location.host.substring(0, 9) === 'localhost' ||
 			window.location.host.substring(0, 1) === '1'
-		this.branch = isLocal ? 'dev' : 'dev' // local || dev || release
+		this.branch = isLocal ? 'local' : 'dev' // local || dev || release
 	}
 
 	fetchRelated = async () => {
@@ -65,6 +60,7 @@ export default class Web3Controller extends PayController {
 				// logout
 				this.logout()
 				this.store.dispatch('save', { k: 'walletLoading', v: false })
+				console.log('login error', error)
 				this.popup({ text: error.message })
 				return Promise.resolve(false)
 			}
@@ -76,7 +72,6 @@ export default class Web3Controller extends PayController {
 		}
 		if (this.store.state.path == '/dsn') {
 			this.store.dispatch('unset', ['notAppUser'])
-			console.log("this.store.state.path == '/dsn'")
 			const info = await this.MyDSNs()
 		}
 		// setTimeout(async () => {

@@ -94,6 +94,8 @@ store.dispatch('load', [
 	'dsnList',
 	'paySellInfo',
 	'notAppUser',
+	// 'loading',
+	'comingSoon',
 ])
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 

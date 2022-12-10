@@ -50,7 +50,7 @@ export default {
 			// unmet: true,
 			conds: [
 				{
-					name: 'DSN duration > 30 days',
+					name: 'DSN duration > 3 days',
 					icon: 'nft_calendar',
 					actionText: 'Approve',
 					// passed: this.getStatus('nft'),
@@ -114,10 +114,12 @@ export default {
 	},
 	mounted() {
 		if (!this.loggedIn()) {
-			this.router.push('/dao')
+			// this.router.push('/dao')
+			this.router.go(-1)
 			// this.web3.login()
 		}
 		if (this.$store.state.daoInfo) this.unmet = !this.$store.state.daoInfo.isDao
+		this.web3.info()
 		// ;(async () => {
 		// 	if (!this.$store.state.address) await this.web3.login()
 		// 	// setTimeout(() => {
@@ -159,10 +161,13 @@ export default {
 				})
 				this.router.push('/seer_dao.html')
 			}
+			if (e == 'nft') {
+				this.router.push('/dsn')
+			}
 			if (e == 'test') {
 				if (this.$store.state.daoInfo.steps.holdDSN == false) {
 					this.popup({
-						text: `<span>Please, fulfill the requirement of <b class="rainbow">NFT duration</b> > ${
+						text: `<span>Please, fulfill the requirement of <b class="rainbow">DSN duration</b> > ${
 							this.$store.state.daoInfo.configs.dsnHoldDay ?? 0
 						} days</span>`,
 						timeout: 5000,

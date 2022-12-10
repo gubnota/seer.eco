@@ -4,7 +4,7 @@ const menu = [
 		name: 'Ecology',
 		hash: false,
 		children: [
-			{ name: 'SDID', hash: 'https://sdid.seer.eco/' },
+			{ name: 'SDID', hash: '/sdid' },
 			{ name: 'DSN', hash: '/dsn' },
 			{ name: 'DAO', hash: '/dao' },
 			{ name: 'AD Services', hash: '/coming-soon' },

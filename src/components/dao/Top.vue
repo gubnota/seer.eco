@@ -85,9 +85,10 @@ export default defineComponent({
 		},
 		loggedIn() {
 			let loggedIn = !!this.$store.state.address
-			if (loggedIn)
+			let seerToken = !!this.$store.state.seerToken
+			if (loggedIn && seerToken)
 				this.$store.dispatch('save', { k: 'walletLoading', v: false })
-			return loggedIn
+			return loggedIn && seerToken
 		},
 	},
 	methods: {

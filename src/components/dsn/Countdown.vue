@@ -77,10 +77,16 @@ export default defineComponent({
 	data() {
 		return {
 			isExpired: false, // true – all are sold out (stopTime already passed)
-			s: { price: '0', selled: '0', stopTime: '0', startTime: '0', total: '0' },
+			s: {
+				price: '1500000000',
+				selled: '0',
+				stopTime: '0',
+				startTime: '0',
+				total: '400',
+			},
 			cd: { days: '0', hours: '0', mins: '0', secs: '0' },
 			diff: 0, // diff with startTime before begin
-			startTime: '',
+			startTime: '2022/12/10 12:00 (UTC)',
 			stopTimeDiff: 0, // diff with stopTime before begin
 			timeout: 0,
 		}
@@ -141,6 +147,7 @@ export default defineComponent({
 				this.popup({ text: 'Sold out' })
 				return
 			}
+			this.$store.dispatch('save', { k: 'nonDirect', v: true })
 			this.router.push('/pay')
 		},
 		fromWei(a: number) {
@@ -171,6 +178,7 @@ div.main {
 	border-radius: 10px;
 	align-self: flex-start;
 	background: transparent;
+	font-weight: 600;
 }
 .btn svg {
 	fill-rule: evenodd;

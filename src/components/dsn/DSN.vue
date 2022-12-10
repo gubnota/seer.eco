@@ -12,13 +12,13 @@
 				key="2"
 			/> -->
 			</div>
-			<h4>—— Excellent SDN Data Display ——</h4>
+			<h4>—— Excellent DSN Data Display ——</h4>
 		</div>
 		<div class="r">
 			<h2 class="rainbow">Rules and Display:</h2>
 			<p>
-				<b>A level</b>: less than 10,000 users; AA level: 10,000 to 50,000
-				users; AAA level: 50,000 to 100,000 users.<br />
+				<b>A level</b>: less than 10,000 users; <b>AA level</b>: 10,000 to
+				50,000 users; <b>AAA level</b>: 50,000 to 100,000 users.<br />
 				<b>USER</b>: The total bearer address and the current address of this
 				server.<br />
 				<b>MEMORY LOAD</b>: The memory usage ratio of this server.<br />

@@ -8,14 +8,14 @@ import web3 from 'web3'
 
 declare const window: any
 export default class PayController extends DSNController {
-	USDT = '0xa8c497D6A54fbe3cce944417C87d1cFba0419B3E'
-	PayDSN = '0xf91b84c72F7800C575Ecce3e50A0A587C9EB1540'
+	USDT = '0xdac17f958d2ee523a2206206994597c13d831ec7' //'0xa8c497D6A54fbe3cce944417C87d1cFba0419B3E'
+	PayDSN = '0x2688a99Cf53Bbaac107c9e2B4F300888FC84B07F' //'0xf91b84c72F7800C575Ecce3e50A0A587C9EB1540'
 	public PayDSNContract: any
 	public USDTContract: any
 
 	async createPayContracts() {
-		const web = new web3('https://rpc.ankr.com/eth_goerli') // only to check ticketsNumber(): window.ethereum release, Polygon test dev
-
+		const web = this.web3js //new web3('https://rpc.ankr.com/eth') // only to check ticketsNumber(): window.ethereum release, Polygon test dev
+		//https://rpc.ankr.com/eth_goerli'
 		const Contract = web.eth.Contract // @ts-ignore
 		this.PayDSNContract = new Contract(dsnAbi, this.PayDSN) // @ts-ignore
 		this.USDTContract = new Contract(usdtAbi, this.USDT)
@@ -23,6 +23,7 @@ export default class PayController extends DSNController {
 		window.USDTContract = this.USDTContract
 	}
 	async testPayNetwork() {
+		return true
 		try {
 			if (!window.ethereum) {
 				var a = await this.enable()

@@ -1,5 +1,6 @@
 <template>
 	<Modal />
+	<Loading v-if="this.$store.state.loading" />
 	<main class="dao">
 		<section class="main">
 			<CheckIn />
@@ -20,6 +21,7 @@ import Roles from '../components/dao/Roles.vue'
 import ReviewUpdates from '../components/dao/ReviewUpdates.vue'
 import FooterDao from '../components/dao/Footer.vue'
 import Modal from '../components/common/Modal.vue'
+import Loading from '../components/common/Loading.vue'
 import CheckIn from '../components/dao/CheckIn.vue'
 import { defineComponent } from 'vue'
 // import CheckIn from
@@ -40,6 +42,7 @@ export default defineComponent({
 		ReviewUpdates,
 		Modal,
 		CheckIn,
+		Loading,
 	},
 })
 </script>

@@ -42,7 +42,7 @@ export default class MetaController {
 		this.vote_abi = vote_abi
 		this.servers = servers
 	}
-	async logout() {
+	async logout(forceReload: boolean = true) {
 		if (this.onLogout) this.onLogout()
 
 		this.store.dispatch('unset', [
@@ -60,7 +60,11 @@ export default class MetaController {
 		// 1. restore all read-only contracts to connect appropriate networks
 		// 2. connect to a network if it's enabled (see in web3controller)
 		if (window.ethereum) {
-			this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
+			if (window.ethereum.chainId == '0x1') {
+				this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
+			} else {
+				this.web3js = new web3(isDev() ? ethDev : eth) // - default provider with Metamask to sign
+			}
 		} else {
 			this.web3js = new web3(isDev() ? ethDev : eth) // - default provider with Metamask to sign
 		}
@@ -123,8 +127,11 @@ export default class MetaController {
 
 			// STAGE 2: TODO: clean acc info after account has been changed
 			window.ethereum.on('accountsChanged', (accounts) => {
-				this.logout()
-				window.location.reload()
+				this.logout(false)
+				// window.location.reload()
+			})
+			window.ethereum.on('chainChanged', (chainId) => {
+				this.logout(false)
 			})
 
 			window.ethereum.on('message', (message) => {
@@ -132,12 +139,13 @@ export default class MetaController {
 			})
 
 			try {
+				let address = (
+					await window.ethereum.request({ method: 'eth_requestAccounts' })
+				)[0]
 				// // STAGE 4: add a contract to read possible tickets value from balanceOf the contract
 				store.dispatch('save', {
 					k: 'address',
-					v: (
-						await window.ethereum.request({ method: 'eth_requestAccounts' })
-					)[0], // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
+					v: address, // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
 				})
 				this.address = store.state.address
 				// if (cb) {
@@ -161,6 +169,7 @@ export default class MetaController {
 
 				// console.log(error.message)
 			}
+			this.web3js = new web3(window.ethereum) // restore MetaMask rpc to sign requests
 			window.web3js = this.web3js
 			//
 			return Promise.resolve(true)

@@ -17,12 +17,23 @@ import MyDsn from './pages/my_dsn.vue'
 import Nft from './components/main/Nft.vue'
 import { comingSoon } from './common/helper'
 import Pay from './pages/pay.vue'
-
-export const openLink = (link: string) => {
+import { router } from './main'
+export const openLink = (link: string, noNeedBack: boolean = true) => {
 	let prev = window.location.hash
 	window.open(link, '_blank')
-	location.href = prev
+	// window.router = router
+	if (!noNeedBack) {
+		setTimeout(() => {
+			router.back()
+		}, 10)
+	}
+	// router.forward()
+	// location.href = prev
+	// router.go(-1)
 	return
+}
+const extLink = (link: string) => {
+	return openLink(link, false)
 }
 const routes = [
 	{
@@ -43,50 +54,50 @@ const routes = [
 	{
 		path: '/sdid',
 		beforeEnter: () => {
-			return openLink('https://sdid.seer.eco')
+			return extLink('https://sdid.seer.eco')
 		},
 	},
 	{
 		path: '/asset/litepaper.png',
 		beforeEnter: () => {
-			return openLink('/asset/litepaper.png')
+			return extLink('/asset/litepaper.png')
 		},
 	},
 	{
 		path: '/seer_user.html',
 		beforeEnter: () => {
-			return openLink('/seer_user.html')
+			return extLink('/seer_user.html')
 		},
 	},
 	{
 		path: '/seer_q_and_a.html',
 		beforeEnter: () => {
-			return openLink('/seer_q_and_a.html')
+			return extLink('/seer_q_and_a.html')
 		},
 	},
 	{
 		path: '/seer_privacy.html',
 		beforeEnter: () => {
-			return openLink('/seer_privacy.html')
+			return extLink('/seer_privacy.html')
 		},
 	},
 	{
 		path: '/seer_dao.html',
 		beforeEnter: () => {
-			return openLink('/seer_dao.html')
+			return extLink('/seer_dao.html')
 		},
 	},
 	{
 		path: '/seer_space.html',
 		beforeEnter: () => {
-			return openLink('/seer_space.html')
+			return extLink('/seer_space.html')
 		},
 	},
 
 	{
 		path: '/brandkit',
 		beforeEnter: () => {
-			return openLink(
+			return extLink(
 				'https://www.figma.com/file/bAfVSpnLjzSRSWidF3YOrS/Project-Seer-Brand-Kit?node-id=3%3A347'
 			)
 		},
@@ -106,7 +117,7 @@ const routes = [
 	{ path: '/incentive-center', component: IncentiveCenter },
 	{ path: '/dsn', component: Dsn },
 	{ path: '/my_dsn', component: MyDsn },
-	{ path: '/pay', component: Pay },
+	{ path: '/pay', name: 'pay', component: Pay, props: true },
 ]
 
 export default routes

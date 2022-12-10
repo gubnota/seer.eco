@@ -1,10 +1,12 @@
 import { store } from '../main'
 
+declare const window: any
 export type messageType = {
 	timeout?: number
 	text?: string
 	type?: string
 	code?: number
+	inevitable?: boolean
 }
 
 export const popup = (message?: messageType) => {
@@ -196,4 +198,36 @@ export const convertUTCString = (time: number) => {
 		.padStart(2, '0')}:${a.getUTCMinutes().toString().padStart(2, '0')} (UTC)`
 	// 1670234400
 }
+export const addressPartially = (address: string) => {
+	if (window.innerWidth < 571)
+		return `${address.substring(0, 3)}...${address.substring(
+			address.length - 2
+		)}`
+	return `${address.substring(0, 5)}.....${address.substring(
+		address.length - 5
+	)}`
+}
+
+window.numberWithCommas = numberWithCommas
+export const countUp = (v: {
+	no: number
+	total: number
+	shown: number
+	goal: number
+	interval: number
+}) => {
+	let count = Math.ceil(v.total / v.interval) // how many steps
+	v.shown = Math.round((v.goal * v.no) / count)
+	if (v.no >= count) {
+		v.shown = v.goal
+	}
+	return {
+		no: v.no + 1,
+		total: v.total,
+		shown: v.shown,
+		goal: v.goal,
+		interval: v.interval,
+	}
+}
+window.countUp = countUp
 export { comingSoon, getFQN, getAlias }

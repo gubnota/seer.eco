@@ -11,7 +11,7 @@
 						Reward Details
 					</div>
 				</nav>
-				<IncentiveCenter v-if="firstTab" />
+				<IncentiveCenterC v-if="firstTab" />
 				<RewardDetails v-else />
 			</section>
 			<aside class="warn">&nbsp;</aside>
@@ -20,12 +20,12 @@
 </template>
 <script lang="ts">
 import Template from '../components/dao/reviewer/Template2.vue'
-import IncentiveCenter from '../components/incentives/IncentiveCenter.vue'
+import IncentiveCenterC from '../components/incentives/IncentiveCenterC.vue'
 import RewardDetails from '../components/incentives/RewardDetails.vue'
 import BackButton from '../components/dao/BackButton.vue'
 import { defineComponent } from 'vue'
 export default defineComponent({
-	components: { Template, IncentiveCenter, RewardDetails, BackButton },
+	components: { Template, IncentiveCenterC, RewardDetails, BackButton },
 	computed: {
 		firstTab() {
 			let a = this.$store.state.currentTab
@@ -36,7 +36,7 @@ export default defineComponent({
 		},
 	},
 	mounted() {
-		if (!this.$store.address) this.router.push({ path: '/dao' })
+		if (!this.$store.address) this.router.go(-1) //this.router.push({ path: '/dao' })
 		let s = this.$store.state
 		if (!this.$store.state.daoInfo)
 			this.popup({

@@ -1,6 +1,7 @@
 <template>
 	<div class="content">
 		<Modal />
+		<Loading v-if="this.$store.state.loading" />
 		<main class="dsn">
 			<section class="main">
 				<Top :isDsn="true" />
@@ -21,6 +22,7 @@
 import Top from '../components/dao/Top.vue'
 import Footer from '../components/common/Footer.vue'
 import Modal from '../components/common/Modal.vue'
+import Loading from '../components/common/Loading.vue'
 import Header from '../components/dsn/Header.vue'
 import DSNEl from '../components/dsn/DSN.vue'
 import Data from '../components/dsn/Data.vue'
@@ -44,6 +46,7 @@ export default defineComponent({
 		Data,
 		Database,
 		Graph,
+		Loading,
 	},
 	mounted() {
 		;(async () => {

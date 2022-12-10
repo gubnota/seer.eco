@@ -52,6 +52,7 @@ export default class LoginController extends MetaController {
 
 	async connect(cb?: () => {}) {
 		var res = await this.enable(cb)
+		console.log('connect enable 1', res)
 		// console.log('await enable', res)
 		if (!res) return Promise.resolve(false)
 		var x = new Date()
@@ -62,12 +63,22 @@ export default class LoginController extends MetaController {
 		// console.log('this.enable res', res)
 		var chain = window.ethereum.chainId || 1
 		// var address = window.ethereum.selectedAddress.toLocaleLowerCase()
-		var signature = await this.signLogin({
-			chain,
-			nonce,
-			stamp,
-		})
+		let signature = false
+		try {
+			signature = await this.signLogin({
+				chain,
+				nonce,
+				stamp,
+			})
+		} catch (e) {
+			// console.log('signature error', e)//{ code: 4001, message: "MetaMask Message Signature: User denied message signature." }
+			if (e.code == 4001) {
+				this.logout(false)
+			}
+			this.popup({ text: e.message })
+		}
 
+		if (!signature) return Promise.resolve(false)
 		let res2 = await axios
 			.post(this.servers.user[this.branch] + 'api/User/Connect', {
 				address: this.address,
