@@ -82,7 +82,10 @@ export default defineComponent({
 		},
 	},
 	mounted() {
-		var a = document.querySelectorAll('.skill-bar')[0]
+		var z = document.querySelectorAll('.skill-bar')
+		if (!z) return
+		var a = z[0]
+		if (!a) return
 		var b = a.style.width
 		a.style.width = '0%'
 		setTimeout(() => {

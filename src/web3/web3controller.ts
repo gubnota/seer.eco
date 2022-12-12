@@ -18,6 +18,9 @@ export default class Web3Controller extends PayController {
 
 	async restoreWeb3() {
 		await super.restoreWeb3()
+		if (this.store.state.address && !this.store.state.seerToken) {
+			this.store.dispatch('unset', ['address'])
+		}
 		if (this.store.state.address) {
 			// console.log('restoreWeb3')
 			// if it's defined (already logged on)
@@ -36,7 +39,7 @@ export default class Web3Controller extends PayController {
 		let isLocal =
 			window.location.host.substring(0, 9) === 'localhost' ||
 			window.location.host.substring(0, 1) === '1'
-		this.branch = isLocal ? 'local' : 'dev' // local || dev || release
+		this.branch = isLocal ? 'dev' : 'dev' // local || dev || release
 	}
 
 	fetchRelated = async () => {

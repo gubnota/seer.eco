@@ -129,6 +129,8 @@ export const setTitle = (to) => {
 }
 
 export const scroll = () => {
+	const db = document.querySelector('section.database') as HTMLElement
+	if (db) window.scrollTo(0, db.offsetTop)
 	return
 	// let a = this.$refs
 	// var b = Object.keys(a)

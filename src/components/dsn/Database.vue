@@ -124,7 +124,7 @@ export default defineComponent({
 			input,
 			samples,
 			fields,
-			perPage: 9, //9,
+			perPage: 10, //9,
 			sync: [],
 			sortColumn: 7,
 			asc: false,
@@ -150,7 +150,7 @@ export default defineComponent({
 	},
 	mounted() {
 		setTimeout(() => {
-			scroll()
+			// scroll()
 			this.sortTable()
 		}, 200)
 	},
@@ -183,6 +183,7 @@ export default defineComponent({
 			let asc = this.asc
 			let a = this.$store.state.dsnList
 			let table = a ? a.list : []
+			if (!table) return
 			table.sort((a, b) => {
 				return asc ? (b[col] > a[col] ? -1 : 1) : b[col] > a[col] ? 1 : -1 //desc numeric
 			})
@@ -211,7 +212,7 @@ export default defineComponent({
 			]
 		) {
 			var out = []
-
+			if (!input) return
 			for (let i = 0; i < input.length; i++) {
 				const el = input[i]
 				let obj = {
@@ -320,16 +321,25 @@ table {
 	font-weight: 500;
 	/* border: none; */
 }
+
 .table td,
 .table th {
 	padding: 0.75rem;
 	vertical-align: top;
 }
+table {
+	display: flex;
+	flex-direction: column;
+}
+
 tr {
 	height: 44px;
 	line-height: 44px;
 	/* box-shadow: inset 0 -1px #cdd0d4; */
 	position: relative;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: row;
 }
 tr {
 	/* border-bottom: 1px solid #cdd0d4; */
@@ -344,11 +354,11 @@ tr.item {
 	height: 88px;
 	line-height: 88px;
 	align-items: center;
+	border-bottom: 1px solid #cdd0d4;
 }
 tr.item td {
-	height: 60px;
-	line-height: 60px;
-	border-bottom: 1px solid #cdd0d4;
+	/* height: 60px; */
+	/* line-height: 60px; */
 }
 .r2 {
 	font-weight: 800 !important;
@@ -413,13 +423,71 @@ heading {
 
 th:nth-child(1),
 td:nth-child(1) {
-	min-width: 36px;
+	min-width: 30px;
 	text-align: left;
 }
 th:nth-child(2),
 td:nth-child(2) {
 	text-align: left;
 	font-weight: 600;
+}
+
+tr.head,
+tr {
+	width: 100%;
+	display: flex;
+	/* flex-direction: column; */
+	justify-content: space-between;
+	align-items: center;
+}
+tr.head {
+	font-weight: bold;
+}
+tr.head {
+	background-color: #f8f7fc;
+	height: 44px;
+}
+th,
+td {
+	/* padding: 0 1rem; */
+	min-width: 166px;
+}
+th:nth-child(1),
+td:nth-child(1) {
+	min-width: 30px;
+}
+th:nth-child(3),
+td:nth-child(3),
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5),
+th:nth-child(6),
+td:nth-child(6) {
+	min-width: 120px;
+}
+th:last-child,
+td:last-child {
+	min-width: 200px;
+}
+tr.head,
+tr.item {
+	/* overflow-x: scroll; */
+}
+tr > td {
+	text-align: center;
+}
+.r svg {
+	overflow: visible;
+}
+
+tr.item {
+	height: 88px;
+}
+thead tr {
+	flex-direction: column;
+	gap: 1rem;
+	align-items: flex-start;
 }
 
 @media (max-width: 1131px) {
@@ -429,6 +497,15 @@ td:nth-child(2) {
 }
 
 @media (max-width: 1130px) {
+	tr.item,
+	tr {
+		line-height: normal;
+		height: 60px;
+	}
+	th,
+	td {
+		min-width: 166px;
+	}
 	th > span::after,
 	th > span::before {
 		right: -10px;
@@ -436,6 +513,9 @@ td:nth-child(2) {
 	}
 	th > span::before {
 		top: 1px;
+	}
+	table {
+		overflow-x: scroll;
 	}
 
 	.bar {
@@ -452,70 +532,6 @@ td:nth-child(2) {
 	section.database {
 		width: calc(100% - 2rem);
 		align-self: center;
-	}
-	table {
-		overflow-x: scroll;
-	}
-	tr.head,
-	tr {
-		width: 100%;
-		display: flex;
-		/* flex-direction: column; */
-		justify-content: space-between;
-	}
-	tr.head {
-		font-weight: bold;
-	}
-	tr.head {
-		background-color: #f8f7fc;
-	}
-	th,
-	td {
-		/* padding: 0 1rem; */
-		min-width: 200px;
-	}
-	th:nth-child(1),
-	td:nth-child(1) {
-		min-width: 60px;
-	}
-	th:nth-child(3),
-	td:nth-child(3),
-	th:nth-child(4),
-	td:nth-child(4),
-	th:nth-child(5),
-	td:nth-child(5),
-	th:nth-child(6),
-	td:nth-child(6) {
-		min-width: 120px;
-	}
-	th:last-child,
-	td:last-child {
-		min-width: 240px;
-	}
-	tr.head,
-	tr.item {
-		/* overflow-x: scroll; */
-	}
-	tr > td {
-		text-align: center;
-	}
-	.r svg {
-		overflow: visible;
-	}
-
-	table {
-		display: flex;
-		flex-direction: column;
-	}
-	tr.item,
-	tr {
-		line-height: normal;
-		height: initial;
-	}
-	thead tr {
-		flex-direction: column;
-		gap: 1rem;
-		align-items: flex-start;
 	}
 }
 

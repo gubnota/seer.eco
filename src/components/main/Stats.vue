@@ -134,7 +134,7 @@ export default defineComponent({
 		margin-top: 100px;
 	}
 	.stats .rows .row {
-		padding: 0 0 0 1rem;
+		padding: 0;
 	}
 	.stats .rows .row p {
 		text-align: left;
@@ -144,7 +144,6 @@ export default defineComponent({
 @media (max-width: 820px) {
 	.stats .rows .row {
 		border-left: none;
-
 		display: flex;
 		flex-direction: column;
 		line-height: 30px;

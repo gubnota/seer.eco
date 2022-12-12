@@ -94,9 +94,8 @@ export default defineComponent({
 				// 	this.getSearchTerm
 				// )
 				this.$store.dispatch('save', { k: 'databasePage', v: num })
-				setTimeout(() => {
-					scroll()
-				}, 200)
+				scroll()
+				setTimeout(() => {}, 200)
 			}
 		},
 		goNext() {
