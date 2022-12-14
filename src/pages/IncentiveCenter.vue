@@ -36,9 +36,11 @@ export default defineComponent({
 		},
 	},
 	mounted() {
-		if (!this.$store.address) this.router.go(-1) //this.router.push({ path: '/dao' })
+		if (!this.$store.state.address) this.router.go(-1) //this.router.push({ path: '/dao' })
 		let s = this.$store.state
-		if (!this.$store.state.daoInfo)
+		if (!this.$store.state.address) {
+			this.popup({ text: `Please connect to your wallet account first` })
+		} else if (!this.$store.state.daoInfo)
 			this.popup({
 				text: `<p>Please, go to <a href="//app.seer.eco" target=_blank>app.seer.eco</a> and register an account first</p>`,
 				timeout: 5000,

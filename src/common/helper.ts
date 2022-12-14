@@ -232,4 +232,10 @@ export const countUp = (v: {
 	}
 }
 window.countUp = countUp
+export function isLocal() {
+	return (
+		window.location.host.substring(0, 9) === 'localhost' ||
+		window.location.host.substring(0, 1) === '1'
+	)
+}
 export { comingSoon, getFQN, getAlias }

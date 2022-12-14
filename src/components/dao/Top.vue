@@ -1,4 +1,5 @@
 <template>
+	<ChooseConnect />
 	<nav class="top2">
 		<router-link :to="this.calcLink">
 			<img :src="logoMobile" alt="logo" class="logo mobile" />
@@ -17,11 +18,8 @@
 				<span>My DSN</span>
 			</button>
 
-			<button
-				@click="connect()"
-				class="btn"
-				:class="{ disabled: !this.window.ethereum }"
-			>
+			<button @click="connect()" class="btn">
+				<!--  :class="{ disabled: !this.window.ethereum }" -->
 				<span class="loader" v-if="loading" />
 				<Wallet v-if="!loggedIn" />
 				<img :src="metamask" alt="wallet" v-else />
@@ -41,6 +39,7 @@ import Foursquare from '/src/assets/dsn/foursquare.svg'
 import logoMobile from '/src/assets/dao/logo.png'
 
 import { defineComponent } from 'vue'
+import ChooseConnect from '../common/ChooseConnect.vue'
 export default defineComponent({
 	props: {
 		isDao: Boolean,
@@ -117,6 +116,14 @@ export default defineComponent({
 				await this.web3.onLogin(() => {
 					// this.$store.dispatch('unset', ['eventList'])
 				})
+
+				// if (window.ethereum) {
+				// this.$store.dispatch('save', {
+				// 	k: 'chooseConnect',
+				// 	v: 'block',
+				// })
+				// return
+				// }
 				const loginRes = await this.web3.login()
 				// console.log('loginRes', loginRes)
 				// if (!loginRes)
@@ -130,6 +137,7 @@ export default defineComponent({
 	components: {
 		Wallet,
 		Foursquare,
+		ChooseConnect,
 	},
 })
 </script>

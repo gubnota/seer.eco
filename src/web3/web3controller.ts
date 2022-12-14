@@ -1,4 +1,4 @@
-import { addressPartially } from '../common/helper'
+import { addressPartially, isLocal } from '../common/helper'
 import PayController from './paycontroller'
 declare const window: any
 export default class Web3Controller extends PayController {
@@ -36,10 +36,7 @@ export default class Web3Controller extends PayController {
 
 	constructor() {
 		super()
-		let isLocal =
-			window.location.host.substring(0, 9) === 'localhost' ||
-			window.location.host.substring(0, 1) === '1'
-		this.branch = isLocal ? 'dev' : 'dev' // local || dev || release
+		this.branch = isLocal() ? 'dev' : 'dev' // local || dev || release
 	}
 
 	fetchRelated = async () => {

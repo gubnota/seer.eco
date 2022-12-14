@@ -13,7 +13,7 @@ import App from './App.vue'
 import store from './store'
 import routes from './routes'
 import { openLink } from './routes'
-import { comingSoon, popup, setTitle } from './common/helper'
+import { comingSoon, isLocal, popup, setTitle } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
 export { store }
@@ -104,6 +104,10 @@ store.dispatch('save', {
 	v: 'none',
 })
 store.dispatch('save', {
+	k: 'chooseConnect',
+	v: 'none',
+})
+store.dispatch('save', {
 	k: 'eventList',
 	v: { list: [], total: 0 },
 })
@@ -112,7 +116,11 @@ app.mount('#app')
 window.onload = () => {
 	const docEnd = new Date().getTime()
 	const docStart = window.docStart ?? docEnd
-	const delay = docEnd - docStart > 1000 ? 0 : 1000 - (docEnd - docStart)
+	const delay = isLocal()
+		? 0
+		: docEnd - docStart > 1000
+		? 0
+		: 1000 - (docEnd - docStart)
 	window.delay = delay
 	setTimeout(() => {
 		document.querySelector('#app').style.opacity = ''
