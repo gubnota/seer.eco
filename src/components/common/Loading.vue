@@ -50,7 +50,7 @@ img {
 }
 
 .darken {
-	z-index: 4;
+	z-index: 501;
 	background-color: rgba(0, 0, 0, 0.1); /*rgba(0, 0, 0, 0.3);*/
 	position: absolute;
 	left: 0;

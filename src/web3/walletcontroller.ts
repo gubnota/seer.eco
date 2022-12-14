@@ -126,13 +126,16 @@ export default class WalletController {
 			k: 'address',
 			v: this.connector.accounts[0],
 		})
+		this.store.dispatch('save', { k: 'loading', v: false })
 	}
 	/*
   onwalletdisconnect()
   */
-	async onwalletdisconnect() {
+	onwalletdisconnect() {
+		console.info('onwalletdisconnect')
 		this.store.dispatch('save', { k: 'address', v: null })
-		await this.connector.killSession()
+		this.store.dispatch('save', { k: 'loading', v: false })
+		this.connector.killSession()
 	}
 	async onwalleterror(error) {
 		console.log('onwalleterror', error)
@@ -143,31 +146,8 @@ export default class WalletController {
 
 		await this.connector.killSession()
 	}
-	/**
-	 * Connect wallet button pressed.
-	 */
-	async walletconnect(forceQR: boolean = true) {
-		console.log('walletconnect', forceQR, this.address())
-		// const WalletConnect = window.WalletConnect.default
-		this.connector = new WalletConnect({
-			bridge: this.wcBridgeUrl,
-			qrcodeModal: QRCodeModal,
-		})
-		window.connector = this.connector
-		if (!this.connector.connected && forceQR) {
-			await this.connector.createSession().catch((error: any) => {
-				// Error returned when rejected
-				console.error('createSession', error, `"${error}"`) // 'Error: Session currently connected'
-				this.onwalleterror(error)
-			})
-		} else {
-			// Already connected
-			this.store.dispatch('save', {
-				k: 'address',
-				v: this.connector.accounts[0],
-			})
-			// TODO: login logic
-		}
+
+	addListeners() {
 		this.connector.on('session_update', (e, pl) => {
 			console.log('session_update', e, pl)
 			if (this.connector.connected) {
@@ -187,8 +167,11 @@ export default class WalletController {
 			// if (error) {
 			// 	throw error
 			// }
-			if (error) this.onwalleterror(error)
+			console.log('disconnect', error, payload)
+			this.store.dispatch('save', { k: 'address', v: null })
+			this.store.dispatch('save', { k: 'loading', v: false })
 			this.onwalletdisconnect()
+			if (error) this.onwalleterror(error)
 		})
 		this.connector.on('connect', (error, payload) => {
 			// if (error) {
@@ -202,5 +185,33 @@ export default class WalletController {
 				this.onwalletconnect()
 			}
 		})
+	}
+	/**
+	 * Connect wallet button pressed.
+	 */
+	async walletconnect(forceQR: boolean = true) {
+		console.log('walletconnect', forceQR, this.address())
+		// const WalletConnect = window.WalletConnect.default
+		this.connector = new WalletConnect({
+			bridge: this.wcBridgeUrl,
+			qrcodeModal: QRCodeModal,
+		})
+		window.connector = this.connector
+		this.addListeners()
+		if (!this.connector.connected && forceQR) {
+			await this.connector.createSession().catch((error: any) => {
+				// Error returned when rejected
+				console.error('createSession', error, `"${error}"`) // 'Error: Session currently connected'
+				this.onwalleterror(error)
+			})
+		} else {
+			// Already connected
+			this.store.dispatch('save', {
+				k: 'address',
+				v: this.connector.accounts[0],
+			})
+			this.store.dispatch('save', { k: 'loading', v: false })
+			// TODO: login logic
+		}
 	}
 }

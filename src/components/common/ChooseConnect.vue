@@ -42,6 +42,7 @@ export default defineComponent({
 	methods: {
 		async connect(choice: number) {
 			var loginRes
+			// this.$store.dispatch('save', { k: 'loading', v: true })
 			switch (choice) {
 				case 1: //Metamask
 					loginRes = await this.web3.login()
@@ -86,7 +87,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .chooseConnect {
-	z-index: 1000;
+	z-index: 500;
 }
 svg {
 	width: 45px;
