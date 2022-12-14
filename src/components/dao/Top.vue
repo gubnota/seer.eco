@@ -37,9 +37,9 @@ import metamask from '/src/assets/dao/metamask@3x.png'
 import Wallet from '/src/assets/dao/wallet.svg'
 import Foursquare from '/src/assets/dsn/foursquare.svg'
 import logoMobile from '/src/assets/dao/logo.png'
-
 import { defineComponent } from 'vue'
 import ChooseConnect from '../common/ChooseConnect.vue'
+declare const window: any
 export default defineComponent({
 	props: {
 		isDao: Boolean,
@@ -108,7 +108,7 @@ export default defineComponent({
 				// window.location.reload()
 				this.web3.logout()
 			} else {
-				this.$store.dispatch('save', { k: 'walletLoading', v: true })
+				// this.$store.dispatch('save', { k: 'walletLoading', v: true })
 				// setTimeout(() => {
 				// if (this.$store.state.walletLoading)
 				// this.$store.dispatch('save', { k: 'walletLoading', v: false })
@@ -117,17 +117,21 @@ export default defineComponent({
 					// this.$store.dispatch('unset', ['eventList'])
 				})
 
-				// if (window.ethereum) {
-				// this.$store.dispatch('save', {
-				// 	k: 'chooseConnect',
-				// 	v: 'block',
-				// })
-				// return
-				// }
-				const loginRes = await this.web3.login()
-				// console.log('loginRes', loginRes)
-				// if (!loginRes)
-				this.$store.dispatch('save', { k: 'walletLoading', v: false })
+				if (window.ethereum) {
+					//choose between Metamask Wallet connect
+					this.$store.dispatch('save', {
+						k: 'chooseConnect',
+						v: 'block',
+					})
+					return
+				} else {
+					this.web3.walletconnect()
+					return
+				}
+				// const loginRes = await this.web3.login()
+				// // console.log('loginRes', loginRes)
+				// // if (!loginRes)
+				// this.$store.dispatch('save', { k: 'walletLoading', v: false })
 				// setTimeout(() => {
 				// 	window.location.reload()
 				// }, 3000)

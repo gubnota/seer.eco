@@ -42,15 +42,8 @@ export default class VoteController extends LoginController {
 				Vote,
 			},
 		}
-		let hash = await this.web3js.currentProvider.request({
-			method: 'eth_signTypedData_v4',
-			params: [
-				(
-					await window.ethereum.enable()
-				)[0], //window.ethereum.selectedAddress.toLocaleLowerCase(),
-				JSON.stringify(msgParams),
-			],
-		})
+
+		let hash = await this.signTypedData(msgParams)
 		return Promise.resolve(hash)
 	}
 }

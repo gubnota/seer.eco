@@ -116,7 +116,7 @@ export default class DSNController extends IncentiveController {
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
 		var chain = parseInt(window.ethereum.chainId) || 1
-		var address = this.address
+		var address = this.address()
 		var signature = await this.signWithdraw({
 			node,
 			token,
@@ -128,7 +128,7 @@ export default class DSNController extends IncentiveController {
 		// return Promise.resolve(null) // FIXME: remove after testing
 
 		const payload = {
-			address: this.address,
+			address: this.address(),
 			nonce,
 			stamp,
 			node,

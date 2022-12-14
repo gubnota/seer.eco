@@ -13,8 +13,16 @@ export default class Web3Controller extends PayController {
 
 	async logout(forceReload: boolean = true) {
 		await super.logout()
+		if (!this.isMetamask()) this.onwalletdisconnect()
 		if (forceReload) window.location.reload()
 	}
+
+	async onwalletconnect() {
+		await super.onwalletconnect()
+		this.login()
+		console.log('onwalletconnect cb')
+	}
+	async onwalletdisconnect() {}
 
 	async restoreWeb3() {
 		await super.restoreWeb3()

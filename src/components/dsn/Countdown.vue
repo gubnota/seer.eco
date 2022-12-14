@@ -51,6 +51,7 @@
 <script lang="ts">
 // import { convertUTCString, countdownObj } from '../../common/helper' // hmr stops working if used
 import Coin from '/src/assets/dsn/coin.svg'
+import utils from 'web3-utils'
 import { defineComponent } from 'vue'
 
 const countdownObj = (time: number) => {
@@ -152,7 +153,7 @@ export default defineComponent({
 		},
 		fromWei(a: number) {
 			if (this.web3.web3js) {
-				return this.web3.web3js.utils.fromWei(a, 'mwei')
+				return utils.fromWei(a, 'mwei')
 			} else {
 				return parseInt(a.toString()) / 1000000
 			}

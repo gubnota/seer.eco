@@ -227,6 +227,16 @@
 			window.env = 'production' //dev || production = release
 			document.querySelector('#app').style.opacity = 0
 			window.docStart = new Date().getTime()
+			window.global = window
+			window.process = { env: {} }
+
+			// window.crypto.subtle = {
+			// 	importKey: (a, b, c, d, e) => {
+			// 		console.log(a, b, c, d, e)
+			// 	},
+			// 	encrypt: () => {},
+			// 	sign: () => {},
+			// }
 		</script>
 		<script type="module" src="/src/main.ts"></script>
 		<style>

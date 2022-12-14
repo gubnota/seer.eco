@@ -4,8 +4,7 @@ import web3 from 'web3'
 // import vote from './vote'
 import vote_abi from './vote_abi.json'
 import { isDev, store } from '../main'
-import { comingSoon, messageType } from '../common/helper'
-import { provider } from 'web3-core'
+import { popup } from '../common/helper'
 import {
 	servers,
 	Polygon,
@@ -17,18 +16,13 @@ import {
 	eth,
 	ethDev,
 } from './common'
+import WalletController from './walletcontroller'
 
 declare const window: any
 window.web3j = web3
 
-export default class MetaController {
-	public web3js: web3
-	public web3js2: web3 // ticketsNumber contract
-	public web3Pay: web3 // paycontroller related
+export default class MetaController extends WalletController {
 	public DSNContract: any
-	public address: String
-	public store
-	public popup
 	protected vote_abi
 	public servers
 	public branch: string = 'local' //dev
@@ -37,8 +31,7 @@ export default class MetaController {
 	public onLogout: () => void
 	public onLogin: () => void
 	constructor() {
-		this.store = store
-		this.popup = comingSoon
+		super()
 		this.vote_abi = vote_abi
 		this.servers = servers
 	}
@@ -56,23 +49,6 @@ export default class MetaController {
 		])
 	}
 
-	async restoreWeb3() {
-		// 1. restore all read-only contracts to connect appropriate networks
-		// 2. connect to a network if it's enabled (see in web3controller)
-		if (window.ethereum) {
-			if (window.ethereum.chainId == '0x1') {
-				this.web3js = new web3(window.ethereum) // - default provider with Metamask to sign
-			} else {
-				this.web3js = new web3(isDev() ? ethDev : eth) // - default provider with Metamask to sign
-			}
-		} else {
-			this.web3js = new web3(isDev() ? ethDev : eth) // - default provider with Metamask to sign
-		}
-		this.web3js2 = new web3(isDev() ? web3js2NetDev : web3js2Net) // only to check ticketsNumber(): window.ethereum release, Polygon test dev
-		this.web3Pay = new web3(isDev() ? payDev : pay) // paycontroller related
-		this.address = store.state.address
-		window.web3js = this.web3js
-	}
 	async switch() {
 		// check if 0x13881 polygon Mumbai testnet
 		try {
@@ -118,9 +94,17 @@ export default class MetaController {
 	}
 
 	async enable(cb?: () => {}) {
+		if (!this.isMetamask() && this.connector) {
+			if (this.connector.connected) {
+				return Promise.resolve(true)
+			}
+			this.walletconnect()
+			return Promise.resolve(false)
+		}
+
 		// STAGE 3: add a contract to read possible tickets value from balanceOf the contract
 		// this.restoreWeb3()
-		if (window.ethereum) {
+		if (this.isMetamask() && window.ethereum) {
 			// STAGE 1: check if connected to Polygon testnet ethereum.chainId == isDev() ? PolygonDev.chainId : Polygon.chainId
 			const switchRes = await this.switch()
 			if (!switchRes) return Promise.resolve(false)
@@ -147,7 +131,7 @@ export default class MetaController {
 					k: 'address',
 					v: address, // or await window.ethereum.enable() and window.ethereum.selectedAddress.toLocaleLowerCase()
 				})
-				this.address = store.state.address
+				// this.address = this.store.state.address
 				// if (cb) {
 				// 	window.localStorage.setItem(
 				// 		'cb',
@@ -166,7 +150,6 @@ export default class MetaController {
 					timeout: 5000,
 					text: `<p>Oops! Something went wrong:<br /><b>${error.message}</b></p>`,
 				})
-
 				// console.log(error.message)
 			}
 			this.web3js = new web3(window.ethereum) // restore MetaMask rpc to sign requests
@@ -178,18 +161,7 @@ export default class MetaController {
 				timeout: 5000,
 				text: `<p>Please, install <a href="https://metamask.io/download/" target=_blank>Metamask</a></p>`,
 			})
-			// alert('Please open the MetaMask')
 		}
-
-		// this.web3js.eth.getBlockNumber().then((result: any) => {
-		// console.log('Latest Ethereum Block is ', result)
-		// })
 		return Promise.resolve(false)
 	}
-
-	// disconnect = () => {
-	// this.address = null
-	// this.$store.commit('setAddress', null)
-	// localStorage.removeItem('forceBitkeep')
-	// }
 }

@@ -98,6 +98,7 @@ import { defineComponent } from 'vue'
 import Arrow from '/src/assets/ui/arrow-left.svg'
 import { ref } from 'vue'
 import { formatNumber } from '../common/helper'
+import utils from 'web3-utils'
 let addr = ref('')
 let coupon = ref('')
 let qty = ref('1')
@@ -227,7 +228,7 @@ export default defineComponent({
 				this.addressError = false
 			} else {
 				if (this.addr) this.addr = this.addr.trim()
-				this.addressError = !this.web3.web3js.utils.isAddress(this.addr)
+				this.addressError = !utils.isAddress(this.addr)
 			}
 		},
 		qtyHandler() {

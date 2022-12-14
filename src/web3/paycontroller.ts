@@ -5,6 +5,7 @@ import DSNController from './dsncontroller'
 import dsnAbi from '../common/dsn_sell_abi.json'
 import usdtAbi from '../common/usdt_abi.json'
 import web3 from 'web3'
+import utils from 'web3-utils'
 
 declare const window: any
 export default class PayController extends DSNController {
@@ -89,9 +90,7 @@ export default class PayController extends DSNController {
 	async payPrice() {
 		//get unit price
 		const a = await this.paySellInfo()
-		return Promise.resolve(
-			parseFloat(this.web3js.utils.fromWei(a['price'], 'mwei'))
-		)
+		return Promise.resolve(parseFloat(utils.fromWei(a['price'], 'mwei')))
 	}
 	async payDiscount(coupon: string) {
 		//get multiplier, multi*price = totalPrice
@@ -106,20 +105,20 @@ export default class PayController extends DSNController {
 	}
 	async payAllowance() {
 		let a = await this.USDTContract.methods
-			.allowance(this.address, this.PayDSN)
+			.allowance(this.address(), this.PayDSN)
 			.call() //'1500000000'
-		return Promise.resolve(parseFloat(this.web3js.utils.fromWei(a, 'mwei'))) // 1500
+		return Promise.resolve(parseFloat(utils.fromWei(a, 'mwei'))) // 1500
 	}
 
 	async payBuy(qty: number = 1, coupon: string = '') {
 		//, ref: string = ''
-		// if (ref == '' || !this.web3js.utils.isAddress(ref))
+		// if (ref == '' || !utils.isAddress(ref))
 		// 	ref = `0x${new Array(40).fill(0).join('')}`
 		// console.log('buy', qty.toString(), coupon, ref)
 		try {
 			const a = await this.PayDSNContract.methods
 				.buy(qty.toString(), coupon) //buy(数量，口令) before ref邀请人)
-				.send({ from: this.address })
+				.send({ from: this.address() })
 			return Promise.resolve(true)
 		} catch (e) {
 			this.popup({ text: e.code + ' ' + e.message })
@@ -134,11 +133,11 @@ export default class PayController extends DSNController {
 	}
 
 	async payApprove(amount: number) {
-		let amnt = this.web3js.utils.toWei(amount.toString(), 'mwei')
+		let amnt = utils.toWei(amount.toString(), 'mwei')
 		try {
 			const a = await this.USDTContract.methods
 				.approve(this.PayDSN, amnt)
-				.send({ from: this.address })
+				.send({ from: this.address() })
 			return Promise.resolve(true)
 		} catch (e) {
 			this.popup({ text: e.code + ' ' + e.message })
@@ -148,8 +147,8 @@ export default class PayController extends DSNController {
 
 	async payBalance() {
 		try {
-			let a = await this.USDTContract.methods.balanceOf(this.address).call()
-			return Promise.resolve(parseFloat(this.web3js.utils.fromWei(a, 'mwei')))
+			let a = await this.USDTContract.methods.balanceOf(this.address()).call()
+			return Promise.resolve(parseFloat(utils.fromWei(a, 'mwei')))
 		} catch (e) {
 			this.popup({ text: e.code + ' ' + e.message })
 			return Promise.reject(false)

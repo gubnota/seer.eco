@@ -26,8 +26,8 @@ export default class DaoController extends UserController {
 			(x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
-		var chain = window.ethereum.chainId || 1
-		var address = this.address
+		var chain = this.getChainId() || 1
+		var address = this.address()
 		var signature = await this.signVote({
 			chain,
 			showId, //100002
@@ -39,11 +39,11 @@ export default class DaoController extends UserController {
 		// return Promise.resolve(null) // FIXME: remove after testing
 
 		const payload = {
-			address: this.address,
+			address: this.address(),
 			nonce,
 			stamp,
 			signature,
-			chainId: parseInt(window.ethereum.chainId),
+			chainId: parseInt(this.getChainId()),
 			version: '1',
 			id: showId,
 			result: vote,

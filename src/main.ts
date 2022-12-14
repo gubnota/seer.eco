@@ -16,6 +16,9 @@ import { openLink } from './routes'
 import { comingSoon, isLocal, popup, setTitle } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
+import { Buffer } from 'buffer'
+globalThis.Buffer = Buffer
+
 export { store }
 
 export const isDev = () => {
@@ -78,6 +81,7 @@ app.config.globalProperties.web3 = new Web3Controller()
 app.config.globalProperties.openLink = openLink
 app.config.globalProperties.isDev = isDev
 let web3obj = app.config.globalProperties.web3
+
 // a.load()
 // Make sure to _use_ the router instance to make the
 // whole app router-aware.
@@ -96,6 +100,7 @@ store.dispatch('load', [
 	'notAppUser',
 	// 'loading',
 	'comingSoon',
+	'isMetamask',
 ])
 store.dispatch('save', { k: 'eventsPage', v: 1 })
 

@@ -20,6 +20,7 @@ specifiers:
   vuex: ^4.0.2
   web3: ^1.8.0
   web3-core: ^1.8.0
+  web3-utils: ^1.8.1
 
 dependencies:
   '@walletconnect/client': registry.npmmirror.com/@walletconnect/client/1.8.0
@@ -35,6 +36,7 @@ dependencies:
   vuex: registry.npmmirror.com/vuex/4.0.2_vue@3.2.41
   web3: registry.npmmirror.com/web3/1.8.0
   web3-core: registry.npmmirror.com/web3-core/1.8.0
+  web3-utils: registry.npmmirror.com/web3-utils/1.8.1
 
 devDependencies:
   '@types/node': registry.npmmirror.com/@types/node/18.7.23
@@ -4661,6 +4663,21 @@ packages:
     resolution: {integrity: sha512-7nUIl7UWpLVka2f09CMbKOSEvorvHnaugIabU4mj7zfMvm0tSByLcEu3eyV9qgS11qxxLuOkzBIwCstTflhmpQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/web3-utils/-/web3-utils-1.8.0.tgz}
     name: web3-utils
     version: 1.8.0
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      bn.js: registry.npmmirror.com/bn.js/5.2.1
+      ethereum-bloom-filters: registry.npmmirror.com/ethereum-bloom-filters/1.0.10
+      ethereumjs-util: registry.npmmirror.com/ethereumjs-util/7.1.5
+      ethjs-unit: registry.npmmirror.com/ethjs-unit/0.1.6
+      number-to-bn: registry.npmmirror.com/number-to-bn/1.7.0
+      randombytes: registry.npmmirror.com/randombytes/2.1.0
+      utf8: registry.npmmirror.com/utf8/3.0.0
+    dev: false
+
+  registry.npmmirror.com/web3-utils/1.8.1:
+    resolution: {integrity: sha512-LgnM9p6V7rHHUGfpMZod+NST8cRfGzJ1BTXAyNo7A9cJX9LczBfSRxJp+U/GInYe9mby40t3v22AJdlELibnsQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/web3-utils/-/web3-utils-1.8.1.tgz}
+    name: web3-utils
+    version: 1.8.1
     engines: {node: '>=8.0.0'}
     dependencies:
       bn.js: registry.npmmirror.com/bn.js/5.2.1

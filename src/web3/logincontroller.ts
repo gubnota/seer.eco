@@ -38,15 +38,7 @@ export default class LoginController extends MetaController {
 				Login,
 			},
 		}
-		let hash = await this.web3js.currentProvider.request({
-			method: 'eth_signTypedData_v4',
-			params: [
-				(
-					await window.ethereum.enable()
-				)[0], //window.ethereum.selectedAddress.toLocaleLowerCase(),
-				JSON.stringify(msgParams),
-			],
-		})
+		let hash = await this.signTypedData(msgParams)
 		return Promise.resolve(hash)
 	}
 
@@ -61,7 +53,7 @@ export default class LoginController extends MetaController {
 		) // UTC seconds
 		var nonce = Math.floor(Math.random() * 100000)
 		// console.log('this.enable res', res)
-		var chain = window.ethereum.chainId || 1
+		var chain = this.getChainId() || 1
 		// var address = window.ethereum.selectedAddress.toLocaleLowerCase()
 		let signature = false
 		try {
@@ -81,7 +73,7 @@ export default class LoginController extends MetaController {
 		if (!signature) return Promise.resolve(false)
 		let res2 = await axios
 			.post(this.servers.user[this.branch] + 'api/User/Connect', {
-				address: this.address,
+				address: this.address(),
 				node: this.node,
 				nonce: nonce,
 				stamp: stamp,
@@ -94,7 +86,6 @@ export default class LoginController extends MetaController {
 						text: `<p><b>Error</b><br />${res.data.message}</p>`,
 						code: res.data.code,
 					})
-					this.address = null
 					this.store.dispatch('save', {
 						k: 'address',
 						v: null,

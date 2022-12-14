@@ -7,7 +7,7 @@
 			<div class="container">
 				<div class="card" @click="floatClick">
 					<div class="wrapper">
-						<div class="card-container btn">
+						<div class="card-container btn" @click="connect(1)">
 							<div class="icon">
 								<Metamask />
 							</div>
@@ -16,7 +16,7 @@
 						</div>
 					</div>
 					<div class="wrapper">
-						<div class="card-container btn">
+						<div class="card-container btn" @click="connect(2)">
 							<div class="icon">
 								<Walletconnect />
 							</div>
@@ -34,11 +34,41 @@ import store from '../../store'
 import { defineComponent } from 'vue'
 import Metamask from '/src/assets/ui/metamask.svg'
 import Walletconnect from '/src/assets/ui/walletconnect.svg'
+
 export default defineComponent({
 	data() {
 		return {}
 	},
 	methods: {
+		async connect(choice: number) {
+			var loginRes
+			switch (choice) {
+				case 1: //Metamask
+					loginRes = await this.web3.login()
+					console.log('loginRes', loginRes)
+					// if (!loginRes)
+					this.$store.dispatch('save', { k: 'walletLoading', v: false })
+					this.$store.dispatch('save', {
+						k: 'isMetamask',
+						v: true,
+					})
+					break
+
+				default: // WalletConnect
+					this.$store.dispatch('save', {
+						k: 'isMetamask',
+						v: false,
+					})
+					loginRes = await this.web3.login()
+					console.log('loginRes', loginRes)
+					// this.web3.walletconnect()
+					break
+			}
+			this.$store.dispatch('save', {
+				k: 'chooseConnect',
+				v: 'none',
+			})
+		},
 		bgClick(e) {
 			console.log('bgClick')
 			this.$store.dispatch('save', {
