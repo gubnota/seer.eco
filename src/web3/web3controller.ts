@@ -22,7 +22,9 @@ export default class Web3Controller extends PayController {
 		this.login(true) //arg means to force show QR for 2nd call
 		console.log('onwalletconnect cb')
 	}
-	async onwalletdisconnect() {}
+	async onwalletdisconnect() {
+		super.onwalletdisconnect()
+	}
 
 	async restoreWeb3() {
 		await super.restoreWeb3()
