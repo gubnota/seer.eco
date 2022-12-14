@@ -101,7 +101,7 @@ export default class WalletController {
 						error.toString() == 'Error:  wallet is in another signing',
 						error.toString() == 'Error: Actionscancelled by user'
 					)
-					this.onwalletdisconnect()
+					this.onwalleterror(error)
 					return Promise.resolve(false)
 				})
 		}
@@ -113,7 +113,9 @@ export default class WalletController {
 		if (this.isMetamask())
 			return window.ethereum.selectedAddress.toLocaleLowerCase()
 		if (this.connector)
-			return this.connector.accounts[0].toLocaleLowerCase() ?? null
+			return this.connector.connected
+				? this.connector.accounts[0].toLocaleLowerCase() ?? null
+				: null
 		return null
 	}
 	/*
@@ -133,8 +135,10 @@ export default class WalletController {
 		await this.connector.killSession()
 	}
 	async onwalleterror(error) {
+		console.log('onwalleterror', error)
 		this.popup({
 			text: error.toString(),
+			timeout: 3000,
 		})
 
 		await this.connector.killSession()
@@ -142,15 +146,15 @@ export default class WalletController {
 	/**
 	 * Connect wallet button pressed.
 	 */
-	async walletconnect() {
-		// console.log('walletconnect', this.address())
+	async walletconnect(forceQR: boolean = true) {
+		console.log('walletconnect', forceQR, this.address())
 		// const WalletConnect = window.WalletConnect.default
 		this.connector = new WalletConnect({
 			bridge: this.wcBridgeUrl,
 			qrcodeModal: QRCodeModal,
 		})
 		window.connector = this.connector
-		if (!this.connector.connected) {
+		if (!this.connector.connected && forceQR) {
 			await this.connector.createSession().catch((error: any) => {
 				// Error returned when rejected
 				console.error('createSession', error, `"${error}"`) // 'Error: Session currently connected'
@@ -180,15 +184,16 @@ export default class WalletController {
 			}
 		})
 		this.connector.on('disconnect', (error, payload) => {
-			if (error) {
-				throw error
-			}
+			// if (error) {
+			// 	throw error
+			// }
+			if (error) this.onwalleterror(error)
 			this.onwalletdisconnect()
 		})
 		this.connector.on('connect', (error, payload) => {
-			if (error) {
-				throw error
-			}
+			// if (error) {
+			// 	throw error
+			// }
 			if (this.connector.chainId != 1) {
 				this.onwalleterror(
 					'Wrong network detected, please change to Ethereum Mainnet'

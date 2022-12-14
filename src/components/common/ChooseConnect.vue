@@ -59,7 +59,7 @@ export default defineComponent({
 						k: 'isMetamask',
 						v: false,
 					})
-					loginRes = await this.web3.login()
+					loginRes = await this.web3.login(true)
 					console.log('loginRes', loginRes)
 					// this.web3.walletconnect()
 					break

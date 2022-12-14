@@ -19,7 +19,7 @@ export default class Web3Controller extends PayController {
 
 	async onwalletconnect() {
 		await super.onwalletconnect()
-		this.login()
+		this.login(true) //arg means to force show QR for 2nd call
 		console.log('onwalletconnect cb')
 	}
 	async onwalletdisconnect() {}
@@ -55,9 +55,9 @@ export default class Web3Controller extends PayController {
 		}
 	}
 
-	async login(cb?: () => {}) {
+	async login(forceQR: boolean = false, cb?: () => {}) {
 		try {
-			const connect = await this.connect(() => {
+			const connect = await this.connect(forceQR, () => {
 				cb()
 				this.fetchRelated()
 				return Promise.resolve(true)

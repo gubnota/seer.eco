@@ -93,12 +93,12 @@ export default class MetaController extends WalletController {
 		return Promise.resolve(true)
 	}
 
-	async enable(cb?: () => {}) {
+	async enable(forceQR: boolean = false, cb?: () => {}) {
 		if (!this.isMetamask() && this.connector) {
 			if (this.connector.connected) {
 				return Promise.resolve(true)
 			}
-			this.walletconnect()
+			this.walletconnect(forceQR)
 			return Promise.resolve(false)
 		}
 

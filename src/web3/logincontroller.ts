@@ -42,8 +42,8 @@ export default class LoginController extends MetaController {
 		return Promise.resolve(hash)
 	}
 
-	async connect(cb?: () => {}) {
-		var res = await this.enable(cb)
+	async connect(forceQR: boolean = false, cb?: () => {}) {
+		var res = await this.enable(forceQR, cb)
 		console.log('connect enable 1', res)
 		// console.log('await enable', res)
 		if (!res) return Promise.resolve(false)
