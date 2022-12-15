@@ -238,5 +238,23 @@ export function isLocal() {
 		window.location.host.substring(0, 1) === '1'
 	)
 }
-export function log() {}
+
+const handler2 = {
+	get(target, prop, receiver) {
+		return (...args) => {
+			// if (!window.expose) return
+			if (typeof window.console2[prop] == 'function')
+				if (isLocal() || window.expose) window.console2[prop].apply(null, args) //[...args, ...['handler2']]
+		}
+	},
+}
+const console = new Proxy({}, handler2)
+export { console }
+// export function log(...args) {
+// 	if (isLocal() || window.expose) console.log.apply(null, args)
+// }
+// export function error(...args) {
+// 	if (isLocal() || window.expose) console.error.apply(null, args)
+// }
+
 export { comingSoon, getFQN, getAlias }

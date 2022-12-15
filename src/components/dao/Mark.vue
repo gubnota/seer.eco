@@ -44,6 +44,7 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
+// import { console } from '/src/common/helper'
 export default defineComponent({
 	computed: {
 		hovered() {
@@ -52,7 +53,7 @@ export default defineComponent({
 	},
 	methods: {
 		show(state) {
-			console.log('clicked')
+			// console.log('clicked')
 			if (!this.$store.state.hovered) {
 				this.$store.dispatch('save', {
 					k: 'hovered',

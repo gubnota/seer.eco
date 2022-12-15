@@ -13,12 +13,13 @@ import App from './App.vue'
 import store from './store'
 import routes from './routes'
 import { openLink } from './routes'
-import { comingSoon, isLocal, popup, setTitle } from './common/helper'
+import { comingSoon, isLocal, popup, setTitle, console } from './common/helper'
 import { questions_zh, questions_en } from './assets/reviewer/questions'
 import { ui } from './assets/reviewer/ui'
 import { Buffer } from 'buffer'
 globalThis.Buffer = Buffer
-
+globalThis.console2 = window.console
+globalThis.console = console
 export { store }
 
 export const isDev = () => {

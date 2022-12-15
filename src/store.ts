@@ -61,7 +61,7 @@ const store = createStore<any>({
 				// 	JSON.stringify(state[k]),
 				// 	typeof state[k]
 				// )
-				if (v) localStorage.setItem(k, v.toString())
+				if (v !== undefined) localStorage.setItem(k, v.toString())
 			})
 		},
 		unset(state, arg: string | Array<string>) {
