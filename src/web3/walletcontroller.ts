@@ -36,7 +36,7 @@ export default class WalletController {
 			bridge: this.wcBridgeUrl,
 			qrcodeModal: QRCodeModal,
 		})
-		window.connector = this.connector
+		this.connector = this.connector
 		if (this.connector.connected) {
 			this.walletconnect()
 		}
@@ -94,10 +94,13 @@ export default class WalletController {
 					return Promise.resolve(false)
 				})
 		} else {
-			// console.log('signTypedData', this.address(), JSON.stringify(msgParams))
+			console.group('signTypedData')
+			console.log('address', this.address())
+			console.log(msgParams)
+			console.groupEnd()
 			hash = await this.connector
 				.signTypedData([this.address(), JSON.stringify(msgParams)])
-				.catch((error: any) => {
+				.catch(async (error: any) => {
 					// Error returned when rejected or cancelled
 					// 'Error: Actionscancelled by user'
 					// 'Error: wallet is in another signing'
@@ -110,12 +113,23 @@ export default class WalletController {
 						error.toString() == 'Error: Actionscancelled by user'
 					)
 					this.onwalleterror(error)
+					// console.info('sign')
+					// console.group()
+					// console.log('== connect', msgParams.message.action == 'connect')
+					// console.log('this.connector.killSession()')
+					// console.groupEnd()
 					if (msgParams.message.action == 'connect')
-						this.connector.killSession()
+						await this.connector.killSession()
 					return Promise.resolve(false)
 				})
 		}
 		this.store.dispatch('save', { k: 'loading', v: false })
+		if (hash === 'Reject') {
+			// BitKeep app bug
+			await this.connector.killSession()
+			this.onwalleterror('User cancelled')
+			return Promise.resolve(false)
+		}
 		return Promise.resolve(hash)
 	}
 
@@ -206,7 +220,7 @@ export default class WalletController {
 			bridge: this.wcBridgeUrl,
 			qrcodeModal: QRCodeModal,
 		})
-		window.connector = this.connector
+		this.connector = this.connector
 		this.addListeners()
 		if (!this.connector.connected && forceQR) {
 			await this.connector.createSession().catch((error: any) => {
