@@ -39,6 +39,7 @@ export default class LoginController extends MetaController {
 			},
 		}
 		let hash = await this.signTypedData(msgParams)
+		if (hash.length < 130) return Promise.resolve(false) // not correct
 		return Promise.resolve(hash)
 	}
 
@@ -70,7 +71,7 @@ export default class LoginController extends MetaController {
 			this.popup({ text: e.message })
 		}
 		console.log('signature', signature)
-		if (!signature || signature == 'Reject') return Promise.resolve(false)
+		if (!signature) return Promise.resolve(false)
 		let res2 = await axios
 			.post(this.servers.user[this.branch] + 'api/User/Connect', {
 				address: this.address(),

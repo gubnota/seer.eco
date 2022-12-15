@@ -44,6 +44,7 @@ export default class VoteController extends LoginController {
 		}
 
 		let hash = await this.signTypedData(msgParams)
+		if (hash.length < 130) return Promise.resolve(false) // not correct
 		return Promise.resolve(hash)
 	}
 }
