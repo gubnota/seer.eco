@@ -93,10 +93,11 @@ export default defineComponent({
 	methods: {
 		myDsn() {
 			if (!this.$store.state.address) {
-				return this.popup({
-					text: 'Please connect to your wallet account first',
-					timeout: 3000,
-				})
+				this.web3.chooseConnect()
+				// return this.popup({
+				// 	text: 'Please connect to your wallet account first',
+				// 	timeout: 3000,
+				// })
 			}
 			// this.popup({ text: 'not implemented' })
 			this.router.push('/my_dsn')

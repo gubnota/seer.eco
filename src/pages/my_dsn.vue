@@ -147,7 +147,8 @@ export default defineComponent({
 	mounted() {
 		this.$store.dispatch('save', { k: 'myDSNPage', v: 1 })
 		if (!this.$store.state.seerToken) {
-			this.popup({ text: 'Please connect to your wallet account first' })
+			this.web3.chooseConnect()
+			// this.popup({ text: 'Please connect to your wallet account first' })
 			this.router.push('/dsn')
 		} else if (this.$store.state.notAppUser) {
 			this.popup({ text: 'UserNotFound' })

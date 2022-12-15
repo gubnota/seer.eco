@@ -613,3 +613,6 @@ sup {
 b {
 	font-weight: bold;
 }
+.walletconnect-modal__mobile__toggle {
+	display: none !important;
+}
