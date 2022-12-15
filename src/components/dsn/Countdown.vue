@@ -138,7 +138,8 @@ export default defineComponent({
 			}
 
 			if (!this.$store.state.address) {
-				this.popup({ text: 'Please connect to your wallet account first' })
+				// this.popup({ text: 'Please connect to your wallet account first' })
+				this.web3.chooseConnect()
 				return
 			}
 			if (this.diff > 0) {

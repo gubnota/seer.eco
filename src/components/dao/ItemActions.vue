@@ -67,7 +67,8 @@ export default defineComponent({
 		pass(e: any) {
 			e.stopPropagation()
 			if (!this.loggedIn()) {
-				this.popup({ text: 'Please connect to your wallet account first' })
+				this.web3.chooseConnect()
+				// this.popup({ text: 'Please connect to your wallet account first' })
 			} else if (this.notAppUser()) {
 				this.popup({ code: 10002 })
 			} else {
@@ -77,7 +78,8 @@ export default defineComponent({
 		reject(e: any) {
 			e.stopPropagation()
 			if (!this.loggedIn()) {
-				this.popup({ text: 'Please connect to your wallet account first' })
+				this.web3.chooseConnect()
+				// this.popup({ text: 'Please connect to your wallet account first' })
 			} else if (this.notAppUser()) {
 				this.popup({ code: 10002 })
 			} else {

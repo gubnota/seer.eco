@@ -67,10 +67,12 @@ export default defineComponent({
 		},
 		handler() {
 			if (!this.$store.state.seerToken) {
-				return this.popup({
-					text: 'Please connect to your wallet account first',
-					timeout: 3000,
-				})
+				this.web3.chooseConnect()
+				return
+				// return this.popup({
+				// 	text: 'Please connect to your wallet account first',
+				// 	timeout: 3000,
+				// })
 			}
 			// this.popup({ text: 'not implemented' })
 			this.router.push('/my_dsn')
