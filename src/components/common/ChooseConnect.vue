@@ -18,7 +18,7 @@
 					<div class="wrapper">
 						<div class="card-container btn" @click="connect(2)">
 							<div class="icon">
-								<Walletconnect />
+								<Walletconnect class="wc" />
 							</div>
 							<div class="name">Walletconnect</div>
 							<div class="description">Scan with WalletConnect to connect</div>
@@ -94,6 +94,10 @@ export default defineComponent({
 svg {
 	width: 45px;
 	height: 45px;
+}
+svg.wc {
+	background: #006fff;
+	border-radius: 50%;
 }
 .wrapper:hover .card-container {
 	background-color: rgba(195, 195, 195, 0.14);
