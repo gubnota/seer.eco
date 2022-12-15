@@ -128,7 +128,7 @@ export default class WalletController {
 		console.log('hash', hash, hash.length < 130)
 		console.groupEnd()
 
-		if (hash.lengh < 130) {
+		if (hash.length < 130) {
 			//hash === 'Reject' || hash === '拒绝' ||
 			// BitKeep app bug
 			if (msgParams.message.action == 'connect')
