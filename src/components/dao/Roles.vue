@@ -42,7 +42,8 @@ export default defineComponent({
 	methods: {
 		loggedIn() {
 			let loggedIn = this.$store.state.address
-			return !!loggedIn
+			let seerToken = this.$store.state.seerToken
+			return !!loggedIn && !!seerToken
 		},
 		notAppUser() {
 			return this.$store.state.notAppUser
@@ -53,7 +54,7 @@ export default defineComponent({
 				;(async () => {
 					// check if user is logged in
 					if (!this.loggedIn()) {
-						await this.web3.login()
+						this.web3.chooseConnect() //await this.web3.login()
 					} else if (this.notAppUser()) {
 						this.popup({ code: 10002 })
 					} else {

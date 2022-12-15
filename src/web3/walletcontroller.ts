@@ -69,6 +69,7 @@ export default class WalletController {
 	}
 
 	async signTypedData(msgParams: any) {
+		this.store.dispatch('save', { k: 'loading', v: true })
 		let hash
 		if (this.isMetamask()) {
 			hash = await this.web3js.currentProvider
@@ -82,6 +83,7 @@ export default class WalletController {
 				.catch((error: any) => {
 					// Error returned when rejected
 					console.error('signTypedData', error, `"${error}"`)
+					this.store.dispatch('save', { k: 'loading', v: false })
 					//{code: 4001, message: 'MetaMask Message Signature: User denied message signature.'}
 					return Promise.resolve(false)
 				})
@@ -105,6 +107,7 @@ export default class WalletController {
 					return Promise.resolve(false)
 				})
 		}
+		this.store.dispatch('save', { k: 'loading', v: false })
 		return Promise.resolve(hash)
 	}
 
@@ -135,7 +138,7 @@ export default class WalletController {
 		console.info('onwalletdisconnect')
 		this.store.dispatch('save', { k: 'address', v: null })
 		this.store.dispatch('save', { k: 'loading', v: false })
-		this.connector.killSession()
+		if (this.connector) this.connector.killSession()
 	}
 	async onwalleterror(error) {
 		console.log('onwalleterror', error)
@@ -143,7 +146,7 @@ export default class WalletController {
 			text: error.toString(),
 			timeout: 3000,
 		})
-
+		this.store.dispatch('save', { k: 'loading', v: false })
 		await this.connector.killSession()
 	}
 
@@ -190,7 +193,6 @@ export default class WalletController {
 	 * Connect wallet button pressed.
 	 */
 	async walletconnect(forceQR: boolean = true) {
-		console.log('walletconnect', forceQR, this.address())
 		// const WalletConnect = window.WalletConnect.default
 		this.connector = new WalletConnect({
 			bridge: this.wcBridgeUrl,

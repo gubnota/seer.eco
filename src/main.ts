@@ -71,7 +71,7 @@ export { router }
 const app = createApp(App)
 
 app.config.globalProperties.window = window
-app.config.globalProperties.comingSoon = comingSoon
+// app.config.globalProperties.comingSoon = comingSoon
 app.config.globalProperties.popup = popup
 app.config.globalProperties.router = router
 app.config.globalProperties.questions_zh = questions_zh

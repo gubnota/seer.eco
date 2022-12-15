@@ -42,7 +42,6 @@ export default defineComponent({
 	methods: {
 		async connect(choice: number) {
 			var loginRes
-			// this.$store.dispatch('save', { k: 'loading', v: true })
 			this.$store.dispatch('save', { k: 'walletLoading', v: false })
 			switch (choice) {
 				case 1: //Metamask
@@ -50,6 +49,9 @@ export default defineComponent({
 						k: 'isMetamask',
 						v: true,
 					})
+					this.$store.dispatch('save', { k: 'loading', v: true })
+					this.$store.dispatch('save', { k: 'chooseConnect', v: 'none' })
+
 					loginRes = await this.web3.login()
 					console.log('loginRes', loginRes)
 					// if (!loginRes)

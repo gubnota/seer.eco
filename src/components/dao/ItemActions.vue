@@ -97,7 +97,7 @@ export default defineComponent({
 							: `<p>Please, become a <b class="rainbow">DAO reviewer</b> first</p>`,
 						timeout: 3000,
 					})
-					if (!this.$store.state.daoInfo) this.web3.login()
+					if (!this.$store.state.daoInfo) this.web3.chooseConnect() //this.web3.login()
 					return
 				}
 				if (pass) {

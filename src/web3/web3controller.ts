@@ -11,6 +11,19 @@ export default class Web3Controller extends PayController {
 		return addressPartially(address)
 	}
 
+	chooseConnect() {
+		if (window.ethereum) {
+			//choose between Metamask Wallet connect
+			this.store.dispatch('save', {
+				k: 'chooseConnect',
+				v: 'block',
+			})
+			return
+		} else {
+			this.walletconnect()
+			return
+		}
+	}
 	async logout(forceReload: boolean = true) {
 		await super.logout()
 		if (!this.isMetamask()) this.onwalletdisconnect()
@@ -30,6 +43,13 @@ export default class Web3Controller extends PayController {
 		await super.restoreWeb3()
 		if (this.store.state.address && !this.store.state.seerToken) {
 			this.store.dispatch('unset', ['address'])
+		}
+		if (
+			!!this.connector &&
+			this.connector.connected &&
+			!this.store.state.address
+		) {
+			this.connector.killSession()
 		}
 		if (this.store.state.address) {
 			// console.log('restoreWeb3')
@@ -59,13 +79,16 @@ export default class Web3Controller extends PayController {
 
 	async login(forceQR: boolean = false, cb?: () => {}) {
 		try {
+			this.store.dispatch('save', { k: 'loading', v: true })
 			const connect = await this.connect(forceQR, () => {
 				cb()
 				this.fetchRelated()
 				return Promise.resolve(true)
 			})
+			this.store.dispatch('save', { k: 'loading', v: false })
 			if (!connect) return Promise.resolve(false)
 		} catch (error) {
+			this.store.dispatch('save', { k: 'loading', v: false })
 			if (error.code == 4001) {
 				// logout
 				this.logout()
@@ -79,13 +102,14 @@ export default class Web3Controller extends PayController {
 		// setTimeout(async () => {
 		if (this.store.state.path == '/dao') {
 			const info = await this.info()
+			const tickets = await this.ticketsNumber()
 		}
 		if (this.store.state.path == '/dsn') {
 			this.store.dispatch('unset', ['notAppUser'])
-			const info = await this.MyDSNs()
+			const myDSNs = await this.MyDSNs()
 		}
 		// setTimeout(async () => {
-		const tickets = await this.ticketsNumber()
+
 		// const events = await this.eventList()
 		if (this.onLogin) this.onLogin()
 
