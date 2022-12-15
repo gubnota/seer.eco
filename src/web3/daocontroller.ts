@@ -37,7 +37,7 @@ export default class DaoController extends UserController {
 		})
 		// console.log(signature) // FIXME: remove after testing
 		// return Promise.resolve(null) // FIXME: remove after testing
-
+		if (!signature) return Promise.resolve(false)
 		const payload = {
 			address: this.address(),
 			nonce,

@@ -153,7 +153,7 @@ export default class WalletController {
 			timeout: 3000,
 		})
 		this.store.dispatch('save', { k: 'loading', v: false })
-		await this.connector.killSession()
+		// await this.connector.killSession()
 	}
 
 	addListeners() {
