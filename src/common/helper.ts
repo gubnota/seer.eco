@@ -238,4 +238,5 @@ export function isLocal() {
 		window.location.host.substring(0, 1) === '1'
 	)
 }
+export function log() {}
 export { comingSoon, getFQN, getAlias }

@@ -94,7 +94,7 @@ export default defineComponent({
 					this.popup({
 						text: !this.$store.state.daoInfo
 							? `<p>Please log in to your wallet account first</p>`
-							: `<p>Please, become a <b class="rainbow">DAO reviewer</b> first</p>`,
+							: `<p>Please, become a <a class="rainbow" href="#/reviewer/conditions">DAO reviewer</a> first</p>`,
 						timeout: 3000,
 					})
 					if (!this.$store.state.daoInfo) this.web3.chooseConnect() //this.web3.login()

@@ -1,10 +1,13 @@
 <script lang="ts">
+declare const window: any
+import { isLocal } from './common/helper'
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 export default {
 	mounted() {
 		// if (store.state.daoInfo) web3obj.info()
 		this.web3.restoreWeb3() // otherwise after refreshing a page signing doesn't work if (store.state.address)
+		if (isLocal()) window.web3 = this.web3
 	},
 }
 </script>

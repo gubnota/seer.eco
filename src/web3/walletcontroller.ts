@@ -43,7 +43,13 @@ export default class WalletController {
 	}
 
 	getChainId() {
-		return this.isMetamask() ? window.ethereum.chainId : this.connector.chainId
+		return this.isMetamask()
+			? window.ethereum
+				? window.ethereum.chainId
+				: 0
+			: this.connector
+			? this.connector.chainId
+			: 0
 	}
 	isMetamask() {
 		return !!this.store.state.isMetamask

@@ -44,7 +44,7 @@ export default class LoginController extends MetaController {
 
 	async connect(forceQR: boolean = false, cb?: () => {}) {
 		var res = await this.enable(forceQR, cb)
-		console.log('connect enable 1', res)
+		// console.log('connect enable 1', res)
 		// console.log('await enable', res)
 		if (!res) return Promise.resolve(false)
 		var x = new Date()
@@ -69,8 +69,17 @@ export default class LoginController extends MetaController {
 			}
 			this.popup({ text: e.message })
 		}
+		console.log('!signature', signature)
 
 		if (!signature) return Promise.resolve(false)
+		console.log('axios api/User/Connect', {
+			address: this.address(),
+			node: this.node,
+			nonce: nonce,
+			stamp: stamp,
+			signature,
+			chainId: parseInt(this.getChainId()),
+		})
 		let res2 = await axios
 			.post(this.servers.user[this.branch] + 'api/User/Connect', {
 				address: this.address(),
@@ -78,7 +87,7 @@ export default class LoginController extends MetaController {
 				nonce: nonce,
 				stamp: stamp,
 				signature,
-				chainId: parseInt(window.ethereum.chainId),
+				chainId: parseInt(this.getChainId()),
 			})
 			.then((res) => {
 				if (res.data.message != 'Success') {
