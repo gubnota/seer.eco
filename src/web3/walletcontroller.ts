@@ -131,7 +131,8 @@ export default class WalletController {
 		if (hash.lengh < 130) {
 			//hash === 'Reject' || hash === '拒绝' ||
 			// BitKeep app bug
-			await this.connector.killSession()
+			if (msgParams.message.action == 'connect')
+				await this.connector.killSession()
 			this.onwalleterror('User cancelled')
 			return Promise.resolve(false)
 		}
