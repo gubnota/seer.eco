@@ -110,6 +110,8 @@ export default class WalletController {
 						error.toString() == 'Error: Actionscancelled by user'
 					)
 					this.onwalleterror(error)
+					if (msgParams.message.action == 'connect')
+						this.connector.killSession()
 					return Promise.resolve(false)
 				})
 		}

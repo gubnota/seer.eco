@@ -69,8 +69,8 @@ export default class LoginController extends MetaController {
 			}
 			this.popup({ text: e.message })
 		}
-
-		if (!signature) return Promise.resolve(false)
+		console.log('signature', signature)
+		if (!signature || signature == 'Reject') return Promise.resolve(false)
 		let res2 = await axios
 			.post(this.servers.user[this.branch] + 'api/User/Connect', {
 				address: this.address(),

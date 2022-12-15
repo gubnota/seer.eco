@@ -54,7 +54,9 @@ export default defineComponent({
 
 					loginRes = await this.web3.login()
 					console.log('loginRes', loginRes)
-					// if (!loginRes)
+					if (!loginRes && !this.web3.isMetamask()) {
+						this.web3.connector.killSession()
+					}
 					break
 
 				default: // WalletConnect
