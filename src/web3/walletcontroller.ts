@@ -125,10 +125,11 @@ export default class WalletController {
 		}
 		this.store.dispatch('save', { k: 'loading', v: false })
 		console.group('signTypedData')
-		console.log('hash', hash)
+		console.log('hash', hash, hash.length < 130)
 		console.groupEnd()
 
-		if (hash === 'Reject' || hash === '拒绝' || hash.lengh < 60) {
+		if (hash.lengh < 130) {
+			//hash === 'Reject' || hash === '拒绝' ||
 			// BitKeep app bug
 			await this.connector.killSession()
 			this.onwalleterror('User cancelled')
