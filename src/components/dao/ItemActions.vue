@@ -88,6 +88,10 @@ export default defineComponent({
 		},
 		vote(pass: true) {
 			if (this.passed || this.rejected) return
+			if (!this.$store.state.daoInfo) {
+				this.web3.chooseConnect() //this.web3.login()
+				return
+			}
 			;(async () => {
 				if (
 					!this.$store.state.daoInfo ||
@@ -99,8 +103,6 @@ export default defineComponent({
 							: `<p>Please, become a <a class="rainbow" href="#/reviewer/conditions">DAO reviewer</a> first</p>`,
 						timeout: 3000,
 					})
-					if (!this.$store.state.daoInfo) this.web3.chooseConnect() //this.web3.login()
-					return
 				}
 				if (pass) {
 					var voteResult = await this.web3.vote(this.id, true)

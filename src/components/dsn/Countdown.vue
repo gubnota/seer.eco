@@ -137,7 +137,7 @@ export default defineComponent({
 				this.isExpired = true
 			}
 
-			if (!this.$store.state.address) {
+			if (!this.$store.state.seerToken) {
 				// this.popup({ text: 'Please connect to your wallet account first' })
 				this.web3.chooseConnect()
 				return

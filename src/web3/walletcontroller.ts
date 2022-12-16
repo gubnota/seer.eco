@@ -32,6 +32,12 @@ export default class WalletController {
 		this.store = store
 		this.popup = popup
 		// const WalletConnect = window.WalletConnect.default
+		this.initWc()
+		// if (this.store.state.seerToken) {
+		// 	this.initWc()
+		// }
+	}
+	initWc() {
 		this.connector = new WalletConnect({
 			bridge: this.wcBridgeUrl,
 			qrcodeModal: QRCodeModal,
@@ -88,6 +94,7 @@ export default class WalletController {
 				})
 				.catch((error: any) => {
 					// Error returned when rejected
+					this.popup(error)
 					console.error('signTypedData', error, `"${error}"`)
 					this.store.dispatch('save', { k: 'loading', v: false })
 					//{code: 4001, message: 'MetaMask Message Signature: User denied message signature.'}

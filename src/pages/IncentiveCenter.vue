@@ -36,9 +36,9 @@ export default defineComponent({
 		},
 	},
 	mounted() {
-		if (!this.$store.state.address) this.router.go(-1) //this.router.push({ path: '/dao' })
+		if (!this.$store.state.seerToken) this.router.go(-1) //this.router.push({ path: '/dao' })
 		let s = this.$store.state
-		if (!this.$store.state.address) {
+		if (!this.$store.state.seerToken) {
 			this.web3.chooseConnect()
 			// this.popup({ text: `Please connect to your wallet account first` })
 		} else if (!this.$store.state.daoInfo)

@@ -20,6 +20,7 @@ export default class Web3Controller extends PayController {
 			})
 			return
 		} else {
+			this.initWc()
 			this.walletconnect()
 			return
 		}
@@ -47,7 +48,7 @@ export default class Web3Controller extends PayController {
 		if (
 			!!this.connector &&
 			this.connector.connected &&
-			!this.store.state.address
+			!this.store.state.seerToken
 		) {
 			this.connector.killSession()
 		}

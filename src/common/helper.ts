@@ -23,7 +23,9 @@ export const popup = (message?: messageType) => {
 	if (!a) return
 	a.style.display = ''
 	// console.log('popup', message)
-	if (
+	if (message && message.code == 4001) {
+		a.querySelector('.actual-message').innerHTML = `<p>User cancelled</p>`
+	} else if (
 		(message && message.text && message.text.includes('UserNotFound')) ||
 		(message && message.code === 10002)
 	) {
@@ -244,7 +246,7 @@ const handler2 = {
 		return (...args) => {
 			// if (!window.expose) return
 			if (typeof window.console2[prop] == 'function')
-				if (isLocal() || window.expose) window.console2[prop].apply(null, args) //[...args, ...['handler2']]
+				if (isLocal() || window.expose) window.console2[prop](...args) //[...args, ...['handler2']]
 		}
 	},
 }

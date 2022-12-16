@@ -92,7 +92,7 @@ export default defineComponent({
 	},
 	methods: {
 		myDsn() {
-			if (!this.$store.state.address) {
+			if (!this.$store.state.seerToken) {
 				this.web3.chooseConnect()
 				return
 				// return this.popup({
