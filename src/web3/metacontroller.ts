@@ -156,12 +156,13 @@ export default class MetaController extends WalletController {
 			window.web3js = this.web3js
 			//
 			return Promise.resolve(true)
-		} else {
-			this.popup({
-				timeout: 5000,
-				text: `<p>Please, install <a href="https://metamask.io/download/" target=_blank>Metamask</a></p>`,
-			})
 		}
+		//  else if (this.isMetamask()) {
+		// 	this.popup({
+		// 		timeout: 5000,
+		// 		text: `<p>Please, install <a href="https://metamask.io/download/" target=_blank>Metamask</a></p>`,
+		// 	})
+		// }
 		return Promise.resolve(false)
 	}
 }
