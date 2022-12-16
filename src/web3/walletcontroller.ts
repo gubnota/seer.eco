@@ -32,10 +32,10 @@ export default class WalletController {
 		this.store = store
 		this.popup = popup
 		// const WalletConnect = window.WalletConnect.default
-		this.initWc()
-		// if (this.store.state.seerToken) {
-		// 	this.initWc()
-		// }
+		// this.initWc()
+		if (this.store.state.seerToken && !this.isMetamask()) {
+			this.initWc()
+		}
 	}
 	initWc() {
 		this.connector = new WalletConnect({
@@ -229,11 +229,11 @@ export default class WalletController {
 	 */
 	async walletconnect(forceQR: boolean = true) {
 		// const WalletConnect = window.WalletConnect.default
-		this.connector = new WalletConnect({
-			bridge: this.wcBridgeUrl,
-			qrcodeModal: QRCodeModal,
-		})
-		this.connector = this.connector
+		// this.connector = new WalletConnect({
+		// 	bridge: this.wcBridgeUrl,
+		// 	qrcodeModal: QRCodeModal,
+		// })
+		// this.connector = this.connector
 		this.addListeners()
 		if (!this.connector.connected && forceQR) {
 			await this.connector.createSession().catch((error: any) => {

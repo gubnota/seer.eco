@@ -60,6 +60,7 @@ export default defineComponent({
 					break
 
 				default: // WalletConnect
+					this.web3.initWc()
 					this.$store.dispatch('save', {
 						k: 'isMetamask',
 						v: false,
