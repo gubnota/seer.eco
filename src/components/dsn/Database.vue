@@ -126,20 +126,20 @@ export default defineComponent({
 			fields,
 			perPage: 10, //9,
 			sync: [],
-			sortColumn: 7,
+			sortColumn: -1,
 			asc: false,
 		}
 	},
 	computed: {
 		totalNumber() {
-			if (!store.state.dsnList) return samples.length
+			if (!store.state.dsnList) return 0 //samples.length
 			return store.state.dsnList.total
 		},
 		fetch() {
-			if (typeof store.state.dsnList == 'undefined')
-				return samples
-					.filter((el) => el.server.includes(input.value.toLowerCase()))
-					.splice((this.selectedPage - 1) * this.perPage, this.perPage)
+			if (typeof store.state.dsnList == 'undefined') return []
+			//  samples
+			// 	.filter((el) => el.server.includes(input.value.toLowerCase()))
+			// 	.splice((this.selectedPage - 1) * this.perPage, this.perPage)
 			return this.formTable(store.state.dsnList.list)
 
 			//.splice((this.selectedPage - 1) * this.perPage,this.perPage)
@@ -151,7 +151,7 @@ export default defineComponent({
 	mounted() {
 		setTimeout(() => {
 			// scroll()
-			this.sortTable()
+			// this.sortTable()
 		}, 200)
 	},
 	methods: {

@@ -96,7 +96,7 @@ store.dispatch('load', [
 	'eventsTab',
 	'daoRulesVisited',
 	'dsnListTop',
-	'dsnList',
+	// 'dsnList',
 	'paySellInfo',
 	'notAppUser',
 	// 'loading',
