@@ -613,6 +613,8 @@ sup {
 b {
 	font-weight: bold;
 }
-.walletconnect-modal__mobile__toggle {
+.walletconnect-modal__mobile__toggle,
+.walletconnect-modal__footer,
+#walletconnect-qrcode-text {
 	display: none !important;
 }
