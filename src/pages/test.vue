@@ -1,132 +1,87 @@
 <template>
-	<section class="nft">
-		<h2>SEER Space</h2>
-		<div class="collections">
-			<span :class="{ active: activeTab == 0 }" @click="changeTab(0)"
-				>Recommend</span
-			>
-			<span :class="{ active: activeTab == 1 }" @click="changeTab(1)"
-				>Hottest</span
-			>
-			<span :class="{ active: activeTab == 2 }" @click="changeTab(2)"
-				>Newest</span
-			>
+	<div class="dsn" v-if="this.$store.state.dsnListTop">
+		<div class="l">
+			<div class="row" v-if="this.$store.state.dsnListTop.length > 0">
+				<Nft_card
+					:no="i"
+					key="i"
+					v-for="(el, i) in this.$store.state.dsnListTop"
+				/>
+				<!-- <Nft_card :no="1" key="1" /><Nft_card
+				:no="2"
+				key="2"
+			/> -->
+			</div>
 		</div>
-
-		<div ref="swipe_field" class="test">
-			<Slider>
-				<div
-					class="slide"
-					v-for="(el, j) in $data.slides"
-					:class="{
-						current: current == j,
-						prev: current == j + 1,
-						next: current == j - 1,
-						last: j == $data.slides.length - 1,
-						first: j == 0,
-					}"
-				>
-					{{ j }}
-				</div>
-			</Slider>
-		</div>
-
-		<a @click="comingSoon" class="cta">Explore More Space</a>
-	</section>
-	<Modal />
+	</div>
 </template>
-<script>
-import Slider from '../components/main/Slider.vue'
-import Modal from '../components/common/Modal.vue'
-export default {
-	name: 'Test',
-	data() {
-		return {
-			activeTab: 0,
-		}
-	},
-	mounted() {},
-	components: {
-		Slider,
-		Modal,
-	},
-	methods: {
-		changeTab(id) {
-			this.activeTab = id
-		},
-	},
-}
+<script lang="ts">
+import Nft_card from '/src/components/dsn/NftCard.vue'
+
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+	components: { Nft_card },
+})
 </script>
 <style scoped>
-section.nft {
-	max-width: 100vw;
+div.dsn {
 	display: flex;
-	flex-direction: column;
-	margin: 0 0 42px 0;
-	max-width: 1920px;
+	flex-direction: row;
+	gap: 165px;
 }
 h2 {
-	font-size: 32px !important;
-	line-height: 123%;
-	color: #000000;
+	font-weight: 600;
+	font-size: 32px;
+	text-transform: capitalize;
 	text-align: left;
-	margin-left: 70px;
-	font-weight: 600;
+	min-height: 36px;
+	display: inline;
 }
-.collections {
-	gap: 49px;
-	flex: 1;
-	display: flex;
-	flex-direction: row;
-	align-self: flex-end;
-	align-items: stretch;
-	margin-right: 101px;
-	align-items: flex-start;
-	margin-bottom: 33px;
-}
-.collections span {
-	cursor: pointer;
-	flex: 1;
+h4 {
+	text-align: center;
+	margin-top: 12px;
 	font-weight: 600;
+	font-size: 15px;
+}
+p {
+	margin-block-start: 1rem;
+	margin-block-end: 36px;
+	font-weight: 400;
 	font-size: 15px;
 	line-height: 123%;
-	color: #000000;
-}
-.collections span:active {
-	transform: scale(0.95);
-}
-.collections span.active {
-	color: #aa1fff;
+	color: #1f2226;
 	line-height: 150%;
-	border-bottom: 4px solid #aa1fff;
 }
-.cta {
-	cursor: pointer;
-	margin: 73px 0 70px 0;
-	flex: 1;
-	align-self: center;
-	display: flex;
-	flex-direction: row;
-	gap: 13px;
+h3 {
+	font-weight: 600;
+	font-size: 18px;
+}
+.row {
+	gap: 32px;
 	justify-content: center;
-	align-items: center;
-	padding: 24px 26px;
-	text-align: center;
-	border-radius: 10px;
-	width: 241px;
-	height: 66px;
-	font-size: 15px;
-	border: 1.5px solid #b4b4b4;
-	text-decoration: none;
-	color: black;
 }
-.cta:active {
-	transform: scale(0.95);
-}
-@media (max-width: 550px) {
-	.collections {
-		margin-right: auto;
-		padding: 1rem 1rem 0 1rem;
+@media (max-width: 1130px) {
+	h2 {
+		min-height: 36px;
+		margin-top: 4rem;
+	}
+	.row {
+		flex-direction: column;
+		align-items: center;
+	}
+	div.dsn {
+		/* margin-top: 2rem; */
+		width: calc(100% - 2rem);
+		align-self: center;
+		flex-direction: column;
+		gap: 100px;
+		margin-top: 100px;
+	}
+	.r {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 }
 </style>
