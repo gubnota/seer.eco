@@ -174,7 +174,7 @@ export default class DaoController extends UserController {
 		)
 
 		let balance = await this.DSNContract.methods
-			.balanceOf(this.address) // '0x95e6FeeeBDD83a44EB7Ca87F3EEeC4632F4218A5' is 4
+			.balanceOf(this.store.state.address) // '0x95e6FeeeBDD83a44EB7Ca87F3EEeC4632F4218A5' is 4
 			.call()
 		this.store.dispatch('save', {
 			k: 'ticketsNumber',
