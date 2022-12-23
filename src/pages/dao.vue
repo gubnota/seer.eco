@@ -31,7 +31,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
 	name: 'DAO',
 	mounted() {
-		this.web3.info()
+		// this.web3.info()
 	},
 	components: {
 		FooterDao,

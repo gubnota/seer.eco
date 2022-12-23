@@ -21,7 +21,7 @@ export default class WalletController {
 	// public isMetamask: boolean
 	public store
 	public popup
-	protected wcBridgeUrl = 'https://walletconnect.seer.eco'
+	protected wcBridgeUrl = 'https://walletconnect.seer.eco' //'https://walletconnect.seer.eco' //"https://bridge.walletconnect.org"
 	public connector // WalletConnect
 	// public qr // qrCodeModal
 	public web3js: web3
@@ -42,7 +42,9 @@ export default class WalletController {
 			bridge: this.wcBridgeUrl,
 			qrcodeModal: QRCodeModal,
 		})
-		this.connector = this.connector
+		window.connector = this.connector
+
+		// this.connector = this.connector
 		if (this.connector.connected) {
 			this.walletconnect()
 		}
@@ -234,14 +236,14 @@ export default class WalletController {
 		// 	qrcodeModal: QRCodeModal,
 		// })
 		// this.connector = this.connector
-		this.addListeners()
-		if (!this.connector.connected && forceQR) {
+		if (this.connector) this.addListeners()
+		if (this.connector && !this.connector.connected && forceQR) {
 			await this.connector.createSession().catch((error: any) => {
 				// Error returned when rejected
 				console.error('createSession', error, `"${error}"`) // 'Error: Session currently connected'
 				this.onwalleterror(error)
 			})
-		} else {
+		} else if (this.connector) {
 			// Already connected
 			this.store.dispatch('save', {
 				k: 'address',

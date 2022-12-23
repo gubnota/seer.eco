@@ -233,6 +233,7 @@ export const countUp = (v: {
 		interval: v.interval,
 	}
 }
+
 window.countUp = countUp
 export function isLocal() {
 	return (
@@ -259,4 +260,25 @@ export { console }
 // 	if (isLocal() || window.expose) console.error.apply(null, args)
 // }
 
+export const countUp2 = (b, c) => {
+	// goal, shown
+	const isNumber = (a) => {
+		return parseInt(a) > 0 || a === '0'
+	}
+	if (no >= steps) c = b
+	c = c.map((el, i) => {
+		if (!isNumber(el)) return el
+		let result = parseInt(b[i])
+		return no < steps
+			? Math.round((no * result) / steps).toString()
+			: result.toString()
+	})
+
+	if (no < steps)
+		setTimeout(() => {
+			no++
+			// countUp2()
+		}, 100)
+	return c
+}
 export { comingSoon, getFQN, getAlias }
