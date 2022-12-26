@@ -235,9 +235,10 @@ export default class WalletController {
 		// 	bridge: this.wcBridgeUrl,
 		// 	qrcodeModal: QRCodeModal,
 		// })
-		// this.connector = this.connector
+		window.connector = this.connector
 		if (this.connector) this.addListeners()
 		if (this.connector && !this.connector.connected && forceQR) {
+			this.connector.killSession()
 			await this.connector.createSession().catch((error: any) => {
 				// Error returned when rejected
 				console.error('createSession', error, `"${error}"`) // 'Error: Session currently connected'
