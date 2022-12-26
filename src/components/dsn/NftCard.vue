@@ -35,7 +35,7 @@
 		}}</span>
 		<span class="user_number"
 			><span class="total_users" ref="total_users">{{
-				this.shown ? this.shown : numberWithCommas(this.dsn[no].total_users)
+				numberWithCommas(this.dsn[no].total_users)
 			}}</span>
 			<span> / 100,000</span></span
 		>
@@ -51,8 +51,11 @@
 <script lang="ts">
 import Nft_card from '/src/assets/dsn/nft-card.svg'
 import store from '../../store'
-import { countUp, formatNumber, numberWithCommas } from '../../common/helper'
+import { formatNumber, numberWithCommas } from '../../common/helper'
 import { defineComponent } from 'vue'
+import 'odometer/themes/odometer-theme-minimal.css' // for count up animation
+import Odometer from 'odometer'
+window.Odometer = Odometer
 
 declare const window: any
 const sampleDsn = {
@@ -97,13 +100,28 @@ export default defineComponent({
 		setTimeout(() => {
 			c.style.width = d
 		}, 1000)
-		this.countUp.goal = this.dsn[this.no].total_users
-
+		// this.countUp.goal = this.dsn[this.no].total_users
+		document.querySelector('.total_users').innerHTML = '0'
+		setTimeout(() => {
+			let od = new Odometer({
+				el: document.querySelector('.total_users'),
+				// value: 0,
+				// Any option (other than auto and selector) can be passed in here
+				format: '(,ddd)',
+				theme: 'minimal',
+			})
+			od.update(this.dsn[this.no].total_users)
+			console.log(
+				'this.dsn[this.no].total_users',
+				this.dsn[this.no].total_users
+			)
+		}, 100)
+		// this.dsn[this.no].total_users
 		// setTimeout(() => {
 		// this.shown = 'false'
-		setTimeout(() => {
-			this.callCountUp()
-		}, this.countUp.interval)
+		// setTimeout(() => {
+		// 	this.callCountUp()
+		// }, this.countUp.interval)
 
 		// this.$refs.total_users.innerText =
 		// 	setTimeout(() => {
@@ -180,8 +198,8 @@ export default defineComponent({
 		return {
 			user_percent: 0.6,
 			memory_percent: 0.4,
-			shown: false,
-			countUp: { no: 0, total: 4000, shown: 0, goal: 0, interval: 10 },
+			// shown: false,
+			// countUp: { no: 0, total: 4000, shown: 0, goal: 0, interval: 10 },
 		}
 	},
 	components: { Nft_card },
@@ -259,7 +277,7 @@ img.badge3 {
 	left: 252px;
 }
 .user_number {
-	left: 220px;
+	right: 0px; /*220px;*/
 	top: 244px;
 	color: #e3e5e8;
 	font-weight: 600;
@@ -267,7 +285,11 @@ img.badge3 {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	width: 104px;
+	width: 132px; /*104px;*/
+}
+.user_number span:last-child {
+	position: absolute;
+	right: 16px;
 }
 .memory_label {
 	right: 40px;

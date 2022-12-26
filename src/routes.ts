@@ -40,7 +40,6 @@ const routes = [
 		path: '/',
 		component: Main,
 	},
-	// { path: '/nft', component: Nft },
 	{ path: '/test', component: Test },
 	{ path: '/q_and_a', component: QA },
 	{
