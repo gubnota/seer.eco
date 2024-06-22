@@ -98,7 +98,7 @@ import { defineComponent } from 'vue'
 import Arrow from '/src/assets/ui/arrow-left.svg'
 import { ref } from 'vue'
 import { formatNumber } from '../common/helper'
-import utils from 'web3-utils'
+import * as utils from 'web3-utils'
 let addr = ref('')
 let coupon = ref('')
 let qty = ref('1')

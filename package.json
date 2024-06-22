@@ -1,36 +1,43 @@
 {
-	"name": "vite-template",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite --host",
-		"build": "vite build",
-		"preview": "vite preview --host"
-	},
-	"dependencies": {
-		"@walletconnect/client": "^1.8.0",
-		"@walletconnect/qrcode-modal": "^1.8.0",
-		"axios": "^1.1.3",
-		"buffer": "^6.0.3",
-		"gsap": "^3.11.1",
-		"odometer": "^0.4.8",
-		"swiper": "^8.4.2",
-		"vanilla-swipe": "^2.4.1",
-		"vite-svg-loader": "^3.6.0",
-		"vue": "^3.2.41",
-		"vue-router": "4",
-		"vuex": "^4.0.2",
-		"web3": "^1.8.0",
-		"web3-core": "^1.8.0",
-		"web3-utils": "^1.8.1"
-	},
-	"devDependencies": {
-		"@types/node": "^18.7.23",
-		"@vitejs/plugin-vue": "^3.1.0",
-		"sass": "^1.55.0",
-		"typescript": "^4.6.4",
-		"vite": "^3.1.0",
-		"vue-tsc": "^0.40.4"
-	}
+  "name": "vite-template",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "dependencies": {
+    "@walletconnect/client": "^1.8.0",
+    "@walletconnect/qrcode-modal": "^1.8.0",
+    "axios": "^1.7.2",
+    "buffer": "^6.0.3",
+    "gsap": "^3.12.5",
+    "odometer": "^0.4.8",
+    "swiper": "^11.1.4",
+    "vanilla-swipe": "^2.4.1",
+    "vite-svg-loader": "^5.1.0",
+    "vue": "^3.4.30",
+    "vue-router": "^4.4.0",
+    "vuex": "^4.1.0",
+    "web3": "^4.10.0",
+    "web3-core": "^4.5.0",
+    "web3-utils": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.8",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "sass": "^1.77.6",
+    "typescript": "^5.5.2",
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.22"
+  },
+  "trustedDependencies": [
+    "es5-ext",
+    "swiper",
+    "web3",
+    "web3-bzz",
+    "web3-shh"
+  ]
 }

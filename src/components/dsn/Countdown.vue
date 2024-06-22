@@ -51,7 +51,7 @@
 <script lang="ts">
 // import { convertUTCString, countdownObj } from '../../common/helper' // hmr stops working if used
 import Coin from '/src/assets/dsn/coin.svg'
-import utils from 'web3-utils'
+import * as utils from 'web3-utils'
 import { defineComponent } from 'vue'
 
 const countdownObj = (time: number) => {

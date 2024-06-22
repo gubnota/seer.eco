@@ -5,7 +5,7 @@ import DSNController from './dsncontroller'
 import dsnAbi from '../common/dsn_sell_abi.json'
 import usdtAbi from '../common/usdt_abi.json'
 import web3 from 'web3'
-import utils from 'web3-utils'
+import * as utils from 'web3-utils'
 
 declare const window: any
 export default class PayController extends DSNController {
@@ -25,36 +25,6 @@ export default class PayController extends DSNController {
 	}
 	async testPayNetwork() {
 		return true
-		try {
-			if (!window.ethereum) {
-				var a = await this.enable()
-				if (!a) return Promise.resolve(false)
-				// console.log('this.enable()', a)
-				// this.popup({ text: 'Use Metamask enabled browser' })
-				// setTimeout(() => {
-				// 	return Promise.resolve(false)
-				// }, 1000)
-			}
-			// Try to switch to the Mumbai testnet
-			if (window.ethereum.chainId != '0x5') {
-				const res1 = await window.ethereum.request({
-					method: 'wallet_switchEthereumChain',
-					params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
-				})
-			}
-			// change contract to write (Metamask-backed one)
-			const Contract = this.web3js.eth.Contract // @ts-ignore
-			this.PayDSNContract = new Contract(dsnAbi, this.PayDSN) // @ts-ignore
-			this.USDTContract = new Contract(usdtAbi, this.USDT)
-
-			return Promise.resolve(true)
-		} catch (error) {
-			console.log('testPayNetwork err', error)
-			if (error.code === 4001) {
-				this.popup({ text: error.message, code: error.code }) //{ text: 'User rejected' })
-				return Promise.reject(false)
-			} //user rejected
-		}
 	}
 
 	async paySellInfo() {
